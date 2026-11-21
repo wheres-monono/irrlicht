@@ -44,24 +44,28 @@ the variable name as parameter instead of the register index.
 IrrlichtDevice* device = 0;
 bool UseHighLevelShaders = false;
 
-class MyShaderCallBack : public video::IShaderConstantSetCallBack
-{
+class MyShaderCallBack : public video::IShaderConstantSetCallBack {
 public:
-	MyShaderCallBack() : WorldViewProjID(-1), TransWorldID(-1), InvWorldID(-1), PositionID(-1),
-						ColorID(-1), TextureID(-1), FirstUpdate(true)
-	{
-	}
+	MyShaderCallBack() :
+		WorldViewProjID(-1),
+		TransWorldID(-1),
+		InvWorldID(-1),
+		PositionID(-1),
+		ColorID(-1),
+		TextureID(-1),
+		FirstUpdate(true) {}
 
-	virtual void OnSetConstants(video::IMaterialRendererServices* services,
-			s32 userData)
-	{
+	virtual void OnSetConstants(
+		video::IMaterialRendererServices* services,
+		s32 userData
+	) {
 		video::IVideoDriver* driver = services->getVideoDriver();
 
 		// get shader constants id.
 
-		if (UseHighLevelShaders && FirstUpdate)
-		{
-			WorldViewProjID = services->getVertexShaderConstantID("mWorldViewProj");
+		if (UseHighLevelShaders && FirstUpdate) {
+			WorldViewProjID =
+				services->getVertexShaderConstantID("mWorldViewProj");
 			TransWorldID = services->getVertexShaderConstantID("mTransWorld");
 			InvWorldID = services->getVertexShaderConstantID("mInvWorld");
 			PositionID = services->getVertexShaderConstantID("mLightPos");
@@ -69,8 +73,10 @@ public:
 
 			// Textures ID are important only for OpenGL interface.
 
-			if(driver->getDriverType() == video::EDT_OPENGL)
-				TextureID = services->getVertexShaderConstantID("myTexture");
+			if (driver->getDriverType() == video::EDT_OPENGL) {
+				TextureID =
+					services->getVertexShaderConstantID("myTexture");
+			}
 
 			FirstUpdate = false;
 		}
@@ -82,10 +88,12 @@ public:
 		core::matrix4 invWorld = driver->getTransform(video::ETS_WORLD);
 		invWorld.makeInverse();
 
-		if (UseHighLevelShaders)
-			services->setVertexShaderConstant(InvWorldID, invWorld.pointer(), 16);
-		else
+		if (UseHighLevelShaders) {
+			services->setVertexShaderConstant(InvWorldID, invWorld.pointer(),
+				16);
+		} else {
 			services->setVertexShaderConstant(invWorld.pointer(), 0, 4);
+		}
 
 		// set clip matrix
 
@@ -94,46 +102,56 @@ public:
 		worldViewProj *= driver->getTransform(video::ETS_VIEW);
 		worldViewProj *= driver->getTransform(video::ETS_WORLD);
 
-		if (UseHighLevelShaders)
-			services->setVertexShaderConstant(WorldViewProjID, worldViewProj.pointer(), 16);
-		else
+		if (UseHighLevelShaders) {
+			services->setVertexShaderConstant(WorldViewProjID,
+				worldViewProj.pointer(), 16);
+		} else {
 			services->setVertexShaderConstant(worldViewProj.pointer(), 4, 4);
+		}
 
 		// set camera position
 
-		core::vector3df pos = device->getSceneManager()->
-			getActiveCamera()->getAbsolutePosition();
+		core::vector3df pos = device->getSceneManager()
+					      ->getActiveCamera()
+					      ->getAbsolutePosition();
 
-		if (UseHighLevelShaders)
-			services->setVertexShaderConstant(PositionID, reinterpret_cast<f32*>(&pos), 3);
-		else
-			services->setVertexShaderConstant(reinterpret_cast<f32*>(&pos), 8, 1);
+		if (UseHighLevelShaders) {
+			services->setVertexShaderConstant(PositionID,
+				reinterpret_cast<f32*>(&pos), 3);
+		} else {
+			services->setVertexShaderConstant(reinterpret_cast<f32*>(&pos), 8,
+				1);
+		}
 
 		// set light color
 
-		video::SColorf col(0.0f,1.0f,1.0f,0.0f);
+		video::SColorf col(0.0f, 1.0f, 1.0f, 0.0f);
 
-		if (UseHighLevelShaders)
+		if (UseHighLevelShaders) {
 			services->setVertexShaderConstant(ColorID,
-					reinterpret_cast<f32*>(&col), 4);
-		else
-			services->setVertexShaderConstant(reinterpret_cast<f32*>(&col), 9, 1);
+				reinterpret_cast<f32*>(&col), 4);
+		} else {
+			services->setVertexShaderConstant(reinterpret_cast<f32*>(&col), 9,
+				1);
+		}
 
 		// set transposed world matrix
 
 		core::matrix4 world = driver->getTransform(video::ETS_WORLD);
 		world = world.getTransposed();
 
-		if (UseHighLevelShaders)
-		{
-			services->setVertexShaderConstant(TransWorldID, world.pointer(), 16);
+		if (UseHighLevelShaders) {
+			services->setVertexShaderConstant(TransWorldID, world.pointer(),
+				16);
 
-			// set texture, for textures you can use both an int and a float setPixelShaderConstant interfaces (You need it only for an OpenGL driver).
+			// set texture, for textures you can use both an int and a float
+			// setPixelShaderConstant interfaces (You need it only for an
+			// OpenGL driver).
 			s32 TextureLayerID = 0;
 			services->setPixelShaderConstant(TextureID, &TextureLayerID, 1);
-		}
-		else
+		} else {
 			services->setVertexShaderConstant(world.pointer(), 10, 4);
+		}
 	}
 
 private:
@@ -152,22 +170,19 @@ The next few lines start up the engine just like in most other tutorials
 before. But in addition, we ask the user if he wants to use high level shaders
 in this example, if he selected a driver which is capable of doing so.
 */
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// ask the user if we should use high level shaders for this example
-	if (driverType == video::EDT_DIRECT3D9 ||
-		 driverType == video::EDT_OPENGL)
-	{
+	if (driverType == video::EDT_DIRECT3D9 || driverType == video::EDT_OPENGL) {
 		char i = 'y';
 		printf("Please press 'y' if you want to use high level shaders.\n");
 		std::cin >> i;
-		if (i == 'y')
-		{
+		if (i == 'y') {
 			UseHighLevelShaders = true;
 		}
 	}
@@ -176,9 +191,9 @@ int main()
 
 	device = createDevice(driverType, core::dimension2d<u32>(640, 480));
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
-
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
@@ -190,44 +205,38 @@ int main()
 	Now for the more interesting parts. If we are using Direct3D, we want
 	to load vertex and pixel shader programs, if we have OpenGL, we want to
 	use ARB fragment and vertex programs. I wrote the corresponding
-	programs down into the files d3d9.ps, d3d9.vs, opengl.ps and opengl.vs. 
-	We only need the right filenames now. This is done in the following switch. 
-	Note, that it is not necessary to write the shaders into text files, 
-	like in this example. You can even write the shaders directly as strings 
-	into the cpp source file, and use later addShaderMaterial() instead of 
+	programs down into the files d3d9.ps, d3d9.vs, opengl.ps and opengl.vs.
+	We only need the right filenames now. This is done in the following switch.
+	Note, that it is not necessary to write the shaders into text files,
+	like in this example. You can even write the shaders directly as strings
+	into the cpp source file, and use later addShaderMaterial() instead of
 	addShaderMaterialFromFiles().
 	*/
 
 	io::path vsFileName; // filename for the vertex shader
 	io::path psFileName; // filename for the pixel shader
 
-	switch(driverType)
-	{
-	case video::EDT_DIRECT3D9:
-		if (UseHighLevelShaders)
-		{
-			psFileName = mediaPath + "d3d9.hlsl";
-			vsFileName = psFileName; // both shaders are in the same file
-		}
-		else
-		{
-			psFileName = mediaPath + "d3d9.psh";
-			vsFileName = mediaPath + "d3d9.vsh";
-		}
-		break;
+	switch (driverType) {
+		case video::EDT_DIRECT3D9:
+			if (UseHighLevelShaders) {
+				psFileName = mediaPath + "d3d9.hlsl";
+				vsFileName =
+					psFileName; // both shaders are in the same file
+			} else {
+				psFileName = mediaPath + "d3d9.psh";
+				vsFileName = mediaPath + "d3d9.vsh";
+			}
+			break;
 
-	case video::EDT_OPENGL:
-		if (UseHighLevelShaders)
-		{
-			psFileName = mediaPath + "opengl.frag";
-			vsFileName = mediaPath + "opengl.vert";
-		}
-		else
-		{
-			psFileName = mediaPath + "opengl.psh";
-			vsFileName = mediaPath + "opengl.vsh";
-		}
-		break;
+		case video::EDT_OPENGL:
+			if (UseHighLevelShaders) {
+				psFileName = mediaPath + "opengl.frag";
+				vsFileName = mediaPath + "opengl.vert";
+			} else {
+				psFileName = mediaPath + "opengl.psh";
+				vsFileName = mediaPath + "opengl.vsh";
+			}
+			break;
 	}
 
 	/*
@@ -244,18 +253,16 @@ int main()
 	*/
 
 	if (!driver->queryFeature(video::EVDF_PIXEL_SHADER_1_1) &&
-		!driver->queryFeature(video::EVDF_ARB_FRAGMENT_PROGRAM_1))
-	{
-		device->getLogger()->log("WARNING: Pixel shaders disabled "\
-			"because of missing driver/hardware support.");
+		!driver->queryFeature(video::EVDF_ARB_FRAGMENT_PROGRAM_1)) {
+		device->getLogger()->log("WARNING: Pixel shaders disabled "
+					 "because of missing driver/hardware support.");
 		psFileName = "";
 	}
 
 	if (!driver->queryFeature(video::EVDF_VERTEX_SHADER_1_1) &&
-		!driver->queryFeature(video::EVDF_ARB_VERTEX_PROGRAM_1))
-	{
-		device->getLogger()->log("WARNING: Vertex shaders disabled "\
-			"because of missing driver/hardware support.");
+		!driver->queryFeature(video::EVDF_ARB_VERTEX_PROGRAM_1)) {
+		device->getLogger()->log("WARNING: Vertex shaders disabled "
+					 "because of missing driver/hardware support.");
 		vsFileName = "";
 	}
 
@@ -288,8 +295,7 @@ int main()
 	s32 newMaterialType1 = 0;
 	s32 newMaterialType2 = 0;
 
-	if (gpu)
-	{
+	if (gpu) {
 		/*
 		Create one callback instance for each shader material you add.
 		Reason is that the getVertexShaderConstantID returns ID's which are
@@ -303,29 +309,29 @@ int main()
 		// create the shaders depending on if the user wanted high level
 		// or low level shaders:
 
-		if (UseHighLevelShaders)
-		{
+		if (UseHighLevelShaders) {
 			// create material from high level shaders (hlsl, glsl)
 
-			newMaterialType1 = gpu->addHighLevelShaderMaterialFromFiles(
-				vsFileName, "vertexMain", video::EVST_VS_1_1,
-				psFileName, "pixelMain", video::EPST_PS_1_1,
-				mcSolid, video::EMT_SOLID, 0);
+			newMaterialType1 =
+				gpu->addHighLevelShaderMaterialFromFiles(vsFileName,
+					"vertexMain", video::EVST_VS_1_1, psFileName,
+					"pixelMain", video::EPST_PS_1_1, mcSolid,
+					video::EMT_SOLID, 0);
 
-			newMaterialType2 = gpu->addHighLevelShaderMaterialFromFiles(
-				vsFileName, "vertexMain", video::EVST_VS_1_1,
-				psFileName, "pixelMain", video::EPST_PS_1_1,
-				mcTransparentAdd, video::EMT_TRANSPARENT_ADD_COLOR, 0);
-		}
-		else
-		{
+			newMaterialType2 =
+				gpu->addHighLevelShaderMaterialFromFiles(vsFileName,
+					"vertexMain", video::EVST_VS_1_1, psFileName,
+					"pixelMain", video::EPST_PS_1_1, mcTransparentAdd,
+					video::EMT_TRANSPARENT_ADD_COLOR, 0);
+		} else {
 			// create material from low level shaders (asm or arb_asm)
 
 			newMaterialType1 = gpu->addShaderMaterialFromFiles(vsFileName,
 				psFileName, mcSolid, video::EMT_SOLID);
 
 			newMaterialType2 = gpu->addShaderMaterialFromFiles(vsFileName,
-				psFileName, mcTransparentAdd, video::EMT_TRANSPARENT_ADD_COLOR);
+				psFileName, mcTransparentAdd,
+				video::EMT_TRANSPARENT_ADD_COLOR);
 		}
 
 		mcSolid->drop();
@@ -342,17 +348,16 @@ int main()
 	// create test scene node 1, with the new created material type 1
 
 	scene::ISceneNode* node = smgr->addCubeSceneNode(50);
-	node->setPosition(core::vector3df(0,0,0));
+	node->setPosition(core::vector3df(0, 0, 0));
 	node->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.bmp"));
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 	node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType1);
 
-	smgr->addTextSceneNode(gui->getBuiltInFont(),
-			L"PS & VS & EMT_SOLID",
-			video::SColor(255,255,255,255),	node);
+	smgr->addTextSceneNode(gui->getBuiltInFont(), L"PS & VS & EMT_SOLID",
+		video::SColor(255, 255, 255, 255), node);
 
-	scene::ISceneNodeAnimator* anim = smgr->createRotationAnimator(
-			core::vector3df(0,0.3f,0));
+	scene::ISceneNodeAnimator* anim =
+		smgr->createRotationAnimator(core::vector3df(0, 0.3f, 0));
 	node->addAnimator(anim);
 	anim->drop();
 
@@ -363,17 +368,16 @@ int main()
 	// create test scene node 2, with the new created material type 2
 
 	node = smgr->addCubeSceneNode(50);
-	node->setPosition(core::vector3df(0,-10,50));
+	node->setPosition(core::vector3df(0, -10, 50));
 	node->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.bmp"));
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 	node->setMaterialFlag(video::EMF_BLEND_OPERATION, true);
 	node->setMaterialType((video::E_MATERIAL_TYPE)newMaterialType2);
 
-	smgr->addTextSceneNode(gui->getBuiltInFont(),
-			L"PS & VS & EMT_TRANSPARENT",
-			video::SColor(255,255,255,255),	node);
+	smgr->addTextSceneNode(gui->getBuiltInFont(), L"PS & VS & EMT_TRANSPARENT",
+		video::SColor(255, 255, 255, 255), node);
 
-	anim = smgr->createRotationAnimator(core::vector3df(0,0.3f,0));
+	anim = smgr->createRotationAnimator(core::vector3df(0, 0.3f, 0));
 	node->addAnimator(anim);
 	anim->drop();
 
@@ -385,11 +389,11 @@ int main()
 	// add a scene node with no shader
 
 	node = smgr->addCubeSceneNode(50);
-	node->setPosition(core::vector3df(0,50,25));
+	node->setPosition(core::vector3df(0, 50, 25));
 	node->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.bmp"));
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 	smgr->addTextSceneNode(gui->getBuiltInFont(), L"NO SHADER",
-		video::SColor(255,255,255,255), node);
+		video::SColor(255, 255, 255, 255), node);
 
 	/*
 	And last, we add a skybox and a user controlled camera to the scene.
@@ -401,8 +405,7 @@ int main()
 
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
 
-	smgr->addSkyBoxSceneNode(
-		driver->getTexture(mediaPath + "irrlicht2_up.jpg"),
+	smgr->addSkyBoxSceneNode(driver->getTexture(mediaPath + "irrlicht2_up.jpg"),
 		driver->getTexture(mediaPath + "irrlicht2_dn.jpg"),
 		driver->getTexture(mediaPath + "irrlicht2_lf.jpg"),
 		driver->getTexture(mediaPath + "irrlicht2_rt.jpg"),
@@ -414,8 +417,8 @@ int main()
 	// add a camera and disable the mouse cursor
 
 	scene::ICameraSceneNode* cam = smgr->addCameraSceneNodeFPS();
-	cam->setPosition(core::vector3df(-100,50,100));
-	cam->setTarget(core::vector3df(0,0,0));
+	cam->setPosition(core::vector3df(-100, 50, 100));
+	cam->setTarget(core::vector3df(0, 0, 0));
 	device->getCursorControl()->setVisible(false);
 
 	/*
@@ -424,24 +427,25 @@ int main()
 
 	int lastFPS = -1;
 
-	while(device->run())
-		if (device->isWindowActive())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,0,0,0));
-		smgr->drawAll();
-		driver->endScene();
+	while (device->run()) {
+		if (device->isWindowActive()) {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 0, 0, 0));
+			smgr->drawAll();
+			driver->endScene();
 
-		int fps = driver->getFPS();
+			int fps = driver->getFPS();
 
-		if (lastFPS != fps)
-		{
-			core::stringw str = L"Irrlicht Engine - Vertex and pixel shader example [";
-			str += driver->getName();
-			str += "] FPS:";
-			str += fps;
+			if (lastFPS != fps) {
+				core::stringw str = L"Irrlicht Engine - Vertex and pixel "
+						    L"shader example [";
+				str += driver->getName();
+				str += "] FPS:";
+				str += fps;
 
-			device->setWindowCaption(str.c_str());
-			lastFPS = fps;
+				device->setWindowCaption(str.c_str());
+				lastFPS = fps;
+			}
 		}
 	}
 

@@ -25,10 +25,8 @@ developed by Spintz. He made it available for Irrlicht and allowed it to be
 distributed under this license. I only modified some parts. A lot of thanks go
 to him.
 */
-class CTerrainTriangleSelector : public ITriangleSelector
-{
+class CTerrainTriangleSelector : public ITriangleSelector {
 public:
-
 	//! Constructs a selector based on an ITerrainSceneNode
 	CTerrainTriangleSelector(ITerrainSceneNode* node, s32 LOD);
 
@@ -39,26 +37,43 @@ public:
 	virtual void setTriangleData(ITerrainSceneNode* node, s32 LOD);
 
 	//! Gets all triangles.
-	void getTriangles(core::triangle3df* triangles, s32 arraySize, s32& outTriangleCount,
-		const core::matrix4* transform, bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Gets all triangles which lie within a specific bounding box.
-	void getTriangles(core::triangle3df* triangles, s32 arraySize, s32& outTriangleCount,
-		const core::aabbox3d<f32>& box, const core::matrix4* transform, bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::aabbox3d<f32>& box,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Gets all triangles which have or may have contact with a 3d line.
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::line3d<f32>& line,
-		const core::matrix4* transform, bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	virtual void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::line3d<f32>& line,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Returns amount of all available triangles in this selector
 	virtual s32 getTriangleCount() const _IRR_OVERRIDE_;
 
 	//! Return the scene node associated with a given triangle.
-	virtual ISceneNode* getSceneNodeForTriangle(u32 triangleIndex) const _IRR_OVERRIDE_;
+	virtual ISceneNode*
+	getSceneNodeForTriangle(u32 triangleIndex) const _IRR_OVERRIDE_;
 
 	// Get the number of TriangleSelectors that are part of this one
 	virtual u32 getSelectorCount() const _IRR_OVERRIDE_;
@@ -70,22 +85,18 @@ public:
 	virtual const ITriangleSelector* getSelector(u32 index) const _IRR_OVERRIDE_;
 
 private:
-
 	friend class CTerrainSceneNode;
 
-	struct SGeoMipMapTrianglePatch
-	{
+	struct SGeoMipMapTrianglePatch {
 		core::array<core::triangle3df> Triangles;
 		s32 NumTriangles;
 		core::aabbox3df Box;
 	};
 
-	struct SGeoMipMapTrianglePatches
-	{
+	struct SGeoMipMapTrianglePatches {
 		SGeoMipMapTrianglePatches() :
-			NumPatches(0), TotalTriangles(0)
-		{
-		}
+			NumPatches(0),
+			TotalTriangles(0) {}
 
 		core::array<SGeoMipMapTrianglePatch> TrianglePatchArray;
 		s32 NumPatches;
@@ -98,6 +109,5 @@ private:
 
 } // end namespace scene
 } // end namespace irr
-
 
 #endif // __C_TERRAIN_TRIANGLE_SELECTOR_H__

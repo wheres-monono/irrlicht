@@ -12,26 +12,23 @@
 #include "IImageLoader.h"
 #include "irrString.h"
 
-
 namespace irr
 {
 namespace video
 {
 
-
 /*!
 	Surface Loader for SUN Pixmaps
 */
-class CImageLoaderPPM : public IImageLoader
-{
+class CImageLoaderPPM : public IImageLoader {
 public:
-
 	//! constructor
 	CImageLoaderPPM();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".tga")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! returns true if the file maybe is able to be loaded by this class
 	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
@@ -49,7 +46,5 @@ private:
 } // end namespace video
 } // end namespace irr
 
-
 #endif
 #endif
-

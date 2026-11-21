@@ -8,8 +8,7 @@
 
 namespace irr
 {
-	 irr::core::array<const IReferenceCounted*> LeakHunter::ReferenceCountedObjects;
+irr::core::array<const IReferenceCounted*> LeakHunter::ReferenceCountedObjects;
 } // end namespace irr
 
 #endif // _IRR_COMPILE_WITH_LEAK_HUNTER_
-

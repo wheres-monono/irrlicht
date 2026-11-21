@@ -1,6 +1,7 @@
 // Copyright (C) 2002-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine" and the "irrXML" project.
-// For conditions of distribution and use, see copyright notice in irrlicht.h and/or irrXML.h
+// For conditions of distribution and use, see copyright notice in irrlicht.h and/or
+// irrXML.h
 
 #ifndef __ICXML_READER_IMPL_H_INCLUDED__
 #define __ICXML_READER_IMPL_H_INCLUDED__
@@ -16,26 +17,32 @@
 #define IRR_DEBUGPRINT(x)
 #endif // _DEBUG
 
-
 namespace irr
 {
 namespace io
 {
 
-
 //! implementation of the IrrXMLReader
-template<class char_type, class superclass>
-class CXMLReaderImpl : public IIrrXMLReader<char_type, superclass>
-{
+template <class char_type, class superclass>
+class CXMLReaderImpl : public IIrrXMLReader<char_type, superclass> {
 public:
-
 	//! Constructor
-	CXMLReaderImpl(IFileReadCallBack* callback, bool deleteCallBack = true)
-		: IgnoreWhitespaceText(true), TextData(0), P(0), TextBegin(0), TextSize(0), CurrentNodeType(EXN_NONE),
-		SourceFormat(ETF_ASCII), TargetFormat(ETF_ASCII), IsEmptyElement(false)
-	{
-		if (!callback)
+	CXMLReaderImpl(
+		IFileReadCallBack* callback,
+		bool deleteCallBack = true
+	) :
+		IgnoreWhitespaceText(true),
+		TextData(0),
+		P(0),
+		TextBegin(0),
+		TextSize(0),
+		CurrentNodeType(EXN_NONE),
+		SourceFormat(ETF_ASCII),
+		TargetFormat(ETF_ASCII),
+		IsEmptyElement(false) {
+		if (!callback) {
 			return;
+		}
 
 		storeTargetFormat();
 
@@ -45,8 +52,9 @@ public:
 
 		// clean up
 
-		if (deleteCallBack)
+		if (deleteCallBack) {
 			delete callback;
+		}
 
 		// create list with special characters
 
@@ -56,226 +64,218 @@ public:
 		P = TextBegin;
 	}
 
-
 	//! Destructor
-	virtual ~CXMLReaderImpl()
-	{
-		delete [] TextData;
-	}
-
+	virtual ~CXMLReaderImpl() { delete[] TextData; }
 
 	//! Reads forward to the next xml node.
 	//! \return Returns false, if there was no further node.
-	virtual bool read() _IRR_OVERRIDE_
-	{
+	virtual bool read() _IRR_OVERRIDE_ {
 		// if not end reached, parse the node
-		if (P && ((unsigned int)(P - TextBegin) < TextSize - 1) && (*P != 0))
-		{
+		if (P && ((unsigned int)(P - TextBegin) < TextSize - 1) && (*P != 0)) {
 			return parseCurrentNode();
 		}
 
 		return false;
 	}
 
-
 	//! Returns the type of the current XML node.
-	virtual EXML_NODE getNodeType() const _IRR_OVERRIDE_
-	{
-		return CurrentNodeType;
-	}
-
+	virtual EXML_NODE getNodeType() const _IRR_OVERRIDE_ { return CurrentNodeType; }
 
 	//! Returns attribute count of the current XML node.
-	virtual unsigned int getAttributeCount() const _IRR_OVERRIDE_
-	{
+	virtual unsigned int getAttributeCount() const _IRR_OVERRIDE_ {
 		return Attributes.size();
 	}
 
-
 	//! Returns name of an attribute.
-	virtual const char_type* getAttributeName(int idx) const _IRR_OVERRIDE_
-	{
-		if ((u32)idx >= Attributes.size())
+	virtual const char_type* getAttributeName(
+		int idx
+	) const _IRR_OVERRIDE_ {
+		if ((u32)idx >= Attributes.size()) {
 			return 0;
+		}
 
 		return Attributes[idx].Name.c_str();
 	}
 
-
 	//! Returns the value of an attribute.
-	virtual const char_type* getAttributeValue(int idx) const _IRR_OVERRIDE_
-	{
-		if ((unsigned int)idx >= Attributes.size())
+	virtual const char_type* getAttributeValue(
+		int idx
+	) const _IRR_OVERRIDE_ {
+		if ((unsigned int)idx >= Attributes.size()) {
 			return 0;
+		}
 
 		return Attributes[idx].Value.c_str();
 	}
 
-
 	//! Returns the value of an attribute.
-	virtual const char_type* getAttributeValue(const char_type* name) const _IRR_OVERRIDE_
-	{
+	virtual const char_type* getAttributeValue(
+		const char_type* name
+	) const _IRR_OVERRIDE_ {
 		const SAttribute* attr = getAttributeByName(name);
-		if (!attr)
+		if (!attr) {
 			return 0;
+		}
 
 		return attr->Value.c_str();
 	}
-
 
 	//! Returns the value of an attribute
-	virtual const char_type* getAttributeValueSafe(const char_type* name) const _IRR_OVERRIDE_
-	{
+	virtual const char_type* getAttributeValueSafe(
+		const char_type* name
+	) const _IRR_OVERRIDE_ {
 		const SAttribute* attr = getAttributeByName(name);
-		if (!attr)
+		if (!attr) {
 			return EmptyString.c_str();
+		}
 
 		return attr->Value.c_str();
 	}
 
-
-
 	//! Returns the value of an attribute as integer.
-	virtual int getAttributeValueAsInt(const char_type* name, int defaultNotFound) const _IRR_OVERRIDE_
-	{
+	virtual int getAttributeValueAsInt(
+		const char_type* name,
+		int defaultNotFound
+	) const _IRR_OVERRIDE_ {
 		const SAttribute* attr = getAttributeByName(name);
-		if (!attr)
+		if (!attr) {
 			return defaultNotFound;
+		}
 
 		core::stringc c(attr->Value.c_str());
 		return core::strtol10(c.c_str());
 	}
 
-
 	//! Returns the value of an attribute as integer.
-	virtual int getAttributeValueAsInt(int idx, int defaultNotFound) const _IRR_OVERRIDE_
-	{
+	virtual int getAttributeValueAsInt(
+		int idx,
+		int defaultNotFound
+	) const _IRR_OVERRIDE_ {
 		const char_type* attrvalue = getAttributeValue(idx);
-		if (!attrvalue)
+		if (!attrvalue) {
 			return defaultNotFound;
+		}
 
 		core::stringc c(attrvalue);
 		return core::strtol10(c.c_str());
 	}
 
-
 	//! Returns the value of an attribute as float.
-	virtual float getAttributeValueAsFloat(const char_type* name, float defaultNotFound) const _IRR_OVERRIDE_
-	{
+	virtual float getAttributeValueAsFloat(
+		const char_type* name,
+		float defaultNotFound
+	) const _IRR_OVERRIDE_ {
 		const SAttribute* attr = getAttributeByName(name);
-		if (!attr)
+		if (!attr) {
 			return defaultNotFound;
+		}
 
 		core::stringc c = attr->Value.c_str();
 		return core::fast_atof(c.c_str());
 	}
 
-
 	//! Returns the value of an attribute as float.
-	virtual float getAttributeValueAsFloat(int idx, float defaultNotFound) const _IRR_OVERRIDE_
-	{
+	virtual float getAttributeValueAsFloat(
+		int idx,
+		float defaultNotFound
+	) const _IRR_OVERRIDE_ {
 		const char_type* attrvalue = getAttributeValue(idx);
-		if (!attrvalue)
+		if (!attrvalue) {
 			return defaultNotFound;
+		}
 
 		core::stringc c = attrvalue;
 		return core::fast_atof(c.c_str());
 	}
 
-
 	//! Returns the name of the current node.
-	virtual const char_type* getNodeName() const _IRR_OVERRIDE_
-	{
+	virtual const char_type* getNodeName() const _IRR_OVERRIDE_ {
 		return NodeName.c_str();
 	}
-
 
 	//! Returns data of the current node.
-	virtual const char_type* getNodeData() const _IRR_OVERRIDE_
-	{
+	virtual const char_type* getNodeData() const _IRR_OVERRIDE_ {
 		return NodeName.c_str();
 	}
 
-
 	//! Returns if an element is an empty element, like <foo />
-	virtual bool isEmptyElement() const _IRR_OVERRIDE_
-	{
-		return IsEmptyElement;
-	}
+	virtual bool isEmptyElement() const _IRR_OVERRIDE_ { return IsEmptyElement; }
 
 	//! Returns format of the source xml file.
-	virtual ETEXT_FORMAT getSourceFormat() const _IRR_OVERRIDE_
-	{
+	virtual ETEXT_FORMAT getSourceFormat() const _IRR_OVERRIDE_ {
 		return SourceFormat;
 	}
 
 	//! Returns format of the strings returned by the parser.
-	virtual ETEXT_FORMAT getParserFormat() const _IRR_OVERRIDE_
-	{
+	virtual ETEXT_FORMAT getParserFormat() const _IRR_OVERRIDE_ {
 		return TargetFormat;
 	}
 
 private:
-
 	// Reads the current xml node
 	// return false if no further node is found
-	bool parseCurrentNode()
-	{
+	bool parseCurrentNode() {
 		char_type* start = P;
 
 		// more forward until '<' found
-		while(*P != L'<' && *P)
+		while (*P != L'<' && *P) {
 			++P;
+		}
 
 		// not a node, so return false
-		if (!*P)
+		if (!*P) {
 			return false;
+		}
 
-		if (P - start > 0)
-		{
+		if (P - start > 0) {
 			// we found some text, store it
-			if (setText(start, P))
+			if (setText(start, P)) {
 				return true;
+			}
 		}
 
 		++P;
 
 		// based on current token, parse and report next element
-		switch(*P)
-		{
-		case L'/':
-			parseClosingXMLElement();
-			break;
-		case L'?':
-			ignoreDefinition();
-			break;
-		case L'!':
-			if (!parseCDATA())
-				parseComment();
-			break;
-		default:
-			parseOpeningXMLElement();
-			break;
+		switch (*P) {
+			case L'/':
+				parseClosingXMLElement();
+				break;
+			case L'?':
+				ignoreDefinition();
+				break;
+			case L'!':
+				if (!parseCDATA()) {
+					parseComment();
+				}
+				break;
+			default:
+				parseOpeningXMLElement();
+				break;
 		}
 		return true;
 	}
 
-
 	//! sets the state that text was found. Returns true if set should be set
-	bool setText(char_type* start, char_type* end)
-	{
-		// By default xml preserves all whitespace. But Irrlicht dropped some whitespace by default
-		// in the past which did lead to OS dependent behavior. We just ignore all whitespace for now
-		// as it's the closest to fixing behavior without breaking downward compatibility too much.
-		if ( IgnoreWhitespaceText )
-		{
+	bool setText(
+		char_type* start,
+		char_type* end
+	) {
+		// By default xml preserves all whitespace. But Irrlicht dropped some
+		// whitespace by default in the past which did lead to OS dependent
+		// behavior. We just ignore all whitespace for now as it's the closest to
+		// fixing behavior without breaking downward compatibility too much.
+		if (IgnoreWhitespaceText) {
 			char_type* p = start;
-			for(; p != end; ++p)
-				if (!isWhiteSpace(*p))
+			for (; p != end; ++p) {
+				if (!isWhiteSpace(*p)) {
 					break;
+				}
+			}
 
-			if (p == end)
+			if (p == end) {
 				return false;
+			}
 		}
 
 		// set current text to the parsed text, and replace xml special characters
@@ -288,52 +288,46 @@ private:
 		return true;
 	}
 
-
-
 	//! ignores an xml definition like <?xml something />
-	void ignoreDefinition()
-	{
+	void ignoreDefinition() {
 		CurrentNodeType = EXN_UNKNOWN;
 
 		// move until end marked with '>' reached
-		while(*P != L'>')
+		while (*P != L'>') {
 			++P;
+		}
 
 		++P;
 	}
 
-
 	//! parses a comment
-	void parseComment()
-	{
+	void parseComment() {
 		CurrentNodeType = EXN_COMMENT;
 		P += 1;
 
-		char_type *pCommentBegin = P;
+		char_type* pCommentBegin = P;
 
 		int count = 1;
 
 		// move until end of comment reached
-		while(count)
-		{
-			if (*P == L'>')
+		while (count) {
+			if (*P == L'>') {
 				--count;
-			else
-			if (*P == L'<')
+			} else if (*P == L'<') {
 				++count;
+			}
 
 			++P;
 		}
 
 		P -= 3;
-		NodeName = core::string<char_type>(pCommentBegin+2, (int)(P - pCommentBegin-2));
+		NodeName = core::string<char_type>(pCommentBegin + 2,
+			(int)(P - pCommentBegin - 2));
 		P += 3;
 	}
 
-
 	//! parses an opening xml element and reads attributes
-	void parseOpeningXMLElement()
-	{
+	void parseOpeningXMLElement() {
 		CurrentNodeType = EXN_ELEMENT;
 		IsEmptyElement = false;
 		Attributes.clear();
@@ -342,65 +336,71 @@ private:
 		const char_type* startName = P;
 
 		// find end of element
-		while(*P != L'>' && !isWhiteSpace(*P))
+		while (*P != L'>' && !isWhiteSpace(*P)) {
 			++P;
+		}
 
 		const char_type* endName = P;
 
 		// find Attributes
-		while(*P != L'>')
-		{
-			if (isWhiteSpace(*P))
+		while (*P != L'>') {
+			if (isWhiteSpace(*P)) {
 				++P;
-			else
-			{
-				if (*P != L'/')
-				{
+			} else {
+				if (*P != L'/') {
 					// we've got an attribute
 
 					// read the attribute names
 					const char_type* attributeNameBegin = P;
 
-					while(!isWhiteSpace(*P) && *P != L'=')
+					while (!isWhiteSpace(*P) && *P != L'=') {
 						++P;
+					}
 
 					const char_type* attributeNameEnd = P;
 					++P;
 
 					// read the attribute value
-					// check for quotes and single quotes, thx to murphy
-					while( (*P != L'\"') && (*P != L'\'') && *P)
+					// check for quotes and single quotes, thx to
+					// murphy
+					while ((*P != L'\"') && (*P != L'\'') && *P) {
 						++P;
+					}
 
-					if (!*P) // malformatted xml file
+					if (!*P) { // malformatted xml file
 						return;
+					}
 
 					const char_type attributeQuoteChar = *P;
 
 					++P;
 					const char_type* attributeValueBegin = P;
 
-					while(*P != attributeQuoteChar && *P)
+					while (*P != attributeQuoteChar && *P) {
 						++P;
+					}
 
-					if (!*P) // malformatted xml file
+					if (!*P) { // malformatted xml file
 						return;
+					}
 
 					const char_type* attributeValueEnd = P;
 					++P;
 
 					SAttribute attr;
-					attr.Name = core::string<char_type>(attributeNameBegin,
-						(int)(attributeNameEnd - attributeNameBegin));
+					attr.Name = core::string<char_type>(
+						attributeNameBegin,
+						(int)(attributeNameEnd -
+							attributeNameBegin)
+					);
 
 					core::string<char_type> s(attributeValueBegin,
-						(int)(attributeValueEnd - attributeValueBegin));
+						(int)(attributeValueEnd -
+							attributeValueBegin));
 
 					attr.Value = replaceSpecialCharacters(s);
 					Attributes.push_back(attr);
-				}
-				else
-				{
+				} else {
 					// tag is closed directly
 					++P;
 					IsEmptyElement = true;
@@ -410,8 +410,7 @@ private:
 		}
 
 		// check if this tag is closing directly
-		if (endName > startName && *(endName-1) == L'/')
-		{
+		if (endName > startName && *(endName - 1) == L'/') {
 			// directly closing tag
 			IsEmptyElement = true;
 			endName--;
@@ -422,10 +421,8 @@ private:
 		++P;
 	}
 
-
 	//! parses an closing xml tag
-	void parseClosingXMLElement()
-	{
+	void parseClosingXMLElement() {
 		CurrentNodeType = EXN_ELEMENT_END;
 		IsEmptyElement = false;
 		Attributes.clear();
@@ -433,116 +430,115 @@ private:
 		++P;
 		const char_type* pBeginClose = P;
 
-		while(*P != L'>')
+		while (*P != L'>') {
 			++P;
+		}
 
 		NodeName = core::string<char_type>(pBeginClose, (int)(P - pBeginClose));
 		++P;
 	}
 
-	//! parses a possible CDATA section, returns false if begin was not a CDATA section
-	bool parseCDATA()
-	{
-		if (*(P+1) != L'[')
+	//! parses a possible CDATA section, returns false if begin was not a CDATA
+	//! section
+	bool parseCDATA() {
+		if (*(P + 1) != L'[') {
 			return false;
+		}
 
 		CurrentNodeType = EXN_CDATA;
 
 		// skip '<![CDATA['
-		int count=0;
-		while( *P && count<8 )
-		{
+		int count = 0;
+		while (*P && count < 8) {
 			++P;
 			++count;
 		}
 
-		if (!*P)
+		if (!*P) {
 			return true;
+		}
 
-		char_type *cDataBegin = P;
-		char_type *cDataEnd = 0;
+		char_type* cDataBegin = P;
+		char_type* cDataEnd = 0;
 
 		// find end of CDATA
-		while(*P && !cDataEnd)
-		{
-			if (*P == L'>' &&
-				(*(P-1) == L']') &&
-				(*(P-2) == L']'))
-			{
+		while (*P && !cDataEnd) {
+			if (*P == L'>' && (*(P - 1) == L']') && (*(P - 2) == L']')) {
 				cDataEnd = P - 2;
 			}
 
 			++P;
 		}
 
-		if ( cDataEnd )
-			NodeName = core::string<char_type>(cDataBegin, (int)(cDataEnd - cDataBegin));
-		else
+		if (cDataEnd) {
+			NodeName = core::string<char_type>(cDataBegin,
+				(int)(cDataEnd - cDataBegin));
+		} else {
 			NodeName = "";
+		}
 
 		return true;
 	}
 
-
 	// structure for storing attribute-name pairs
-	struct SAttribute
-	{
+	struct SAttribute {
 		core::string<char_type> Name;
 		core::string<char_type> Value;
 	};
 
 	// finds a current attribute by name, returns 0 if not found
-	const SAttribute* getAttributeByName(const char_type* name) const
-	{
-		if (!name)
+	const SAttribute* getAttributeByName(
+		const char_type* name
+	) const {
+		if (!name) {
 			return 0;
+		}
 
 		core::string<char_type> n = name;
 
-		for (int i=0; i<(int)Attributes.size(); ++i)
-			if (Attributes[i].Name == n)
+		for (int i = 0; i < (int)Attributes.size(); ++i) {
+			if (Attributes[i].Name == n) {
 				return &Attributes[i];
+			}
+		}
 
 		return 0;
 	}
 
 	// replaces xml special characters in a string and creates a new one
 	core::string<char_type> replaceSpecialCharacters(
-		const core::string<char_type>& origstr)
-	{
+		const core::string<char_type>& origstr
+	) {
 		int pos = origstr.findFirst(L'&');
 		int oldPos = 0;
 
-		if (pos == -1)
+		if (pos == -1) {
 			return origstr;
+		}
 
 		core::string<char_type> newstr;
 
-		while(pos != -1 && pos < (int)origstr.size()-2)
-		{
+		while (pos != -1 && pos < (int)origstr.size() - 2) {
 			// check if it is one of the special characters
 
 			int specialChar = -1;
-			for (int i=0; i<(int)SpecialCharacters.size(); ++i)
-			{
-				const char_type* p = &origstr.c_str()[pos]+1;
+			for (int i = 0; i < (int)SpecialCharacters.size(); ++i) {
+				const char_type* p = &origstr.c_str()[pos] + 1;
 
-				if (equalsn(&SpecialCharacters[i][1], p, SpecialCharacters[i].size()-1))
-				{
+				if (equalsn(&SpecialCharacters[i][1], p,
+					    SpecialCharacters[i].size() - 1)) {
 					specialChar = i;
 					break;
 				}
 			}
 
-			if (specialChar != -1)
-			{
+			if (specialChar != -1) {
 				newstr.append(origstr.subString(oldPos, pos - oldPos));
 				newstr.append(SpecialCharacters[specialChar][0]);
 				pos += SpecialCharacters[specialChar].size();
-			}
-			else
-			{
-				newstr.append(origstr.subString(oldPos, pos - oldPos + 1));
+			} else {
+				newstr.append(origstr.subString(oldPos,
+					pos - oldPos + 1));
 				pos += 1;
 			}
 
@@ -551,35 +547,35 @@ private:
 			pos = origstr.findNext(L'&', pos);
 		}
 
-		if (oldPos < (int)origstr.size()-1)
-			newstr.append(origstr.subString(oldPos, origstr.size()-oldPos));
+		if (oldPos < (int)origstr.size() - 1) {
+			newstr.append(origstr.subString(oldPos, origstr.size() - oldPos));
+		}
 
 		return newstr;
 	}
 
-
-
 	//! reads the xml file and converts it into the wanted character format.
-	bool readFile(IFileReadCallBack* callback)
-	{
+	bool readFile(
+		IFileReadCallBack* callback
+	) {
 		long size = callback->getSize();
-		if (size<0)
+		if (size < 0) {
 			return false;
+		}
 		// We need four terminating 0's at the end.
 		// For ASCII we need 1 0's, for UTF-16 2, for UTF-32 4.
 		size += 4;
 
 		char* data8 = new char[size];
 
-		if (!callback->read(data8, size-4))
-		{
-			delete [] data8;
+		if (!callback->read(data8, size - 4)) {
+			delete[] data8;
 			return false;
 		}
 
 		// add zeros at end
 
-		memset(data8+size-4, 0, 4);
+		memset(data8 + size - 4, 0, 4);
 
 		char16* data16 = reinterpret_cast<char16*>(data8);
 		char32* data32 = reinterpret_cast<char32*>(data8);
@@ -595,43 +591,36 @@ private:
 
 		// check source for all utf versions and convert to target data format
 
-		if (size >= 4 && data32[0]
-			== static_cast<char32>(UTF32_BE))
-		{
+		if (size >= 4 && data32[0] == static_cast<char32>(UTF32_BE)) {
 			// UTF-32, big endian
 			SourceFormat = ETF_UTF32_BE;
-			convertTextData(data32+1, data8, (size/4)-1); // data32+1 because we need to skip the header
-		}
-		else
-		if (size >= 4 && data32[0] == static_cast<char32>(UTF32_LE))
-		{
+			convertTextData(
+				data32 + 1, data8, (size / 4) - 1
+			); // data32+1 because we need to skip the header
+		} else if (size >= 4 && data32[0] == static_cast<char32>(UTF32_LE)) {
 			// UTF-32, little endian
 			SourceFormat = ETF_UTF32_LE;
-			convertTextData(data32+1, data8, (size/4)-1); // data32+1 because we need to skip the header
-		}
-		else
-		if (size >= 2 && data16[0] == UTF16_BE)
-		{
+			convertTextData(
+				data32 + 1, data8, (size / 4) - 1
+			); // data32+1 because we need to skip the header
+		} else if (size >= 2 && data16[0] == UTF16_BE) {
 			// UTF-16, big endian
 			SourceFormat = ETF_UTF16_BE;
-			convertTextData(data16+1, data8, (size/2)-1); // data16+1 because we need to skip the header
-		}
-		else
-		if (size >= 2 && data16[0] == UTF16_LE)
-		{
+			convertTextData(
+				data16 + 1, data8, (size / 2) - 1
+			); // data16+1 because we need to skip the header
+		} else if (size >= 2 && data16[0] == UTF16_LE) {
 			// UTF-16, little endian
 			SourceFormat = ETF_UTF16_LE;
-			convertTextData(data16+1, data8, (size/2)-1); // data16+1 because we need to skip the header
-		}
-		else
-		if (size >= 3 && memcmp(data8,UTF8,3)==0)
-		{
+			convertTextData(
+				data16 + 1, data8, (size / 2) - 1
+			); // data16+1 because we need to skip the header
+		} else if (size >= 3 && memcmp(data8, UTF8, 3) == 0) {
 			// UTF-8
 			SourceFormat = ETF_UTF8;
-			convertTextData(data8+3, data8, size-3); // data8+3 because we need to skip the header
-		}
-		else
-		{
+			convertTextData(data8 + 3, data8,
+				size - 3); // data8+3 because we need to skip the header
+		} else {
 			// ASCII
 			SourceFormat = ETF_ASCII;
 			convertTextData(data8, data8, size);
@@ -640,31 +629,31 @@ private:
 		return true;
 	}
 
-
 	//! converts the text file into the desired format.
 	/** \param source: begin of the text (without byte order mark)
 	\param pointerToStore: pointer to text data block which can be
 	stored or deleted based on the nesessary conversion.
 	\param sizeWithoutHeader: Text size in characters without header
 	*/
-	template<class src_char_type>
-	void convertTextData(src_char_type* source, char* pointerToStore, int sizeWithoutHeader)
-	{
+	template <class src_char_type>
+	void convertTextData(
+		src_char_type* source,
+		char* pointerToStore,
+		int sizeWithoutHeader
+	) {
 		// convert little to big endian if necessary
 		if (sizeof(src_char_type) > 1 &&
-			isLittleEndian(TargetFormat) != isLittleEndian(SourceFormat))
+			isLittleEndian(TargetFormat) != isLittleEndian(SourceFormat)) {
 			convertToLittleEndian(source);
+		}
 
 		// check if conversion is necessary:
-		if (sizeof(src_char_type) == sizeof(char_type))
-		{
+		if (sizeof(src_char_type) == sizeof(char_type)) {
 			// no need to convert
 			TextBegin = (char_type*)source;
 			TextData = (char_type*)pointerToStore;
 			TextSize = sizeWithoutHeader;
-		}
-		else
-		{
+		} else {
 			// convert source into target data format.
 			// TODO: implement a real conversion. This one just
 			// copies bytes. This is a problem when there are
@@ -672,50 +661,45 @@ private:
 
 			TextData = new char_type[sizeWithoutHeader];
 
-			if ( sizeof(src_char_type) == 1 )
-			{
-				// we have to cast away negative numbers or results might add the sign instead of just doing a copy
-				for (int i=0; i<sizeWithoutHeader; ++i)
-				{
-					TextData[i] = static_cast<char_type>(static_cast<unsigned char>(source[i]));
+			if (sizeof(src_char_type) == 1) {
+				// we have to cast away negative numbers or results might
+				// add the sign instead of just doing a copy
+				for (int i = 0; i < sizeWithoutHeader; ++i) {
+					TextData[i] = static_cast<char_type>(
+						static_cast<unsigned char>(source[i])
+					);
 				}
-			}
-			else
-			{
-				for (int i=0; i<sizeWithoutHeader; ++i)
+			} else {
+				for (int i = 0; i < sizeWithoutHeader; ++i) {
 					TextData[i] = static_cast<char_type>(source[i]);
+				}
 			}
 			TextBegin = TextData;
 			TextSize = sizeWithoutHeader;
 
 			// delete original data because no longer needed
-			delete [] pointerToStore;
+			delete[] pointerToStore;
 		}
 	}
 
 	//! converts whole text buffer to little endian
-	template<class src_char_type>
-	void convertToLittleEndian(src_char_type* t)
-	{
-		if (sizeof(src_char_type) == 4)
-		{
+	template <class src_char_type>
+	void convertToLittleEndian(
+		src_char_type* t
+	) {
+		if (sizeof(src_char_type) == 4) {
 			// 32 bit
 
-			while(*t)
-			{
+			while (*t) {
 				*t = ((*t & 0xff000000) >> 24) |
-					((*t & 0x00ff0000) >> 8)  |
-					((*t & 0x0000ff00) << 8)  |
-					((*t & 0x000000ff) << 24);
+				     ((*t & 0x00ff0000) >> 8) | ((*t & 0x0000ff00) << 8) |
+				     ((*t & 0x000000ff) << 24);
 				++t;
 			}
-		}
-		else
-		{
+		} else {
 			// 16 bit
 
-			while(*t)
-			{
+			while (*t) {
 				*t = (*t >> 8) | (*t << 8);
 				++t;
 			}
@@ -723,25 +707,22 @@ private:
 	}
 
 	//! returns if a format is little endian
-	inline bool isLittleEndian(ETEXT_FORMAT f)
-	{
-		return f == ETF_ASCII ||
-			f == ETF_UTF8 ||
-			f == ETF_UTF16_LE ||
-			f == ETF_UTF32_LE;
+	inline bool isLittleEndian(
+		ETEXT_FORMAT f
+	) {
+		return f == ETF_ASCII || f == ETF_UTF8 || f == ETF_UTF16_LE ||
+		       f == ETF_UTF32_LE;
 	}
-
 
 	//! returns true if a character is whitespace
-	inline bool isWhiteSpace(char_type c)
-	{
-		return (c==' ' || c=='\t' || c=='\n' || c=='\r');
+	inline bool isWhiteSpace(
+		char_type c
+	) {
+		return (c == ' ' || c == '\t' || c == '\n' || c == '\r');
 	}
 
-
 	//! generates a list with xml special characters
-	void createSpecialCharacterList()
-	{
+	void createSpecialCharacterList() {
 		// list of strings containing special symbols,
 		// the first character is the special character,
 		// the following is the symbol string without trailing &.
@@ -751,71 +732,73 @@ private:
 		SpecialCharacters.push_back(">gt;");
 		SpecialCharacters.push_back("\"quot;");
 		SpecialCharacters.push_back("'apos;");
-
 	}
 
-
 	//! compares the first n characters of the strings
-	bool equalsn(const char_type* str1, const char_type* str2, int len)
-	{
+	bool equalsn(
+		const char_type* str1,
+		const char_type* str2,
+		int len
+	) {
 		int i;
-		for(i=0; str1[i] && str2[i] && i < len; ++i)
-			if (str1[i] != str2[i])
+		for (i = 0; str1[i] && str2[i] && i < len; ++i) {
+			if (str1[i] != str2[i]) {
 				return false;
+			}
+		}
 
 		// if one (or both) of the strings was smaller then they
 		// are only equal if they have the same length
 		return (i == len) || (str1[i] == 0 && str2[i] == 0);
 	}
 
-
 	//! stores the target text format
-	void storeTargetFormat()
-	{
-		// get target format. We could have done this using template specialization,
-		// but VisualStudio 6 don't like it and we want to support it.
+	void storeTargetFormat() {
+		// get target format. We could have done this using template
+		// specialization, but VisualStudio 6 don't like it and we want to support
+		// it.
 
-		switch(sizeof(char_type))
-		{
-		case 1:
-			TargetFormat = ETF_UTF8;
-			break;
-		case 2:
-			TargetFormat = ETF_UTF16_LE;
-			break;
-		case 4:
-			TargetFormat = ETF_UTF32_LE;
-			break;
-		default:
-			TargetFormat = ETF_ASCII; // should never happen.
+		switch (sizeof(char_type)) {
+			case 1:
+				TargetFormat = ETF_UTF8;
+				break;
+			case 2:
+				TargetFormat = ETF_UTF16_LE;
+				break;
+			case 4:
+				TargetFormat = ETF_UTF32_LE;
+				break;
+			default:
+				TargetFormat = ETF_ASCII; // should never happen.
 		}
 	}
 
-
 	// instance variables:
-	bool IgnoreWhitespaceText;   // do not return EXN_TEXT nodes for pure whitespace
-	char_type* TextData;         // data block of the text file
-	char_type* P;                // current point in text to parse
-	char_type* TextBegin;        // start of text to parse
-	unsigned int TextSize;       // size of text to parse in characters, not bytes
+	bool IgnoreWhitespaceText; // do not return EXN_TEXT nodes for pure whitespace
+	char_type* TextData;	   // data block of the text file
+	char_type* P;		   // current point in text to parse
+	char_type* TextBegin;	   // start of text to parse
+	unsigned int TextSize;	   // size of text to parse in characters, not bytes
 
-	EXML_NODE CurrentNodeType;   // type of the currently parsed node
-	ETEXT_FORMAT SourceFormat;   // source format of the xml file
-	ETEXT_FORMAT TargetFormat;   // output format of this parser
+	EXML_NODE CurrentNodeType; // type of the currently parsed node
+	ETEXT_FORMAT SourceFormat; // source format of the xml file
+	ETEXT_FORMAT TargetFormat; // output format of this parser
 
-	core::string<char_type> NodeName;    // name of the node currently in - also used for text
-	core::string<char_type> EmptyString; // empty string to be returned by getSafe() methods
+	core::string<char_type>
+		NodeName; // name of the node currently in - also used for text
+	core::string<char_type>
+		EmptyString; // empty string to be returned by getSafe() methods
 
-	bool IsEmptyElement;       // is the currently parsed node empty?
+	bool IsEmptyElement; // is the currently parsed node empty?
 
-	core::array< core::string<char_type> > SpecialCharacters; // see createSpecialCharacterList()
+	core::array<core::string<char_type>>
+		SpecialCharacters; // see createSpecialCharacterList()
 
 	core::array<SAttribute> Attributes; // attributes of current element
 
 }; // end CXMLReaderImpl
 
-
-} // end namespace
-} // end namespace
+} // namespace io
+} // namespace irr
 
 #endif

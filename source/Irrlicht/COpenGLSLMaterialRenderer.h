@@ -28,13 +28,11 @@ class IShaderConstantSetCallBack;
 
 //! Class for using GLSL shaders with OpenGL
 //! Please note: This renderer implements its own IMaterialRendererServices
-class COpenGLSLMaterialRenderer : public IMaterialRenderer, public IMaterialRendererServices
-{
+class COpenGLSLMaterialRenderer : public IMaterialRenderer,
+				  public IMaterialRendererServices {
 public:
-
 	//! Constructor
-	COpenGLSLMaterialRenderer(
-		COpenGLDriver* driver,
+	COpenGLSLMaterialRenderer(COpenGLDriver* driver,
 		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram = 0,
 		const c8* vertexShaderEntryPointName = 0,
@@ -55,10 +53,13 @@ public:
 	//! Destructor
 	virtual ~COpenGLSLMaterialRenderer();
 
-	virtual void OnSetMaterial(const SMaterial& material, const SMaterial& lastMaterial,
-		bool resetAllRenderstates, IMaterialRendererServices* services) _IRR_OVERRIDE_;
+	virtual void OnSetMaterial(const SMaterial& material,
+		const SMaterial& lastMaterial,
+		bool resetAllRenderstates,
+		IMaterialRendererServices* services) _IRR_OVERRIDE_;
 
-	virtual bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
+	virtual bool OnRender(IMaterialRendererServices* service,
+		E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
 
 	virtual void OnUnsetMaterial() _IRR_OVERRIDE_;
 
@@ -66,39 +67,48 @@ public:
 	virtual bool isTransparent() const _IRR_OVERRIDE_;
 
 	//! Access the callback provided by the users when creating shader materials
-	virtual IShaderConstantSetCallBack* getShaderConstantSetCallBack() const _IRR_OVERRIDE_
-	{ 
+	virtual IShaderConstantSetCallBack*
+	getShaderConstantSetCallBack() const _IRR_OVERRIDE_ {
 		return CallBack;
 	}
 
 	// implementations for the render services
-	virtual void setBasicRenderStates(const SMaterial& material, const SMaterial& lastMaterial, bool resetAllRenderstates) _IRR_OVERRIDE_;
+	virtual void setBasicRenderStates(const SMaterial& material,
+		const SMaterial& lastMaterial,
+		bool resetAllRenderstates) _IRR_OVERRIDE_;
 	virtual s32 getVertexShaderConstantID(const c8* name) _IRR_OVERRIDE_;
 	virtual s32 getPixelShaderConstantID(const c8* name) _IRR_OVERRIDE_;
-	virtual void setVertexShaderConstant(const f32* data, s32 startRegister, s32 constantAmount=1) _IRR_OVERRIDE_;
-	virtual void setPixelShaderConstant(const f32* data, s32 startRegister, s32 constantAmount=1) _IRR_OVERRIDE_;
-	virtual bool setVertexShaderConstant(s32 index, const f32* floats, int count) _IRR_OVERRIDE_;
-	virtual bool setVertexShaderConstant(s32 index, const s32* ints, int count) _IRR_OVERRIDE_;
-	virtual bool setPixelShaderConstant(s32 index, const f32* floats, int count) _IRR_OVERRIDE_;
-	virtual bool setPixelShaderConstant(s32 index, const s32* ints, int count) _IRR_OVERRIDE_;
+	virtual void setVertexShaderConstant(const f32* data,
+		s32 startRegister,
+		s32 constantAmount = 1) _IRR_OVERRIDE_;
+	virtual void setPixelShaderConstant(const f32* data,
+		s32 startRegister,
+		s32 constantAmount = 1) _IRR_OVERRIDE_;
+	virtual bool
+	setVertexShaderConstant(s32 index, const f32* floats, int count) _IRR_OVERRIDE_;
+	virtual bool
+	setVertexShaderConstant(s32 index, const s32* ints, int count) _IRR_OVERRIDE_;
+	virtual bool
+	setPixelShaderConstant(s32 index, const f32* floats, int count) _IRR_OVERRIDE_;
+	virtual bool
+	setPixelShaderConstant(s32 index, const s32* ints, int count) _IRR_OVERRIDE_;
 	virtual IVideoDriver* getVideoDriver() _IRR_OVERRIDE_;
 
 protected:
-
 	//! constructor only for use by derived classes who want to
 	//! create a fall back material for example.
 	COpenGLSLMaterialRenderer(COpenGLDriver* driver,
-					IShaderConstantSetCallBack* callback,
-					E_MATERIAL_TYPE baseMaterial,
-					s32 userData=0);
+		IShaderConstantSetCallBack* callback,
+		E_MATERIAL_TYPE baseMaterial,
+		s32 userData = 0);
 
 	void init(s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
 		const c8* pixelShaderProgram,
 		const c8* geometryShaderProgram,
-		scene::E_PRIMITIVE_TYPE inType=scene::EPT_TRIANGLES,
-		scene::E_PRIMITIVE_TYPE outType=scene::EPT_TRIANGLE_STRIP,
-		u32 verticesOut=0);
+		scene::E_PRIMITIVE_TYPE inType = scene::EPT_TRIANGLES,
+		scene::E_PRIMITIVE_TYPE outType = scene::EPT_TRIANGLE_STRIP,
+		u32 verticesOut = 0);
 
 	bool createProgram();
 	bool createShader(GLenum shaderType, const char* shader);
@@ -112,8 +122,7 @@ protected:
 	bool FixedBlending;
 	bool AlphaTest;
 
-	struct SUniformInfo
-	{
+	struct SUniformInfo {
 		core::stringc name;
 		GLenum type;
 		GLint location;
@@ -125,10 +134,8 @@ protected:
 	s32 UserData;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif // compile with OpenGL
 #endif // if included
-

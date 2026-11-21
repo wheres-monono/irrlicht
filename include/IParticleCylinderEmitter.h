@@ -13,24 +13,22 @@ namespace scene
 {
 
 //! A particle emitter which emits from a cylindrically shaped space.
-class IParticleCylinderEmitter : public IParticleEmitter
-{
+class IParticleCylinderEmitter : public IParticleEmitter {
 public:
-
 	//! Set the center of the radius for the cylinder, at one end of the cylinder
-	virtual void setCenter( const core::vector3df& center ) = 0;
+	virtual void setCenter(const core::vector3df& center) = 0;
 
 	//! Set the normal of the cylinder
-	virtual void setNormal( const core::vector3df& normal ) = 0;
+	virtual void setNormal(const core::vector3df& normal) = 0;
 
 	//! Set the radius of the cylinder
-	virtual void setRadius( f32 radius ) = 0;
+	virtual void setRadius(f32 radius) = 0;
 
 	//! Set the length of the cylinder
-	virtual void setLength( f32 length ) = 0;
+	virtual void setLength(f32 length) = 0;
 
 	//! Set whether or not to draw points inside the cylinder
-	virtual void setOutlineOnly( bool outlineOnly = true ) = 0;
+	virtual void setOutlineOnly(bool outlineOnly = true) = 0;
 
 	//! Get the center of the cylinder
 	virtual const core::vector3df& getCenter() const = 0;
@@ -48,12 +46,12 @@ public:
 	virtual bool getOutlineOnly() const = 0;
 
 	//! Get emitter type
-	virtual E_PARTICLE_EMITTER_TYPE getType() const _IRR_OVERRIDE_ { return EPET_CYLINDER; }
+	virtual E_PARTICLE_EMITTER_TYPE getType() const _IRR_OVERRIDE_ {
+		return EPET_CYLINDER;
+	}
 };
 
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

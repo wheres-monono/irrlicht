@@ -6,12 +6,12 @@
 using namespace irr;
 using namespace core;
 
-template<class T>
-static bool compareVectors(const core::vector2d<T> & compare,
-						   const core::vector2d<T> & with)
-{
-	if (!compare.equals(with))
-	{
+template <class T>
+static bool compareVectors(
+	const core::vector2d<T>& compare,
+	const core::vector2d<T>& with
+) {
+	if (!compare.equals(with)) {
 		logTestString("\nERROR: vector2d %.16f, %.16f != vector2d %.16f, %.16f\n",
 			(f64)compare.X, (f64)compare.Y, (f64)with.X, (f64)with.Y);
 		assert_log(compare == with);
@@ -21,26 +21,23 @@ static bool compareVectors(const core::vector2d<T> & compare,
 	return true;
 }
 
-template <class T>
-static bool doTests()
-{
-	#define COMPARE_VECTORS(compare, with)\
-		if(!compareVectors(compare, with)) return false;
+template <class T> static bool doTests() {
+#define COMPARE_VECTORS(compare, with)                                                   \
+	if (!compareVectors(compare, with))                                              \
+		return false;
 
 	vector2d<T> vec(5, 5);
 	vector2d<T> otherVec(10, 20);
-	if(!equals(vec.getDistanceFrom(otherVec), (T)15.8113883))
-	{
+	if (!equals(vec.getDistanceFrom(otherVec), (T)15.8113883)) {
 		logTestString("vector2d::getDistanceFrom() failed\n");
 		assert_log(0);
 		return false;
 	}
 
-	otherVec = vector2d<T>(1,2);
+	otherVec = vector2d<T>(1, 2);
 	otherVec[0] = vec[0];
 	otherVec[1] = vec[1];
-	if(!vec.equals(otherVec))
-	{
+	if (!vec.equals(otherVec)) {
 		logTestString("vector2d::operator[] failed\n");
 		assert_log(0);
 		return false;
@@ -80,7 +77,6 @@ static bool doTests()
 	(void)interpolated.interpolate(vec, otherVec, 1.f);
 	COMPARE_VECTORS(interpolated, vec); // 1.f means all the first vector
 
-
 	interpolated = vec.getInterpolated(otherVec, 0.f);
 	COMPARE_VECTORS(interpolated, otherVec); // 0.f means all the second vector
 
@@ -92,7 +88,6 @@ static bool doTests()
 
 	interpolated = vec.getInterpolated(otherVec, 1.f);
 	COMPARE_VECTORS(interpolated, vec); // 1.f means all the first vector
-
 
 	logTestString("vector2d quadratic interpolation\n");
 	vector2d<T> thirdVec(20, 10);
@@ -113,77 +108,73 @@ static bool doTests()
 
 	// check if getAngle returns values matching those of the double precision version
 	logTestString("vector2d getAngle\n");
-	for (s32 i=0; i<200; ++i)
-	{
-		core::vector2d<T> tmp((T)-1, (T)(-100+i));
-		core::vector2d<f64> ref(-1, -100+i);
-		if (!equals(tmp.getAngle(),ref.getAngle(), 0.0003))
-		{
+	for (s32 i = 0; i < 200; ++i) {
+		core::vector2d<T> tmp((T)-1, (T)(-100 + i));
+		core::vector2d<f64> ref(-1, -100 + i);
+		if (!equals(tmp.getAngle(), ref.getAngle(), 0.0003)) {
 			logTestString("\nERROR: angle %.16f != angle %.16f\n",
 				tmp.getAngle(), ref.getAngle());
 			return false;
 		}
-		f32 val = atan2f((float)tmp.Y, (float)tmp.X)*core::RADTODEG;
-		if (val<=0)
-			val=-val;
-		else
-			val=360-val;
-		if (!equals((f32)tmp.getAngle(),val, 0.5f))
-		{
-			logTestString("\nERROR: angle %.16f != atan2 %.16f\n vector %.16f, %.16f\n",
+		f32 val = atan2f((float)tmp.Y, (float)tmp.X) * core::RADTODEG;
+		if (val <= 0) {
+			val = -val;
+		} else {
+			val = 360 - val;
+		}
+		if (!equals((f32)tmp.getAngle(), val, 0.5f)) {
+			logTestString("\nERROR: angle %.16f != atan2 %.16f\n vector "
+				      "%.16f, %.16f\n",
 				tmp.getAngle(), val, tmp.X, tmp.Y);
 			return false;
 		}
-		tmp = core::vector2d<T>((T)1, (T)(-100+i));
-		ref = core::vector2d<f64>(1, -100+i);
-		if (!equals(tmp.getAngle(),ref.getAngle(), 0.0003))
-		{
+		tmp = core::vector2d<T>((T)1, (T)(-100 + i));
+		ref = core::vector2d<f64>(1, -100 + i);
+		if (!equals(tmp.getAngle(), ref.getAngle(), 0.0003)) {
 			logTestString("\nERROR: angle %.16f != angle %.16f\n",
 				tmp.getAngle(), ref.getAngle());
 			return false;
 		}
-		val = atan2f((f32)tmp.Y, (f32)tmp.X)*core::RADTODEG;
-		if (val<=0)
-			val=-val;
-		else
-			val=360-val;
-		if (!equals((f32)tmp.getAngle(),val, 0.5f))
-		{
-			logTestString("\nERROR: angle %.16f != atan2 %.16f\n vector %.16f, %.16f\n",
+		val = atan2f((f32)tmp.Y, (f32)tmp.X) * core::RADTODEG;
+		if (val <= 0) {
+			val = -val;
+		} else {
+			val = 360 - val;
+		}
+		if (!equals((f32)tmp.getAngle(), val, 0.5f)) {
+			logTestString("\nERROR: angle %.16f != atan2 %.16f\n vector "
+				      "%.16f, %.16f\n",
 				tmp.getAngle(), val, tmp.X, tmp.Y);
 			return false;
 		}
 	}
 	core::vector2d<T> tmp(0, -100);
 	core::vector2d<f64> ref(0, -100);
-	if (!equals(tmp.getAngle(),ref.getAngle()))
-	{
-		logTestString("\nERROR: angle %.16f != angle %.16f\n",
-			tmp.getAngle(), ref.getAngle());
+	if (!equals(tmp.getAngle(), ref.getAngle())) {
+		logTestString("\nERROR: angle %.16f != angle %.16f\n", tmp.getAngle(),
+			ref.getAngle());
 		return false;
 	}
 	tmp = core::vector2d<T>(0, 100);
 	ref = core::vector2d<f64>(0, 100);
-	if (!equals(tmp.getAngle(),ref.getAngle()))
-	{
-		logTestString("\nERROR: angle %.16f != angle %.16f\n",
-			tmp.getAngle(), ref.getAngle());
+	if (!equals(tmp.getAngle(), ref.getAngle())) {
+		logTestString("\nERROR: angle %.16f != angle %.16f\n", tmp.getAngle(),
+			ref.getAngle());
 		return false;
 	}
-	tmp = core::vector2d<T>(static_cast<T>(-1.53080559e-16), static_cast<T>(2.49999523));
+	tmp = core::vector2d<T>(static_cast<T>(-1.53080559e-16),
+		static_cast<T>(2.49999523));
 	ref = core::vector2d<f64>(-1.53080559e-16, 2.49999523);
-	if (!equals(tmp.getAngle(),ref.getAngle()))
-	{
-		logTestString("\nERROR: angle %.16f != angle %.16f\n",
-			tmp.getAngle(), ref.getAngle());
+	if (!equals(tmp.getAngle(), ref.getAngle())) {
+		logTestString("\nERROR: angle %.16f != angle %.16f\n", tmp.getAngle(),
+			ref.getAngle());
 		return false;
 	}
 
 	core::vector2d<T> zeroZero(0, 0);
 	core::vector2d<T> oneOne(1, 1);
 	// Check if comparing (0.0, 0.0) with (1.0, 1.0) returns false.
-	if(zeroZero == oneOne)
-	{
+	if (zeroZero == oneOne) {
 		logTestString("\nERROR: vector2d %.16f, %.16f == vector2d %.16f, %.16f\n",
 			(f64)zeroZero.X, (f64)zeroZero.Y, (f64)oneOne.X, (f64)oneOne.Y);
 		return false;
@@ -196,26 +187,29 @@ static bool doTests()
 	involve calculations done using different precision than <T>.
 	Note that all reference vector2d<T>s are creating using double precision
 	values cast to (T), as we need to test <f64>. */
-bool testVector2d(void)
-{
+bool testVector2d(
+	void
+) {
 	bool f32Success = doTests<f32>();
-	if(f32Success)
+	if (f32Success) {
 		logTestString("vector2df tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector2df tests failed ***\n\n");
+	}
 
 	bool f64Success = doTests<f64>();
-	if(f64Success)
+	if (f64Success) {
 		logTestString("vector2d<f64> tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector2d<f64> tests failed ***\n\n");
+	}
 
 	bool s32Success = doTests<s32>();
-	if(s32Success)
+	if (s32Success) {
 		logTestString("vector2di tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector2di tests failed ***\n\n");
+	}
 
 	return f32Success && f64Success && s32Success;
 }
-

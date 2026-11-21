@@ -14,8 +14,7 @@ namespace scene
 {
 
 //! Types of built in particle emitters
-enum E_PARTICLE_EMITTER_TYPE
-{
+enum E_PARTICLE_EMITTER_TYPE {
 	EPET_POINT = 0,
 	EPET_ANIMATED_MESH,
 	EPET_BOX,
@@ -27,25 +26,14 @@ enum E_PARTICLE_EMITTER_TYPE
 };
 
 //! Names for built in particle emitters
-const c8* const ParticleEmitterTypeNames[] =
-{
-	"Point",
-	"AnimatedMesh",
-	"Box",
-	"Cylinder",
-	"Mesh",
-	"Ring",
-	"Sphere",
-	0
-};
+const c8* const ParticleEmitterTypeNames[] = {
+	"Point", "AnimatedMesh", "Box", "Cylinder", "Mesh", "Ring", "Sphere", 0};
 
 //! A particle emitter for using with particle systems.
 /** A Particle emitter emits new particles into a particle system.
-*/
-class IParticleEmitter : public virtual io::IAttributeExchangingObject
-{
+ */
+class IParticleEmitter : public virtual io::IAttributeExchangingObject {
 public:
-
 	//! Prepares an array with new particles to emit into the system
 	/** \param now Current time.
 	\param timeSinceLastCall Time elapsed since last call, in milliseconds.
@@ -55,34 +43,34 @@ public:
 	virtual s32 emitt(u32 now, u32 timeSinceLastCall, SParticle*& outArray) = 0;
 
 	//! Set direction the emitter emits particles
-	virtual void setDirection( const core::vector3df& newDirection ) = 0;
+	virtual void setDirection(const core::vector3df& newDirection) = 0;
 
 	//! Set minimum number of particles the emitter emits per second
-	virtual void setMinParticlesPerSecond( u32 minPPS ) = 0;
+	virtual void setMinParticlesPerSecond(u32 minPPS) = 0;
 
 	//! Set maximum number of particles the emitter emits per second
-	virtual void setMaxParticlesPerSecond( u32 maxPPS ) = 0;
+	virtual void setMaxParticlesPerSecond(u32 maxPPS) = 0;
 
 	//! Set minimum starting color for particles
-	virtual void setMinStartColor( const video::SColor& color ) = 0;
+	virtual void setMinStartColor(const video::SColor& color) = 0;
 
 	//! Set maximum starting color for particles
-	virtual void setMaxStartColor( const video::SColor& color ) = 0;
+	virtual void setMaxStartColor(const video::SColor& color) = 0;
 
 	//! Set the maximum starting size for particles
-	virtual void setMaxStartSize( const core::dimension2df& size ) = 0;
+	virtual void setMaxStartSize(const core::dimension2df& size) = 0;
 
 	//! Set the minimum starting size for particles
-	virtual void setMinStartSize( const core::dimension2df& size ) = 0;
+	virtual void setMinStartSize(const core::dimension2df& size) = 0;
 
 	//! Set the minimum particle life-time in milliseconds
-	virtual void setMinLifeTime( u32 lifeTimeMin ) = 0;
+	virtual void setMinLifeTime(u32 lifeTimeMin) = 0;
 
 	//! Set the maximum particle life-time in milliseconds
-	virtual void setMaxLifeTime( u32 lifeTimeMax ) = 0;
+	virtual void setMaxLifeTime(u32 lifeTimeMax) = 0;
 
 	//! Set maximal random derivation from the direction
-	virtual void setMaxAngleDegrees( s32 maxAngleDegrees ) = 0;
+	virtual void setMaxAngleDegrees(s32 maxAngleDegrees) = 0;
 
 	//! Get direction the emitter emits particles
 	virtual const core::vector3df& getDirection() const = 0;
@@ -123,6 +111,4 @@ typedef IParticleEmitter IParticlePointEmitter;
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

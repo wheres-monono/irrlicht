@@ -20,52 +20,52 @@ namespace irr
 {
 namespace video
 {
-    // NSOpenGL manager.
-    class CNSOGLManager : public IContextManager
-    {
-    public:
-        //! Constructor.
-        CNSOGLManager();
+// NSOpenGL manager.
+class CNSOGLManager : public IContextManager {
+public:
+	//! Constructor.
+	CNSOGLManager();
 
-		//! Destructor
-		~CNSOGLManager();
+	//! Destructor
+	~CNSOGLManager();
 
-        // Initialize
-        bool initialize(const SIrrlichtCreationParameters& params, const SExposedVideoData& data);
+	// Initialize
+	bool initialize(const SIrrlichtCreationParameters& params,
+		const SExposedVideoData& data);
 
-        // Terminate
-        void terminate();
+	// Terminate
+	void terminate();
 
-        // Create surface.
-        bool generateSurface();
+	// Create surface.
+	bool generateSurface();
 
-        // Destroy surface.
-        void destroySurface();
+	// Destroy surface.
+	void destroySurface();
 
-        // Create context.
-        bool generateContext();
+	// Create context.
+	bool generateContext();
 
-        // Destroy EGL context.
-        void destroyContext();
+	// Destroy EGL context.
+	void destroyContext();
 
-		//! Get current context
-		const SExposedVideoData& getContext() const;
+	//! Get current context
+	const SExposedVideoData& getContext() const;
 
-		//! Change render context, disable old and activate new defined by videoData
-		bool activateContext(const SExposedVideoData& videoData);
+	//! Change render context, disable old and activate new defined by videoData
+	bool activateContext(const SExposedVideoData& videoData);
 
-        // Swap buffers.
-        bool swapBuffers();
+	// Swap buffers.
+	bool swapBuffers();
 
-    private:
-        SIrrlichtCreationParameters Params;
-		SExposedVideoData PrimaryContext;
-        SExposedVideoData CurrentContext;
-        
-        NSOpenGLPixelFormat* PixelFormat;
-	};
-}
-}
+private:
+	SIrrlichtCreationParameters Params;
+	SExposedVideoData PrimaryContext;
+	SExposedVideoData CurrentContext;
+
+	NSOpenGLPixelFormat* PixelFormat;
+};
+} // namespace video
+} // namespace irr
 
 #endif
 

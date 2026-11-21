@@ -9,15 +9,13 @@
 #include "irrString.h"
 #include "irrArray.h"
 
-
 namespace irr
 {
 namespace io
 {
 
 //! An entry in a list of files, can be a folder or a file.
-struct SFileListEntry
-{
+struct SFileListEntry {
 	//! The name of the file
 	/** If this is a file or folder in the virtual filesystem and the archive
 	was created with the ignoreCase flag then the file name will be lower case. */
@@ -43,30 +41,32 @@ struct SFileListEntry
 	bool IsDirectory;
 
 	//! The == operator is provided so that CFileList can slowly search the list!
-	bool operator ==(const struct SFileListEntry& other) const
-	{
-		if (IsDirectory != other.IsDirectory)
+	bool operator==(
+		const struct SFileListEntry& other
+	) const {
+		if (IsDirectory != other.IsDirectory) {
 			return false;
+		}
 
 		return FullName.equals_ignore_case(other.FullName);
 	}
 
-	//! The < operator is provided so that CFileList can sort and quickly search the list.
-	bool operator <(const struct SFileListEntry& other) const
-	{
-		if (IsDirectory != other.IsDirectory)
+	//! The < operator is provided so that CFileList can sort and quickly search the
+	//! list.
+	bool operator<(
+		const struct SFileListEntry& other
+	) const {
+		if (IsDirectory != other.IsDirectory) {
 			return IsDirectory;
+		}
 
 		return FullName.lower_ignore_case(other.FullName);
 	}
 };
 
-
 //! Implementation of a file list
-class CFileList : public IFileList
-{
+class CFileList : public IFileList {
 public:
-
 	// CFileList methods
 
 	//! Constructor
@@ -82,9 +82,14 @@ public:
 	\param offset The offset where the file is stored in an archive
 	\param size The size of the file in bytes.
 	\param id The ID of the file in the archive which owns it */
-	virtual u32 addItem(const io::path& fullPath, u32 offset, u32 size, bool isDirectory, u32 id=0) _IRR_OVERRIDE_;
+	virtual u32 addItem(const io::path& fullPath,
+		u32 offset,
+		u32 size,
+		bool isDirectory,
+		u32 id = 0) _IRR_OVERRIDE_;
 
-	//! Sorts the file list. You should call this after adding any items to the file list
+	//! Sorts the file list. You should call this after adding any items to the file
+	//! list
 	virtual void sort() _IRR_OVERRIDE_;
 
 	//! Returns the amount of files in the filelist.
@@ -109,13 +114,13 @@ public:
 	virtual u32 getFileOffset(u32 index) const _IRR_OVERRIDE_;
 
 	//! Searches for a file or folder within the list, returns the index
-	virtual s32 findFile(const io::path& filename, bool isFolder) const _IRR_OVERRIDE_;
+	virtual s32 findFile(const io::path& filename,
+		bool isFolder) const _IRR_OVERRIDE_;
 
 	//! Returns the base path of the file list
 	virtual const io::path& getPath() const _IRR_OVERRIDE_;
 
 protected:
-
 	//! Ignore paths when adding or searching for files
 	bool IgnorePaths;
 
@@ -129,10 +134,7 @@ protected:
 	core::array<SFileListEntry> Files;
 };
 
-
-} // end namespace irr
-} // end namespace io
-
+} // namespace io
+} // namespace irr
 
 #endif
-

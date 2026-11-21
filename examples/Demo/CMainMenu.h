@@ -8,10 +8,8 @@
 
 using namespace irr;
 
-class CMainMenu : public IEventReceiver
-{
+class CMainMenu : public IEventReceiver {
 public:
-
 	CMainMenu();
 
 	bool run();
@@ -24,15 +22,13 @@ public:
 	bool getAntiAliasing() const { return aa; }
 	video::E_DRIVER_TYPE getDriverType() const { return driverType; }
 
-
 	virtual bool OnEvent(const SEvent& event);
 
 private:
-
 	void setTransparency();
 
 	gui::IGUIButton* startButton;
-	IrrlichtDevice *MenuDevice;
+	IrrlichtDevice* MenuDevice;
 	s32 selected;
 	bool start;
 	bool fullscreen;
@@ -48,9 +44,8 @@ private:
 	scene::ISceneNode* lightMapNode;
 	scene::ISceneNode* dynamicNode;
 
-	video::SColor SkinColor [ gui::EGDC_COUNT ];
+	video::SColor SkinColor[gui::EGDC_COUNT];
 	void getOriginalSkinColor();
 };
 
 #endif
-

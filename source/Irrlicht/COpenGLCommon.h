@@ -10,56 +10,56 @@
 #ifdef _IRR_COMPILE_WITH_OPENGL_
 
 #if defined(_IRR_WINDOWS_API_)
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#define GL_GLEXT_LEGACY 1
-	#endif
-	#include <GL/gl.h>
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#include "glext.h"
-	#endif
-	#include "wglext.h"
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#define GL_GLEXT_LEGACY 1
+#endif
+#include <GL/gl.h>
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#include "glext.h"
+#endif
+#include "wglext.h"
 
-	#ifdef _MSC_VER
-		#pragma comment(lib, "OpenGL32.lib")
-	#endif
+#ifdef _MSC_VER
+#pragma comment(lib, "OpenGL32.lib")
+#endif
 
 #elif defined(_IRR_COMPILE_WITH_OSX_DEVICE_)
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#define GL_GLEXT_LEGACY 1
-	#endif
-	#include <OpenGL/gl.h>
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#include "glext.h"
-	#endif
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#define GL_GLEXT_LEGACY 1
+#endif
+#include <OpenGL/gl.h>
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#include "glext.h"
+#endif
 #elif defined(_IRR_COMPILE_WITH_SDL_DEVICE_) && !defined(_IRR_COMPILE_WITH_X11_DEVICE_)
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#define GL_GLEXT_LEGACY 1
-		#define GLX_GLXEXT_LEGACY 1
-	#else
-		#define GL_GLEXT_PROTOTYPES 1
-		#define GLX_GLXEXT_PROTOTYPES 1
-	#endif
-	#define NO_SDL_GLEXT
-	#include <SDL/SDL_video.h>
-	#include <SDL/SDL_opengl.h>
-	#include "glext.h"
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#define GL_GLEXT_LEGACY 1
+#define GLX_GLXEXT_LEGACY 1
 #else
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-		#define GL_GLEXT_LEGACY 1
-		#define GLX_GLXEXT_LEGACY 1
-	#else
-		#define GL_GLEXT_PROTOTYPES 1
-		#define GLX_GLXEXT_PROTOTYPES 1
-	#endif
-	#include <GL/gl.h>
-	#include <GL/glx.h>
-	#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
-	#include "glext.h"
-	#undef GLX_ARB_get_proc_address
-	#include "glxext.h"
-	#endif
+#define GL_GLEXT_PROTOTYPES 1
+#define GLX_GLXEXT_PROTOTYPES 1
+#endif
+#define NO_SDL_GLEXT
+#include <SDL/SDL_video.h>
+#include <SDL/SDL_opengl.h>
+#include "glext.h"
+#else
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#define GL_GLEXT_LEGACY 1
+#define GLX_GLXEXT_LEGACY 1
+#else
+#define GL_GLEXT_PROTOTYPES 1
+#define GLX_GLXEXT_PROTOTYPES 1
+#endif
+#include <GL/gl.h>
+#include <GL/glx.h>
+#if defined(_IRR_OPENGL_USE_EXTPOINTER_)
+#include "glext.h"
+#undef GLX_ARB_get_proc_address
+#include "glxext.h"
+#endif
 #endif
 
 #ifndef GL_ARB_shader_objects
@@ -74,7 +74,8 @@ typedef char GLchar;
 // Blending definitions.
 
 #if !defined(GL_VERSION_1_4)
-#if defined(GL_EXT_blend_subtract) || defined(GL_EXT_blend_minmax) || defined(GL_EXT_blend_logic_op)
+#if defined(GL_EXT_blend_subtract) || defined(GL_EXT_blend_minmax) ||                    \
+	defined(GL_EXT_blend_logic_op)
 #define GL_FUNC_ADD GL_FUNC_ADD_EXT
 #else
 #define GL_FUNC_ADD 0
@@ -95,7 +96,8 @@ typedef char GLchar;
 #define GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT
 #define GL_FRAMEBUFFER_INCOMPLETE_FORMATS GL_FRAMEBUFFER_INCOMPLETE_FORMATS_EXT
 #define GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT
-#define GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT
+#define GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT                                     \
+	GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT
 #define GL_FRAMEBUFFER_UNSUPPORTED GL_FRAMEBUFFER_UNSUPPORTED_EXT
 #else
 #define GL_FRAMEBUFFER 0
@@ -178,26 +180,23 @@ namespace irr
 namespace video
 {
 
-	// Forward declarations.
+// Forward declarations.
 
-	class COpenGLCoreFeature;
+class COpenGLCoreFeature;
 
-	template <class TOpenGLDriver>
-	class COpenGLCoreTexture;
+template <class TOpenGLDriver> class COpenGLCoreTexture;
 
-	template <class TOpenGLDriver, class TOpenGLTexture>
-	class COpenGLCoreRenderTarget;
+template <class TOpenGLDriver, class TOpenGLTexture> class COpenGLCoreRenderTarget;
 
-	template <class TOpenGLDriver, class TOpenGLTexture>
-	class COpenGLCoreCacheHandler;
+template <class TOpenGLDriver, class TOpenGLTexture> class COpenGLCoreCacheHandler;
 
-	class COpenGLDriver;
-	typedef COpenGLCoreTexture<COpenGLDriver> COpenGLTexture;
-	typedef COpenGLCoreRenderTarget<COpenGLDriver, COpenGLTexture> COpenGLRenderTarget;
-	class COpenGLCacheHandler;
+class COpenGLDriver;
+typedef COpenGLCoreTexture<COpenGLDriver> COpenGLTexture;
+typedef COpenGLCoreRenderTarget<COpenGLDriver, COpenGLTexture> COpenGLRenderTarget;
+class COpenGLCacheHandler;
 
-}
-}
+} // namespace video
+} // namespace irr
 
 #endif
 #endif

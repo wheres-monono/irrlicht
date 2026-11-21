@@ -13,11 +13,11 @@ namespace video
 {
 
 //! Enumeration for different types of lights
-enum E_LIGHT_TYPE
-{
+enum E_LIGHT_TYPE {
 	//! point light, it has a position in space and radiates light in all directions
 	ELT_POINT,
-	//! spot light, it has a position in space, a direction, and a limited cone of influence
+	//! spot light, it has a position in space, a direction, and a limited cone of
+	//! influence
 	ELT_SPOT,
 	//! directional light, coming from a direction from an infinite distance
 	ELT_DIRECTIONAL,
@@ -27,25 +27,25 @@ enum E_LIGHT_TYPE
 };
 
 //! Names for light types
-const c8* const LightTypeNames[] =
-{
-	"Point",
-	"Spot",
-	"Directional",
-	0
-};
+const c8* const LightTypeNames[] = {"Point", "Spot", "Directional", 0};
 
 //! structure for holding data describing a dynamic point light.
 /** Irrlicht supports point lights, spot lights, and directional lights.
-*/
-struct SLight
-{
-	SLight() : AmbientColor(0.f,0.f,0.f), DiffuseColor(1.f,1.f,1.f),
-		SpecularColor(1.f,1.f,1.f), Attenuation(1.f,0.f,0.f),
-		OuterCone(45.f), InnerCone(0.f), Falloff(2.f),
-		Position(0.f,0.f,0.f), Direction(0.f,0.f,1.f),
-		Radius(100.f), Type(ELT_POINT), CastShadows(true)
-		{}
+ */
+struct SLight {
+	SLight() :
+		AmbientColor(0.f, 0.f, 0.f),
+		DiffuseColor(1.f, 1.f, 1.f),
+		SpecularColor(1.f, 1.f, 1.f),
+		Attenuation(1.f, 0.f, 0.f),
+		OuterCone(45.f),
+		InnerCone(0.f),
+		Falloff(2.f),
+		Position(0.f, 0.f, 0.f),
+		Direction(0.f, 0.f, 1.f),
+		Radius(100.f),
+		Type(ELT_POINT),
+		CastShadows(true) {}
 
 	//! Ambient color emitted by the light
 	SColorf AmbientColor;
@@ -74,11 +74,13 @@ struct SLight
 	f32 Falloff;
 
 	//! Read-ONLY! Position of the light.
-	/** If Type is ELT_DIRECTIONAL, it is ignored. Changed via light scene node's position. */
+	/** If Type is ELT_DIRECTIONAL, it is ignored. Changed via light scene node's
+	 * position. */
 	core::vector3df Position;
 
 	//! Read-ONLY! Direction of the light.
-	/** If Type is ELT_POINT, it is ignored. Changed via light scene node's rotation. */
+	/** If Type is ELT_POINT, it is ignored. Changed via light scene node's rotation.
+	 */
 	core::vector3df Direction;
 
 	//! Read-ONLY! Radius of light. Everything within this radius will be lighted.
@@ -88,11 +90,10 @@ struct SLight
 	E_LIGHT_TYPE Type;
 
 	//! Read-ONLY! Does the light cast shadows?
-	bool CastShadows:1;
+	bool CastShadows : 1;
 };
 
 } // end namespace video
 } // end namespace irr
 
 #endif
-

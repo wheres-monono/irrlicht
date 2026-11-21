@@ -27,54 +27,54 @@ using namespace irr;
 HWND hOKButton;
 HWND hWnd;
 
-static LRESULT CALLBACK CustomWndProc(HWND hWnd, UINT message,
-		WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_COMMAND:
-		{
-			HWND hwndCtl = (HWND)lParam;
-			int code = HIWORD(wParam);
-
-			if (hwndCtl == hOKButton)
+static LRESULT CALLBACK CustomWndProc(
+	HWND hWnd,
+	UINT message,
+	WPARAM wParam,
+	LPARAM lParam
+) {
+	switch (message) {
+		case WM_COMMAND:
 			{
-				DestroyWindow(hWnd);
-				PostQuitMessage(0);
-				return 0;
-			}
-		}
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
+				HWND hwndCtl = (HWND)lParam;
+				int code = HIWORD(wParam);
 
+				if (hwndCtl == hOKButton) {
+					DestroyWindow(hWnd);
+					PostQuitMessage(0);
+					return 0;
+				}
+			}
+			break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			return 0;
 	}
 
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-
 /*
    Now ask for the driver and create the Windows specific window.
 */
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
-	printf("Select the render window (some dead window may exist too):\n"\
-		" (a) Window with button (via CreationParam)\n"\
-		" (b) Window with button (via beginScene)\n"\
-		" (c) Own Irrlicht window (default behavior)\n"\
-		" (otherKey) exit\n\n");
+	printf("Select the render window (some dead window may exist too):\n"
+	       " (a) Window with button (via CreationParam)\n"
+	       " (b) Window with button (via beginScene)\n"
+	       " (c) Own Irrlicht window (default behavior)\n"
+	       " (otherKey) exit\n\n");
 
 	char key;
 	std::cin >> key;
-	if (key != 'a' && key != 'b' && key != 'c')
+	if (key != 'a' && key != 'b' && key != 'c') {
 		return 1;
+	}
 
 	HINSTANCE hInstance = 0;
 	// create dialog
@@ -82,30 +82,29 @@ int main()
 	const fschar_t* Win32ClassName = __TEXT("CIrrlichtWindowsTestDialog");
 
 	WNDCLASSEX wcex;
-	wcex.cbSize			= sizeof(WNDCLASSEX);
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= (WNDPROC)CustomWndProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= DLGWINDOWEXTRA;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= NULL;
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW);
-	wcex.lpszMenuName	= 0;
-	wcex.lpszClassName	= Win32ClassName;
-	wcex.hIconSm		= 0;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = (WNDPROC)CustomWndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = DLGWINDOWEXTRA;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = NULL;
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
+	wcex.lpszMenuName = 0;
+	wcex.lpszClassName = Win32ClassName;
+	wcex.hIconSm = 0;
 
 	RegisterClassEx(&wcex);
 
-	DWORD style = WS_SYSMENU | WS_BORDER | WS_CAPTION |
-		WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SIZEBOX;
+	DWORD style = WS_SYSMENU | WS_BORDER | WS_CAPTION | WS_CLIPCHILDREN |
+		      WS_CLIPSIBLINGS | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SIZEBOX;
 
 	int windowWidth = 440;
 	int windowHeight = 380;
 
-	hWnd = CreateWindow( Win32ClassName, __TEXT("Irrlicht Win32 window example"),
-		style, 100, 100, windowWidth, windowHeight,
-		NULL, NULL, hInstance, NULL);
+	hWnd = CreateWindow(Win32ClassName, __TEXT("Irrlicht Win32 window example"),
+		style, 100, 100, windowWidth, windowHeight, NULL, NULL, hInstance, NULL);
 
 	RECT clientRect;
 	GetClientRect(hWnd, &clientRect);
@@ -114,21 +113,24 @@ int main()
 
 	// create ok button
 
-	hOKButton = CreateWindow(__TEXT("BUTTON"), __TEXT("OK - Close"), WS_CHILD | WS_VISIBLE | BS_TEXT,
-		windowWidth - 160, windowHeight - 40, 150, 30, hWnd, NULL, hInstance, NULL);
+	hOKButton = CreateWindow(__TEXT("BUTTON"), __TEXT("OK - Close"),
+		WS_CHILD | WS_VISIBLE | BS_TEXT, windowWidth - 160, windowHeight - 40,
+		150, 30, hWnd, NULL, hInstance, NULL);
 
 	// create some text
 
-	CreateWindow(__TEXT("STATIC"), __TEXT("This is Irrlicht running inside a standard Win32 window.\n")\
-		__TEXT("Also mixing with MFC and .NET Windows.Forms is possible."),
+	CreateWindow(__TEXT("STATIC"),
+		__TEXT(
+			"This is Irrlicht running inside a standard Win32 window.\n"
+		) __TEXT("Also mixing with MFC and .NET Windows.Forms is possible."),
 		WS_CHILD | WS_VISIBLE, 20, 20, 400, 40, hWnd, NULL, hInstance, NULL);
 
 	// create window to put irrlicht in
 
 	HWND hIrrlichtWindow = CreateWindow(__TEXT("BUTTON"), __TEXT(""),
-			WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
-			50, 80, 320, 220, hWnd, NULL, hInstance, NULL);
-	video::SExposedVideoData videodata((key=='b')?hIrrlichtWindow:0);
+		WS_CHILD | WS_VISIBLE | BS_OWNERDRAW, 50, 80, 320, 220, hWnd, NULL,
+		hInstance, NULL);
+	video::SExposedVideoData videodata((key == 'b') ? hIrrlichtWindow : 0);
 
 	/*
 	So now that we have some window, we can create an Irrlicht device
@@ -140,8 +142,9 @@ int main()
 
 	irr::SIrrlichtCreationParameters param;
 	param.DriverType = driverType;
-	if (key=='a')
+	if (key == 'a') {
 		param.WindowId = reinterpret_cast<void*>(hIrrlichtWindow);
+	}
 
 	irr::IrrlichtDevice* device = irr::createDeviceEx(param);
 
@@ -150,26 +153,26 @@ int main()
 	irr::scene::ISceneManager* smgr = device->getSceneManager();
 	video::IVideoDriver* driver = device->getVideoDriver();
 
-	if (driverType==video::EDT_OPENGL)
-	{
-		HDC HDc=GetDC(hIrrlichtWindow);
-		PIXELFORMATDESCRIPTOR pfd={0};
-		pfd.nSize=sizeof(PIXELFORMATDESCRIPTOR);
+	if (driverType == video::EDT_OPENGL) {
+		HDC HDc = GetDC(hIrrlichtWindow);
+		PIXELFORMATDESCRIPTOR pfd = {0};
+		pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
 		int pf = GetPixelFormat(HDc);
 		DescribePixelFormat(HDc, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 		pfd.dwFlags |= PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW;
-		pfd.cDepthBits=16;
+		pfd.cDepthBits = 16;
 		pf = ChoosePixelFormat(HDc, &pfd);
 		SetPixelFormat(HDc, pf, &pfd);
 		videodata.OpenGLWin32.HDc = HDc;
-		videodata.OpenGLWin32.HRc=wglCreateContext(HDc);
-		wglShareLists((HGLRC)driver->getExposedVideoData().OpenGLWin32.HRc, (HGLRC)videodata.OpenGLWin32.HRc);
+		videodata.OpenGLWin32.HRc = wglCreateContext(HDc);
+		wglShareLists((HGLRC)driver->getExposedVideoData().OpenGLWin32.HRc,
+			(HGLRC)videodata.OpenGLWin32.HRc);
 	}
 	scene::ICameraSceneNode* cam = smgr->addCameraSceneNode();
-	cam->setTarget(core::vector3df(0,0,0));
+	cam->setTarget(core::vector3df(0, 0, 0));
 
 	scene::ISceneNodeAnimator* anim =
-		smgr->createFlyCircleAnimator(core::vector3df(0,15,0), 30.0f);
+		smgr->createFlyCircleAnimator(core::vector3df(0, 15, 0), 30.0f);
 	cam->addAnimator(anim);
 	anim->drop();
 
@@ -179,23 +182,24 @@ int main()
 
 	cube->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.bmp"));
 	cube->setMaterialTexture(1, driver->getTexture(mediaPath + "water.jpg"));
-	cube->setMaterialFlag( video::EMF_LIGHTING, false );
-	cube->setMaterialType( video::EMT_REFLECTION_2_LAYER );
+	cube->setMaterialFlag(video::EMF_LIGHTING, false);
+	cube->setMaterialType(video::EMT_REFLECTION_2_LAYER);
 
-	smgr->addSkyBoxSceneNode(
-	driver->getTexture(mediaPath + "irrlicht2_up.jpg"),
-	driver->getTexture(mediaPath + "irrlicht2_dn.jpg"),
-	driver->getTexture(mediaPath + "irrlicht2_lf.jpg"),
-	driver->getTexture(mediaPath + "irrlicht2_rt.jpg"),
-	driver->getTexture(mediaPath + "irrlicht2_ft.jpg"),
-	driver->getTexture(mediaPath + "irrlicht2_bk.jpg"));
+	smgr->addSkyBoxSceneNode(driver->getTexture(mediaPath + "irrlicht2_up.jpg"),
+		driver->getTexture(mediaPath + "irrlicht2_dn.jpg"),
+		driver->getTexture(mediaPath + "irrlicht2_lf.jpg"),
+		driver->getTexture(mediaPath + "irrlicht2_rt.jpg"),
+		driver->getTexture(mediaPath + "irrlicht2_ft.jpg"),
+		driver->getTexture(mediaPath + "irrlicht2_bk.jpg"));
 
 	// This shows that we can render to multiple windows within one application
-	device->getGUIEnvironment()->addStaticText(core::stringw("Second screen render").c_str(),core::recti(0,0,200,200));
+	device->getGUIEnvironment()->addStaticText(
+		core::stringw("Second screen render").c_str(), core::recti(0, 0, 200, 200)
+	);
 
 	// show and execute dialog
 
-	ShowWindow(hWnd , SW_SHOW);
+	ShowWindow(hWnd, SW_SHOW);
 	UpdateWindow(hWnd);
 
 	// do message queue
@@ -212,14 +216,14 @@ int main()
 	DirectInput, or whatever.
 	*/
 
-	while (device->run())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0), 1.f, 0, videodata);
+	while (device->run()) {
+		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+			video::SColor(0), 1.f, 0, videodata);
 		smgr->drawAll();
 		driver->endScene();
-		if (key=='b')
-		{
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0xbbbbbbbb));
+		if (key == 'b') {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(0xbbbbbbbb));
 			device->getGUIEnvironment()->drawAll();
 			driver->endScene();
 		}

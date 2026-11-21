@@ -10,40 +10,44 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-// There's all sorts of minor and inevitable FP accuracy errors here, so use a sloppy comparison.
-static bool sloppyComparePlanes(const plane3df plane1, const plane3df plane2)
-{
-	return(equals(plane1.D, plane2.D, 0.001f) &&
+// There's all sorts of minor and inevitable FP accuracy errors here, so use a sloppy
+// comparison.
+static bool sloppyComparePlanes(
+	const plane3df plane1,
+	const plane3df plane2
+) {
+	return (equals(plane1.D, plane2.D, 0.001f) &&
 		equals(plane1.Normal.X, plane2.Normal.X, 0.001f) &&
 		equals(plane1.Normal.Y, plane2.Normal.Y, 0.001f) &&
 		equals(plane1.Normal.Z, plane2.Normal.Z, 0.001f));
 }
 
-static bool transformPlane(const vector3df & point, const vector3df & normal,
-						   const matrix4 & matrix, const plane3df & expected)
-{
+static bool transformPlane(
+	const vector3df& point,
+	const vector3df& normal,
+	const matrix4& matrix,
+	const plane3df& expected
+) {
 	plane3df plane(point, vector3df(normal).normalize());
 
-	logTestString("\n     Pre N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n",
-		plane.Normal.X, plane.Normal.Y, plane.Normal.Z, plane.D);
+	logTestString("\n     Pre N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n", plane.Normal.X,
+		plane.Normal.Y, plane.Normal.Z, plane.D);
 
 	matrix.transformPlane(plane);
 
-	logTestString("    Post N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n",
-		plane.Normal.X, plane.Normal.Y, plane.Normal.Z, plane.D);
+	logTestString("    Post N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n", plane.Normal.X,
+		plane.Normal.Y, plane.Normal.Z, plane.D);
 
-	logTestString("Expected N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n",
-		expected.Normal.X, expected.Normal.Y, expected.Normal.Z, expected.D);
+	logTestString("Expected N:(%.3ff,%.3ff,%.3ff), D:%.3ff\n", expected.Normal.X,
+		expected.Normal.Y, expected.Normal.Z, expected.D);
 
-	if(!plane.Normal.equals(vector3df(plane.Normal).normalize()))
-	{
+	if (!plane.Normal.equals(vector3df(plane.Normal).normalize())) {
 		logTestString("Plane normal no longer normalized after transformation\n");
 		assert_log(false);
 		return false;
 	}
 
-	if(!sloppyComparePlanes(plane, expected))
-	{
+	if (!sloppyComparePlanes(plane, expected)) {
 		logTestString("Unexpected result\n");
 		assert_log(false);
 		return false;
@@ -52,38 +56,43 @@ static bool transformPlane(const vector3df & point, const vector3df & normal,
 	return true;
 }
 
-
-static bool drawScaledOctree(void)
-{
+static bool drawScaledOctree(
+	void
+) {
 	bool result = false;
-	IrrlichtDevice *device = createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
-	if (!device)
+	IrrlichtDevice* device =
+		createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
+	if (!device) {
 		return false;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	ISceneManager * smgr = device->getSceneManager();
+	ISceneManager* smgr = device->getSceneManager();
 
 	bool added = device->getFileSystem()->addFileArchive("../media/map-20kdm2.pk3");
 	assert_log(added);
 
-	if(added)
-	{
-		ISceneNode * node = smgr->addOctreeSceneNode(smgr->getMesh("20kdm2.bsp")->getMesh(0), 0, -1, 1024);
+	if (added) {
+		ISceneNode* node =
+			smgr->addOctreeSceneNode(smgr->getMesh("20kdm2.bsp")->getMesh(0),
+				0, -1, 1024);
 		assert_log(node);
 
-		if (node)
-		{
+		if (node) {
 			node->setMaterialFlag(EMF_LIGHTING, false);
-			node->setPosition(core::vector3df(-1300,-820,-1249));
+			node->setPosition(core::vector3df(-1300, -820, -1249));
 			node->setScale(core::vector3df(1, 5, 1));
 
-			(void)smgr->addCameraSceneNode(0, core::vector3df(0,0,0), core::vector3df(40,100,30));
+			(void)smgr->addCameraSceneNode(0, core::vector3df(0, 0, 0),
+				core::vector3df(40, 100, 30));
 
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,255,255,0));
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 255, 255, 0));
 			smgr->drawAll();
 			driver->endScene();
 
-			result = takeScreenshotAndCompareAgainstReference(driver, "-planeMatrix-scaledClip.png");
+			result = takeScreenshotAndCompareAgainstReference(driver,
+				"-planeMatrix-scaledClip.png");
 		}
 	}
 
@@ -94,10 +103,10 @@ static bool drawScaledOctree(void)
 	return result;
 }
 
-
 // Test the ability to transform a plane with a matrix.
-bool planeMatrix(void)
-{
+bool planeMatrix(
+	void
+) {
 	matrix4 rotationMatrix;
 	rotationMatrix.setRotationDegrees(vector3df(90, 0, 0));
 
@@ -111,134 +120,182 @@ bool planeMatrix(void)
 
 	matrix4 matrix = rotationMatrix;
 	logTestString("\nRotation matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-.707f, 0.f, -.707f), 0.f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(.707f, 0.f, .707f), 0.f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-.707f, 0.f, .707f), 0.f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(.707f, 0.f, -.707f), 0.f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-.707f, 0.f, -.707f), .707f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(.707f, 0.f, .707f), -.707f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-.707f, 0.f, .707f), -.707f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(.707f, 0.f, -.707f), .707f));
-
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-.707f, 0.f, -.707f), 0.f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(.707f, 0.f, .707f), 0.f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-.707f, 0.f, .707f), 0.f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(.707f, 0.f, -.707f), 0.f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-.707f, 0.f, -.707f), .707f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(.707f, 0.f, .707f), -.707f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-.707f, 0.f, .707f), -.707f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(.707f, 0.f, -.707f), .707f));
 
 	matrix = translationMatrix;
 	logTestString("\nTranslation matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.707f,0.000f), 2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.707f,0.000f), -2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.707f,0.000f), -2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.707f,0.000f), 2.121f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.707f,0.000f), 2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.707f,0.000f), -2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.707f,0.000f), -2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.707f,0.000f), 2.828f));
-
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.707f, 0.000f), 2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.707f, 0.000f), -2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.707f, 0.000f), -2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.707f, 0.000f), 2.121f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.707f, 0.000f), 2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.707f, 0.000f), -2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.707f, 0.000f), -2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.707f, 0.000f), 2.828f));
 
 	matrix = scaleMatrix;
 	logTestString("\nScale matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.354f,0.000f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.354f,0.000f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.354f,0.000f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.354f,0.000f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.354f,0.000f).normalize(), 0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.354f,0.000f).normalize(), -0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.354f,0.000f).normalize(), -0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.354f,0.000f).normalize(), 0.894f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.354f, 0.000f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.354f, 0.000f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.354f, 0.000f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.354f, 0.000f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.354f, 0.000f).normalize(), 0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.354f, 0.000f).normalize(), -0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.354f, 0.000f).normalize(), -0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.354f, 0.000f).normalize(), 0.894f));
 
 	matrix = rotationMatrix * translationMatrix;
 	logTestString("\nRotation * translation matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.707f).normalize(), 2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.707f).normalize(), -2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.707f).normalize(), -2.121f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.707f).normalize(), 2.121f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.707f).normalize(), 2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.707f).normalize(), -2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.707f).normalize(), -2.828f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.707f).normalize(), 2.828f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.707f).normalize(), 2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.707f).normalize(), -2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.707f).normalize(), -2.121f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.707f).normalize(), 2.121f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.707f).normalize(), 2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.707f).normalize(), -2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.707f).normalize(), -2.828f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.707f).normalize(), 2.828f));
 
 	matrix = rotationMatrix * scaleMatrix;
 	logTestString("\nRotation * scale matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.354f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.354f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.354f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.354f).normalize(), -0.000f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.354f).normalize(), 0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.354f).normalize(), -0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.354f).normalize(), -0.894f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.354f).normalize(), 0.894f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.354f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.354f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.354f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.354f).normalize(), -0.000f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.354f).normalize(), 0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.354f).normalize(), -0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.354f).normalize(), -0.894f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.354f).normalize(), 0.894f));
 
 	matrix = translationMatrix * scaleMatrix;
 	logTestString("\nTranslation * scale matrix\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f"
-		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f"
+		      "\n%02.02f %02.02f %02.02f %02.02f\n",
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
 		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.354f,0.000f).normalize(), 1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.354f,0.000f).normalize(), -1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.354f,0.000f).normalize(), -1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.354f,0.000f).normalize(), 1.3416f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,-0.354f,0.000f).normalize(), 2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,0.354f,0.000f).normalize(), -2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,0.354f,0.000f).normalize(), -2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,-0.354f,0.000f).normalize(), 2.236f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.354f, 0.000f).normalize(), 1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.354f, 0.000f).normalize(), -1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.354f, 0.000f).normalize(), -1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.354f, 0.000f).normalize(), 1.3416f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.354f, 0.000f).normalize(), 2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.354f, 0.000f).normalize(), -2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.354f, 0.000f).normalize(), -2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.354f, 0.000f).normalize(), 2.236f));
 
 	matrix = rotationMatrix * translationMatrix * scaleMatrix;
-	logTestString("\nRotation * translation * scale matrix\n%02.02f %02.02f %02.02f %02.02f"
+	logTestString(
+		"\nRotation * translation * scale matrix\n%02.02f %02.02f %02.02f %02.02f"
 		"\n%02.02f %02.02f %02.02f %02.02f"
 		"\n%02.02f %02.02f %02.02f %02.02f"
 		"\n%02.02f %02.02f %02.02f %02.02f\n",
-		matrix[0], matrix[1], matrix[2], matrix[3],
-		matrix[4], matrix[5], matrix[6], matrix[7],
-		matrix[8], matrix[9], matrix[10], matrix[11],
-		matrix[12], matrix[13], matrix[14], matrix[15]);
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.354f).normalize(), 1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.354f).normalize(), -1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.354f).normalize(), -1.3416f));
-	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.354f).normalize(), 1.3416f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix, plane3df(vector3df(-0.707f,0.000f,-0.354f).normalize(), 2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix, plane3df(vector3df(0.707f,-0.000f,0.354f).normalize(), -2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix, plane3df(vector3df(-0.707f,-0.000f,0.354f).normalize(), -2.236f));
-	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix, plane3df(vector3df(0.707f,0.000f,-0.354f).normalize(), 2.236f));
+		matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5],
+		matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11],
+		matrix[12], matrix[13], matrix[14], matrix[15]
+	);
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.354f).normalize(), 1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.354f).normalize(), -1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.354f).normalize(), -1.3416f));
+	success &= transformPlane(vector3df(0, 0, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.354f).normalize(), 1.3416f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, -1, 0), matrix,
+		plane3df(vector3df(-0.707f, 0.000f, -0.354f).normalize(), 2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, 1, 0), matrix,
+		plane3df(vector3df(0.707f, -0.000f, 0.354f).normalize(), -2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(-1, 1, 0), matrix,
+		plane3df(vector3df(-0.707f, -0.000f, 0.354f).normalize(), -2.236f));
+	success &= transformPlane(vector3df(0, 1, 0), vector3df(1, -1, 0), matrix,
+		plane3df(vector3df(0.707f, 0.000f, -0.354f).normalize(), 2.236f));
 
 	success &= drawScaledOctree();
 
 	return success;
 }
-

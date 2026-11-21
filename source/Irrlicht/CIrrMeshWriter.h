@@ -16,46 +16,43 @@ namespace irr
 
 namespace scene
 {
-	class IMeshBuffer;
+class IMeshBuffer;
 
+//! class to write meshes, implementing a IrrMesh (.irrmesh, .xml) writer
+/** This writer implementation has been originally developed for irrEdit and then
+merged out to the Irrlicht Engine */
+class CIrrMeshWriter : public IMeshWriter {
+public:
+	CIrrMeshWriter(video::IVideoDriver* driver, io::IFileSystem* fs);
+	virtual ~CIrrMeshWriter();
 
-	//! class to write meshes, implementing a IrrMesh (.irrmesh, .xml) writer
-	/** This writer implementation has been originally developed for irrEdit and then
-	merged out to the Irrlicht Engine */
-	class CIrrMeshWriter : public IMeshWriter
-	{
-	public:
+	//! Returns the type of the mesh writer
+	virtual EMESH_WRITER_TYPE getType() const _IRR_OVERRIDE_;
 
-		CIrrMeshWriter(video::IVideoDriver* driver, io::IFileSystem* fs);
-		virtual ~CIrrMeshWriter();
+	//! writes a mesh
+	virtual bool writeMesh(io::IWriteFile* file,
+		scene::IMesh* mesh,
+		s32 flags = EMWF_NONE) _IRR_OVERRIDE_;
 
-		//! Returns the type of the mesh writer
-		virtual EMESH_WRITER_TYPE getType() const _IRR_OVERRIDE_;
+protected:
+	void writeBoundingBox(const core::aabbox3df& box);
 
-		//! writes a mesh
-		virtual bool writeMesh(io::IWriteFile* file, scene::IMesh* mesh, s32 flags=EMWF_NONE) _IRR_OVERRIDE_;
+	void writeMeshBuffer(const scene::IMeshBuffer* buffer);
 
-	protected:
+	void writeMaterial(const video::SMaterial& material);
 
-		void writeBoundingBox(const core::aabbox3df& box);
+	core::stringw getVectorAsStringLine(const core::vector3df& v) const;
 
-		void writeMeshBuffer(const scene::IMeshBuffer* buffer);
+	core::stringw getVectorAsStringLine(const core::vector2df& v) const;
 
-		void writeMaterial(const video::SMaterial& material);
+	// member variables:
 
-		core::stringw getVectorAsStringLine(const core::vector3df& v) const;
+	io::IFileSystem* FileSystem;
+	video::IVideoDriver* VideoDriver;
+	io::IXMLWriter* Writer;
+};
 
-		core::stringw getVectorAsStringLine(const core::vector2df& v) const;
-
-		// member variables:
-
-		io::IFileSystem* FileSystem;
-		video::IVideoDriver* VideoDriver;
-		io::IXMLWriter* Writer;
-	};
-
-} // end namespace
-} // end namespace
+} // namespace scene
+} // namespace irr
 
 #endif
-

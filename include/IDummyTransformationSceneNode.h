@@ -20,13 +20,15 @@ anywhere into the scene graph.
 This scene node is for example used by the IAnimatedMeshSceneNode for emulating
 joint scene nodes when playing skeletal animations.
 */
-class IDummyTransformationSceneNode : public ISceneNode
-{
+class IDummyTransformationSceneNode : public ISceneNode {
 public:
-
 	//! Constructor
-	IDummyTransformationSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id)
-		: ISceneNode(parent, mgr, id) {}
+	IDummyTransformationSceneNode(
+		ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id
+	) :
+		ISceneNode(parent, mgr, id) {}
 
 	//! Returns a reference to the current relative transformation matrix.
 	/** This is the matrix, this scene node uses instead of scale, translation
@@ -37,6 +39,4 @@ public:
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

@@ -17,20 +17,20 @@
 
 namespace irr
 {
-	class IOSOperator;
-	class IEventReceiver;
+class IOSOperator;
+class IEventReceiver;
 
-	namespace io
-	{
-		class IReadFile;
-		class IWriteFile;
-		class IFileSystem;
-	} // end namespace io
-	namespace video
-	{
-		class IVideoDriver;
-		class ITexture;
-	} // end namespace video
+namespace io
+{
+class IReadFile;
+class IWriteFile;
+class IFileSystem;
+} // end namespace io
+namespace video
+{
+class IVideoDriver;
+class ITexture;
+} // end namespace video
 
 namespace gui
 {
@@ -63,17 +63,17 @@ class IGUIProfiler;
 class IGUIElementFactory;
 
 //! GUI Environment. Used as factory and manager of all other GUI elements.
-/** \par This element can create the following events of type EGUI_EVENT_TYPE (which are passed on to focused sub-elements):
+/** \par This element can create the following events of type EGUI_EVENT_TYPE (which are
+passed on to focused sub-elements):
 \li EGET_ELEMENT_FOCUS_LOST
 \li EGET_ELEMENT_FOCUSED
 \li EGET_ELEMENT_LEFT
 \li EGET_ELEMENT_HOVERED
 */
-class IGUIEnvironment : public virtual IReferenceCounted
-{
+class IGUIEnvironment : public virtual IReferenceCounted {
 public:
-
-	//! Draws all gui elements by traversing the GUI environment starting at the root node.
+	//! Draws all gui elements by traversing the GUI environment starting at the root
+	//! node.
 	virtual void drawAll() = 0;
 
 	//! Sets the focus to an element.
@@ -105,9 +105,11 @@ public:
 
 	//! Returns whether the element has focus
 	/** \param element Pointer to the element which is tested.
-	\param checkSubElements When true and focus is on a sub-element of element then it will still count as focused and return true
+	\param checkSubElements When true and focus is on a sub-element of element then it
+	will still count as focused and return true
 	\return True if the element has focus, else false. */
-	virtual bool hasFocus(const IGUIElement* element, bool checkSubElements=false) const = 0;
+	virtual bool hasFocus(const IGUIElement* element,
+		bool checkSubElements = false) const = 0;
 
 	//! Returns the current video driver.
 	/** \return Pointer to the video driver. */
@@ -164,17 +166,17 @@ public:
 	See IReferenceCounted::drop() for more information. */
 	virtual IGUISkin* createSkin(EGUI_SKIN_TYPE type) = 0;
 
-
 	//! Creates the image list from the given texture.
 	/** \param texture Texture to split into images
 	\param imageSize Dimension of each image
-	\param useAlphaChannel Flag whether alpha channel of the texture should be honored.
+	\param useAlphaChannel Flag whether alpha channel of the texture should be
+	honored.
 	\return Pointer to the font. Returns 0 if the font could not be loaded.
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
-	virtual IGUIImageList* createImageList( video::ITexture* texture,
-					core::dimension2d<s32> imageSize,
-					bool useAlphaChannel ) = 0;
+	virtual IGUIImageList* createImageList(video::ITexture* texture,
+		core::dimension2d<s32> imageSize,
+		bool useAlphaChannel) = 0;
 
 	//! Returns pointer to the font with the specified filename.
 	/** Loads the font if it was not loaded before.
@@ -189,7 +191,8 @@ public:
 	existing fonts. The font is grabbed if non-null and adding was successful.
 	\param name Name the font should be stored as.
 	\param font Pointer to font to add.
-	\return Pointer to the font stored. This can differ from given parameter if the name previously existed. */
+	\return Pointer to the font stored. This can differ from given parameter if the
+	name previously existed. */
 	virtual IGUIFont* addFont(const io::path& name, IGUIFont* font) = 0;
 
 	//! remove loaded font
@@ -205,13 +208,15 @@ public:
 	/** TODO: This should load files in the future, but not implemented so far.
 	\param filename Name of a spritebank added with addEmptySpriteBank
 	\return Pointer to the sprite bank. Returns 0 if it could not be loaded.
-	This pointer should not be dropped. See IReferenceCounted::drop() for more information. */
+	This pointer should not be dropped. See IReferenceCounted::drop() for more
+	information. */
 	virtual IGUISpriteBank* getSpriteBank(const io::path& filename) = 0;
 
 	//! Adds an empty sprite bank to the manager
 	/** \param name Name of the new sprite bank.
 	\return Pointer to the sprite bank.
-	This pointer should not be dropped. See IReferenceCounted::drop() for more information. */
+	This pointer should not be dropped. See IReferenceCounted::drop() for more
+	information. */
 	virtual IGUISpriteBank* addEmptySpriteBank(const io::path& name) = 0;
 
 	//! Returns the root gui element.
@@ -233,7 +238,10 @@ public:
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
 	virtual IGUIButton* addButton(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0, const wchar_t* tooltiptext = 0) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		const wchar_t* text = 0,
+		const wchar_t* tooltiptext = 0) = 0;
 
 	//! Adds an empty window element.
 	/** \param rectangle Rectangle specifying the borders of the window.
@@ -246,8 +254,11 @@ public:
 	\return Pointer to the created window. Returns 0 if an error occurred.
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
-	virtual IGUIWindow* addWindow(const core::rect<s32>& rectangle, bool modal = false,
-		const wchar_t* text=0, IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIWindow* addWindow(const core::rect<s32>& rectangle,
+		bool modal = false,
+		const wchar_t* text = 0,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a modal screen.
 	/** This control stops its parent's members from being able to receive
@@ -264,16 +275,22 @@ public:
 	\param modal Defines if the dialog is modal. This means, that all other
 	gui elements which were created before the message box cannot be used
 	until this messagebox is removed.
-	\param flags Flags specifying the layout of the message box using ::EMESSAGE_BOX_FLAG.
-	Create a message box with an OK and CANCEL button for example with (EMBF_OK | EMBF_CANCEL).
+	\param flags Flags specifying the layout of the message box using
+	::EMESSAGE_BOX_FLAG. Create a message box with an OK and CANCEL button for example
+	with (EMBF_OK | EMBF_CANCEL).
 	\param parent Parent gui element of the message box.
 	\param id Id with which the gui element can be identified.
 	\param image Optional texture which will be displayed beside the text as an image
 	\return Pointer to the created message box. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIWindow* addMessageBox(const wchar_t* caption, const wchar_t* text=0,
-		bool modal = true, s32 flags = EMBF_OK, IGUIElement* parent=0, s32 id=-1, video::ITexture* image=0) = 0;
+	virtual IGUIWindow* addMessageBox(const wchar_t* caption,
+		const wchar_t* text = 0,
+		bool modal = true,
+		s32 flags = EMBF_OK,
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		video::ITexture* image = 0) = 0;
 
 	//! Adds a scrollbar.
 	/** \param horizontal Specifies if the scroll bar is drawn horizontal
@@ -284,8 +301,10 @@ public:
 	\return Pointer to the created scrollbar. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIScrollBar* addScrollBar(bool horizontal, const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIScrollBar* addScrollBar(bool horizontal,
+		const core::rect<s32>& rectangle,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds an image element.
 	/** \param image Image to be displayed.
@@ -299,8 +318,12 @@ public:
 	\return Pointer to the created image element. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIImage* addImage(video::ITexture* image, core::position2d<s32> pos,
-		bool useAlphaChannel=true, IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0) = 0;
+	virtual IGUIImage* addImage(video::ITexture* image,
+		core::position2d<s32> pos,
+		bool useAlphaChannel = true,
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		const wchar_t* text = 0) = 0;
 
 	//! Adds an image element.
 	/** Use IGUIImage::setImage later to set the image to be displayed.
@@ -314,7 +337,10 @@ public:
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIImage* addImage(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0, bool useAlphaChannel=true) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		const wchar_t* text = 0,
+		bool useAlphaChannel = true) = 0;
 
 	//! Adds a checkbox element.
 	/** \param checked Define the initial state of the check box.
@@ -325,8 +351,11 @@ public:
 	\return Pointer to the created check box. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUICheckBox* addCheckBox(bool checked, const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0) = 0;
+	virtual IGUICheckBox* addCheckBox(bool checked,
+		const core::rect<s32>& rectangle,
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		const wchar_t* text = 0) = 0;
 
 	//! Adds a list box element.
 	/** \param rectangle Rectangle specifying the borders of the list box.
@@ -337,7 +366,9 @@ public:
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
 	virtual IGUIListBox* addListBox(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, bool drawBackground=false) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		bool drawBackground = false) = 0;
 
 	//! Adds a tree view element.
 	/** \param rectangle Position and dimension of list box.
@@ -350,8 +381,11 @@ public:
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
 	virtual IGUITreeView* addTreeView(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, bool drawBackground=false,
-		bool scrollBarVertical = true, bool scrollBarHorizontal = false) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		bool drawBackground = false,
+		bool scrollBarVertical = true,
+		bool scrollBarHorizontal = false) = 0;
 
 	//! Adds a mesh viewer. Not 100% implemented yet.
 	/** \param rectangle Rectangle specifying the borders of the mesh viewer.
@@ -362,7 +396,9 @@ public:
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIMeshViewer* addMeshViewer(const core::rect<s32>& rectangle,
-			IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		const wchar_t* text = 0) = 0;
 
 	//! Adds a file open dialog.
 	/** \param title Text to be displayed as the title of the dialog.
@@ -378,9 +414,12 @@ public:
 	\return Pointer to the created file open dialog. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIFileOpenDialog* addFileOpenDialog(const wchar_t* title=0,
-		bool modal=true, IGUIElement* parent=0, s32 id=-1,
-		bool restoreCWD=false, io::path::char_type* startDir=0) = 0;
+	virtual IGUIFileOpenDialog* addFileOpenDialog(const wchar_t* title = 0,
+		bool modal = true,
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		bool restoreCWD = false,
+		io::path::char_type* startDir = 0) = 0;
 
 	//! Adds a color select dialog.
 	/** \param title The title of the dialog.
@@ -393,7 +432,9 @@ public:
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIColorSelectDialog* addColorSelectDialog(const wchar_t* title = 0,
-		bool modal=true, IGUIElement* parent=0, s32 id=-1) = 0;
+		bool modal = true,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a static text.
 	/** \param text Text to be displayed. Can be altered after creation by SetText().
@@ -407,8 +448,12 @@ public:
 	\return Pointer to the created static text. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIStaticText* addStaticText(const wchar_t* text, const core::rect<s32>& rectangle,
-		bool border=false, bool wordWrap=true, IGUIElement* parent=0, s32 id=-1,
+	virtual IGUIStaticText* addStaticText(const wchar_t* text,
+		const core::rect<s32>& rectangle,
+		bool border = false,
+		bool wordWrap = true,
+		IGUIElement* parent = 0,
+		s32 id = -1,
 		bool fillBackground = false) = 0;
 
 	//! Adds an edit box.
@@ -426,8 +471,11 @@ public:
 	\return Pointer to the created edit box. Returns 0 if an error occurred.
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
-	virtual IGUIEditBox* addEditBox(const wchar_t* text, const core::rect<s32>& rectangle,
-		bool border=true, IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIEditBox* addEditBox(const wchar_t* text,
+		const core::rect<s32>& rectangle,
+		bool border = true,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a spin box.
 	/** An edit box with up and down buttons
@@ -440,8 +488,11 @@ public:
 	\return Pointer to the created spin box. Returns 0 if an error occurred.
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
-	virtual IGUISpinBox* addSpinBox(const wchar_t* text, const core::rect<s32>& rectangle,
-		bool border=true,IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUISpinBox* addSpinBox(const wchar_t* text,
+		const core::rect<s32>& rectangle,
+		bool border = true,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds an element for fading in or out.
 	/** \param rectangle Rectangle specifying the borders of the fader.
@@ -451,7 +502,9 @@ public:
 	\return Pointer to the created in-out-fader. Returns 0 if an error
 	occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIInOutFader* addInOutFader(const core::rect<s32>* rectangle=0, IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIInOutFader* addInOutFader(const core::rect<s32>* rectangle = 0,
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a tab control to the environment.
 	/** \param rectangle Rectangle specifying the borders of the tab control.
@@ -467,8 +520,10 @@ public:
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUITabControl* addTabControl(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, bool fillbackground=false,
-		bool border=true, s32 id=-1) = 0;
+		IGUIElement* parent = 0,
+		bool fillbackground = false,
+		bool border = true,
+		s32 id = -1) = 0;
 
 	//! Adds tab to the environment.
 	/** You can use this element to group other elements. This is not used
@@ -482,7 +537,8 @@ public:
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUITab* addTab(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a context menu to the environment.
 	/** \param rectangle Rectangle specifying the borders of the menu.
@@ -494,7 +550,8 @@ public:
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIContextMenu* addContextMenu(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a menu to the environment.
 	/** This is like the menu you can find on top of most windows in modern
@@ -505,7 +562,7 @@ public:
 	\return Pointer to the created menu. Returns 0 if an
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIContextMenu* addMenu(IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIContextMenu* addMenu(IGUIElement* parent = 0, s32 id = -1) = 0;
 
 	//! Adds a toolbar to the environment.
 	/** It is like a menu that is always placed on top of its parent, and
@@ -516,7 +573,7 @@ public:
 	\return Pointer to the created tool bar. Returns 0 if an
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
-	virtual IGUIToolBar* addToolBar(IGUIElement* parent=0, s32 id=-1) = 0;
+	virtual IGUIToolBar* addToolBar(IGUIElement* parent = 0, s32 id = -1) = 0;
 
 	//! Adds a combo box to the environment.
 	/** \param rectangle Rectangle specifying the borders of the combo box.
@@ -527,7 +584,8 @@ public:
 	error occurred. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIComboBox* addComboBox(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Adds a table to the environment
 	/** \param rectangle Rectangle specifying the borders of the table.
@@ -539,7 +597,9 @@ public:
 	This pointer should not be dropped. See IReferenceCounted::drop() for
 	more information. */
 	virtual IGUITable* addTable(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1, bool drawBackground=false) =0;
+		IGUIElement* parent = 0,
+		s32 id = -1,
+		bool drawBackground = false) = 0;
 
 	//! Adds an element to display the information from the Irrlicht profiler
 	/** \param rectangle Rectangle specifying the borders of the element.
@@ -547,7 +607,8 @@ public:
 	be the parent.
 	\param id An identifier for the element. */
 	virtual IGUIProfiler* addProfilerDisplay(const core::rect<s32>& rectangle,
-		IGUIElement* parent=0, s32 id=-1) = 0;
+		IGUIElement* parent = 0,
+		s32 id = -1) = 0;
 
 	//! Get the default element factory which can create all built-in elements
 	/** \return Pointer to the factory.
@@ -577,62 +638,69 @@ public:
 	\param elementName Name of the element to be created.
 	\param parent Parent of the new element, if not 0.
 	\return New GUI element, or 0 if no such element exists. */
-	virtual IGUIElement* addGUIElement(const c8* elementName, IGUIElement* parent=0) = 0;
+	virtual IGUIElement* addGUIElement(const c8* elementName,
+		IGUIElement* parent = 0) = 0;
 
 	//! Saves the current gui into a file.
 	/** \param filename Name of the file.
 	\param start The GUIElement to start with. Root if 0.
 	\return True if saving succeeded, else false. */
-	virtual bool saveGUI(const io::path& filename, IGUIElement* start=0) = 0;
+	virtual bool saveGUI(const io::path& filename, IGUIElement* start = 0) = 0;
 
 	//! Saves the current gui into a file.
 	/** \param file The file to write to.
 	\param start The GUIElement to start with. Root if 0.
 	\return True if saving succeeded, else false. */
-	virtual bool saveGUI(io::IWriteFile* file, IGUIElement* start=0) = 0;
+	virtual bool saveGUI(io::IWriteFile* file, IGUIElement* start = 0) = 0;
 
 	//! Loads the gui. Note that the current gui is not cleared before.
-	/** When a parent is set the elements will be added below the parent, the parent itself does not deserialize.
-	When the file contains skin-settings from the gui-environment those are always serialized into the
-	guienvironment independent of the parent setting.
+	/** When a parent is set the elements will be added below the parent, the parent
+	itself does not deserialize. When the file contains skin-settings from the
+	gui-environment those are always serialized into the guienvironment independent of
+	the parent setting.
 	\param filename Name of the file.
 	\param parent Parent for the loaded GUI, root if 0.
 	\return True if loading succeeded, else false. */
-	virtual bool loadGUI(const io::path& filename, IGUIElement* parent=0) = 0;
+	virtual bool loadGUI(const io::path& filename, IGUIElement* parent = 0) = 0;
 
 	//! Loads the gui. Note that the current gui is not cleared before.
-	/** When a parent is set the elements will be added below the parent, the parent itself does not deserialize.
-	When the file contains skin-settings from the gui-environment those are always serialized into the
-	guienvironment independent of the parent setting.
+	/** When a parent is set the elements will be added below the parent, the parent
+	itself does not deserialize. When the file contains skin-settings from the
+	gui-environment those are always serialized into the guienvironment independent of
+	the parent setting.
 	\param file The file to load from.
 	\param parent Parent for the loaded GUI, root if 0.
 	\return True if loading succeeded, else false. */
-	virtual bool loadGUI(io::IReadFile* file, IGUIElement* parent=0) = 0;
+	virtual bool loadGUI(io::IReadFile* file, IGUIElement* parent = 0) = 0;
 
 	//! Writes attributes of the gui environment
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options=0) const =0;
+	virtual void serializeAttributes(io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0) const = 0;
 
 	//! Reads attributes of the gui environment
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options=0)=0;
+	virtual void deserializeAttributes(io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0) = 0;
 
 	//! writes an element
-	virtual void writeGUIElement(io::IXMLWriter* writer, IGUIElement* node) =0;
+	virtual void writeGUIElement(io::IXMLWriter* writer, IGUIElement* node) = 0;
 
 	//! reads an element
-	virtual void readGUIElement(io::IXMLReader* reader, IGUIElement* node) =0;
+	virtual void readGUIElement(io::IXMLReader* reader, IGUIElement* node) = 0;
 
 	//! Find the next element which would be selected when pressing the tab-key
-	/** If you set the focus for the result you can manually force focus-changes like they
-	would happen otherwise by the tab-keys.
-	\param reverse When true it will search backward (toward lower TabOrder numbers, like shift+tab)
+	/** If you set the focus for the result you can manually force focus-changes like
+	they would happen otherwise by the tab-keys.
+	\param reverse When true it will search backward (toward lower TabOrder numbers,
+	like shift+tab)
 	\param group When true it will search for the next tab-group (like ctrl+tab)
 	*/
-	virtual IGUIElement* getNextElement(bool reverse=false, bool group=false) = 0;
+	virtual IGUIElement* getNextElement(bool reverse = false, bool group = false) = 0;
 
 	//! Set the way the gui will handle automatic focus changes
 	/** The default is (EFF_SET_ON_LMOUSE_DOWN | EFF_SET_ON_TAB).
 	with the left mouse button.
-	This does not affect the setFocus function itself - users can still call that whenever they want on any element.
+	This does not affect the setFocus function itself - users can still call that
+	whenever they want on any element.
 	\param flags A bitmask which is a combination of ::EFOCUS_FLAG flags.*/
 	virtual void setFocusBehavior(u32 flags) = 0;
 
@@ -641,9 +709,7 @@ public:
 	virtual u32 getFocusBehavior() const = 0;
 };
 
-
 } // end namespace gui
 } // end namespace irr
 
 #endif
-

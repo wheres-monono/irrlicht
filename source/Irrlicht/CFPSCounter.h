@@ -12,9 +12,7 @@ namespace irr
 namespace video
 {
 
-
-class CFPSCounter
-{
+class CFPSCounter {
 public:
 	CFPSCounter();
 
@@ -34,7 +32,6 @@ public:
 	void registerFrame(u32 now, u32 primitive);
 
 private:
-
 	s32 FPS;
 	u32 Primitive;
 	u32 StartTime;
@@ -45,10 +42,7 @@ private:
 	u32 PrimitiveTotal;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
-
 #endif
-

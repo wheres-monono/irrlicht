@@ -11,8 +11,7 @@ namespace io
 {
 
 //! Types of attributes available for IAttributes
-enum E_ATTRIBUTE_TYPE
-{
+enum E_ATTRIBUTE_TYPE {
 	// integer attribute
 	EAT_INT = 0,
 

@@ -11,43 +11,53 @@ namespace irr
 {
 namespace gui
 {
-	class IGUIElement;
-	class IGUIEnvironment;
+class IGUIElement;
+class IGUIEnvironment;
 
-	//!	Interface making it possible to dynamicly create gui elements
-	class CGUIEditFactory : public IGUIElementFactory
-	{
-	public:
+//!	Interface making it possible to dynamicly create gui elements
+class CGUIEditFactory : public IGUIElementFactory {
+public:
+	CGUIEditFactory(IGUIEnvironment* env);
+	~CGUIEditFactory();
 
-		CGUIEditFactory(IGUIEnvironment* env);
-		~CGUIEditFactory();
+	//! adds a GUI element to the GUI Environment based on its type name
+	/** \param typeName: Type name of the element to add.
+	\param parent: Parent scene node of the new element, can be null to add it to the
+	root.
+	\return Returns pointer to the new element or null if not successful. */
+	virtual IGUIElement* addGUIElement(const c8* typeName, IGUIElement* parent = 0);
 
-		//! adds a GUI element to the GUI Environment based on its type name
-		/** \param typeName: Type name of the element to add.
-		\param parent: Parent scene node of the new element, can be null to add it to the root.
-		\return Returns pointer to the new element or null if not successful. */
-		virtual IGUIElement* addGUIElement(const c8* typeName, IGUIElement* parent=0);
+	//! returns amount of GUI element types this factory is able to create
+	virtual s32 getCreatableGUIElementTypeCount() const;
 
-		//! returns amount of GUI element types this factory is able to create
-		virtual s32 getCreatableGUIElementTypeCount() const;
+	//! returns type name of a creatable GUI element type by index
+	/** \param idx: Index of the type in this factory. Must be a value between 0 and
+	getCreatableGUIElementTypeCount() */
+	virtual const c8* getCreateableGUIElementTypeName(s32 idx) const;
 
-		//! returns type name of a creatable GUI element type by index
-		/** \param idx: Index of the type in this factory. Must be a value between 0 and
-		getCreatableGUIElementTypeCount() */
-		virtual const c8* getCreateableGUIElementTypeName(s32 idx) const;
-
-		// not used:
-		virtual const c8* getCreateableGUIElementTypeName(EGUI_ELEMENT_TYPE type) const {return 0;} ;
-		virtual EGUI_ELEMENT_TYPE getCreateableGUIElementType(s32 idx) const { return EGUIET_ELEMENT;};
-		virtual IGUIElement* addGUIElement(EGUI_ELEMENT_TYPE type, IGUIElement* parent=0) {return 0;};
-	private:
-
-		IGUIEnvironment* Environment;
+	// not used:
+	virtual const c8* getCreateableGUIElementTypeName(
+		EGUI_ELEMENT_TYPE type
+	) const {
+		return 0;
+	};
+	virtual EGUI_ELEMENT_TYPE getCreateableGUIElementType(
+		s32 idx
+	) const {
+		return EGUIET_ELEMENT;
+	};
+	virtual IGUIElement* addGUIElement(
+		EGUI_ELEMENT_TYPE type,
+		IGUIElement* parent = 0
+	) {
+		return 0;
 	};
 
+private:
+	IGUIEnvironment* Environment;
+};
 
-} // end namespace scene
+} // namespace gui
 } // end namespace irr
 
 #endif
-

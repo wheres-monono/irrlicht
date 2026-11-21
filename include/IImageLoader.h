@@ -15,7 +15,7 @@ namespace irr
 {
 namespace io
 {
-	class IReadFile;
+class IReadFile;
 } // end namespace io
 namespace video
 {
@@ -25,10 +25,8 @@ namespace video
 currently unsupported file formats (e.g .gif), then implement
 this and add your new Surface loader with
 IVideoDriver::addExternalImageLoader() to the engine. */
-class IImageLoader : public virtual IReferenceCounted
-{
+class IImageLoader : public virtual IReferenceCounted {
 public:
-
 	//! Check if the file might be loaded by this class
 	/** Check is based on the file extension (e.g. ".tga")
 	\param filename Name of file to check.
@@ -48,19 +46,20 @@ public:
 
 	//! Creates a multiple surfaces from the file eg. whole cube map.
 	/** \param file File handle to check.
-	\param type Pointer to E_TEXTURE_TYPE where a recommended type of the texture will be stored.
+	\param type Pointer to E_TEXTURE_TYPE where a recommended type of the texture will
+	be stored.
 	\return Array of pointers to newly created images. */
-	virtual core::array<IImage*> loadImages(io::IReadFile* file, E_TEXTURE_TYPE* type) const
-	{
+	virtual core::array<IImage*> loadImages(
+		io::IReadFile* file,
+		E_TEXTURE_TYPE* type
+	) const {
 		core::array<IImage*> image;
 
 		return image;
 	}
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
-

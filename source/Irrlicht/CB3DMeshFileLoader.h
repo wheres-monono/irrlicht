@@ -24,16 +24,15 @@ namespace scene
 {
 
 //! Meshloader for B3D format
-class CB3DMeshFileLoader : public IMeshLoader
-{
+class CB3DMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CB3DMeshFileLoader(scene::ISceneManager* smgr);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -42,12 +41,13 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 	bool load();
 	bool readChunkNODE(CSkinnedMesh::SJoint* InJoint);
 	bool readChunkMESH(CSkinnedMesh::SJoint* InJoint);
 	bool readChunkVRTS(CSkinnedMesh::SJoint* InJoint);
-	bool readChunkTRIS(scene::SSkinMeshBuffer *MeshBuffer, u32 MeshBufferID, s32 Vertices_Start);
+	bool readChunkTRIS(scene::SSkinMeshBuffer* MeshBuffer,
+		u32 MeshBufferID,
+		s32 Vertices_Start);
 	bool readChunkBONE(CSkinnedMesh::SJoint* InJoint);
 	bool readChunkKEYS(CSkinnedMesh::SJoint* InJoint);
 	bool readChunkANIM();
@@ -70,12 +70,12 @@ private:
 
 	core::array<video::S3DVertex2TCoords> BaseVertices;
 
-	ISceneManager*	SceneManager;
-	CSkinnedMesh*	AnimatedMesh;
-	io::IReadFile*	B3DFile;
+	ISceneManager* SceneManager;
+	CSkinnedMesh* AnimatedMesh;
+	io::IReadFile* B3DFile;
 
-	//B3Ds have Vertex ID's local within the mesh I don't want this
-	// Variable needs to be class member due to recursion in calls
+	// B3Ds have Vertex ID's local within the mesh I don't want this
+	//  Variable needs to be class member due to recursion in calls
 	u32 VerticesStart;
 
 	bool NormalsInFile;
@@ -83,9 +83,7 @@ private:
 	bool ShowWarning;
 };
 
-
 } // end namespace scene
 } // end namespace irr
 
 #endif // __C_B3D_MESH_LOADER_H_INCLUDED__
-

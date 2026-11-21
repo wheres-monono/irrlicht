@@ -8,49 +8,58 @@ using namespace core;
 using namespace scene;
 
 /** Test functionality of the ISceneNodeAnimator implementations. */
-bool sceneNodeAnimator(void)
-{
-	IrrlichtDevice * device = irr::createDevice(video::EDT_NULL, dimension2d<u32>(160, 120));
+bool sceneNodeAnimator(
+	void
+) {
+	IrrlichtDevice* device =
+		irr::createDevice(video::EDT_NULL, dimension2d<u32>(160, 120));
 	assert_log(device);
-	if(!device)
+	if (!device) {
 		return false;
+	}
 
-	ISceneManager * smgr = device->getSceneManager();
+	ISceneManager* smgr = device->getSceneManager();
 
 	// Test the hasFinished() method.
-	ISceneNodeAnimatorCollisionResponse* collisionResponseAnimator
-		= smgr->createCollisionResponseAnimator(0, 0);
+	ISceneNodeAnimatorCollisionResponse* collisionResponseAnimator =
+		smgr->createCollisionResponseAnimator(0, 0);
 
 	ISceneNodeAnimator* deleteAnimator = smgr->createDeleteAnimator(1);
 
 	ISceneNodeAnimator* flyCircleAnimator = smgr->createFlyCircleAnimator();
 
-	ISceneNodeAnimator* flyStraightAnimator
-		= smgr->createFlyStraightAnimator(vector3df(0, 0, 0), vector3df(0, 0, 0), 1, false);
+	ISceneNodeAnimator* flyStraightAnimator =
+		smgr->createFlyStraightAnimator(vector3df(0, 0, 0), vector3df(0, 0, 0), 1,
+			false);
 
-	ISceneNodeAnimator* flyStraightAnimatorLooping
-		= smgr->createFlyStraightAnimator(vector3df(0, 0, 0), vector3df(0, 0, 0), 1, true);
+	ISceneNodeAnimator* flyStraightAnimatorLooping =
+		smgr->createFlyStraightAnimator(vector3df(0, 0, 0), vector3df(0, 0, 0), 1,
+			true);
 
-	ISceneNodeAnimator* rotationAnimator = smgr->createRotationAnimator(vector3df(0, 0, 0));
+	ISceneNodeAnimator* rotationAnimator =
+		smgr->createRotationAnimator(vector3df(0, 0, 0));
 
 	array<vector3df> points;
 	points.push_back(vector3df(0, 0, 0));
 	points.push_back(vector3df(0, 0, 0));
-	ISceneNodeAnimator* followSplineAnimator = smgr->createFollowSplineAnimator(0, points, 1000.f);
+	ISceneNodeAnimator* followSplineAnimator =
+		smgr->createFollowSplineAnimator(0, points, 1000.f);
 
 	array<video::ITexture*> textures;
 	textures.push_back(0);
 	textures.push_back(0);
 
-	ISceneNodeAnimator* textureAnimator = smgr->createTextureAnimator(textures, 1, false);
-	ISceneNodeAnimator* textureAnimatorLooping = smgr->createTextureAnimator(textures, 1, true);
+	ISceneNodeAnimator* textureAnimator =
+		smgr->createTextureAnimator(textures, 1, false);
+	ISceneNodeAnimator* textureAnimatorLooping =
+		smgr->createTextureAnimator(textures, 1, true);
 
 	bool result = true;
 
-	ISceneNode * deletedNode = smgr->addEmptySceneNode();
+	ISceneNode* deletedNode = smgr->addEmptySceneNode();
 	deletedNode->addAnimator(deleteAnimator);
 
-	ISceneNode * testNode = smgr->addEmptySceneNode();
+	ISceneNode* testNode = smgr->addEmptySceneNode();
 	testNode->addAnimator(collisionResponseAnimator);
 	testNode->addAnimator(deleteAnimator);
 	testNode->addAnimator(flyCircleAnimator);
@@ -105,13 +114,10 @@ bool sceneNodeAnimator(void)
 	device->run();
 	device->drop();
 
-	if(!result)
-	{
+	if (!result) {
 		logTestString("One or more animators has a bad hasFinished() state\n.");
 		assert_log(false);
 	}
 
 	return result;
 }
-
-

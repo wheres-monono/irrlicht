@@ -17,10 +17,8 @@ namespace scene
 providing together the interface of one triangle selector. In this way,
 collision tests can be done with different triangle soups in one pass.
 */
-class IMetaTriangleSelector : public ITriangleSelector
-{
+class IMetaTriangleSelector : public ITriangleSelector {
 public:
-
 	//! Adds a triangle selector to the collection of triangle selectors.
 	/** \param toAdd: Pointer to an triangle selector to add to the list. */
 	virtual void addTriangleSelector(ITriangleSelector* toAdd) = 0;
@@ -38,6 +36,4 @@ public:
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

@@ -14,10 +14,8 @@ namespace scene
 {
 
 //! Interface for making multiple triangle selectors work as one big selector.
-class CMetaTriangleSelector : public IMetaTriangleSelector
-{
+class CMetaTriangleSelector : public IMetaTriangleSelector {
 public:
-
 	//! constructor
 	CMetaTriangleSelector();
 
@@ -28,34 +26,51 @@ public:
 	virtual s32 getTriangleCount() const _IRR_OVERRIDE_;
 
 	//! Gets all triangles.
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::matrix4* transform, bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	virtual void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Gets all triangles which lie within a specific bounding box.
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::aabbox3d<f32>& box,
-		const core::matrix4* transform,	bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	virtual void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::aabbox3d<f32>& box,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Gets all triangles which have or may have contact with a 3d line.
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::line3d<f32>& line,
-		const core::matrix4* transform,	bool useNodeTransform, 
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo) const _IRR_OVERRIDE_;
+	virtual void getTriangles(
+		core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::line3d<f32>& line,
+		const core::matrix4* transform,
+		bool useNodeTransform,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo
+	) const _IRR_OVERRIDE_;
 
 	//! Adds a triangle selector to the collection of triangle selectors
 	//! in this metaTriangleSelector.
 	virtual void addTriangleSelector(ITriangleSelector* toAdd) _IRR_OVERRIDE_;
 
-	//! Removes a specific triangle selector which was added before	from the collection.
+	//! Removes a specific triangle selector which was added before	from the
+	//! collection.
 	virtual bool removeTriangleSelector(ITriangleSelector* toRemove) _IRR_OVERRIDE_;
 
 	//! Removes all triangle selectors from the collection.
 	virtual void removeAllTriangleSelectors() _IRR_OVERRIDE_;
 
 	//! Get the scene node associated with a given triangle.
-	virtual ISceneNode* getSceneNodeForTriangle(u32 triangleIndex) const _IRR_OVERRIDE_;
+	virtual ISceneNode*
+	getSceneNodeForTriangle(u32 triangleIndex) const _IRR_OVERRIDE_;
 
 	// Get the number of TriangleSelectors that are part of this one
 	virtual u32 getSelectorCount() const _IRR_OVERRIDE_;
@@ -67,13 +82,10 @@ public:
 	virtual const ITriangleSelector* getSelector(u32 index) const _IRR_OVERRIDE_;
 
 private:
-
 	core::array<ITriangleSelector*> TriangleSelectors;
 };
 
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

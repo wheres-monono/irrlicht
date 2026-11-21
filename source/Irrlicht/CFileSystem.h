@@ -13,17 +13,15 @@ namespace irr
 namespace io
 {
 
-	class CZipReader;
-	class CPakReader;
-	class CMountPointReader;
+class CZipReader;
+class CPakReader;
+class CMountPointReader;
 
 /*!
 	FileSystem which uses normal files and one zipfile
 */
-class CFileSystem : public IFileSystem
-{
+class CFileSystem : public IFileSystem {
 public:
-
 	//! constructor
 	CFileSystem();
 
@@ -34,30 +32,42 @@ public:
 	virtual IReadFile* createAndOpenFile(const io::path& filename) _IRR_OVERRIDE_;
 
 	//! Creates an IReadFile interface for accessing memory like a file.
-	virtual IReadFile* createMemoryReadFile(const void* memory, s32 len, const io::path& fileName, bool deleteMemoryWhenDropped = false) _IRR_OVERRIDE_;
+	virtual IReadFile* createMemoryReadFile(const void* memory,
+		s32 len,
+		const io::path& fileName,
+		bool deleteMemoryWhenDropped = false) _IRR_OVERRIDE_;
 
 	//! Creates an IReadFile interface for accessing files inside files
-	virtual IReadFile* createLimitReadFile(const io::path& fileName, IReadFile* alreadyOpenedFile, long pos, long areaSize) _IRR_OVERRIDE_;
+	virtual IReadFile* createLimitReadFile(const io::path& fileName,
+		IReadFile* alreadyOpenedFile,
+		long pos,
+		long areaSize) _IRR_OVERRIDE_;
 
 	//! Creates an IWriteFile interface for accessing memory like a file.
-	virtual IWriteFile* createMemoryWriteFile(void* memory, s32 len, const io::path& fileName, bool deleteMemoryWhenDropped=false) _IRR_OVERRIDE_;
+	virtual IWriteFile* createMemoryWriteFile(void* memory,
+		s32 len,
+		const io::path& fileName,
+		bool deleteMemoryWhenDropped = false) _IRR_OVERRIDE_;
 
 	//! Opens a file for write access.
-	virtual IWriteFile* createAndWriteFile(const io::path& filename, bool append=false) _IRR_OVERRIDE_;
+	virtual IWriteFile* createAndWriteFile(const io::path& filename,
+		bool append = false) _IRR_OVERRIDE_;
 
 	//! Adds an archive to the file system.
 	virtual bool addFileArchive(const io::path& filename,
-			bool ignoreCase = true, bool ignorePaths = true,
-			E_FILE_ARCHIVE_TYPE archiveType = EFAT_UNKNOWN,
-			const core::stringc& password="",
-			IFileArchive** retArchive = 0) _IRR_OVERRIDE_;
+		bool ignoreCase = true,
+		bool ignorePaths = true,
+		E_FILE_ARCHIVE_TYPE archiveType = EFAT_UNKNOWN,
+		const core::stringc& password = "",
+		IFileArchive** retArchive = 0) _IRR_OVERRIDE_;
 
 	//! Adds an archive to the file system.
-	virtual bool addFileArchive(IReadFile* file, bool ignoreCase=true,
-			bool ignorePaths=true,
-			E_FILE_ARCHIVE_TYPE archiveType=EFAT_UNKNOWN,
-			const core::stringc& password="",
-			IFileArchive** retArchive = 0) _IRR_OVERRIDE_;
+	virtual bool addFileArchive(IReadFile* file,
+		bool ignoreCase = true,
+		bool ignorePaths = true,
+		E_FILE_ARCHIVE_TYPE archiveType = EFAT_UNKNOWN,
+		const core::stringc& password = "",
+		IFileArchive** retArchive = 0) _IRR_OVERRIDE_;
 
 	//! Adds an archive to the file system.
 	virtual bool addFileArchive(IFileArchive* archive) _IRR_OVERRIDE_;
@@ -95,9 +105,11 @@ public:
 	//! Changes the current Working Directory to the string given.
 	//! The string is operating system dependent. Under Windows it will look
 	//! like this: "drive:\directory\sudirectory\"
-	virtual bool changeWorkingDirectoryTo(const io::path& newDirectory) _IRR_OVERRIDE_;
+	virtual bool
+	changeWorkingDirectoryTo(const io::path& newDirectory) _IRR_OVERRIDE_;
 
-	//! Converts a relative path to an absolute (unique) path, resolving symbolic links
+	//! Converts a relative path to an absolute (unique) path, resolving symbolic
+	//! links
 	virtual io::path getAbsolutePath(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! Returns the directory a file is located in.
@@ -107,22 +119,28 @@ public:
 	//! Returns the base part of a filename, i.e. the name without the directory
 	//! part. If no directory is prefixed, the full name is returned.
 	/** \param filename: The file to get the basename from */
-	virtual io::path getFileBasename(const io::path& filename, bool keepExtension=true) const _IRR_OVERRIDE_;
+	virtual io::path getFileBasename(const io::path& filename,
+		bool keepExtension = true) const _IRR_OVERRIDE_;
 
 	//! flatten a path and file name for example: "/you/me/../." becomes "/you"
-	virtual io::path& flattenFilename( io::path& directory, const io::path& root = "/" ) const _IRR_OVERRIDE_;
+	virtual io::path& flattenFilename(io::path& directory,
+		const io::path& root = "/") const _IRR_OVERRIDE_;
 
 	//! Get the relative filename, relative to the given directory
-	virtual path getRelativeFilename(const path& filename, const path& directory) const _IRR_OVERRIDE_;
+	virtual path getRelativeFilename(const path& filename,
+		const path& directory) const _IRR_OVERRIDE_;
 
-	virtual EFileSystemType setFileListSystem(EFileSystemType listType) _IRR_OVERRIDE_;
+	virtual EFileSystemType
+	setFileListSystem(EFileSystemType listType) _IRR_OVERRIDE_;
 
 	//! Creates a list of files and directories in the current working directory
 	//! and returns it.
 	virtual IFileList* createFileList() _IRR_OVERRIDE_;
 
 	//! Creates an empty filelist
-	virtual IFileList* createEmptyFileList(const io::path& path, bool ignoreCase, bool ignorePaths) _IRR_OVERRIDE_;
+	virtual IFileList* createEmptyFileList(const io::path& path,
+		bool ignoreCase,
+		bool ignorePaths) _IRR_OVERRIDE_;
 
 	//! determines if a file exists and would be able to be opened.
 	virtual bool existFile(const io::path& filename) const _IRR_OVERRIDE_;
@@ -134,7 +152,8 @@ public:
 	virtual IXMLReader* createXMLReader(IReadFile* file) _IRR_OVERRIDE_;
 
 	//! Creates a XML Reader from a file.
-	virtual IXMLReaderUTF8* createXMLReaderUTF8(const io::path& filename) _IRR_OVERRIDE_;
+	virtual IXMLReaderUTF8*
+	createXMLReaderUTF8(const io::path& filename) _IRR_OVERRIDE_;
 
 	//! Creates a XML Reader from a file.
 	virtual IXMLReaderUTF8* createXMLReaderUTF8(IReadFile* file) _IRR_OVERRIDE_;
@@ -145,35 +164,36 @@ public:
 	//! Creates a XML Writer from a file.
 	virtual IXMLWriter* createXMLWriter(IWriteFile* file) _IRR_OVERRIDE_;
 
-	//! Creates a XML Writer from a file which will write ASCII/UTF-8 characters (char*).
+	//! Creates a XML Writer from a file which will write ASCII/UTF-8 characters
+	//! (char*).
 	virtual IXMLWriterUTF8* createXMLWriterUTF8(const path& filename) _IRR_OVERRIDE_;
 
-	//! Creates a XML Writer from a file which will write ASCII/UTF-8 characters (char*).
+	//! Creates a XML Writer from a file which will write ASCII/UTF-8 characters
+	//! (char*).
 	virtual IXMLWriterUTF8* createXMLWriterUTF8(IWriteFile* file) _IRR_OVERRIDE_;
 
-	//! Creates a new empty collection of attributes, usable for serialization and more.
-	virtual IAttributes* createEmptyAttributes(video::IVideoDriver* driver) _IRR_OVERRIDE_;
+	//! Creates a new empty collection of attributes, usable for serialization and
+	//! more.
+	virtual IAttributes*
+	createEmptyAttributes(video::IVideoDriver* driver) _IRR_OVERRIDE_;
 
 private:
-
 	// don't expose, needs refactoring
 	bool changeArchivePassword(const path& filename,
-			const core::stringc& password,
-			IFileArchive** archive = 0);
+		const core::stringc& password,
+		IFileArchive** archive = 0);
 
 	//! Currently used FileSystemType
 	EFileSystemType FileSystemType;
 	//! WorkingDirectory for Native and Virtual filesystems
-	io::path WorkingDirectory [2];
+	io::path WorkingDirectory[2];
 	//! currently attached ArchiveLoaders
 	core::array<IArchiveLoader*> ArchiveLoader;
 	//! currently attached Archives
 	core::array<IFileArchive*> FileArchives;
 };
 
-
-} // end namespace irr
-} // end namespace io
+} // namespace io
+} // namespace irr
 
 #endif
-

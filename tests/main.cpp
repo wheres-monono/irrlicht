@@ -15,32 +15,32 @@
 #include <time.h>
 #include <vector>
 
-struct STestDefinition
-{
+struct STestDefinition {
 	//! The test entry point function
-	bool(*testSignature)(void);
+	bool (*testSignature)(void);
 
 	//! A descriptive name for the test
-	const char * testName;
+	const char* testName;
 };
 
 //! This is the main entry point for the Irrlicht test suite.
 /** \return The number of test that failed, i.e. 0 is success. */
-int main(int argumentCount, char * arguments[])
-{
-	if(argumentCount > 3)
-	{
+int main(
+	int argumentCount,
+	char* arguments[]
+) {
+	if (argumentCount > 3) {
 		logTestString("\nUsage: %s [testNumber] [testCount]\n");
 		return 9999;
 	}
 
-	#define TEST(x)\
-	{\
-		extern bool x(void);\
-		STestDefinition newTest;\
-		newTest.testSignature = x;\
-		newTest.testName = #x;\
-		tests.push_back(newTest);\
+#define TEST(x)                                                                          \
+	{                                                                                \
+		extern bool x(void);                                                     \
+		STestDefinition newTest;                                                 \
+		newTest.testSignature = x;                                               \
+		newTest.testName = #x;                                                   \
+		tests.push_back(newTest);                                                \
 	}
 
 	// Use an STL vector so that we don't rely on Irrlicht.
@@ -51,7 +51,8 @@ int main(int argumentCount, char * arguments[])
 	// Otherwise debugging is slightly tricky as each test runs in it's own process.
 	TEST(textureFeatures);
 #else
-	TEST(disambiguateTextures); // Normally you should run this first, since it validates the working directory.
+	TEST(disambiguateTextures); // Normally you should run this first, since it
+				    // validates the working directory.
 	// Now the simple tests without device
 	TEST(testIrrArray);
 	TEST(testIrrMap);
@@ -67,7 +68,7 @@ int main(int argumentCount, char * arguments[])
 	TEST(testQuaternion);
 	TEST(testS3DVertex);
 	TEST(testaabbox3d);
-    TEST(color);
+	TEST(color);
 	TEST(testTriangle3d);
 	TEST(vectorPositionDimension2d);
 	// file system checks (with null driver)
@@ -123,8 +124,8 @@ int main(int argumentCount, char * arguments[])
 	TEST(projectionMatrix);
 	// large scenes/long rendering
 	// shadows are slow
-//	TEST(orthoCam);
-//	TEST(stencilShadow);
+	//	TEST(orthoCam);
+	//	TEST(stencilShadow);
 	// q3 maps are slow
 	TEST(planeMatrix);
 	TEST(terrainSceneNode);
@@ -137,15 +138,12 @@ int main(int argumentCount, char * arguments[])
 	unsigned int testToRun = 0;
 	unsigned int fails = 0;
 
-	bool firstRun=true;
-	const bool spawn=false;
+	bool firstRun = true;
+	const bool spawn = false;
 	// args: [testNumber] [testCount]
-	if(argumentCount > 1)
-	{
-		if (!strcmp(arguments[1],"--list"))
-		{
-			for (unsigned int i=0; i<tests.size(); ++i)
-			{
+	if (argumentCount > 1) {
+		if (!strcmp(arguments[1], "--list")) {
+			for (unsigned int i = 0; i < tests.size(); ++i) {
 				logTestString("%3d: %s\n", i, tests[i].testName);
 			}
 			logTestString("\n");
@@ -153,64 +151,61 @@ int main(int argumentCount, char * arguments[])
 		}
 
 		int tmp = atoi(arguments[1]);
-		firstRun = (tmp>=0);
-		testToRun=abs(tmp);
-		if (!firstRun)
+		firstRun = (tmp >= 0);
+		testToRun = abs(tmp);
+		if (!firstRun) {
 			testToRun -= 1;
+		}
 
-		if(argumentCount > 2)
-		{
+		if (argumentCount > 2) {
 			numberOfTests = testToRun + abs(atoi(arguments[2]));
-			if (numberOfTests>=tests.size())
-				numberOfTests=tests.size();
+			if (numberOfTests >= tests.size()) {
+				numberOfTests = tests.size();
+			}
 		}
 	}
 
-	if(testToRun >= numberOfTests)
-	{
-		logTestString("\nError: invalid test %d (maximum %d)\n",
-					testToRun, numberOfTests-testToRun);
+	if (testToRun >= numberOfTests) {
+		logTestString("\nError: invalid test %d (maximum %d)\n", testToRun,
+			numberOfTests - testToRun);
 		return 9999;
 	}
 
-	const unsigned int testCount = numberOfTests-testToRun;
+	const unsigned int testCount = numberOfTests - testToRun;
 	const bool logFileOpened = openTestLog(firstRun);
 	assert(logFileOpened);
 
-	if (firstRun)
-	{
-		if (numberOfTests)
-		{
-			for (unsigned int i=testToRun; i<numberOfTests; ++i)
-			{
-				logTestString("\nStarting test %d, '%s'\n",
-						i, tests[i].testName);
-				if (spawn)
-				{
+	if (firstRun) {
+		if (numberOfTests) {
+			for (unsigned int i = testToRun; i < numberOfTests; ++i) {
+				logTestString("\nStarting test %d, '%s'\n", i,
+					tests[i].testName);
+				if (spawn) {
 					closeTestLog();
 					char runNextTest[256];
-					(void)sprintf(runNextTest, "\"%s\" -%d 1", arguments[0], i+1);
+					(void)sprintf(runNextTest, "\"%s\" -%d 1",
+						arguments[0], i + 1);
 					// Spawn the next test in a new process.
-					if (system(runNextTest))
-					{
+					if (system(runNextTest)) {
 						(void)openTestLog(false);
-						logTestString("\n******** Test failure ********\n"\
-								"Test %d '%s' failed\n"\
-								"******** Test failure ********\n",
-								i, tests[i].testName);
+						logTestString("\n******** Test failure "
+							      "********\n"
+							      "Test %d '%s' failed\n"
+							      "******** Test failure "
+							      "********\n",
+							i, tests[i].testName);
 						++fails;
-					}
-					else
+					} else {
 						(void)openTestLog(false);
-				}
-				else
-				{
-					if (!tests[i].testSignature())
-					{
-						logTestString("\n******** Test failure ********\n"\
-								"Test %d '%s' failed\n"\
-								"******** Test failure ********\n",
-								i, tests[i].testName);
+					}
+				} else {
+					if (!tests[i].testSignature()) {
+						logTestString("\n******** Test failure "
+							      "********\n"
+							      "Test %d '%s' failed\n"
+							      "******** Test failure "
+							      "********\n",
+							i, tests[i].testName);
 						++fails;
 					}
 				}
@@ -218,27 +213,30 @@ int main(int argumentCount, char * arguments[])
 		}
 		const int passed = testCount - fails;
 
-		logTestString("\nTests finished. %d test%s of %d passed.\n\n",
-			passed, 1 == passed ? "" : "s", testCount);
+		logTestString("\nTests finished. %d test%s of %d passed.\n\n", passed,
+			1 == passed ? "" : "s", testCount);
 
-		if(0 == fails && testCount==tests.size())
-		{
+		if (0 == fails && testCount == tests.size()) {
 			time_t rawtime;
-			struct tm * timeinfo;
+			struct tm* timeinfo;
 			(void)time(&rawtime);
 			timeinfo = gmtime(&rawtime);
 			(void)printf("\nTest suite pass at GMT %s\n", asctime(timeinfo));
-			FILE * testsLastPassedAtFile = fopen("tests-last-passed-at.txt", "w");
-			if(testsLastPassedAtFile)
-			{
-				(void)fprintf(testsLastPassedAtFile, "Tests finished. %d test%s of %d passed.\n",
-			passed, 1 == passed ? "" : "s", numberOfTests);
+			FILE* testsLastPassedAtFile =
+				fopen("tests-last-passed-at.txt", "w");
+			if (testsLastPassedAtFile) {
+				(void)fprintf(testsLastPassedAtFile,
+					"Tests finished. %d test%s of %d passed.\n",
+					passed, 1 == passed ? "" : "s", numberOfTests);
 #ifdef _DEBUG
-				(void)fprintf(testsLastPassedAtFile, "Compiled as DEBUG\n");
+				(void)fprintf(testsLastPassedAtFile,
+					"Compiled as DEBUG\n");
 #else
-				(void)fprintf(testsLastPassedAtFile, "Compiled as RELEASE\n");
+				(void)fprintf(testsLastPassedAtFile,
+					"Compiled as RELEASE\n");
 #endif
-				(void)fprintf(testsLastPassedAtFile, "Test suite pass at GMT %s\n", asctime(timeinfo));
+				(void)fprintf(testsLastPassedAtFile,
+					"Test suite pass at GMT %s\n", asctime(timeinfo));
 				(void)fclose(testsLastPassedAtFile);
 			}
 		}
@@ -249,12 +247,9 @@ int main(int argumentCount, char * arguments[])
 		(void)system("$PAGER tests.log");
 #endif
 		return fails;
-	}
-	else
-	{
+	} else {
 		const bool res = tests[testToRun].testSignature();
 		closeTestLog();
-		return res?0:1;
+		return res ? 0 : 1;
 	}
 }
-

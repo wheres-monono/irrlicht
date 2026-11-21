@@ -15,16 +15,16 @@
 #include <stdio.h>
 #endif
 
-
 namespace irr
 {
 namespace video
 {
 
-
 //! Public constructor
-CD3D9HLSLMaterialRenderer::CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev,
-	video::IVideoDriver* driver, s32& outMaterialTypeNr,
+CD3D9HLSLMaterialRenderer::CD3D9HLSLMaterialRenderer(
+	IDirect3DDevice9* d3ddev,
+	video::IVideoDriver* driver,
+	s32& outMaterialTypeNr,
 	const c8* vertexShaderProgram,
 	const c8* vertexShaderEntryPointName,
 	E_VERTEX_SHADER_TYPE vsCompileTarget,
@@ -33,55 +33,59 @@ CD3D9HLSLMaterialRenderer::CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev,
 	E_PIXEL_SHADER_TYPE psCompileTarget,
 	IShaderConstantSetCallBack* callback,
 	IMaterialRenderer* baseMaterial,
-	s32 userData)
-	: CD3D9ShaderMaterialRenderer(d3ddev, driver, callback, baseMaterial, userData),
-	VSConstantsTable(0), PSConstantsTable(0)
-{
+	s32 userData
+) :
+	CD3D9ShaderMaterialRenderer(d3ddev, driver, callback, baseMaterial, userData),
+	VSConstantsTable(0),
+	PSConstantsTable(0) {
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	setDebugName("CD3D9HLSLMaterialRenderer");
-	#endif
+#endif
 
 	outMaterialTypeNr = -1;
 
 	// now create shaders
 
-	if (vsCompileTarget < 0 || vsCompileTarget > EVST_COUNT)
-	{
-		os::Printer::log("Invalid HLSL vertex shader compilation target", ELL_ERROR);
+	if (vsCompileTarget < 0 || vsCompileTarget > EVST_COUNT) {
+		os::Printer::log("Invalid HLSL vertex shader compilation target",
+			ELL_ERROR);
 		return;
 	}
 
-	if (!createHLSLVertexShader(vertexShaderProgram,
-		vertexShaderEntryPointName, VERTEX_SHADER_TYPE_NAMES[vsCompileTarget]))
+	if (!createHLSLVertexShader(vertexShaderProgram, vertexShaderEntryPointName,
+		    VERTEX_SHADER_TYPE_NAMES[vsCompileTarget])) {
 		return;
+	}
 
-	if (!createHLSLPixelShader(pixelShaderProgram,
-		pixelShaderEntryPointName, PIXEL_SHADER_TYPE_NAMES[psCompileTarget]))
+	if (!createHLSLPixelShader(pixelShaderProgram, pixelShaderEntryPointName,
+		    PIXEL_SHADER_TYPE_NAMES[psCompileTarget])) {
 		return;
+	}
 
 	// register myself as new material
 	outMaterialTypeNr = Driver->addMaterialRenderer(this);
 }
 
-
 //! Destructor
-CD3D9HLSLMaterialRenderer::~CD3D9HLSLMaterialRenderer()
-{
-	if (VSConstantsTable)
+CD3D9HLSLMaterialRenderer::~CD3D9HLSLMaterialRenderer() {
+	if (VSConstantsTable) {
 		VSConstantsTable->Release();
+	}
 
-	if (PSConstantsTable)
+	if (PSConstantsTable) {
 		PSConstantsTable->Release();
+	}
 }
 
-
-bool CD3D9HLSLMaterialRenderer::createHLSLVertexShader(const char* vertexShaderProgram,
-			const char* shaderEntryPointName,
-			const char* shaderTargetName)
-{
-	if (!vertexShaderProgram)
+bool CD3D9HLSLMaterialRenderer::createHLSLVertexShader(
+	const char* vertexShaderProgram,
+	const char* shaderEntryPointName,
+	const char* shaderTargetName
+) {
+	if (!vertexShaderProgram) {
 		return true;
+	}
 
 	LPD3DXBUFFER buffer = 0;
 	LPD3DXBUFFER errors = 0;
@@ -89,17 +93,13 @@ bool CD3D9HLSLMaterialRenderer::createHLSLVertexShader(const char* vertexShaderP
 #ifdef _IRR_D3D_NO_SHADER_DEBUGGING
 
 	// compile without debug info
-	HRESULT h = stubD3DXCompileShader(
-		vertexShaderProgram,
-		strlen(vertexShaderProgram),
-		0, // macros
-		0, // no includes
-		shaderEntryPointName,
-		shaderTargetName,
-		0, // no flags
-		&buffer,
-		&errors,
-		&VSConstantsTable);
+	HRESULT h =
+		stubD3DXCompileShader(vertexShaderProgram, strlen(vertexShaderProgram),
+			0, // macros
+			0, // no includes
+			shaderEntryPointName, shaderTargetName,
+			0, // no flags
+			&buffer, &errors, &VSConstantsTable);
 
 #else
 
@@ -116,41 +116,37 @@ bool CD3D9HLSLMaterialRenderer::createHLSLVertexShader(const char* vertexShaderP
 	fflush(f);
 	fclose(f);
 
-	HRESULT h = stubD3DXCompileShaderFromFile(
-		tmp,
+	HRESULT h = stubD3DXCompileShaderFromFile(tmp,
 		0, // macros
 		0, // no includes
-		shaderEntryPointName,
-		shaderTargetName,
-		D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION,
-		&buffer,
-		&errors,
+		shaderEntryPointName, shaderTargetName,
+		D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION, &buffer, &errors,
 		&VSConstantsTable);
 
 #endif
 
-	if (FAILED(h))
-	{
+	if (FAILED(h)) {
 		os::Printer::log("HLSL vertex shader compilation failed:", ELL_ERROR);
-		if (errors)
-		{
+		if (errors) {
 			os::Printer::log((c8*)errors->GetBufferPointer(), ELL_ERROR);
 			errors->Release();
-			if (buffer)
+			if (buffer) {
 				buffer->Release();
+			}
 		}
 		return false;
 	}
 
-	if (errors)
+	if (errors) {
 		errors->Release();
+	}
 
-	if (buffer)
-	{
-		if (FAILED(pID3DDevice->CreateVertexShader((DWORD*)buffer->GetBufferPointer(),
-			&VertexShader)))
-		{
-			os::Printer::log("Could not create hlsl vertex shader.", ELL_ERROR);
+	if (buffer) {
+		if (FAILED(pID3DDevice->CreateVertexShader(
+			    (DWORD*)buffer->GetBufferPointer(), &VertexShader
+		    ))) {
+			os::Printer::log("Could not create hlsl vertex shader.",
+				ELL_ERROR);
 			buffer->Release();
 			return false;
 		}
@@ -162,13 +158,14 @@ bool CD3D9HLSLMaterialRenderer::createHLSLVertexShader(const char* vertexShaderP
 	return false;
 }
 
-
-bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(const char* pixelShaderProgram,
-		const char* shaderEntryPointName,
-		const char* shaderTargetName)
-{
-	if (!pixelShaderProgram)
+bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(
+	const char* pixelShaderProgram,
+	const char* shaderEntryPointName,
+	const char* shaderTargetName
+) {
+	if (!pixelShaderProgram) {
 		return true;
+	}
 
 	LPD3DXBUFFER buffer = 0;
 	LPD3DXBUFFER errors = 0;
@@ -176,12 +173,15 @@ bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(const char* pixelShaderPro
 	DWORD flags = 0;
 
 #ifdef D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY
-	if (Driver->queryFeature(video::EVDF_VERTEX_SHADER_2_0) || Driver->queryFeature(video::EVDF_VERTEX_SHADER_3_0))
+	if (Driver->queryFeature(video::EVDF_VERTEX_SHADER_2_0) ||
+		Driver->queryFeature(video::EVDF_VERTEX_SHADER_3_0)) {
 		// this one's for newer DX SDKs which don't support ps_1_x anymore
 		// instead they'll silently compile 1_x as 2_x when using this flag
 		flags |= D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY;
+	}
 #endif
-#if defined(_IRR_D3D_USE_LEGACY_HLSL_COMPILER) && defined(D3DXSHADER_USE_LEGACY_D3DX9_31_DLL)
+#if defined(_IRR_D3D_USE_LEGACY_HLSL_COMPILER) &&                                        \
+	defined(D3DXSHADER_USE_LEGACY_D3DX9_31_DLL)
 #ifdef D3DXSHADER_ENABLE_BACKWARDS_COMPATIBILITY
 	else
 #endif
@@ -191,16 +191,10 @@ bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(const char* pixelShaderPro
 #ifdef _IRR_D3D_NO_SHADER_DEBUGGING
 
 	// compile without debug info
-	HRESULT h = stubD3DXCompileShader(
-		pixelShaderProgram,
-		strlen(pixelShaderProgram),
+	HRESULT h = stubD3DXCompileShader(pixelShaderProgram, strlen(pixelShaderProgram),
 		0, // macros
 		0, // no includes
-		shaderEntryPointName,
-		shaderTargetName,
-		flags,
-		&buffer,
-		&errors,
+		shaderEntryPointName, shaderTargetName, flags, &buffer, &errors,
 		&PSConstantsTable);
 
 #else
@@ -218,41 +212,37 @@ bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(const char* pixelShaderPro
 	fflush(f);
 	fclose(f);
 
-	HRESULT h = stubD3DXCompileShaderFromFile(
-		tmp,
+	HRESULT h = stubD3DXCompileShaderFromFile(tmp,
 		0, // macros
 		0, // no includes
-		shaderEntryPointName,
-		shaderTargetName,
-		flags | D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION,
-		&buffer,
-		&errors,
+		shaderEntryPointName, shaderTargetName,
+		flags | D3DXSHADER_DEBUG | D3DXSHADER_SKIPOPTIMIZATION, &buffer, &errors,
 		&PSConstantsTable);
 
 #endif
 
-	if (FAILED(h))
-	{
+	if (FAILED(h)) {
 		os::Printer::log("HLSL pixel shader compilation failed:", ELL_ERROR);
-		if (errors)
-		{
+		if (errors) {
 			os::Printer::log((c8*)errors->GetBufferPointer(), ELL_ERROR);
 			errors->Release();
-			if (buffer)
+			if (buffer) {
 				buffer->Release();
+			}
 		}
 		return false;
 	}
 
-	if (errors)
+	if (errors) {
 		errors->Release();
+	}
 
-	if (buffer)
-	{
-		if (FAILED(pID3DDevice->CreatePixelShader((DWORD*)buffer->GetBufferPointer(),
-			&PixelShader)))
-		{
-			os::Printer::log("Could not create hlsl pixel shader.", ELL_ERROR);
+	if (buffer) {
+		if (FAILED(pID3DDevice->CreatePixelShader(
+			    (DWORD*)buffer->GetBufferPointer(), &PixelShader
+		    ))) {
+			os::Printer::log("Could not create hlsl pixel shader.",
+				ELL_ERROR);
 			buffer->Release();
 			return false;
 		}
@@ -264,25 +254,28 @@ bool CD3D9HLSLMaterialRenderer::createHLSLPixelShader(const char* pixelShaderPro
 	return false;
 }
 
-
-s32 CD3D9HLSLMaterialRenderer::getVariableID(bool vertexShader, const c8* name)
-{
+s32 CD3D9HLSLMaterialRenderer::getVariableID(
+	bool vertexShader,
+	const c8* name
+) {
 	LPD3DXCONSTANTTABLE tbl = vertexShader ? VSConstantsTable : PSConstantsTable;
-	if (!tbl)
+	if (!tbl) {
 		return -1;
+	}
 
 	D3DXCONSTANTTABLE_DESC tblDesc;
-	if (!FAILED(tbl->GetDesc(&tblDesc)))
-	{
-		for (u32 i = 0; i < tblDesc.Constants; ++i)
-		{
+	if (!FAILED(tbl->GetDesc(&tblDesc))) {
+		for (u32 i = 0; i < tblDesc.Constants; ++i) {
 			D3DXHANDLE curConst = tbl->GetConstant(NULL, i);
 			D3DXCONSTANT_DESC constDesc;
 			UINT ucount = 1;
 
-			if (!FAILED(tbl->GetConstantDesc(curConst, &constDesc, &ucount)))
-				if(strcmp(name, constDesc.Name) == 0)
+			if (!FAILED(tbl->GetConstantDesc(curConst, &constDesc,
+				    &ucount))) {
+				if (strcmp(name, constDesc.Name) == 0) {
 					return i;
+				}
+			}
 		}
 	}
 
@@ -295,31 +288,34 @@ s32 CD3D9HLSLMaterialRenderer::getVariableID(bool vertexShader, const c8* name)
 	return -1;
 }
 
-
-bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, s32 index,
-					const f32* floats, int count)
-{
+bool CD3D9HLSLMaterialRenderer::setVariable(
+	bool vertexShader,
+	s32 index,
+	const f32* floats,
+	int count
+) {
 	LPD3DXCONSTANTTABLE tbl = vertexShader ? VSConstantsTable : PSConstantsTable;
-	if (index < 0 || !tbl)
+	if (index < 0 || !tbl) {
 		return false;
+	}
 
 	// currently we only support top level parameters.
 	// Should be enough for the beginning. (TODO)
 
 	D3DXHANDLE hndl = tbl->GetConstant(NULL, index);
-	if (!hndl)
+	if (!hndl) {
 		return false;
+	}
 
 	D3DXCONSTANT_DESC Description;
 	UINT ucount = 1;
-    tbl->GetConstantDesc(hndl, &Description, &ucount);
+	tbl->GetConstantDesc(hndl, &Description, &ucount);
 
-	if(Description.RegisterSet != D3DXRS_SAMPLER)
-	{
+	if (Description.RegisterSet != D3DXRS_SAMPLER) {
 		HRESULT hr = tbl->SetFloatArray(pID3DDevice, hndl, floats, count);
-		if (FAILED(hr))
-		{
-			os::Printer::log("Error setting float array for HLSL variable", ELL_WARNING);
+		if (FAILED(hr)) {
+			os::Printer::log("Error setting float array for HLSL variable",
+				ELL_WARNING);
 			return false;
 		}
 	}
@@ -327,31 +323,34 @@ bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, s32 index,
 	return true;
 }
 
-
-bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, s32 index,
-					const s32* ints, int count)
-{
+bool CD3D9HLSLMaterialRenderer::setVariable(
+	bool vertexShader,
+	s32 index,
+	const s32* ints,
+	int count
+) {
 	LPD3DXCONSTANTTABLE tbl = vertexShader ? VSConstantsTable : PSConstantsTable;
-	if (index < 0 || !tbl)
+	if (index < 0 || !tbl) {
 		return false;
+	}
 
 	// currently we only support top level parameters.
 	// Should be enough for the beginning. (TODO)
 
 	D3DXHANDLE hndl = tbl->GetConstant(NULL, index);
-	if (!hndl)
+	if (!hndl) {
 		return false;
+	}
 
 	D3DXCONSTANT_DESC Description;
 	UINT ucount = 1;
-    tbl->GetConstantDesc(hndl, &Description, &ucount);
+	tbl->GetConstantDesc(hndl, &Description, &ucount);
 
-	if(Description.RegisterSet != D3DXRS_SAMPLER)
-	{
+	if (Description.RegisterSet != D3DXRS_SAMPLER) {
 		HRESULT hr = tbl->SetIntArray(pID3DDevice, hndl, ints, count);
-		if (FAILED(hr))
-		{
-			os::Printer::log("Error setting int array for HLSL variable", ELL_WARNING);
+		if (FAILED(hr)) {
+			os::Printer::log("Error setting int array for HLSL variable",
+				ELL_WARNING);
 			return false;
 		}
 	}
@@ -359,33 +358,32 @@ bool CD3D9HLSLMaterialRenderer::setVariable(bool vertexShader, s32 index,
 	return true;
 }
 
-
-bool CD3D9HLSLMaterialRenderer::OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype)
-{
-	if (VSConstantsTable)
+bool CD3D9HLSLMaterialRenderer::OnRender(
+	IMaterialRendererServices* service,
+	E_VERTEX_TYPE vtxtype
+) {
+	if (VSConstantsTable) {
 		VSConstantsTable->SetDefaults(pID3DDevice);
+	}
 
 	return CD3D9ShaderMaterialRenderer::OnRender(service, vtxtype);
 }
 
-
-void CD3D9HLSLMaterialRenderer::printHLSLVariables(LPD3DXCONSTANTTABLE table)
-{
+void CD3D9HLSLMaterialRenderer::printHLSLVariables(
+	LPD3DXCONSTANTTABLE table
+) {
 	// currently we only support top level parameters.
 	// Should be enough for the beginning. (TODO)
 
 	// print out constant names
 	D3DXCONSTANTTABLE_DESC tblDesc;
 	HRESULT hr = table->GetDesc(&tblDesc);
-	if (!FAILED(hr))
-	{
-		for (int i=0; i<(int)tblDesc.Constants; ++i)
-		{
+	if (!FAILED(hr)) {
+		for (int i = 0; i < (int)tblDesc.Constants; ++i) {
 			D3DXCONSTANT_DESC d;
 			UINT n = 1;
 			D3DXHANDLE cHndl = table->GetConstant(NULL, i);
-			if (!FAILED(table->GetConstantDesc(cHndl, &d, &n)))
-			{
+			if (!FAILED(table->GetConstantDesc(cHndl, &d, &n))) {
 				core::stringc s = "  '";
 				s += d.Name;
 				s += "' Registers:[begin:";
@@ -398,7 +396,6 @@ void CD3D9HLSLMaterialRenderer::printHLSLVariables(LPD3DXCONSTANTTABLE table)
 		}
 	}
 }
-
 
 } // end namespace video
 } // end namespace irr

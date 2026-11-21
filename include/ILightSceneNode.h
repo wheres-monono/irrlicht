@@ -19,14 +19,16 @@ animated by ordinary scene node animators. If the light type is directional or
 spot, the direction of the light source is defined by the rotation of the scene
 node (assuming (0,0,1) as the local direction of the light).
 */
-class ILightSceneNode : public ISceneNode
-{
+class ILightSceneNode : public ISceneNode {
 public:
-
 	//! constructor
-	ILightSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-		const core::vector3df& position = core::vector3df(0,0,0))
-		: ISceneNode(parent, mgr, id, position) {}
+	ILightSceneNode(
+		ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id,
+		const core::vector3df& position = core::vector3df(0, 0, 0)
+	) :
+		ISceneNode(parent, mgr, id, position) {}
 
 	//! Sets the light data associated with this ILightSceneNode
 	/** \param light The new light data. */
@@ -71,7 +73,7 @@ public:
 	will still need shadow scene nodes attached. But one can enable or
 	disable distinct lights for shadow casting for performance reasons.
 	\param shadow True if this light shall cast shadows. */
-	virtual void enableCastShadow(bool shadow=true) = 0;
+	virtual void enableCastShadow(bool shadow = true) = 0;
 
 	//! Check whether this light casts shadows.
 	/** \return True if light would cast shadows, else false. */
@@ -81,6 +83,4 @@ public:
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

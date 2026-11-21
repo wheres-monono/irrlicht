@@ -13,15 +13,13 @@ namespace scene
 {
 
 //! A particle emitter which emits from a spherical space.
-class IParticleSphereEmitter : public IParticleEmitter
-{
+class IParticleSphereEmitter : public IParticleEmitter {
 public:
-
 	//! Set the center of the sphere for particle emissions
-	virtual void setCenter( const core::vector3df& center ) = 0;
+	virtual void setCenter(const core::vector3df& center) = 0;
 
 	//! Set the radius of the sphere for particle emissions
-	virtual void setRadius( f32 radius ) = 0;
+	virtual void setRadius(f32 radius) = 0;
 
 	//! Get the center of the sphere for particle emissions
 	virtual const core::vector3df& getCenter() const = 0;
@@ -30,12 +28,12 @@ public:
 	virtual f32 getRadius() const = 0;
 
 	//! Get emitter type
-	virtual E_PARTICLE_EMITTER_TYPE getType() const _IRR_OVERRIDE_ { return EPET_SPHERE; }
+	virtual E_PARTICLE_EMITTER_TYPE getType() const _IRR_OVERRIDE_ {
+		return EPET_SPHERE;
+	}
 };
 
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

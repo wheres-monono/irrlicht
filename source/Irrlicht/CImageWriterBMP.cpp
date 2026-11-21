@@ -16,25 +16,25 @@ namespace irr
 namespace video
 {
 
-IImageWriter* createImageWriterBMP()
-{
-	return new CImageWriterBMP;
-}
+IImageWriter* createImageWriterBMP() { return new CImageWriterBMP; }
 
-CImageWriterBMP::CImageWriterBMP()
-{
+CImageWriterBMP::CImageWriterBMP() {
 #ifdef _DEBUG
 	setDebugName("CImageWriterBMP");
 #endif
 }
 
-bool CImageWriterBMP::isAWriteableFileExtension(const io::path& filename) const
-{
-	return core::hasFileExtension ( filename, "bmp" );
+bool CImageWriterBMP::isAWriteableFileExtension(
+	const io::path& filename
+) const {
+	return core::hasFileExtension(filename, "bmp");
 }
 
-bool CImageWriterBMP::writeImage(io::IWriteFile* file, IImage* image, u32 param) const
-{
+bool CImageWriterBMP::writeImage(
+	io::IWriteFile* file,
+	IImage* image,
+	u32 param
+) const {
 	// we always write 24-bit color because nothing really reads 32-bit
 
 	SBMPHeader imageHeader;
@@ -62,41 +62,43 @@ bool CImageWriterBMP::writeImage(io::IWriteFile* file, IImage* image, u32 param)
 
 	// bitmaps are stored upside down and padded so we always do this
 	void (*CColorConverter_convertFORMATtoFORMAT)(const void*, s32, void*) = 0;
-	switch(image->getColorFormat())
-	{
-	case ECF_R8G8B8:
-		CColorConverter_convertFORMATtoFORMAT
-			= CColorConverter::convert_R8G8B8toR8G8B8;
-		break;
-	case ECF_A8R8G8B8:
-		CColorConverter_convertFORMATtoFORMAT
-			= CColorConverter::convert_A8R8G8B8toB8G8R8;
-		break;
-	case ECF_A1R5G5B5:
-		CColorConverter_convertFORMATtoFORMAT
-			= CColorConverter::convert_A1R5G5B5toR8G8B8;
-		break;
-	case ECF_R5G6B5:
-		CColorConverter_convertFORMATtoFORMAT
-			= CColorConverter::convert_R5G6B5toR8G8B8;
-		break;
+	switch (image->getColorFormat()) {
+		case ECF_R8G8B8:
+			CColorConverter_convertFORMATtoFORMAT =
+				CColorConverter::convert_R8G8B8toR8G8B8;
+			break;
+		case ECF_A8R8G8B8:
+			CColorConverter_convertFORMATtoFORMAT =
+				CColorConverter::convert_A8R8G8B8toB8G8R8;
+			break;
+		case ECF_A1R5G5B5:
+			CColorConverter_convertFORMATtoFORMAT =
+				CColorConverter::convert_A1R5G5B5toR8G8B8;
+			break;
+		case ECF_R5G6B5:
+			CColorConverter_convertFORMATtoFORMAT =
+				CColorConverter::convert_R5G6B5toR8G8B8;
+			break;
 #ifndef _DEBUG
-	default:
-		break;
+		default:
+			break;
 #endif
 	}
 
 	// couldn't find a color converter
-	if (!CColorConverter_convertFORMATtoFORMAT)
+	if (!CColorConverter_convertFORMATtoFORMAT) {
 		return false;
+	}
 
 	// write the bitmap header
-	if (file->write(&imageHeader, sizeof(imageHeader)) != sizeof(imageHeader))
+	if (file->write(&imageHeader, sizeof(imageHeader)) != sizeof(imageHeader)) {
 		return false;
+	}
 
 	u8* scan_lines = (u8*)image->getData();
-	if (!scan_lines)
+	if (!scan_lines) {
 		return false;
+	}
 
 	// size of one pixel in bytes
 	u32 pixel_size = image->getBytesPerPixel();
@@ -113,19 +115,22 @@ bool CImageWriterBMP::writeImage(io::IWriteFile* file, IImage* image, u32 param)
 
 	// convert the image to 24-bit BGR and flip it over
 	s32 y;
-	for (y = imageHeader.Height - 1; 0 <= y; --y)
-	{
-		if (image->getColorFormat()==ECF_R8G8B8)
-			CColorConverter::convert24BitTo24Bit(&scan_lines[y * row_stride], row_pointer, imageHeader.Width, 1, 0, false, true);
-		else
+	for (y = imageHeader.Height - 1; 0 <= y; --y) {
+		if (image->getColorFormat() == ECF_R8G8B8) {
+			CColorConverter::convert24BitTo24Bit(&scan_lines[y * row_stride],
+				row_pointer, imageHeader.Width, 1, 0, false, true);
+		} else {
 			// source, length [pixels], destination
-			CColorConverter_convertFORMATtoFORMAT(&scan_lines[y * row_stride], imageHeader.Width, row_pointer);
-		if (file->write(row_pointer, row_size) < row_size)
+			CColorConverter_convertFORMATtoFORMAT(&scan_lines[y * row_stride],
+				imageHeader.Width, row_pointer);
+		}
+		if (file->write(row_pointer, row_size) < row_size) {
 			break;
+		}
 	}
 
 	// clean up our scratch area
-	delete [] row_pointer;
+	delete[] row_pointer;
 
 	return y < 0;
 }
@@ -134,4 +139,3 @@ bool CImageWriterBMP::writeImage(io::IWriteFile* file, IImage* image, u32 param)
 } // namespace irr
 
 #endif
-

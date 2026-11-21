@@ -11,17 +11,17 @@ using namespace gui;
 #pragma comment(lib, "Irrlicht.lib")
 #endif
 
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole(false);
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole(false);
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
-	IrrlichtDevice *device = createDevice(driverType, core::dimension2du(800, 600));
+	IrrlichtDevice* device = createDevice(driverType, core::dimension2du(800, 600));
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
-	gui::IGUIEnvironment *env = device->getGUIEnvironment();
+	gui::IGUIEnvironment* env = device->getGUIEnvironment();
 
 	device->setResizable(true);
 
@@ -35,17 +35,17 @@ int main()
 	// remember to drop since we created with a create call
 	factory->drop();
 
-	IGUISkin *skin = env->createSkin(EGST_WINDOWS_METALLIC);
+	IGUISkin* skin = env->createSkin(EGST_WINDOWS_METALLIC);
 	env->setSkin(skin);
 
-	IGUIFont *font = env->getFont("../../media/lucida.xml");
-	if (font)
+	IGUIFont* font = env->getFont("../../media/lucida.xml");
+	if (font) {
 		skin->setFont(font);
+	}
 	skin->drop();
 
 	// change transparency of skin
-	for (s32 i=0; i<gui::EGDC_COUNT ; ++i)
-	{
+	for (s32 i = 0; i < gui::EGDC_COUNT; ++i) {
 		video::SColor col = env->getSkin()->getColor((gui::EGUI_DEFAULT_COLOR)i);
 		col.setAlpha(250);
 		env->getSkin()->setColor((gui::EGUI_DEFAULT_COLOR)i, col);
@@ -57,15 +57,16 @@ int main()
 
 	env->addGUIElement("GUIEditor");
 
-	while(device->run())
-	{
-		if (!device->isWindowMinimized())
-		{
-			const core::dimension2d<u32>& screenSize = driver->getScreenSize();
+	while (device->run()) {
+		if (!device->isWindowMinimized()) {
+			const core::dimension2d<u32>& screenSize =
+				driver->getScreenSize();
 			wchar_t caption[512];
-			swprintf_irr(caption, 512, L"screen (%4u/%4u)", screenSize.Width, screenSize.Height);
+			swprintf_irr(caption, 512, L"screen (%4u/%4u)", screenSize.Width,
+				screenSize.Height);
 			device->setWindowCaption(caption);
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0,200,200,200));
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(0, 200, 200, 200));
 			smgr->drawAll();
 			env->drawAll();
 			driver->endScene();
@@ -73,8 +74,9 @@ int main()
 
 		// be nice to CPU
 		device->sleep(10);
-		if (!device->isWindowActive())
+		if (!device->isWindowActive()) {
 			device->sleep(90);
+		}
 	}
 
 	device->closeDevice();

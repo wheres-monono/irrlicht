@@ -13,57 +13,58 @@ namespace irr
 
 namespace video
 {
-	class IVideoDriver;
+class IVideoDriver;
 }
 namespace io
 {
-	class IFileSystem;
+class IFileSystem;
 }
 
 namespace scene
 {
 
 //! Class which can load
-class CSMFMeshFileLoader : public virtual IMeshLoader
-{
+class CSMFMeshFileLoader : public virtual IMeshLoader {
 public:
-
 	CSMFMeshFileLoader(irr::io::IFileSystem* fs, video::IVideoDriver* driver);
 
 	//! Returns true if the file might be loaded by this class.
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! Creates/loads an animated mesh from the file.
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
-private:
 
-	void loadLimb(io::IReadFile* file, scene::SMesh* mesh, const core::matrix4 &parentTransformation);
+private:
+	void loadLimb(io::IReadFile* file,
+		scene::SMesh* mesh,
+		const core::matrix4& parentTransformation);
 };
 
 } // end namespace scene
 
 namespace io
 {
-	class BinaryFile
-	{
-	public:
-		//! reads most types from the given file, moving the file pointer along
-		template <class T>
-		static void read(io::IReadFile* file, T &out, bool bigEndian=false);
+class BinaryFile {
+public:
+	//! reads most types from the given file, moving the file pointer along
+	template <class T>
+	static void read(io::IReadFile* file, T& out, bool bigEndian = false);
 
-		//! reads a 3d vector from the file, moving the file pointer along
-		static void read(io::IReadFile* file, core::vector3df &outVector2d, bool bigEndian=false);
+	//! reads a 3d vector from the file, moving the file pointer along
+	static void
+	read(io::IReadFile* file, core::vector3df& outVector2d, bool bigEndian = false);
 
-		//! reads a 2d vector from the file, moving the file pointer along
-		static void read(io::IReadFile* file, core::vector2df &outVector2d, bool bigEndian=false);
+	//! reads a 2d vector from the file, moving the file pointer along
+	static void
+	read(io::IReadFile* file, core::vector2df& outVector2d, bool bigEndian = false);
 
-		//! reads a null terminated string from the file, moving the file pointer along
-		static void read(io::IReadFile* file, core::stringc &outString, bool bigEndian=false);
-
-	};
-}
+	//! reads a null terminated string from the file, moving the file pointer along
+	static void
+	read(io::IReadFile* file, core::stringc& outString, bool bigEndian = false);
+};
+} // namespace io
 
 } // end namespace irr
 
 #endif // __C_SMF_MESH_LOADER_H_INCLUDED__
-

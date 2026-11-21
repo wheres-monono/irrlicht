@@ -16,8 +16,7 @@ namespace gui
 class IGUIScrollBar;
 class IGUITab;
 
-enum E_SCROLL_BAR_MODE
-{
+enum E_SCROLL_BAR_MODE {
 	//! The scrollbar will only show up when needed.
 	ESBM_AUTOMATIC = 0,
 
@@ -31,22 +30,18 @@ enum E_SCROLL_BAR_MODE
 	ESBM_COUNT
 };
 
-const c8* const GUIScrollBarModeNames[] =
-{
-	"automatic",
-	"alwaysInvisible",
-	"alwaysVisible",
-	0
-};
+const c8* const GUIScrollBarModeNames[] = {
+	"automatic", "alwaysInvisible", "alwaysVisible", 0};
 
-class CGUIPanel : public IGUIElement
-{
+class CGUIPanel : public IGUIElement {
 public:
-	CGUIPanel( IGUIEnvironment* environment, IGUIElement* parent, s32 id=-1,
-			const core::rect<s32>& rectangle = core::rect<s32>(0,0,100,100),
-			bool border=false,
-			E_SCROLL_BAR_MODE vMode=ESBM_AUTOMATIC,
-			E_SCROLL_BAR_MODE hMode=ESBM_ALWAYS_INVISIBLE );
+	CGUIPanel(IGUIEnvironment* environment,
+		IGUIElement* parent,
+		s32 id = -1,
+		const core::rect<s32>& rectangle = core::rect<s32>(0, 0, 100, 100),
+		bool border = false,
+		E_SCROLL_BAR_MODE vMode = ESBM_AUTOMATIC,
+		E_SCROLL_BAR_MODE hMode = ESBM_ALWAYS_INVISIBLE);
 
 	virtual ~CGUIPanel();
 
@@ -80,7 +75,7 @@ public:
 	//! returns the visible area inside the panel, excluding scrollbar and border
 	core::rect<s32> getClientArea() const;
 
-	virtual bool OnEvent(const SEvent &event);
+	virtual bool OnEvent(const SEvent& event);
 
 	//! adds a child to the panel
 	virtual void addChild(IGUIElement* child);
@@ -95,13 +90,14 @@ public:
 	virtual const core::list<IGUIElement*>& getChildren();
 
 	//! Returns the type name of the gui element.
-	virtual const c8* getTypeName() const
-	{
+	virtual const c8* getTypeName() const {
 		return GUIEditElementTypeNames[EGUIEDIT_GUIPANEL];
 	}
 
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options=0);
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options=0);
+	virtual void serializeAttributes(io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0);
+	virtual void deserializeAttributes(io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0);
 
 protected:
 	void moveInnerPane();
@@ -109,11 +105,10 @@ protected:
 	void calculateClientArea();
 
 private:
-
-	IGUIScrollBar*	VScrollBar;
-	IGUIScrollBar*	HScrollBar;
-	IGUITab*	ClipPane;
-	IGUITab*	InnerPane;
+	IGUIScrollBar* VScrollBar;
+	IGUIScrollBar* HScrollBar;
+	IGUITab* ClipPane;
+	IGUITab* InnerPane;
 
 	E_SCROLL_BAR_MODE VScrollBarMode;
 	E_SCROLL_BAR_MODE HScrollBarMode;

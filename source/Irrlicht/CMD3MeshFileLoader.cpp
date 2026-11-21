@@ -15,37 +15,35 @@ namespace scene
 {
 
 //! Constructor
-CMD3MeshFileLoader::CMD3MeshFileLoader( scene::ISceneManager* smgr)
-: SceneManager(smgr)
-{
-}
-
+CMD3MeshFileLoader::CMD3MeshFileLoader(
+	scene::ISceneManager* smgr
+) :
+	SceneManager(smgr) {}
 
 //! destructor
-CMD3MeshFileLoader::~CMD3MeshFileLoader()
-{
-}
-
+CMD3MeshFileLoader::~CMD3MeshFileLoader() {}
 
 //! returns true if the file maybe is able to be loaded by this class
 //! based on the file extension (e.g. ".bsp")
-bool CMD3MeshFileLoader::isALoadableFileExtension(const io::path& filename) const
-{
-	return core::hasFileExtension ( filename, "md3" );
+bool CMD3MeshFileLoader::isALoadableFileExtension(
+	const io::path& filename
+) const {
+	return core::hasFileExtension(filename, "md3");
 }
 
+IAnimatedMesh* CMD3MeshFileLoader::createMesh(
+	io::IReadFile* file
+) {
+	CAnimatedMeshMD3* mesh = new CAnimatedMeshMD3();
 
-IAnimatedMesh* CMD3MeshFileLoader::createMesh(io::IReadFile* file)
-{
-	CAnimatedMeshMD3 * mesh = new CAnimatedMeshMD3();
-
-	if ( mesh->loadModelFile ( 0, file, SceneManager->getFileSystem(), SceneManager->getVideoDriver() ) )
+	if (mesh->loadModelFile(0, file, SceneManager->getFileSystem(),
+		    SceneManager->getVideoDriver())) {
 		return mesh;
+	}
 
-	mesh->drop ();
+	mesh->drop();
 	return 0;
 }
-
 
 } // end namespace scene
 } // end namespace irr

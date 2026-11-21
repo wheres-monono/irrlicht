@@ -16,25 +16,27 @@ using namespace irr;
 #ifdef _MSC_VER
 
 #pragma comment(lib, "Irrlicht.lib")
-INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+INT WINAPI WinMain(
+	HINSTANCE hInst,
+	HINSTANCE,
+	LPSTR strCmdLine,
+	INT
+)
 #else
-int main(int argc, char* argv[])
+int main(
+	int argc,
+	char* argv[]
+)
 #endif
 {
 	CMainMenu menu;
 
-	if (menu.run())
-	{
-		CDemo demo(menu.getFullscreen(),
-					menu.getMusic(),
-					menu.getShadows(),
-					menu.getAdditive(),
-					menu.getVSync(),
-					menu.getAntiAliasing(),
-					menu.getDriverType());
+	if (menu.run()) {
+		CDemo demo(menu.getFullscreen(), menu.getMusic(), menu.getShadows(),
+			menu.getAdditive(), menu.getVSync(), menu.getAntiAliasing(),
+			menu.getDriverType());
 		demo.run();
 	}
 
 	return 0;
 }
-

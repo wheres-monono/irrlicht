@@ -14,94 +14,89 @@ namespace irr
 namespace gui
 {
 
-CGUISpriteBank::CGUISpriteBank(IGUIEnvironment* env) :
-	Environment(env), Driver(0)
-{
-	#ifdef _DEBUG
+CGUISpriteBank::CGUISpriteBank(
+	IGUIEnvironment* env
+) :
+	Environment(env),
+	Driver(0) {
+#ifdef _DEBUG
 	setDebugName("CGUISpriteBank");
-	#endif
+#endif
 
-	if (Environment)
-	{
+	if (Environment) {
 		Driver = Environment->getVideoDriver();
-		if (Driver)
+		if (Driver) {
 			Driver->grab();
+		}
 	}
 }
 
-
-CGUISpriteBank::~CGUISpriteBank()
-{
+CGUISpriteBank::~CGUISpriteBank() {
 	// drop textures
-	for (u32 i=0; i<Textures.size(); ++i)
-		if (Textures[i])
+	for (u32 i = 0; i < Textures.size(); ++i) {
+		if (Textures[i]) {
 			Textures[i]->drop();
+		}
+	}
 
 	// drop video driver
-	if (Driver)
+	if (Driver) {
 		Driver->drop();
+	}
 }
 
+core::array<core::rect<s32>>& CGUISpriteBank::getPositions() { return Rectangles; }
 
-core::array< core::rect<s32> >& CGUISpriteBank::getPositions()
-{
-	return Rectangles;
-}
+core::array<SGUISprite>& CGUISpriteBank::getSprites() { return Sprites; }
 
+u32 CGUISpriteBank::getTextureCount() const { return Textures.size(); }
 
-core::array< SGUISprite >& CGUISpriteBank::getSprites()
-{
-	return Sprites;
-}
-
-
-u32 CGUISpriteBank::getTextureCount() const
-{
-	return Textures.size();
-}
-
-
-video::ITexture* CGUISpriteBank::getTexture(u32 index) const
-{
-	if (index < Textures.size())
+video::ITexture* CGUISpriteBank::getTexture(
+	u32 index
+) const {
+	if (index < Textures.size()) {
 		return Textures[index];
-	else
+	} else {
 		return 0;
+	}
 }
 
-
-void CGUISpriteBank::addTexture(video::ITexture* texture)
-{
-	if (texture)
+void CGUISpriteBank::addTexture(
+	video::ITexture* texture
+) {
+	if (texture) {
 		texture->grab();
+	}
 
 	Textures.push_back(texture);
 }
 
-
-void CGUISpriteBank::setTexture(u32 index, video::ITexture* texture)
-{
-	while (index >= Textures.size())
+void CGUISpriteBank::setTexture(
+	u32 index,
+	video::ITexture* texture
+) {
+	while (index >= Textures.size()) {
 		Textures.push_back(0);
+	}
 
-	if (texture)
+	if (texture) {
 		texture->grab();
+	}
 
-	if (Textures[index])
+	if (Textures[index]) {
 		Textures[index]->drop();
+	}
 
 	Textures[index] = texture;
 }
 
-
 //! clear everything
-void CGUISpriteBank::clear()
-{
+void CGUISpriteBank::clear() {
 	// drop textures
-	for (u32 i=0; i<Textures.size(); ++i)
-	{
-		if (Textures[i])
+	for (u32 i = 0; i < Textures.size(); ++i) {
+		if (Textures[i]) {
 			Textures[i]->drop();
+		}
 	}
 	Textures.clear();
 	Sprites.clear();
@@ -109,16 +104,19 @@ void CGUISpriteBank::clear()
 }
 
 //! Add the texture and use it for a single non-animated sprite.
-s32 CGUISpriteBank::addTextureAsSprite(video::ITexture* texture)
-{
-	if ( !texture )
+s32 CGUISpriteBank::addTextureAsSprite(
+	video::ITexture* texture
+) {
+	if (!texture) {
 		return -1;
+	}
 
 	addTexture(texture);
 	u32 textureIndex = getTextureCount() - 1;
 
 	u32 rectangleIndex = Rectangles.size();
-	Rectangles.push_back( core::rect<s32>(0,0, texture->getOriginalSize().Width, texture->getOriginalSize().Height) );
+	Rectangles.push_back(core::rect<s32>(0, 0, texture->getOriginalSize().Width,
+		texture->getOriginalSize().Height));
 
 	SGUISprite sprite;
 	sprite.frameTime = 0;
@@ -126,124 +124,145 @@ s32 CGUISpriteBank::addTextureAsSprite(video::ITexture* texture)
 	SGUISpriteFrame frame;
 	frame.textureNumber = textureIndex;
 	frame.rectNumber = rectangleIndex;
-	sprite.Frames.push_back( frame );
+	sprite.Frames.push_back(frame);
 
-	Sprites.push_back( sprite );
+	Sprites.push_back(sprite);
 
 	return Sprites.size() - 1;
 }
 
 //! draws a sprite in 2d with scale and color
-void CGUISpriteBank::draw2DSprite(u32 index, const core::position2di& pos,
-		const core::rect<s32>* clip, const video::SColor& color,
-		u32 starttime, u32 currenttime, bool loop, bool center)
-{
-	if (index >= Sprites.size() || Sprites[index].Frames.empty() )
+void CGUISpriteBank::draw2DSprite(
+	u32 index,
+	const core::position2di& pos,
+	const core::rect<s32>* clip,
+	const video::SColor& color,
+	u32 starttime,
+	u32 currenttime,
+	bool loop,
+	bool center
+) {
+	if (index >= Sprites.size() || Sprites[index].Frames.empty()) {
 		return;
+	}
 
 	u32 frame = getFrameNr(index, currenttime - starttime, loop);
-	const video::ITexture* tex = getTexture(Sprites[index].Frames[frame].textureNumber);
-	if (!tex)
+	const video::ITexture* tex =
+		getTexture(Sprites[index].Frames[frame].textureNumber);
+	if (!tex) {
 		return;
+	}
 
 	const u32 rn = Sprites[index].Frames[frame].rectNumber;
-	if (rn >= Rectangles.size())
+	if (rn >= Rectangles.size()) {
 		return;
+	}
 
 	const core::rect<s32>& r = Rectangles[rn];
 	core::position2di p(pos);
-	if (center)
-	{
+	if (center) {
 		p -= r.getSize() / 2;
 	}
 	Driver->draw2DImage(tex, p, r, clip, color, true);
 }
 
-void CGUISpriteBank::draw2DSprite(u32 index, const core::rect<s32>& destRect,
-		const core::rect<s32>* clip, const video::SColor * const colors,
-		u32 timeTicks, bool loop)
-{
-	if (index >= Sprites.size() || Sprites[index].Frames.empty() )
+void CGUISpriteBank::draw2DSprite(
+	u32 index,
+	const core::rect<s32>& destRect,
+	const core::rect<s32>* clip,
+	const video::SColor* const colors,
+	u32 timeTicks,
+	bool loop
+) {
+	if (index >= Sprites.size() || Sprites[index].Frames.empty()) {
 		return;
+	}
 
 	u32 frame = getFrameNr(index, timeTicks, loop);
-	const video::ITexture* tex = getTexture(Sprites[index].Frames[frame].textureNumber);
-	if (!tex)
+	const video::ITexture* tex =
+		getTexture(Sprites[index].Frames[frame].textureNumber);
+	if (!tex) {
 		return;
+	}
 
 	const u32 rn = Sprites[index].Frames[frame].rectNumber;
-	if (rn >= Rectangles.size())
+	if (rn >= Rectangles.size()) {
 		return;
+	}
 
 	Driver->draw2DImage(tex, destRect, Rectangles[rn], clip, colors, true);
 }
 
-void CGUISpriteBank::draw2DSpriteBatch(	const core::array<u32>& indices,
-										const core::array<core::position2di>& pos,
-										const core::rect<s32>* clip,
-										const video::SColor& color,
-										u32 starttime, u32 currenttime,
-										bool loop, bool center)
-{
+void CGUISpriteBank::draw2DSpriteBatch(
+	const core::array<u32>& indices,
+	const core::array<core::position2di>& pos,
+	const core::rect<s32>* clip,
+	const video::SColor& color,
+	u32 starttime,
+	u32 currenttime,
+	bool loop,
+	bool center
+) {
 	const irr::u32 drawCount = core::min_<u32>(indices.size(), pos.size());
 
-	if (!getTextureCount())
+	if (!getTextureCount()) {
 		return;
+	}
 	core::array<SDrawBatch> drawBatches(getTextureCount());
-	for (u32 i=0; i < Textures.size(); ++i)
-	{
+	for (u32 i = 0; i < Textures.size(); ++i) {
 		drawBatches.push_back(SDrawBatch());
 		drawBatches[i].positions.reallocate(drawCount);
 		drawBatches[i].sourceRects.reallocate(drawCount);
 	}
 
-	for (u32 i = 0; i < drawCount; ++i)
-	{
+	for (u32 i = 0; i < drawCount; ++i) {
 		const u32 index = indices[i];
 
-		if (index >= Sprites.size() || Sprites[index].Frames.empty() )
+		if (index >= Sprites.size() || Sprites[index].Frames.empty()) {
 			continue;
+		}
 
 		// work out frame number
 		u32 frame = 0;
-		if (Sprites[index].frameTime)
-		{
+		if (Sprites[index].frameTime) {
 			u32 f = ((currenttime - starttime) / Sprites[index].frameTime);
-			if (loop)
+			if (loop) {
 				frame = f % Sprites[index].Frames.size();
-			else
-				frame = (f >= Sprites[index].Frames.size()) ? Sprites[index].Frames.size()-1 : f;
+			} else {
+				frame = (f >= Sprites[index].Frames.size())
+						? Sprites[index].Frames.size() - 1
+						: f;
+			}
 		}
 
 		const u32 texNum = Sprites[index].Frames[frame].textureNumber;
 		SDrawBatch& currentBatch = drawBatches[texNum];
 
 		const u32 rn = Sprites[index].Frames[frame].rectNumber;
-		if (rn >= Rectangles.size())
+		if (rn >= Rectangles.size()) {
 			return;
+		}
 
 		const core::rect<s32>& r = Rectangles[rn];
 
-		if (center)
-		{
+		if (center) {
 			core::position2di p = pos[i];
 			p -= r.getSize() / 2;
 
 			currentBatch.positions.push_back(p);
 			currentBatch.sourceRects.push_back(r);
-		}
-		else
-		{
+		} else {
 			currentBatch.positions.push_back(pos[i]);
 			currentBatch.sourceRects.push_back(r);
 		}
 	}
 
-	for(u32 i = 0;i < drawBatches.size();i++)
-	{
-		if(!drawBatches[i].positions.empty() && !drawBatches[i].sourceRects.empty())
+	for (u32 i = 0; i < drawBatches.size(); i++) {
+		if (!drawBatches[i].positions.empty() &&
+			!drawBatches[i].sourceRects.empty()) {
 			Driver->draw2DImageBatch(getTexture(i), drawBatches[i].positions,
 				drawBatches[i].sourceRects, clip, color, true);
+		}
 	}
 }
 

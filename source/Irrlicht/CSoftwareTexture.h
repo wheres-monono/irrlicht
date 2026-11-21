@@ -19,18 +19,21 @@ class CSoftwareDriver;
 /*!
 	interface for a Video Driver dependent Texture.
 */
-class CSoftwareTexture : public ITexture
-{
+class CSoftwareTexture : public ITexture {
 public:
-
 	//! constructor
-	CSoftwareTexture(IImage* surface, const io::path& name, bool renderTarget=false);
+	CSoftwareTexture(IImage* surface,
+		const io::path& name,
+		bool renderTarget = false);
 
 	//! destructor
 	virtual ~CSoftwareTexture();
 
 	//! lock function
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE, u32 mipmapLevel=0, u32 layer = 0, E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
+	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+		u32 mipmapLevel = 0,
+		u32 layer = 0,
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
 
 	//! unlock function
 	virtual void unlock() _IRR_OVERRIDE_;
@@ -51,13 +54,14 @@ private:
 /*!
 	interface for a Video Driver dependent render target.
 */
-class CSoftwareRenderTarget : public IRenderTarget
-{
+class CSoftwareRenderTarget : public IRenderTarget {
 public:
 	CSoftwareRenderTarget(CSoftwareDriver* driver);
 	virtual ~CSoftwareRenderTarget();
 
-	virtual void setTexture(const core::array<ITexture*>& texture, ITexture* depthStencil, const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
+	virtual void setTexture(const core::array<ITexture*>& texture,
+		ITexture* depthStencil,
+		const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
 
 	ITexture* getTexture() const;
 
@@ -65,9 +69,7 @@ protected:
 	CSoftwareDriver* Driver;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
-

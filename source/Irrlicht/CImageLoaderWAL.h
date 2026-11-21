@@ -24,22 +24,23 @@ namespace video
 // byte-align structures
 #include "irrpack.h"
 
-	struct SLMPHeader {
-		u32	width;	// width
-		u32	height;	// height
-		// variably sized
-	} PACK_STRUCT;
+struct SLMPHeader {
+	u32 width;  // width
+	u32 height; // height
+		    // variably sized
+} PACK_STRUCT;
 
 // Default alignment
 #include "irrunpack.h"
 
 //! An Irrlicht image loader for Quake1,2 engine lmp textures/palette
-class CImageLoaderLMP : public irr::video::IImageLoader
-{
+class CImageLoaderLMP : public irr::video::IImageLoader {
 public:
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 	virtual bool isALoadableFileFormat(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
-	virtual irr::video::IImage* loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual irr::video::IImage*
+	loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
 };
 
 #endif
@@ -47,54 +48,53 @@ public:
 #ifdef _IRR_COMPILE_WITH_WAL_LOADER_
 
 //! An Irrlicht image loader for quake2 wal engine textures
-class CImageLoaderWAL : public irr::video::IImageLoader
-{
+class CImageLoaderWAL : public irr::video::IImageLoader {
 public:
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 	virtual bool isALoadableFileFormat(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
-	virtual irr::video::IImage* loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual irr::video::IImage*
+	loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
 };
 
 //! An Irrlicht image loader for Halflife 1 engine textures
-class CImageLoaderWAL2 : public irr::video::IImageLoader
-{
+class CImageLoaderWAL2 : public irr::video::IImageLoader {
 public:
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 	virtual bool isALoadableFileFormat(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
-	virtual irr::video::IImage* loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual irr::video::IImage*
+	loadImage(irr::io::IReadFile* file) const _IRR_OVERRIDE_;
 };
 
 // byte-align structures
 #include "irrpack.h"
 
-	// Halfelife wad3 type 67 file
-	struct miptex_halflife
-	{
-		c8  name[16];
-		u32 width, height;
-		u32 mipmap[4];		// four mip maps stored
-	} PACK_STRUCT;
+// Halfelife wad3 type 67 file
+struct miptex_halflife {
+	c8 name[16];
+	u32 width, height;
+	u32 mipmap[4]; // four mip maps stored
+} PACK_STRUCT;
 
-	//quake2 texture
-	struct miptex_quake2
-	{
-		c8 name[32];
-		u32 width;
-		u32 height;
-		u32 mipmap[4];		// four mip maps stored
-		c8  animname[32];	// next frame in animation chain
-		s32 flags;
-		s32 contents;
-		s32 value;
-	} PACK_STRUCT;
+// quake2 texture
+struct miptex_quake2 {
+	c8 name[32];
+	u32 width;
+	u32 height;
+	u32 mipmap[4];	 // four mip maps stored
+	c8 animname[32]; // next frame in animation chain
+	s32 flags;
+	s32 contents;
+	s32 value;
+} PACK_STRUCT;
 
 // Default alignment
 #include "irrunpack.h"
 
 #endif
 
-}
-}
+} // namespace video
+} // namespace irr
 
 #endif
-

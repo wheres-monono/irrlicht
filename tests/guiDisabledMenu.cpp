@@ -7,18 +7,21 @@ using namespace irr;
 using namespace core;
 using namespace gui;
 
-// Tests that disabled GUI menu items don't cause their submenu to appear when hovered over.
+// Tests that disabled GUI menu items don't cause their submenu to appear when hovered
+// over.
 /**
 	http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?p=178436#178436
  */
 
-bool guiDisabledMenu(void)
-{
-	IrrlichtDevice *device = createDevice( video::EDT_BURNINGSVIDEO,
-											dimension2d<u32>(160, 40), 32);
+bool guiDisabledMenu(
+	void
+) {
+	IrrlichtDevice* device =
+		createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 40), 32);
 	assert_log(device);
-	if (!device)
+	if (!device) {
 		return false;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	gui::IGUIEnvironment* env = device->getGUIEnvironment();
@@ -44,15 +47,16 @@ bool guiDisabledMenu(void)
 	(void)menu->OnEvent(event);
 
 	device->run();
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(150,50,50,50));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(150, 50, 50, 50));
 	env->drawAll();
 	driver->endScene();
 
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-guiDisabledMenu.png", 98.77f);
+	bool result = takeScreenshotAndCompareAgainstReference(driver,
+		"-guiDisabledMenu.png", 98.77f);
 	device->closeDevice();
 	device->run();
 	device->drop();
 
 	return result;
 }
-

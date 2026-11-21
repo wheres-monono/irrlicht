@@ -16,15 +16,20 @@ namespace scene
 {
 
 //! constructor
-CBillboardSceneNode::CBillboardSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-			const core::vector3df& position, const core::dimension2d<f32>& size,
-			video::SColor colorTop, video::SColor colorBottom)
-	: IBillboardSceneNode(parent, mgr, id, position)
-	, Buffer(new SMeshBuffer())
-{
-	#ifdef _DEBUG
+CBillboardSceneNode::CBillboardSceneNode(
+	ISceneNode* parent,
+	ISceneManager* mgr,
+	s32 id,
+	const core::vector3df& position,
+	const core::dimension2d<f32>& size,
+	video::SColor colorTop,
+	video::SColor colorBottom
+) :
+	IBillboardSceneNode(parent, mgr, id, position),
+	Buffer(new SMeshBuffer()) {
+#ifdef _DEBUG
 	setDebugName("CBillboardSceneNode");
-	#endif
+#endif
 
 	setSize(size);
 
@@ -51,29 +56,25 @@ CBillboardSceneNode::CBillboardSceneNode(ISceneNode* parent, ISceneManager* mgr,
 	Buffer->Vertices[3].Color = colorBottom;
 }
 
-CBillboardSceneNode::~CBillboardSceneNode()
-{
-	Buffer->drop();
-}
+CBillboardSceneNode::~CBillboardSceneNode() { Buffer->drop(); }
 
 //! pre render event
-void CBillboardSceneNode::OnRegisterSceneNode()
-{
-	if (IsVisible)
+void CBillboardSceneNode::OnRegisterSceneNode() {
+	if (IsVisible) {
 		SceneManager->registerNodeForRendering(this);
+	}
 
 	ISceneNode::OnRegisterSceneNode();
 }
 
-
 //! render
-void CBillboardSceneNode::render()
-{
+void CBillboardSceneNode::render() {
 	video::IVideoDriver* driver = SceneManager->getVideoDriver();
 	ICameraSceneNode* camera = SceneManager->getActiveCamera();
 
-	if (!camera || !driver)
+	if (!camera || !driver) {
 		return;
+	}
 
 	// make billboard look to camera
 	updateMesh(camera);
@@ -82,18 +83,18 @@ void CBillboardSceneNode::render()
 	driver->setMaterial(Buffer->Material);
 	driver->drawMeshBuffer(Buffer);
 
-	if (DebugDataVisible & scene::EDS_BBOX)
-	{
+	if (DebugDataVisible & scene::EDS_BBOX) {
 		driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
 		video::SMaterial m;
 		m.Lighting = false;
 		driver->setMaterial(m);
-		driver->draw3DBox(BBoxSafe, video::SColor(0,208,195,152));
+		driver->draw3DBox(BBoxSafe, video::SColor(0, 208, 195, 152));
 	}
 }
 
-void CBillboardSceneNode::updateMesh(const irr::scene::ICameraSceneNode* camera)
-{
+void CBillboardSceneNode::updateMesh(
+	const irr::scene::ICameraSceneNode* camera
+) {
 	// billboard looks toward camera
 	core::vector3df pos = getAbsolutePosition();
 
@@ -104,9 +105,8 @@ void CBillboardSceneNode::updateMesh(const irr::scene::ICameraSceneNode* camera)
 	view.normalize();
 
 	core::vector3df horizontal = up.crossProduct(view);
-	if ( horizontal.getLength() == 0 )
-	{
-		horizontal.set(up.Y,up.X,up.Z);
+	if (horizontal.getLength() == 0) {
+		horizontal.set(up.Y, up.X, up.Z);
 	}
 	horizontal.normalize();
 	core::vector3df topHorizontal = horizontal * 0.5f * TopEdgeWidth;
@@ -121,8 +121,9 @@ void CBillboardSceneNode::updateMesh(const irr::scene::ICameraSceneNode* camera)
 
 	core::array<video::S3DVertex>& vertices = Buffer->Vertices;
 
-	for (s32 i=0; i<4; ++i)
+	for (s32 i = 0; i < 4; ++i) {
 		vertices[i].Normal = view;
+	}
 
 	/* Vertices are:
 	2--1
@@ -139,90 +140,88 @@ void CBillboardSceneNode::updateMesh(const irr::scene::ICameraSceneNode* camera)
 	Buffer->recalculateBoundingBox();
 }
 
-
 //! returns the axis aligned bounding box of this node
-const core::aabbox3d<f32>& CBillboardSceneNode::getBoundingBox() const
-{
+const core::aabbox3d<f32>& CBillboardSceneNode::getBoundingBox() const {
 	// Really wrong when scaled.
 	return BBoxSafe;
 }
 
-const core::aabbox3d<f32>& CBillboardSceneNode::getTransformedBillboardBoundingBox(const irr::scene::ICameraSceneNode* camera)
-{
+const core::aabbox3d<f32>& CBillboardSceneNode::getTransformedBillboardBoundingBox(
+	const irr::scene::ICameraSceneNode* camera
+) {
 	updateMesh(camera);
 	return Buffer->BoundingBox;
 }
 
-void CBillboardSceneNode::setSize(const core::dimension2d<f32>& size)
-{
+void CBillboardSceneNode::setSize(
+	const core::dimension2d<f32>& size
+) {
 	Size = size;
 
-	if (core::equals(Size.Width, 0.0f))
+	if (core::equals(Size.Width, 0.0f)) {
 		Size.Width = 1.0f;
+	}
 	TopEdgeWidth = Size.Width;
 
-	if (core::equals(Size.Height, 0.0f))
+	if (core::equals(Size.Height, 0.0f)) {
 		Size.Height = 1.0f;
+	}
 
-	const f32 avg = (Size.Width + Size.Height)/6;
-	BBoxSafe.MinEdge.set(-avg,-avg,-avg);
-	BBoxSafe.MaxEdge.set(avg,avg,avg);
+	const f32 avg = (Size.Width + Size.Height) / 6;
+	BBoxSafe.MinEdge.set(-avg, -avg, -avg);
+	BBoxSafe.MaxEdge.set(avg, avg, avg);
 }
 
-
-void CBillboardSceneNode::setSize(f32 height, f32 bottomEdgeWidth, f32 topEdgeWidth)
-{
+void CBillboardSceneNode::setSize(
+	f32 height,
+	f32 bottomEdgeWidth,
+	f32 topEdgeWidth
+) {
 	Size.set(bottomEdgeWidth, height);
 	TopEdgeWidth = topEdgeWidth;
 
-	if (core::equals(Size.Height, 0.0f))
+	if (core::equals(Size.Height, 0.0f)) {
 		Size.Height = 1.0f;
+	}
 
-	if (core::equals(Size.Width, 0.f) && core::equals(TopEdgeWidth, 0.f))
-	{
+	if (core::equals(Size.Width, 0.f) && core::equals(TopEdgeWidth, 0.f)) {
 		Size.Width = 1.0f;
 		TopEdgeWidth = 1.0f;
 	}
 
-	const f32 avg = (core::max_(Size.Width,TopEdgeWidth) + Size.Height)/6;
-	BBoxSafe.MinEdge.set(-avg,-avg,-avg);
-	BBoxSafe.MaxEdge.set(avg,avg,avg);
+	const f32 avg = (core::max_(Size.Width, TopEdgeWidth) + Size.Height) / 6;
+	BBoxSafe.MinEdge.set(-avg, -avg, -avg);
+	BBoxSafe.MaxEdge.set(avg, avg, avg);
 }
 
-
-video::SMaterial& CBillboardSceneNode::getMaterial(u32 i)
-{
+video::SMaterial& CBillboardSceneNode::getMaterial(
+	u32 i
+) {
 	return Buffer->Material;
 }
 
-
 //! returns amount of materials used by this scene node.
-u32 CBillboardSceneNode::getMaterialCount() const
-{
-	return 1;
-}
-
+u32 CBillboardSceneNode::getMaterialCount() const { return 1; }
 
 //! gets the size of the billboard
-const core::dimension2d<f32>& CBillboardSceneNode::getSize() const
-{
-	return Size;
-}
-
+const core::dimension2d<f32>& CBillboardSceneNode::getSize() const { return Size; }
 
 //! Gets the widths of the top and bottom edges of the billboard.
-void CBillboardSceneNode::getSize(f32& height, f32& bottomEdgeWidth,
-		f32& topEdgeWidth) const
-{
+void CBillboardSceneNode::getSize(
+	f32& height,
+	f32& bottomEdgeWidth,
+	f32& topEdgeWidth
+) const {
 	height = Size.Height;
 	bottomEdgeWidth = Size.Width;
 	topEdgeWidth = TopEdgeWidth;
 }
 
-
 //! Writes attributes of the scene node.
-void CBillboardSceneNode::serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const
-{
+void CBillboardSceneNode::serializeAttributes(
+	io::IAttributes* out,
+	io::SAttributeReadWriteOptions* options
+) const {
 	IBillboardSceneNode::serializeAttributes(out, options);
 
 	out->addFloat("Width", Size.Width);
@@ -232,88 +231,93 @@ void CBillboardSceneNode::serializeAttributes(io::IAttributes* out, io::SAttribu
 	out->addColor("Shade_Down", Buffer->Vertices[0].Color);
 }
 
-
 //! Reads attributes of the scene node.
-void CBillboardSceneNode::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
-{
+void CBillboardSceneNode::deserializeAttributes(
+	io::IAttributes* in,
+	io::SAttributeReadWriteOptions* options
+) {
 	IBillboardSceneNode::deserializeAttributes(in, options);
 
 	Size.Width = in->getAttributeAsFloat("Width");
 	Size.Height = in->getAttributeAsFloat("Height");
 
-	if (in->existsAttribute("TopEdgeWidth"))
-	{
+	if (in->existsAttribute("TopEdgeWidth")) {
 		TopEdgeWidth = in->getAttributeAsFloat("TopEdgeWidth");
-		if (Size.Width != TopEdgeWidth)
+		if (Size.Width != TopEdgeWidth) {
 			setSize(Size.Height, Size.Width, TopEdgeWidth);
-	}
-	else
+		}
+	} else {
 		setSize(Size);
+	}
 	Buffer->Vertices[1].Color = in->getAttributeAsColor("Shade_Top");
 	Buffer->Vertices[0].Color = in->getAttributeAsColor("Shade_Down");
 	Buffer->Vertices[2].Color = Buffer->Vertices[1].Color;
 	Buffer->Vertices[3].Color = Buffer->Vertices[0].Color;
 }
 
-
 //! Set the color of all vertices of the billboard
 //! \param overallColor: the color to set
-void CBillboardSceneNode::setColor(const video::SColor& overallColor)
-{
-	for(u32 vertex = 0; vertex < 4; ++vertex)
+void CBillboardSceneNode::setColor(
+	const video::SColor& overallColor
+) {
+	for (u32 vertex = 0; vertex < 4; ++vertex) {
 		Buffer->Vertices[vertex].Color = overallColor;
+	}
 }
-
 
 //! Set the color of the top and bottom vertices of the billboard
 //! \param topColor: the color to set the top vertices
 //! \param bottomColor: the color to set the bottom vertices
-void CBillboardSceneNode::setColor(const video::SColor& topColor,
-		const video::SColor& bottomColor)
-{
+void CBillboardSceneNode::setColor(
+	const video::SColor& topColor,
+	const video::SColor& bottomColor
+) {
 	Buffer->Vertices[0].Color = bottomColor;
 	Buffer->Vertices[1].Color = topColor;
 	Buffer->Vertices[2].Color = topColor;
 	Buffer->Vertices[3].Color = bottomColor;
 }
 
-
 //! Gets the color of the top and bottom vertices of the billboard
 //! \param[out] topColor: stores the color of the top vertices
 //! \param[out] bottomColor: stores the color of the bottom vertices
-void CBillboardSceneNode::getColor(video::SColor& topColor,
-		video::SColor& bottomColor) const
-{
+void CBillboardSceneNode::getColor(
+	video::SColor& topColor,
+	video::SColor& bottomColor
+) const {
 	bottomColor = Buffer->Vertices[0].Color;
 	topColor = Buffer->Vertices[1].Color;
 }
 
-
 //! Creates a clone of this scene node and its children.
-ISceneNode* CBillboardSceneNode::clone(ISceneNode* newParent, ISceneManager* newManager)
-{
-	if (!newParent)
+ISceneNode* CBillboardSceneNode::clone(
+	ISceneNode* newParent,
+	ISceneManager* newManager
+) {
+	if (!newParent) {
 		newParent = Parent;
-	if (!newManager)
+	}
+	if (!newManager) {
 		newManager = SceneManager;
+	}
 
-	CBillboardSceneNode* nb = new CBillboardSceneNode(newParent,
-		newManager, ID, RelativeTranslation, Size);
+	CBillboardSceneNode* nb = new CBillboardSceneNode(newParent, newManager, ID,
+		RelativeTranslation, Size);
 
 	nb->cloneMembers(this, newManager);
 	nb->Buffer->Material = Buffer->Material;
 	nb->Size = Size;
 	nb->TopEdgeWidth = this->TopEdgeWidth;
 
-	video::SColor topColor,bottomColor;
-	getColor(topColor,bottomColor);
-	nb->setColor(topColor,bottomColor);
+	video::SColor topColor, bottomColor;
+	getColor(topColor, bottomColor);
+	nb->setColor(topColor, bottomColor);
 
-	if ( newParent )
+	if (newParent) {
 		nb->drop();
+	}
 	return nb;
 }
-
 
 } // end namespace scene
 } // end namespace irr

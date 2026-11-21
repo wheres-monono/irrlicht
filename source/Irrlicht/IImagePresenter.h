@@ -20,17 +20,15 @@ namespace video
 	This class should be used only internally.
 */
 
-	class IImagePresenter
-	{
-	public:
-
-		virtual ~IImagePresenter() {};
-		//! presents a surface in the client area
-		virtual bool present(video::IImage* surface, void* windowId=0, core::rect<s32>* src=0 ) = 0;
-	};
+class IImagePresenter {
+public:
+	virtual ~IImagePresenter() {};
+	//! presents a surface in the client area
+	virtual bool
+	present(video::IImage* surface, void* windowId = 0, core::rect<s32>* src = 0) = 0;
+};
 
 } // end namespace video
 } // end namespace irr
 
 #endif
-

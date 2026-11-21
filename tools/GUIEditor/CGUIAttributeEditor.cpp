@@ -18,16 +18,22 @@ namespace gui
 using namespace core;
 using namespace io;
 
-CGUIAttributeEditor::CGUIAttributeEditor(IGUIEnvironment* environment, s32 id, IGUIElement *parent) :
+CGUIAttributeEditor::CGUIAttributeEditor(
+	IGUIEnvironment* environment,
+	s32 id,
+	IGUIElement* parent
+) :
 	CGUIPanel(environment, parent, id, rect<s32>(0, 0, 100, 100)),
-		Attribs(0), Panel(0)
-{
-	#ifdef _DEBUG
+	Attribs(0),
+	Panel(0) {
+#ifdef _DEBUG
 	setDebugName("CGUIAttributeEditor");
-	#endif
+#endif
 
 	// create attributes
-	Attribs = environment->getFileSystem()->createEmptyAttributes(Environment->getVideoDriver());
+	Attribs = environment->getFileSystem()->createEmptyAttributes(
+		Environment->getVideoDriver()
+	);
 
 	calculateClientArea();
 	resizeInnerPane();
@@ -41,10 +47,8 @@ CGUIAttributeEditor::CGUIAttributeEditor(IGUIEnvironment* environment, s32 id, I
 	sb->setRelativePosition(r);
 }
 
-CGUIAttributeEditor::~CGUIAttributeEditor()
-{
-	for (u32 i=0; i<AttribList.size(); ++i)
-	{
+CGUIAttributeEditor::~CGUIAttributeEditor() {
+	for (u32 i = 0; i < AttribList.size(); ++i) {
 		AttribList[i]->remove();
 		AttribList[i]->drop();
 	}
@@ -53,44 +57,38 @@ CGUIAttributeEditor::~CGUIAttributeEditor()
 	Attribs->drop();
 }
 
+IAttributes* CGUIAttributeEditor::getAttribs() { return Attribs; }
 
-IAttributes* CGUIAttributeEditor::getAttribs()
-{
-	return Attribs;
-}
-
-void CGUIAttributeEditor::refreshAttribs()
-{
+void CGUIAttributeEditor::refreshAttribs() {
 	// clear the attribute list
 	u32 i;
-	for (i=0; i<AttribList.size(); ++i)
-	{
+	for (i = 0; i < AttribList.size(); ++i) {
 		AttribList[i]->remove();
 		AttribList[i]->drop();
 	}
 	AttribList.clear();
 
 	position2di top(10, 5);
-	rect<s32> r(top.X, top.Y,
-			getClientArea().getWidth() - 10,
-			5 + Environment->getSkin()->getFont()->getDimension(L"A").Height);
+	rect<s32> r(top.X, top.Y, getClientArea().getWidth() - 10,
+		5 + Environment->getSkin()->getFont()->getDimension(L"A").Height);
 
 	// add attribute elements
 	u32 c = Attribs->getAttributeCount();
-	for (i=0; i<c; ++i)
-	{
+	for (i = 0; i < c; ++i) {
 
 		// try to create attribute
 		stringc str = Attribs->getAttributeTypeString(i);
 		str += "_attribute";
-		CGUIAttribute* n = (CGUIAttribute*)Environment->addGUIElement(str.c_str(), 0);
+		CGUIAttribute* n =
+			(CGUIAttribute*)Environment->addGUIElement(str.c_str(), 0);
 
 		// if this doesn't exist, use a string editor
-		if (!n)
-			n = (CGUIAttribute*)Environment->addGUIElement("string_attribute", 0);
+		if (!n) {
+			n = (CGUIAttribute*)Environment->addGUIElement("string_attribute",
+				0);
+		}
 
-		if (n)
-		{
+		if (n) {
 			AttribList.push_back(n);
 			n->setParentID(getID());
 			n->grab();
@@ -103,18 +101,18 @@ void CGUIAttributeEditor::refreshAttribs()
 
 		AttribList[i]->setSubElement(true);
 		AttribList[i]->setRelativePosition(r);
-		AttribList[i]->setAlignment(EGUIA_UPPERLEFT, EGUIA_LOWERRIGHT, EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
+		AttribList[i]->setAlignment(EGUIA_UPPERLEFT, EGUIA_LOWERRIGHT,
+			EGUIA_UPPERLEFT, EGUIA_UPPERLEFT);
 		AttribList[i]->setAttrib(Attribs, i);
 		r += position2di(0, AttribList[i]->getRelativePosition().getHeight() + 5);
 	}
 }
 
-void CGUIAttributeEditor::updateAttribs()
-{
-	for (u32 i=0; i<AttribList.size(); ++i)
+void CGUIAttributeEditor::updateAttribs() {
+	for (u32 i = 0; i < AttribList.size(); ++i) {
 		AttribList[i]->updateAttrib(false);
+	}
 }
 
 } // namespace gui
 } // namespace irr
-

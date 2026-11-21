@@ -16,25 +16,25 @@ to ask the user for a driver type using the console.
 	define which Quake3 Level should be loaded
 */
 #define IRRLICHT_QUAKE3_ARENA
-//#define ORIGINAL_QUAKE3_ARENA
-//#define CUSTOM_QUAKE3_ARENA
-//#define SHOW_SHADER_NAME
+// #define ORIGINAL_QUAKE3_ARENA
+// #define CUSTOM_QUAKE3_ARENA
+// #define SHOW_SHADER_NAME
 
 #ifdef ORIGINAL_QUAKE3_ARENA
-	#define QUAKE3_STORAGE_FORMAT	addFolderFileArchive
-	#define QUAKE3_STORAGE_1		"/baseq3/"
-	#ifdef CUSTOM_QUAKE3_ARENA
-		#define QUAKE3_STORAGE_2	"/cf/"
-		#define QUAKE3_MAP_NAME		"maps/cf.bsp"
-	#else
-		#define QUAKE3_MAP_NAME			"maps/q3dm8.bsp"
-	#endif
+#define QUAKE3_STORAGE_FORMAT addFolderFileArchive
+#define QUAKE3_STORAGE_1 "/baseq3/"
+#ifdef CUSTOM_QUAKE3_ARENA
+#define QUAKE3_STORAGE_2 "/cf/"
+#define QUAKE3_MAP_NAME "maps/cf.bsp"
+#else
+#define QUAKE3_MAP_NAME "maps/q3dm8.bsp"
+#endif
 #endif
 
 #ifdef IRRLICHT_QUAKE3_ARENA
-	#define QUAKE3_STORAGE_FORMAT	addFileArchive
-	#define QUAKE3_STORAGE_1	getExampleMediaPath() + "map-20kdm2.pk3"
-	#define QUAKE3_MAP_NAME			"maps/20kdm2.bsp"
+#define QUAKE3_STORAGE_FORMAT addFileArchive
+#define QUAKE3_STORAGE_1 getExampleMediaPath() + "map-20kdm2.pk3"
+#define QUAKE3_MAP_NAME "maps/20kdm2.bsp"
 #endif
 
 using namespace irr;
@@ -49,66 +49,67 @@ to make it easy, we use a pragma comment lib:
 #pragma comment(lib, "Irrlicht.lib")
 #endif
 
-
 /*
 A class to produce a series of screenshots
 */
-class CScreenShotFactory : public IEventReceiver
-{
+class CScreenShotFactory : public IEventReceiver {
 public:
-
-	CScreenShotFactory( IrrlichtDevice *device, const c8 * templateName, ISceneNode* node )
-		: Device(device), Number(0), FilenameTemplate(templateName), Node(node)
-	{
-		FilenameTemplate.replace ( '/', '_' );
-		FilenameTemplate.replace ( '\\', '_' );
+	CScreenShotFactory(
+		IrrlichtDevice* device,
+		const c8* templateName,
+		ISceneNode* node
+	) :
+		Device(device),
+		Number(0),
+		FilenameTemplate(templateName),
+		Node(node) {
+		FilenameTemplate.replace('/', '_');
+		FilenameTemplate.replace('\\', '_');
 	}
 
-	bool OnEvent(const SEvent& event)
-	{
+	bool OnEvent(
+		const SEvent& event
+	) {
 		// check if user presses the key F9
 		if ((event.EventType == EET_KEY_INPUT_EVENT) &&
-				event.KeyInput.PressedDown)
-		{
-			if (event.KeyInput.Key == KEY_F9)
-			{
-				video::IImage* image = Device->getVideoDriver()->createScreenShot();
-				if (image)
-				{
+			event.KeyInput.PressedDown) {
+			if (event.KeyInput.Key == KEY_F9) {
+				video::IImage* image =
+					Device->getVideoDriver()->createScreenShot();
+				if (image) {
 					c8 buf[256];
 					snprintf_irr(buf, 256, "%s_shot%04d.jpg",
-							FilenameTemplate.c_str(),
-							++Number);
-					Device->getVideoDriver()->writeImageToFile(image, buf, 85 );
+						FilenameTemplate.c_str(), ++Number);
+					Device->getVideoDriver()->writeImageToFile(image,
+						buf, 85);
 					image->drop();
 				}
-			}
-			else
-			if (event.KeyInput.Key == KEY_F8)
-			{
-				if (Node->isDebugDataVisible())
+			} else if (event.KeyInput.Key == KEY_F8) {
+				if (Node->isDebugDataVisible()) {
 					Node->setDebugDataVisible(scene::EDS_OFF);
-				else
+				} else {
 					Node->setDebugDataVisible(scene::EDS_BBOX_ALL);
+				}
 			}
 		}
 		return false;
 	}
 
 private:
-	IrrlichtDevice *Device;
+	IrrlichtDevice* Device;
 	u32 Number;
 	core::stringc FilenameTemplate;
 	ISceneNode* Node;
 };
 
-
 /*
 Ok, lets start.
 */
 
-int IRRCALLCONV main(int argc, char* argv[])
-{
+int IRRCALLCONV main(
+	int argc,
+	char* argv[]
+) {
 	/*
 	Like in the HelloWorld example, we create an IrrlichtDevice with
 	createDevice(). The difference now is that we ask the user to select
@@ -118,23 +119,26 @@ int IRRCALLCONV main(int argc, char* argv[])
 	*/
 
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// create device and exit if creation failed
-	const core::dimension2du videoDim(800,600);
+	const core::dimension2du videoDim(800, 600);
 
-	IrrlichtDevice *device = createDevice(driverType, videoDim, 32, false );
+	IrrlichtDevice* device = createDevice(driverType, videoDim, 32, false);
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
-	const char* mapname=0;
-	if (argc>2)
+	const char* mapname = 0;
+	if (argc > 2) {
 		mapname = argv[2];
-	else
+	} else {
 		mapname = QUAKE3_MAP_NAME;
+	}
 
 	/*
 	Get a pointer to the video driver and the SceneManager so that
@@ -157,10 +161,11 @@ int IRRCALLCONV main(int argc, char* argv[])
 	we are able to read from the files in that archive as they would
 	directly be stored on disk.
 	*/
-	if (argc>2)
+	if (argc > 2) {
 		device->getFileSystem()->QUAKE3_STORAGE_FORMAT(argv[1]);
-	else
+	} else {
 		device->getFileSystem()->QUAKE3_STORAGE_FORMAT(QUAKE3_STORAGE_1);
+	}
 #ifdef QUAKE3_STORAGE_2
 	device->getFileSystem()->QUAKE3_STORAGE_FORMAT(QUAKE3_STORAGE_2);
 #endif
@@ -184,17 +189,15 @@ int IRRCALLCONV main(int argc, char* argv[])
 	IVideoDriver class). Note that this optimization with the Octree is only
 	useful when drawing huge meshes consisting of lots of geometry.
 	*/
-	scene::IQ3LevelMesh* const mesh =
-		(scene::IQ3LevelMesh*) smgr->getMesh(mapname);
+	scene::IQ3LevelMesh* const mesh = (scene::IQ3LevelMesh*)smgr->getMesh(mapname);
 
 	/*
 		add the geometry mesh to the Scene ( polygon & patches )
 		The Geometry mesh is optimised for faster drawing
 	*/
 	scene::ISceneNode* node = 0;
-	if (mesh)
-	{
-		scene::IMesh * const geometry = mesh->getMesh(quake3::E_Q3_MESH_GEOMETRY);
+	if (mesh) {
+		scene::IMesh* const geometry = mesh->getMesh(quake3::E_Q3_MESH_GEOMETRY);
 		node = smgr->addOctreeSceneNode(geometry, 0, -1, 4096);
 	}
 
@@ -208,28 +211,29 @@ int IRRCALLCONV main(int argc, char* argv[])
 		and the Shader ID is stored in the MaterialParameters
 		mostly dark looking skulls and moving lava.. or green flashing tubes?
 	*/
-	if ( mesh )
-	{
+	if (mesh) {
 		// the additional mesh can be quite huge and is unoptimized
-		const scene::IMesh * const additional_mesh = mesh->getMesh(quake3::E_Q3_MESH_ITEMS);
+		const scene::IMesh* const additional_mesh =
+			mesh->getMesh(quake3::E_Q3_MESH_ITEMS);
 
 #ifdef SHOW_SHADER_NAME
-		gui::IGUIFont *font = device->getGUIEnvironment()->getFont(mediaPath + "fontlucida.png");
+		gui::IGUIFont* font = device->getGUIEnvironment()->getFont(
+			mediaPath + "fontlucida.png"
+		);
 		u32 count = 0;
 #endif
 
-		for ( u32 i = 0; i!= additional_mesh->getMeshBufferCount(); ++i )
-		{
+		for (u32 i = 0; i != additional_mesh->getMeshBufferCount(); ++i) {
 			const IMeshBuffer* meshBuffer = additional_mesh->getMeshBuffer(i);
 			const video::SMaterial& material = meshBuffer->getMaterial();
 
 			// The ShaderIndex is stored in the material parameter
-			const s32 shaderIndex = (s32) material.MaterialTypeParam2;
+			const s32 shaderIndex = (s32)material.MaterialTypeParam2;
 
-			// the meshbuffer can be rendered without additional support, or it has no shader
-			const quake3::IShader *shader = mesh->getShader(shaderIndex);
-			if (0 == shader)
-			{
+			// the meshbuffer can be rendered without additional support, or
+			// it has no shader
+			const quake3::IShader* shader = mesh->getShader(shaderIndex);
+			if (0 == shader) {
 				continue;
 			}
 
@@ -243,11 +247,10 @@ int IRRCALLCONV main(int argc, char* argv[])
 
 #ifdef SHOW_SHADER_NAME
 			count += 1;
-			core::stringw name( node->getName() );
-			node = smgr->addBillboardTextSceneNode(
-					font, name.c_str(), node,
-					core::dimension2d<f32>(80.0f, 8.0f),
-					core::vector3df(0, 10, 0));
+			core::stringw name(node->getName());
+			node = smgr->addBillboardTextSceneNode(font, name.c_str(), node,
+				core::dimension2d<f32>(80.0f, 8.0f),
+				core::vector3df(0, 10, 0));
 #endif
 		}
 	}
@@ -271,27 +274,27 @@ int IRRCALLCONV main(int argc, char* argv[])
 		"info_player_deathmatch"
 		we choose a random launch
 	*/
-	if ( mesh )
-	{
-		quake3::tQ3EntityList &entityList = mesh->getEntityList();
+	if (mesh) {
+		quake3::tQ3EntityList& entityList = mesh->getEntityList();
 
 		quake3::IEntity search;
 		search.name = "info_player_deathmatch";
 
 		s32 index = entityList.binary_search(search);
-		if (index >= 0)
-		{
+		if (index >= 0) {
 			s32 notEndList;
-			do
-			{
-				const quake3::SVarGroup *group = entityList[index].getGroup(1);
+			do {
+				const quake3::SVarGroup* group =
+					entityList[index].getGroup(1);
 
 				u32 parsepos = 0;
 				const core::vector3df pos =
-					quake3::getAsVector3df(group->get("origin"), parsepos);
+					quake3::getAsVector3df(group->get("origin"),
+						parsepos);
 
 				parsepos = 0;
-				const f32 angle = quake3::getAsFloat(group->get("angle"), parsepos);
+				const f32 angle =
+					quake3::getAsFloat(group->get("angle"), parsepos);
 
 				core::vector3df target(0.f, 0.f, 1.f);
 				target.rotateXZBy(angle);
@@ -300,14 +303,15 @@ int IRRCALLCONV main(int argc, char* argv[])
 				camera->setTarget(pos + target);
 
 				++index;
-/*
-				notEndList = (	index < (s32) entityList.size () &&
-								entityList[index].name == search.name &&
-								(device->getTimer()->getRealTime() >> 3 ) & 1
-							);
-*/
+				/*
+								notEndList = (	index <
+				   (s32) entityList.size () && entityList[index].name ==
+				   search.name && (device->getTimer()->getRealTime() >> 3
+				   ) & 1
+											);
+				*/
 				notEndList = index == 2;
-			} while ( notEndList );
+			} while (notEndList);
 		}
 	}
 
@@ -319,13 +323,12 @@ int IRRCALLCONV main(int argc, char* argv[])
 
 	// load the engine logo
 	gui->addImage(driver->getTexture("irrlichtlogo2.png"),
-			core::position2d<s32>(10, 10));
+		core::position2d<s32>(10, 10));
 
 	// show the driver logo
 	const core::position2di pos(videoDim.Width - 128, videoDim.Height - 64);
 
-	switch ( driverType )
-	{
+	switch (driverType) {
 		case video::EDT_BURNINGSVIDEO:
 			gui->addImage(driver->getTexture("burninglogo.png"), pos);
 			break;
@@ -346,36 +349,39 @@ int IRRCALLCONV main(int argc, char* argv[])
 	*/
 	int lastFPS = -1;
 
-	while(device->run())
-	if (device->isWindowActive())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,20,20,40));
-		smgr->drawAll();
-		gui->drawAll();
-		driver->endScene();
+	while (device->run()) {
+		if (device->isWindowActive()) {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 20, 20, 40));
+			smgr->drawAll();
+			gui->drawAll();
+			driver->endScene();
 
-		int fps = driver->getFPS();
-		//if (lastFPS != fps)
-		{
-			io::IAttributes * const attr = smgr->getParameters();
-			core::stringw str = L"Q3 [";
-			str += driver->getName();
-			str += "] FPS:";
-			str += fps;
-#ifdef _IRR_SCENEMANAGER_DEBUG			
-			str += " Cull:";
-			str += attr->getAttributeAsInt("calls");
-			str += "/";
-			str += attr->getAttributeAsInt("culled");
-			str += " Draw: ";
-			str += attr->getAttributeAsInt("drawn_solid");
-			str += "/";
-			str += attr->getAttributeAsInt("drawn_transparent");
-			str += "/";
-			str += attr->getAttributeAsInt("drawn_transparent_effect");
+			int fps = driver->getFPS();
+			// if (lastFPS != fps)
+			{
+				io::IAttributes* const attr = smgr->getParameters();
+				core::stringw str = L"Q3 [";
+				str += driver->getName();
+				str += "] FPS:";
+				str += fps;
+#ifdef _IRR_SCENEMANAGER_DEBUG
+				str += " Cull:";
+				str += attr->getAttributeAsInt("calls");
+				str += "/";
+				str += attr->getAttributeAsInt("culled");
+				str += " Draw: ";
+				str += attr->getAttributeAsInt("drawn_solid");
+				str += "/";
+				str += attr->getAttributeAsInt("drawn_transparent");
+				str += "/";
+				str += attr->getAttributeAsInt(
+					"drawn_transparent_effect"
+				);
 #endif
-			device->setWindowCaption(str.c_str());
-			lastFPS = fps;
+				device->setWindowCaption(str.c_str());
+				lastFPS = fps;
+			}
 		}
 	}
 
@@ -388,4 +394,4 @@ int IRRCALLCONV main(int argc, char* argv[])
 }
 
 /*
-**/
+ **/

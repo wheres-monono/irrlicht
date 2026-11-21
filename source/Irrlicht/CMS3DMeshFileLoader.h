@@ -15,16 +15,15 @@ namespace scene
 {
 
 //! Meshloader capable of loading Milkshape 3D files
-class CMS3DMeshFileLoader : public IMeshLoader
-{
+class CMS3DMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CMS3DMeshFileLoader(video::IVideoDriver* driver);
 
 	//! returns true if the file might be loadable by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -33,8 +32,8 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
-	core::stringc stripPathFromString(const core::stringc& inString, bool returnPath) const;
+	core::stringc stripPathFromString(const core::stringc& inString,
+		bool returnPath) const;
 
 	bool load(io::IReadFile* file);
 	video::IVideoDriver* Driver;
@@ -45,5 +44,3 @@ private:
 } // end namespace irr
 
 #endif
-
-

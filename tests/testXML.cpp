@@ -6,28 +6,24 @@
 using namespace irr;
 using namespace core;
 
-bool simple_xml( irr::io::IFileSystem * fs )
-{
+bool simple_xml(
+	irr::io::IFileSystem* fs
+) {
 	io::IXMLReaderUTF8* reader = fs->createXMLReaderUTF8("media/test.xml");
-	if (!reader)
-	{
+	if (!reader) {
 		logTestString("Could not create XML reader.\n");
 		return false;
 	}
 
-	const core::stringc expected[] = {
-		"a", "b", "c"
-	};
+	const core::stringc expected[] = {"a", "b", "c"};
 
 	bool retVal = true;
-	u32 i=0;
-	while(reader->read())
-	{
-		if (reader->getNodeType() == io::EXN_ELEMENT)
-		{
-			if (expected[i++] != reader->getNodeName())
-			{
-				logTestString("Did not find expected string in XML element name.\n");
+	u32 i = 0;
+	while (reader->read()) {
+		if (reader->getNodeType() == io::EXN_ELEMENT) {
+			if (expected[i++] != reader->getNodeName()) {
+				logTestString("Did not find expected string in XML "
+					      "element name.\n");
 				retVal = false;
 				break;
 			}
@@ -39,17 +35,17 @@ bool simple_xml( irr::io::IFileSystem * fs )
 }
 
 // CDATA should return everything between "![CDATA[" and "]]>" as it's in the file
-bool cdata( irr::io::IFileSystem * fs )
-{
+bool cdata(
+	irr::io::IFileSystem* fs
+) {
 	io::IXMLReaderUTF8* reader = fs->createXMLReaderUTF8("media/cdata.xml");
-	if (!reader)
-	{
+	if (!reader) {
 		logTestString("Could not create XML reader.\n");
 		return false;
 	}
 
 	const core::stringc textNode("text");
-	core::array< core::stringc > compareStrings;
+	core::array<core::stringc> compareStrings;
 	compareStrings.push_back("simple");
 	compareStrings.push_back("");
 	compareStrings.push_back("] ]> ");
@@ -60,39 +56,47 @@ bool cdata( irr::io::IFileSystem * fs )
 
 	bool result = true;
 	size_t count = 0;
-	while(reader->read())
-	{
-		if (reader->getNodeType() == io::EXN_ELEMENT)
-		{
-			if ( core::stringc(reader->getNodeName()) == textNode )
-			{
-				while(reader->read())
-				{
-					if (reader->getNodeType() == io::EXN_CDATA)
-					{
-						core::stringc data = reader->getNodeData();
-						core::stringc name = reader->getNodeName();
-						if ( count == compareStrings.size() )
-						{
-							logTestString("too many cdata elements for reading in %s:%d\n", __FILE__, __LINE__);
-						}
-						else if ( count < compareStrings.size() )
-						{
-							core::stringc cmpString(compareStrings[count]);
-							
-							// some (unused) variables to ease debugging
-							// const c8* dataRaw = data.c_str();
-							// const c8* cmpRaw = cmpString.c_str();
-							if ( cmpString != data )
-							{
+	while (reader->read()) {
+		if (reader->getNodeType() == io::EXN_ELEMENT) {
+			if (core::stringc(reader->getNodeName()) == textNode) {
+				while (reader->read()) {
+					if (reader->getNodeType() == io::EXN_CDATA) {
+						core::stringc data =
+							reader->getNodeData();
+						core::stringc name =
+							reader->getNodeName();
+						if (count == compareStrings.size()) {
+							logTestString(
+								"too many cdata elements "
+								"for reading in %s:%d\n",
+								__FILE__, __LINE__
+							);
+						} else if (count <
+							   compareStrings.size()) {
+							core::stringc cmpString(
+								compareStrings[count]
+							);
+
+							// some (unused) variables to ease
+							// debugging const c8* dataRaw =
+							// data.c_str(); const c8* cmpRaw
+							// = cmpString.c_str();
+							if (cmpString != data) {
 								result = false;
-								logTestString("cdata read failed for string %d in %s:%d\n", count, __FILE__, __LINE__);
+								logTestString(
+									"cdata read "
+									"failed for "
+									"string %d in "
+									"%s:%d\n",
+									count, __FILE__,
+									__LINE__
+								);
 							}
 						}
 						++count;
 					}
-					if ( reader->getNodeType() == io::EXN_ELEMENT_END )
-					{
+					if (reader->getNodeType() ==
+						io::EXN_ELEMENT_END) {
 						break;
 					}
 				}
@@ -104,28 +108,26 @@ bool cdata( irr::io::IFileSystem * fs )
 	return result;
 }
 
-bool attributeValues(irr::io::IFileSystem * fs)
-{
+bool attributeValues(
+	irr::io::IFileSystem* fs
+) {
 	io::IXMLReaderUTF8* reader = fs->createXMLReaderUTF8("media/attributes.xml");
-	if (!reader)
-	{
+	if (!reader) {
 		logTestString("Could not create XML reader.\n");
 		return false;
 	}
 
 	bool result = true;
 	bool hasNode = false;
-	while (reader->read())
-	{
-		if (io::EXN_ELEMENT == reader->getNodeType() )
-		{
-			if ( core::stringc(reader->getNodeName()) == core::stringc("element_position") )
-			{
+	while (reader->read()) {
+		if (io::EXN_ELEMENT == reader->getNodeType()) {
+			if (core::stringc(reader->getNodeName()) ==
+				core::stringc("element_position")) {
 				hasNode = true;
 				int id1 = reader->getAttributeValueAsInt("id1");
-				if ( id1 != 152722522 )
-				{
-					logTestString("id1 is %d in %s:%d\n", id1, __FILE__, __LINE__);
+				if (id1 != 152722522) {
+					logTestString("id1 is %d in %s:%d\n", id1,
+						__FILE__, __LINE__);
 					result = false;
 				}
 				int id2 = reader->getAttributeValueAsInt("id2");
@@ -138,8 +140,7 @@ bool attributeValues(irr::io::IFileSystem * fs)
 		}
 	}
 
-	if ( !hasNode )
-	{
+	if (!hasNode) {
 		logTestString("missing node in xml in %s:%d\n", __FILE__, __LINE__);
 		return false;
 	}
@@ -149,9 +150,10 @@ bool attributeValues(irr::io::IFileSystem * fs)
 }
 
 /** Tests for XML handling */
-bool testXML(void)
-{
-	IrrlichtDevice *device = createDevice(video::EDT_NULL, dimension2du(400, 200));
+bool testXML(
+	void
+) {
+	IrrlichtDevice* device = createDevice(video::EDT_NULL, dimension2du(400, 200));
 
 	bool result = true;
 
@@ -160,7 +162,7 @@ bool testXML(void)
 	logTestString("Test XML reader CDATA support.\n");
 	result &= cdata(device->getFileSystem());
 	logTestString("Test XML reader attribute support.\n");
-	result &= attributeValues(device->getFileSystem());	
+	result &= attributeValues(device->getFileSystem());
 
 	device->closeDevice();
 	device->run();

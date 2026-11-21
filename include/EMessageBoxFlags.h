@@ -11,8 +11,7 @@ namespace gui
 {
 
 //! enumeration for message box layout flags
-enum EMESSAGE_BOX_FLAG
-{
+enum EMESSAGE_BOX_FLAG {
 	//! Flag for the OK button
 	EMBF_OK = 0x1,
 
@@ -33,4 +32,3 @@ enum EMESSAGE_BOX_FLAG
 } // namespace irr
 
 #endif
-

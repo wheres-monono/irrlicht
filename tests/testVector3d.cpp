@@ -6,99 +6,116 @@
 using namespace irr;
 using namespace core;
 
-#define EQUAL_VECTORS(compare, with)\
-	if(!equalVectors(cmp_equal<core::vector3d<T> >(compare), with)) {assert(false); return false;}
+#define EQUAL_VECTORS(compare, with)                                                     \
+	if (!equalVectors(cmp_equal<core::vector3d<T>>(compare), with)) {                \
+		assert(false);                                                           \
+		return false;                                                            \
+	}
 
-#define LESS_VECTORS(compare, with)\
-	if(!equalVectors(cmp_less<core::vector3d<T> >(compare), with)) return false;
+#define LESS_VECTORS(compare, with)                                                      \
+	if (!equalVectors(cmp_less<core::vector3d<T>>(compare), with))                   \
+		return false;
 
-#define LESS_EQUAL_VECTORS(compare, with)\
-	if(!equalVectors(cmp_less_equal<core::vector3d<T> >(compare), with)) return false;
+#define LESS_EQUAL_VECTORS(compare, with)                                                \
+	if (!equalVectors(cmp_less_equal<core::vector3d<T>>(compare), with))             \
+		return false;
 
-#define MORE_VECTORS(compare, with)\
-	if(!equalVectors(cmp_more<core::vector3d<T> >(compare), with)) return false;
+#define MORE_VECTORS(compare, with)                                                      \
+	if (!equalVectors(cmp_more<core::vector3d<T>>(compare), with))                   \
+		return false;
 
-#define MORE_EQUAL_VECTORS(compare, with)\
-	if(!equalVectors(cmp_more_equal<core::vector3d<T> >(compare), with)) return false;
+#define MORE_EQUAL_VECTORS(compare, with)                                                \
+	if (!equalVectors(cmp_more_equal<core::vector3d<T>>(compare), with))             \
+		return false;
 
 // check if the vector contains a NAN (a==b is guaranteed to return false in this case)
-template<class T>
-static bool is_nan(const core::vector3d<T> &vec )
-{
-	return ( !(vec.X == vec.X)
-			|| !(vec.Y == vec.Y)
-			|| !(vec.Z == vec.Z) );
+template <class T>
+static bool is_nan(
+	const core::vector3d<T>& vec
+) {
+	return (!(vec.X == vec.X) || !(vec.Y == vec.Y) || !(vec.Z == vec.Z));
 }
 
-template<class T>
-struct cmp_less
-{
-	cmp_less(const T& a) : val(a) {}
-	bool operator()(const T& other) const
-	{
-		return val<other;
+template <class T> struct cmp_less {
+	cmp_less(
+		const T& a
+	) :
+		val(a) {}
+	bool operator()(
+		const T& other
+	) const {
+		return val < other;
 	}
-	const char* getName() const {return "<";}
+	const char* getName() const { return "<"; }
 	const T val;
 };
 
-template<class T>
-struct cmp_less_equal
-{
-	cmp_less_equal(const T& a) : val(a) {}
-	bool operator()(const T& other) const
-	{
-		return val<=other;
+template <class T> struct cmp_less_equal {
+	cmp_less_equal(
+		const T& a
+	) :
+		val(a) {}
+	bool operator()(
+		const T& other
+	) const {
+		return val <= other;
 	}
-	const char* getName() const {return "<=";}
+	const char* getName() const { return "<="; }
 	const T val;
 };
 
-template<class T>
-struct cmp_more
-{
-	cmp_more(const T& a) : val(a) {}
-	bool operator()(const T& other) const
-	{
-		return val>other;
+template <class T> struct cmp_more {
+	cmp_more(
+		const T& a
+	) :
+		val(a) {}
+	bool operator()(
+		const T& other
+	) const {
+		return val > other;
 	}
-	const char* getName() const {return ">";}
+	const char* getName() const { return ">"; }
 	const T val;
 };
 
-template<class T>
-struct cmp_more_equal
-{
-	cmp_more_equal(const T& a) : val(a) {}
-	bool operator()(const T& other) const
-	{
-		return val>=other;
+template <class T> struct cmp_more_equal {
+	cmp_more_equal(
+		const T& a
+	) :
+		val(a) {}
+	bool operator()(
+		const T& other
+	) const {
+		return val >= other;
 	}
-	const char* getName() const {return ">=";}
+	const char* getName() const { return ">="; }
 	const T val;
 };
 
-template<class T>
-struct cmp_equal
-{
-	cmp_equal(const T& a) : val(a) {}
-	bool operator()(const T& other) const
-	{
+template <class T> struct cmp_equal {
+	cmp_equal(
+		const T& a
+	) :
+		val(a) {}
+	bool operator()(
+		const T& other
+	) const {
 		return val.equals(other);
 	}
-	const char* getName() const {return "==";}
+	const char* getName() const { return "=="; }
 	const T val;
 };
 
-template<class S, class T>
-static bool equalVectors(const S& compare,
-			   const core::vector3d<T> & with)
-{
-	if (!compare(with))
-	{
-		logTestString("\nERROR: vector3d %.16f, %.16f, %.16f %s vector3d %.16f, %.16f, %.16f\n",
-			(f64)compare.val.X, (f64)compare.val.Y, (f64)compare.val.Z, compare.getName(),
-			(f64)with.X, (f64)with.Y, (f64)with.Z);
+template <class S, class T>
+static bool equalVectors(
+	const S& compare,
+	const core::vector3d<T>& with
+) {
+	if (!compare(with)) {
+		logTestString("\nERROR: vector3d %.16f, %.16f, %.16f %s vector3d %.16f, "
+			      "%.16f, %.16f\n",
+			(f64)compare.val.X, (f64)compare.val.Y, (f64)compare.val.Z,
+			compare.getName(), (f64)with.X, (f64)with.Y, (f64)with.Z);
 		assert_log(compare(with));
 		return false;
 	}
@@ -106,9 +123,7 @@ static bool equalVectors(const S& compare,
 	return true;
 }
 
-template <class T>
-static bool checkInterpolation()
-{
+template <class T> static bool checkInterpolation() {
 	core::vector3d<T> vec(5, 5, 0);
 	core::vector3d<T> otherVec(10, 20, 40);
 
@@ -125,7 +140,6 @@ static bool checkInterpolation()
 	(void)interpolated.interpolate(vec, otherVec, 1.f);
 	EQUAL_VECTORS(interpolated, vec); // 1.f means all the first vector
 
-
 	interpolated = vec.getInterpolated(otherVec, 0.f);
 	EQUAL_VECTORS(interpolated, otherVec); // 0.f means all the second vector
 
@@ -137,7 +151,6 @@ static bool checkInterpolation()
 
 	interpolated = vec.getInterpolated(otherVec, 1.f);
 	EQUAL_VECTORS(interpolated, vec); // 1.f means all the first vector
-
 
 	vector3d<T> thirdVec(20, 10, -30);
 	interpolated = vec.getInterpolated_quadratic(otherVec, thirdVec, 0.f);
@@ -157,18 +170,14 @@ static bool checkInterpolation()
 	return true;
 }
 
-template <class T>
-static bool checkAngleCalculations()
-{
+template <class T> static bool checkAngleCalculations() {
 	core::vector3d<T> vec(5, 5, 0);
 	EQUAL_VECTORS(vec.getHorizontalAngle(), vector3d<T>(315, (T)90.0, 0));
 	EQUAL_VECTORS(vec.getSphericalCoordinateAngles(), vector3d<T>((T)45.0, 0, 0));
 	return true;
 }
 
-template <class T>
-static bool checkRotations()
-{
+template <class T> static bool checkRotations() {
 	core::vector3d<T> vec(5, 5, 0);
 	vector3d<T> center(0, 0, 0);
 
@@ -177,8 +186,9 @@ static bool checkRotations()
 
 	vec.normalize();
 	// TODO: This breaks under Linux/gcc due to FP differences, but is no bug
-	if (((T)0.5f)>0.f)
+	if (((T)0.5f) > 0.f) {
 		EQUAL_VECTORS(vec, vector3d<T>(0, (T)1.0, 0));
+	}
 
 	vec.set(10, 10, 10);
 	center.set(5, 5, 10);
@@ -199,29 +209,26 @@ static bool checkRotations()
 
 	vec.set(5, 5, 0);
 	vec.normalize();
-	EQUAL_VECTORS(vec, vector3d<T>((T)0.70710681378841400, (T)0.70710681378841400, 0));
+	EQUAL_VECTORS(vec,
+		vector3d<T>((T)0.70710681378841400, (T)0.70710681378841400, 0));
 	return true;
 }
 
-template <class T>
-static bool doTests()
-{
+template <class T> static bool doTests() {
 	vector3d<T> vec(-5, 5, 0);
 	vector3d<T> otherVec((T)-5.1, 5, 0);
 
-	if(!vec.equals(otherVec, (T)0.1))
-	{
+	if (!vec.equals(otherVec, (T)0.1)) {
 		logTestString("vector3d::equals failed\n");
 		assert_log(0);
 		return false;
 	}
 
-	otherVec = vector3d<T>(1,2,3);
+	otherVec = vector3d<T>(1, 2, 3);
 	otherVec[0] = vec[0];
 	otherVec[1] = vec[1];
 	otherVec[2] = vec[2];
-	if(!vec.equals(otherVec))
-	{
+	if (!vec.equals(otherVec)) {
 		logTestString("vector3d::operator[] failed\n");
 		assert_log(0);
 		return false;
@@ -229,35 +236,38 @@ static bool doTests()
 
 	vec.set(5, 5, 0);
 	otherVec.set(10, 20, 0);
-	if(!equals(vec.getDistanceFrom(otherVec), (T)15.8113883))
-	{
+	if (!equals(vec.getDistanceFrom(otherVec), (T)15.8113883)) {
 		logTestString("vector3d::getDistanceFrom() failed\n");
 		assert_log(0);
 		return false;
 	}
 
-	if (!checkRotations<T>())
+	if (!checkRotations<T>()) {
 		return false;
+	}
 
-	if (!checkInterpolation<T>())
+	if (!checkInterpolation<T>()) {
 		return false;
+	}
 
-	if (!checkAngleCalculations<T>())
+	if (!checkAngleCalculations<T>()) {
 		return false;
+	}
 
-	vec.set(0,0,0);
+	vec.set(0, 0, 0);
 	vec.setLength(99);
-	if ( is_nan(vec) )
+	if (is_nan(vec)) {
 		return false;
+	}
 
 	core::vector3d<T> zeroZero(0, 0, 0);
 	core::vector3d<T> oneOne(1, 1, 1);
 	// Check if comparing (0.0, 0.0, 0.0) with (1.0, 1.0, 1.0) returns false.
-	if(zeroZero == oneOne)
-	{
-		logTestString("\nERROR: vector3d %.16f, %.16f, %.16f == vector3d %.16f, %.16f, %.16f\n",
-			(f64)zeroZero.X, (f64)zeroZero.Y, (f64)zeroZero.Z,
-			(f64)oneOne.X, (f64)oneOne.Y, (f64)oneOne.Z);
+	if (zeroZero == oneOne) {
+		logTestString("\nERROR: vector3d %.16f, %.16f, %.16f == vector3d %.16f, "
+			      "%.16f, %.16f\n",
+			(f64)zeroZero.X, (f64)zeroZero.Y, (f64)zeroZero.Z, (f64)oneOne.X,
+			(f64)oneOne.Y, (f64)oneOne.Z);
 		return false;
 	}
 
@@ -269,8 +279,8 @@ static bool doTests()
 	MORE_VECTORS(otherVec, vec);
 	MORE_EQUAL_VECTORS(otherVec, vec);
 
-	vec.set(-1,-1,1);
-	otherVec.set(1,-1,1);
+	vec.set(-1, -1, 1);
+	otherVec.set(1, -1, 1);
 	LESS_VECTORS(vec, otherVec);
 	LESS_EQUAL_VECTORS(vec, otherVec);
 	MORE_VECTORS(otherVec, vec);
@@ -282,31 +292,33 @@ static bool doTests()
 	return true;
 }
 
-
 /** Test the functionality of vector3d<T>, particularly methods that
 	involve calculations done using different precision than <T>.
 	Note that all reference vector3d<T>s are creating using double precision
 	values cast to (T), as we need to test <f64>. */
-bool testVector3d(void)
-{
+bool testVector3d(
+	void
+) {
 	const bool f32Success = doTests<f32>();
-	if (f32Success)
+	if (f32Success) {
 		logTestString("vector3df tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector3df tests failed ***\n\n");
+	}
 
 	const bool f64Success = doTests<f64>();
-	if (f64Success)
+	if (f64Success) {
 		logTestString("vector3d<f64> tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector3d<f64> tests failed ***\n\n");
+	}
 
 	const bool s32Success = doTests<s32>();
-	if (s32Success)
+	if (s32Success) {
 		logTestString("vector3di tests passed\n\n");
-	else
+	} else {
 		logTestString("\n*** vector3di tests failed ***\n\n");
+	}
 
 	return f32Success && f64Success && s32Success;
 }
-

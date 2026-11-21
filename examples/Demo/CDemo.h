@@ -4,8 +4,8 @@
 #ifndef __C_DEMO_H_INCLUDED__
 #define __C_DEMO_H_INCLUDED__
 
-//#define USE_IRRKLANG
-//#define USE_SDL_MIXER
+// #define USE_IRRKLANG
+// #define USE_SDL_MIXER
 
 #include <irrlicht.h>
 
@@ -18,25 +18,29 @@ using namespace irr;
 // audio support
 
 #ifdef USE_IRRKLANG
-	#include <irrKlang.h>	// problem here? go to http://www.ambiera.com/irrklang and download
-							// the irrKlang library or undefine USE_IRRKLANG at the beginning
-							// of this file.
-	#ifdef _MSC_VER
-	#pragma comment (lib, "irrKlang.lib")
-	#endif
+#include <irrKlang.h> // problem here? go to http://www.ambiera.com/irrklang and download
+		      // the irrKlang library or undefine USE_IRRKLANG at the beginning
+		      // of this file.
+#ifdef _MSC_VER
+#pragma comment(lib, "irrKlang.lib")
+#endif
 #endif
 #ifdef USE_SDL_MIXER
-	# include <SDL/SDL.h>
-	# include <SDL/SDL_mixer.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #endif
 
 const int CAMERA_COUNT = 7;
 
-class CDemo : public IEventReceiver
-{
+class CDemo : public IEventReceiver {
 public:
-
-	CDemo(bool fullscreen, bool music, bool shadows, bool additive, bool vsync, bool aa, video::E_DRIVER_TYPE driver);
+	CDemo(bool fullscreen,
+		bool music,
+		bool shadows,
+		bool additive,
+		bool vsync,
+		bool aa,
+		video::E_DRIVER_TYPE driver);
 
 	~CDemo();
 
@@ -45,7 +49,6 @@ public:
 	virtual bool OnEvent(const SEvent& event);
 
 private:
-
 	void createLoadingScreen();
 	void loadSceneData();
 	void switchToNextScene();
@@ -59,7 +62,7 @@ private:
 	bool vsync;
 	bool aa;
 	video::E_DRIVER_TYPE driverType;
-	IrrlichtDevice *device;
+	IrrlichtDevice* device;
 
 #ifdef USE_IRRKLANG
 	void startIrrKlang();
@@ -70,15 +73,14 @@ private:
 
 #ifdef USE_SDL_MIXER
 	void startSound();
-	void playSound(Mix_Chunk *);
+	void playSound(Mix_Chunk*);
 	void pollSound();
-	Mix_Music *stream;
-	Mix_Chunk *ballSound;
-	Mix_Chunk *impactSound;
+	Mix_Music* stream;
+	Mix_Chunk* ballSound;
+	Mix_Chunk* impactSound;
 #endif
 
-	struct SParticleImpact
-	{
+	struct SParticleImpact {
 		u32 when;
 		core::vector3df pos;
 		core::vector3df outVector;
@@ -107,4 +109,3 @@ private:
 };
 
 #endif
-

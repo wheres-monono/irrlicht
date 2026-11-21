@@ -8,33 +8,36 @@ using namespace scene;
 using namespace video;
 
 /** Tests the Burning Video driver */
-bool burningsVideo(void)
-{
-    IrrlichtDevice *device = createDevice(video::EDT_BURNINGSVIDEO,
-										core::dimension2du(160,120), 32);
-    if (!device)
-        return false;
+bool burningsVideo(
+	void
+) {
+	IrrlichtDevice* device =
+		createDevice(video::EDT_BURNINGSVIDEO, core::dimension2du(160, 120), 32);
+	if (!device) {
+		return false;
+	}
 
-    IVideoDriver* driver = device->getVideoDriver();
-    ISceneManager* smgr = device->getSceneManager();
+	IVideoDriver* driver = device->getVideoDriver();
+	ISceneManager* smgr = device->getSceneManager();
 
-    smgr->addCubeSceneNode(10.f, 0, -1, core::vector3df(0.f, 0.f, 20.f));
-    smgr->addCameraSceneNode();
-    // Test that ambient lighting works when there are no other lights in the scene
-    smgr->setAmbientLight(video::SColorf(.7f, .1f, .1f, 1.f));
+	smgr->addCubeSceneNode(10.f, 0, -1, core::vector3df(0.f, 0.f, 20.f));
+	smgr->addCameraSceneNode();
+	// Test that ambient lighting works when there are no other lights in the scene
+	smgr->setAmbientLight(video::SColorf(.7f, .1f, .1f, 1.f));
 
-    bool result = false;
-    device->run();
-	if (driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0, 80, 80, 80)))
-	{
+	bool result = false;
+	device->run();
+	if (driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		    video::SColor(0, 80, 80, 80))) {
 		smgr->drawAll();
 		driver->endScene();
-		result = takeScreenshotAndCompareAgainstReference(driver, "-ambient-lighting.png", 100);
+		result = takeScreenshotAndCompareAgainstReference(driver,
+			"-ambient-lighting.png", 100);
 	}
 
 	device->closeDevice();
 	device->run();
-    device->drop();
+	device->drop();
 
-    return result;
+	return result;
 }

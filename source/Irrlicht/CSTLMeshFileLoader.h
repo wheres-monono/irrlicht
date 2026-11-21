@@ -15,13 +15,12 @@ namespace scene
 {
 
 //! Meshloader capable of loading STL meshes.
-class CSTLMeshFileLoader : public IMeshLoader
-{
+class CSTLMeshFileLoader : public IMeshLoader {
 public:
-
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (i.e. ".stl")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -30,11 +29,11 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 	// skips to the first non-space character available
 	void goNextWord(io::IReadFile* file) const;
 	// returns the next word
-	const core::stringc& getNextToken(io::IReadFile* file, core::stringc& token) const;
+	const core::stringc& getNextToken(io::IReadFile* file,
+		core::stringc& token) const;
 	// skip to next printable character after the first line break
 	void goNextLine(io::IReadFile* file) const;
 
@@ -46,4 +45,3 @@ private:
 } // end namespace irr
 
 #endif
-

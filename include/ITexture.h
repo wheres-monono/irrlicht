@@ -17,10 +17,8 @@ namespace irr
 namespace video
 {
 
-
 //! Enumeration flags telling the video driver in which format textures should be created.
-enum E_TEXTURE_CREATION_FLAG
-{
+enum E_TEXTURE_CREATION_FLAG {
 	/** Forces the driver to create 16 bit textures always, independent of
 	which format the file on disk has. When choosing this you may lose
 	some color detail, but gain much speed and memory. 16 bit textures can
@@ -66,10 +64,10 @@ enum E_TEXTURE_CREATION_FLAG
 	ETCF_ALLOW_NON_POWER_2 = 0x00000040,
 
 	//! Allow the driver to keep a copy of the texture in memory
-	/** Enabling this makes calls to ITexture::lock a lot faster, but costs main memory.
-	Currently only used in combination with OpenGL drivers.
-	NOTE: Disabling this does not yet work correctly with alpha-textures.
-	So the default is on for now (but might change with Irrlicht 1.9 if we get the alpha-troubles fixed).
+	/** Enabling this makes calls to ITexture::lock a lot faster, but costs main
+	memory. Currently only used in combination with OpenGL drivers. NOTE: Disabling
+	this does not yet work correctly with alpha-textures. So the default is on for now
+	(but might change with Irrlicht 1.9 if we get the alpha-troubles fixed).
 	*/
 	ETCF_ALLOW_MEMORY_COPY = 0x00000080,
 
@@ -79,8 +77,7 @@ enum E_TEXTURE_CREATION_FLAG
 };
 
 //! Enum for the mode for texture locking. Read-Only, write-only or read/write.
-enum E_TEXTURE_LOCK_MODE
-{
+enum E_TEXTURE_LOCK_MODE {
 	//! The default mode. Texture can be read and written to.
 	ETLM_READ_WRITE = 0,
 
@@ -95,32 +92,30 @@ enum E_TEXTURE_LOCK_MODE
 };
 
 //! Additional bitflags for ITexture::lock() call
-enum E_TEXTURE_LOCK_FLAGS
-{
+enum E_TEXTURE_LOCK_FLAGS {
 	ETLF_NONE = 0,
 
 	//! Flip left-bottom origin rendertarget textures upside-down
 	/** Irrlicht usually has all textures with left-top as origin.
 	And for drivers with a left-bottom origin coordinate system (OpenGL)
 	Irrlicht modifies the texture-matrix in the fixed function pipeline to make
-	the textures show up correctly (shader coders have to handle upside down 
+	the textures show up correctly (shader coders have to handle upside down
 	textures themselves).
-	But rendertarget textures (RTT's) are written by drivers the way the 
-	coordinate system of that driver works. So on OpenGL images tend to look 
+	But rendertarget textures (RTT's) are written by drivers the way the
+	coordinate system of that driver works. So on OpenGL images tend to look
 	upside down (aka Y coordinate going up) on lock() when this flag isn't set.
 	When the flag is set it will flip such textures on lock() to make them look
 	like non-rtt textures (origin left-top). Note that this also means the texture
-	will be uploaded flipped on unlock. So mostly you want to have this flag set 
-	when you want to look at the texture or save it, but unset if you want to 
+	will be uploaded flipped on unlock. So mostly you want to have this flag set
+	when you want to look at the texture or save it, but unset if you want to
 	upload it again to the card.
 	If you disable this flag you get the memory just as it is on the graphic card.
 	For backward compatibility reasons this flag is enabled by default. */
-	ETLF_FLIP_Y_UP_RTT = 1	
+	ETLF_FLIP_Y_UP_RTT = 1
 };
 
 //! Where did the last IVideoDriver::getTexture call find this texture
-enum E_TEXTURE_SOURCE
-{
+enum E_TEXTURE_SOURCE {
 	//! IVideoDriver::getTexture was never called (texture created otherwise)
 	ETS_UNKNOWN,
 
@@ -132,8 +127,7 @@ enum E_TEXTURE_SOURCE
 };
 
 //! Enumeration describing the type of ITexture.
-enum E_TEXTURE_TYPE
-{
+enum E_TEXTURE_TYPE {
 	//! 2D texture.
 	ETT_2D,
 
@@ -150,15 +144,22 @@ NULL device, their textures are compatible. If you try to use a texture
 created by one device with an other device, the device will refuse to do that
 and write a warning or an error message to the output buffer.
 */
-class ITexture : public virtual IReferenceCounted
-{
+class ITexture : public virtual IReferenceCounted {
 public:
-
 	//! constructor
-	ITexture(const io::path& name, E_TEXTURE_TYPE type) : NamedPath(name), DriverType(EDT_NULL), OriginalColorFormat(ECF_UNKNOWN),
-		ColorFormat(ECF_UNKNOWN), Pitch(0), HasMipMaps(false), IsRenderTarget(false), Source(ETS_UNKNOWN), Type(type)
-	{
-	}
+	ITexture(
+		const io::path& name,
+		E_TEXTURE_TYPE type
+	) :
+		NamedPath(name),
+		DriverType(EDT_NULL),
+		OriginalColorFormat(ECF_UNKNOWN),
+		ColorFormat(ECF_UNKNOWN),
+		Pitch(0),
+		HasMipMaps(false),
+		IsRenderTarget(false),
+		Source(ETS_UNKNOWN),
+		Type(type) {}
 
 	//! Lock function.
 	/** Locks the Texture and returns a pointer to access the
@@ -175,15 +176,19 @@ public:
 	only mode or read from in write only mode.
 	Support for this feature depends on the driver, so don't rely on the
 	texture being write-protected when locking with read-only, etc.
-	\param mipmapLevel NOTE: Currently broken, sorry, we try if we can repair it for 1.9 release.
-	Number of the mipmapLevel to lock. 0 is main texture.
+	\param mipmapLevel NOTE: Currently broken, sorry, we try if we can repair it
+	for 1.9 release. Number of the mipmapLevel to lock. 0 is main texture.
 	Non-existing levels will silently fail and return 0.
-	\param layer It determines which cubemap face or texture array layer should be locked.
+	\param layer It determines which cubemap face or texture array layer should be
+	locked.
 	\param lockFlags See E_TEXTURE_LOCK_FLAGS documentation.
 	\return Returns a pointer to the pixel data. The format of the pixel can
 	be determined by using getColorFormat(). 0 is returned, if
 	the texture cannot be locked. */
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE, u32 mipmapLevel=0, u32 layer = 0, E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) = 0;
+	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+		u32 mipmapLevel = 0,
+		u32 layer = 0,
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) = 0;
 
 	//! Unlock function. Must be called after a lock() to the texture.
 	/** One should avoid to call unlock more than once before another lock.
@@ -227,9 +232,9 @@ public:
 	ECOLOR_FORMAT getColorFormat() const { return ColorFormat; };
 
 	//! Get the original color format
-	/** When create textures from image data we will often use different color formats.
-	For example depending on driver TextureCreationFlag's. 
-	This can give you the original format which the image used to create the texture had	*/
+	/** When create textures from image data we will often use different color
+	formats. For example depending on driver TextureCreationFlag's. This can give you
+	the original format which the image used to create the texture had	*/
 	ECOLOR_FORMAT getOriginalColorFormat() const { return OriginalColorFormat; };
 
 	//! Get pitch of the main texture (in bytes).
@@ -255,29 +260,32 @@ public:
 	//! Check where the last IVideoDriver::getTexture found this texture
 	E_TEXTURE_SOURCE getSource() const { return Source; }
 
-	//! Used internally by the engine to update Source status on IVideoDriver::getTexture calls.
-	void updateSource(E_TEXTURE_SOURCE source) { Source = source; }
+	//! Used internally by the engine to update Source status on
+	//! IVideoDriver::getTexture calls.
+	void updateSource(
+		E_TEXTURE_SOURCE source
+	) {
+		Source = source;
+	}
 
 	//! Returns if the texture has an alpha channel
-	bool hasAlpha() const
-	{
+	bool hasAlpha() const {
 		bool status = false;
 
-		switch (ColorFormat)
-		{
-		case ECF_A8R8G8B8:
-		case ECF_A1R5G5B5:
-		case ECF_DXT1:
-		case ECF_DXT2:
-		case ECF_DXT3:
-		case ECF_DXT4:
-		case ECF_DXT5:
-		case ECF_A16B16G16R16F:
-		case ECF_A32B32G32R32F:
-			status = true;
-			break;
-		default:
-			break;
+		switch (ColorFormat) {
+			case ECF_A8R8G8B8:
+			case ECF_A1R5G5B5:
+			case ECF_DXT1:
+			case ECF_DXT2:
+			case ECF_DXT3:
+			case ECF_DXT4:
+			case ECF_DXT5:
+			case ECF_A16B16G16R16F:
+			case ECF_A32B32G32R32F:
+				status = true;
+				break;
+			default:
+				break;
 		}
 
 		return status;
@@ -287,20 +295,25 @@ public:
 	E_TEXTURE_TYPE getType() const { return Type; }
 
 protected:
-
-	//! Helper function, helps to get the desired texture creation format from the flags.
+	//! Helper function, helps to get the desired texture creation format from the
+	//! flags.
 	/** \return Either ETCF_ALWAYS_32_BIT, ETCF_ALWAYS_16_BIT,
 	ETCF_OPTIMIZED_FOR_QUALITY, or ETCF_OPTIMIZED_FOR_SPEED. */
-	inline E_TEXTURE_CREATION_FLAG getTextureFormatFromFlags(u32 flags)
-	{
-		if (flags & ETCF_OPTIMIZED_FOR_SPEED)
+	inline E_TEXTURE_CREATION_FLAG getTextureFormatFromFlags(
+		u32 flags
+	) {
+		if (flags & ETCF_OPTIMIZED_FOR_SPEED) {
 			return ETCF_OPTIMIZED_FOR_SPEED;
-		if (flags & ETCF_ALWAYS_16_BIT)
+		}
+		if (flags & ETCF_ALWAYS_16_BIT) {
 			return ETCF_ALWAYS_16_BIT;
-		if (flags & ETCF_ALWAYS_32_BIT)
+		}
+		if (flags & ETCF_ALWAYS_32_BIT) {
 			return ETCF_ALWAYS_32_BIT;
-		if (flags & ETCF_OPTIMIZED_FOR_QUALITY)
+		}
+		if (flags & ETCF_OPTIMIZED_FOR_QUALITY) {
 			return ETCF_OPTIMIZED_FOR_QUALITY;
+		}
 		return ETCF_OPTIMIZED_FOR_SPEED;
 	}
 
@@ -317,9 +330,7 @@ protected:
 	E_TEXTURE_TYPE Type;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
-

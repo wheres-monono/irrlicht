@@ -14,8 +14,7 @@ namespace scene
 {
 
 //! Types of built in particle affectors
-enum E_PARTICLE_AFFECTOR_TYPE
-{
+enum E_PARTICLE_AFFECTOR_TYPE {
 	EPAT_NONE = 0,
 	EPAT_ATTRACT,
 	EPAT_FADE_OUT,
@@ -26,24 +25,15 @@ enum E_PARTICLE_AFFECTOR_TYPE
 };
 
 //! Names for built in particle affectors
-const c8* const ParticleAffectorTypeNames[] =
-{
-	"None",
-	"Attract",
-	"FadeOut",
-	"Gravity",
-	"Rotate",
-	"Scale",
-	0
-};
+const c8* const ParticleAffectorTypeNames[] = {
+	"None", "Attract", "FadeOut", "Gravity", "Rotate", "Scale", 0};
 
 //! A particle affector modifies particles.
-class IParticleAffector : public virtual io::IAttributeExchangingObject
-{
+class IParticleAffector : public virtual io::IAttributeExchangingObject {
 public:
-
 	//! constructor
-	IParticleAffector() : Enabled(true) {}
+	IParticleAffector() :
+		Enabled(true) {}
 
 	//! Affects an array of particles.
 	/** \param now Current time. (Same as ITimer::getTime() would return)
@@ -52,7 +42,11 @@ public:
 	virtual void affect(u32 now, SParticle* particlearray, u32 count) = 0;
 
 	//! Sets whether or not the affector is currently enabled.
-	virtual void setEnabled(bool enabled) { Enabled = enabled; }
+	virtual void setEnabled(
+		bool enabled
+	) {
+		Enabled = enabled;
+	}
 
 	//! Gets whether or not the affector is currently enabled.
 	virtual bool getEnabled() const { return Enabled; }
@@ -67,6 +61,4 @@ protected:
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

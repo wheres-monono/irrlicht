@@ -11,17 +11,17 @@
 namespace irr
 {
 
-//! The Operating system operator provides operation system specific methods and information.
-class IOSOperator : public virtual IReferenceCounted
-{
+//! The Operating system operator provides operation system specific methods and
+//! information.
+class IOSOperator : public virtual IReferenceCounted {
 public:
 	//! Get the current operation system version as string.
 	virtual const core::stringc& getOperatingSystemVersion() const = 0;
 
 	//! Get the current operation system version as string.
-	/** \deprecated Use getOperatingSystemVersion instead. This method will be removed in Irrlicht 1.9. */
-	_IRR_DEPRECATED_ const wchar_t* getOperationSystemVersion() const
-	{
+	/** \deprecated Use getOperatingSystemVersion instead. This method will be removed
+	 * in Irrlicht 1.9. */
+	_IRR_DEPRECATED_ const wchar_t* getOperationSystemVersion() const {
 		return core::stringw(getOperatingSystemVersion()).c_str();
 	}
 
@@ -42,9 +42,8 @@ public:
 	\param availableBytes: will contain the available memory in bytes
 	\return True if successful, false if not */
 	virtual bool getSystemMemory(u32* totalBytes, u32* availableBytes) const = 0;
-
 };
 
-} // end namespace
+} // namespace irr
 
 #endif

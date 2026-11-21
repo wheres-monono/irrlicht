@@ -15,7 +15,7 @@ namespace irr
 
 namespace io
 {
-	class IReadFile;
+class IReadFile;
 } // end namespace io
 
 namespace video
@@ -25,10 +25,8 @@ class IVideoDriver;
 class IShaderConstantSetCallBack;
 
 //! Interface making it possible to create and use programs running on the GPU.
-class IGPUProgrammingServices
-{
+class IGPUProgrammingServices {
 public:
-
 	//! Destructor
 	virtual ~IGPUProgrammingServices() {}
 
@@ -73,8 +71,7 @@ public:
 	occurred, e.g. if a shader program could not be compiled or a compile
 	target is not reachable. The error strings are then printed to the
 	error log and can be caught with a custom event receiver. */
-	virtual s32 addHighLevelShaderMaterial(
-		const c8* vertexShaderProgram,
+	virtual s32 addHighLevelShaderMaterial(const c8* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		const c8* pixelShaderProgram,
@@ -93,21 +90,19 @@ public:
 	//! convenience function for use without geometry shaders
 	s32 addHighLevelShaderMaterial(
 		const c8* vertexShaderProgram,
-		const c8* vertexShaderEntryPointName="main",
-		E_VERTEX_SHADER_TYPE vsCompileTarget=EVST_VS_1_1,
-		const c8* pixelShaderProgram=0,
-		const c8* pixelShaderEntryPointName="main",
-		E_PIXEL_SHADER_TYPE psCompileTarget=EPST_PS_1_1,
-		IShaderConstantSetCallBack* callback=0,
-		E_MATERIAL_TYPE baseMaterial=video::EMT_SOLID,
-		s32 userData=0)
-	{
-		return addHighLevelShaderMaterial(
-			vertexShaderProgram, vertexShaderEntryPointName,
-			vsCompileTarget, pixelShaderProgram,
-			pixelShaderEntryPointName, psCompileTarget,
-			0, "main", EGST_GS_4_0,
-			scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
+		const c8* vertexShaderEntryPointName = "main",
+		E_VERTEX_SHADER_TYPE vsCompileTarget = EVST_VS_1_1,
+		const c8* pixelShaderProgram = 0,
+		const c8* pixelShaderEntryPointName = "main",
+		E_PIXEL_SHADER_TYPE psCompileTarget = EPST_PS_1_1,
+		IShaderConstantSetCallBack* callback = 0,
+		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterial(vertexShaderProgram,
+			vertexShaderEntryPointName, vsCompileTarget, pixelShaderProgram,
+			pixelShaderEntryPointName, psCompileTarget, 0, "main",
+			EGST_GS_4_0, scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
 			callback, baseMaterial, userData);
 	}
 
@@ -117,17 +112,14 @@ public:
 	*/
 	s32 addHighLevelShaderMaterial(
 		const c8* vertexShaderProgram,
-		const c8* pixelShaderProgram=0,
-		IShaderConstantSetCallBack* callback=0,
+		const c8* pixelShaderProgram = 0,
+		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData=0)
-	{
-		return addHighLevelShaderMaterial(
-			vertexShaderProgram, "main",
-			EVST_VS_1_1, pixelShaderProgram,
-			"main", EPST_PS_1_1,
-			0, "main", EGST_GS_4_0,
-			scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterial(vertexShaderProgram, "main",
+			EVST_VS_1_1, pixelShaderProgram, "main", EPST_PS_1_1, 0, "main",
+			EGST_GS_4_0, scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
 			callback, baseMaterial, userData);
 	}
 
@@ -144,15 +136,12 @@ public:
 		u32 verticesOut = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0 )
-	{
-		return addHighLevelShaderMaterial(
-			vertexShaderProgram, "main",
-			EVST_VS_1_1, pixelShaderProgram,
-			"main", EPST_PS_1_1,
-			geometryShaderProgram, "main", EGST_GS_4_0,
-			inType, outType, verticesOut,
-			callback, baseMaterial, userData);
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterial(vertexShaderProgram, "main",
+			EVST_VS_1_1, pixelShaderProgram, "main", EPST_PS_1_1,
+			geometryShaderProgram, "main", EGST_GS_4_0, inType, outType,
+			verticesOut, callback, baseMaterial, userData);
 	}
 
 	//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
@@ -197,8 +186,8 @@ public:
 	occurred, e.g. if a shader program could not be compiled or a compile
 	target is not reachable. The error strings are then printed to the
 	error log and can be caught with a custom event receiver. */
-	virtual s32 addHighLevelShaderMaterialFromFiles(
-		const io::path& vertexShaderProgramFileName,
+	virtual s32
+	addHighLevelShaderMaterialFromFiles(const io::path& vertexShaderProgramFileName,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		const io::path& pixelShaderProgramFileName,
@@ -224,15 +213,13 @@ public:
 		E_PIXEL_SHADER_TYPE psCompileTarget = EPST_PS_1_1,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0)
-	{
-		return addHighLevelShaderMaterialFromFiles(
-			vertexShaderProgramFileName, vertexShaderEntryPointName,
-			vsCompileTarget, pixelShaderProgramFileName,
-			pixelShaderEntryPointName, psCompileTarget,
-			"", "main", EGST_GS_4_0,
-			scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
-			callback, baseMaterial, userData);
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterialFromFiles(vertexShaderProgramFileName,
+			vertexShaderEntryPointName, vsCompileTarget,
+			pixelShaderProgramFileName, pixelShaderEntryPointName,
+			psCompileTarget, "", "main", EGST_GS_4_0, scene::EPT_TRIANGLES,
+			scene::EPT_TRIANGLE_STRIP, 0, callback, baseMaterial, userData);
 	}
 
 	//! convenience function for use with many defaults, without geometry shader
@@ -244,15 +231,12 @@ public:
 		const io::path& pixelShaderProgramFileName = "",
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0 )
-	{
-		return addHighLevelShaderMaterialFromFiles(
-			vertexShaderProgramFileName, "main",
-			EVST_VS_1_1, pixelShaderProgramFileName,
-			"main", EPST_PS_1_1,
-			"", "main", EGST_GS_4_0,
-			scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
-			callback, baseMaterial, userData);
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterialFromFiles(vertexShaderProgramFileName,
+			"main", EVST_VS_1_1, pixelShaderProgramFileName, "main",
+			EPST_PS_1_1, "", "main", EGST_GS_4_0, scene::EPT_TRIANGLES,
+			scene::EPT_TRIANGLE_STRIP, 0, callback, baseMaterial, userData);
 	}
 
 	//! convenience function for use with many defaults, with geometry shader
@@ -268,15 +252,12 @@ public:
 		u32 verticesOut = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0 )
-	{
-		return addHighLevelShaderMaterialFromFiles(
-			vertexShaderProgramFileName, "main",
-			EVST_VS_1_1, pixelShaderProgramFileName,
-			"main", EPST_PS_1_1,
-			geometryShaderProgramFileName, "main", EGST_GS_4_0,
-			inType, outType, verticesOut,
-			callback, baseMaterial, userData);
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterialFromFiles(vertexShaderProgramFileName,
+			"main", EVST_VS_1_1, pixelShaderProgramFileName, "main",
+			EPST_PS_1_1, geometryShaderProgramFileName, "main", EGST_GS_4_0,
+			inType, outType, verticesOut, callback, baseMaterial, userData);
 	}
 
 	//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
@@ -319,8 +300,8 @@ public:
 	error occurred, e.g. if a shader program could not be compiled or a
 	compile target is not reachable. The error strings are then printed to
 	the error log and can be caught with a custom event receiver. */
-	virtual s32 addHighLevelShaderMaterialFromFiles(
-		io::IReadFile* vertexShaderProgram,
+	virtual s32
+	addHighLevelShaderMaterialFromFiles(io::IReadFile* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		io::IReadFile* pixelShaderProgram,
@@ -346,14 +327,12 @@ public:
 		E_PIXEL_SHADER_TYPE psCompileTarget = EPST_PS_1_1,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0)
-	{
-		return addHighLevelShaderMaterialFromFiles(
-			vertexShaderProgram, vertexShaderEntryPointName,
-			vsCompileTarget, pixelShaderProgram,
-			pixelShaderEntryPointName, psCompileTarget,
-			0, "main", EGST_GS_4_0,
-			scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
+		s32 userData = 0
+	) {
+		return addHighLevelShaderMaterialFromFiles(vertexShaderProgram,
+			vertexShaderEntryPointName, vsCompileTarget, pixelShaderProgram,
+			pixelShaderEntryPointName, psCompileTarget, 0, "main",
+			EGST_GS_4_0, scene::EPT_TRIANGLES, scene::EPT_TRIANGLE_STRIP, 0,
 			callback, baseMaterial, userData);
 	}
 
@@ -440,16 +419,15 @@ public:
 	error occurred. -1 is returned for example if a vertex or pixel shader
 	program could not be compiled, the error strings are then printed out
 	into the error log, and can be caught with a custom event receiver. */
-	virtual s32 addShaderMaterialFromFiles(const io::path& vertexShaderProgramFileName,
+	virtual s32
+	addShaderMaterialFromFiles(const io::path& vertexShaderProgramFileName,
 		const io::path& pixelShaderProgramFileName,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
 		s32 userData = 0) = 0;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
-

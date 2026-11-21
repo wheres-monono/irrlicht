@@ -18,43 +18,44 @@
 
 namespace irr
 {
-	namespace video
-	{
+namespace video
+{
 
-		class CD3D9Driver;
+class CD3D9Driver;
 
-		class CD3D9RenderTarget : public IRenderTarget
-		{
-		public:
-			CD3D9RenderTarget(CD3D9Driver* driver);
-			virtual ~CD3D9RenderTarget();
+class CD3D9RenderTarget : public IRenderTarget {
+public:
+	CD3D9RenderTarget(CD3D9Driver* driver);
+	virtual ~CD3D9RenderTarget();
 
-			virtual void setTexture(const core::array<ITexture*>& texture, ITexture* depthStencil, const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
+	virtual void setTexture(const core::array<ITexture*>& texture,
+		ITexture* depthStencil,
+		const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
 
-			const core::dimension2d<u32>& getSize() const;
+	const core::dimension2d<u32>& getSize() const;
 
-			IDirect3DSurface9* getSurface(u32 id) const;
+	IDirect3DSurface9* getSurface(u32 id) const;
 
-			u32 getSurfaceCount() const;
+	u32 getSurfaceCount() const;
 
-			IDirect3DSurface9* getDepthStencilSurface() const;
+	IDirect3DSurface9* getDepthStencilSurface() const;
 
-			void releaseSurfaces();
+	void releaseSurfaces();
 
-			void generateSurfaces();
+	void generateSurfaces();
 
-		protected:
-			core::dimension2d<u32> Size;
+protected:
+	core::dimension2d<u32> Size;
 
-			core::array<IDirect3DSurface9*> Surface;
+	core::array<IDirect3DSurface9*> Surface;
 
-			IDirect3DSurface9* DepthStencilSurface;
+	IDirect3DSurface9* DepthStencilSurface;
 
-			CD3D9Driver* Driver;
-		};
+	CD3D9Driver* Driver;
+};
 
-	}
-}
+} // namespace video
+} // namespace irr
 
 #endif
 #endif

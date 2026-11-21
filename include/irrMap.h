@@ -14,36 +14,50 @@ namespace core
 {
 
 //! map template for associative arrays using a red-black tree
-template <class KeyType, class ValueType>
-class map
-{
+template <class KeyType, class ValueType> class map {
 	//! red/black tree for map
-	template <class KeyTypeRB, class ValueTypeRB>
-	class RBTree
-	{
+	template <class KeyTypeRB, class ValueTypeRB> class RBTree {
 	public:
+		RBTree(
+			const KeyTypeRB& k,
+			const ValueTypeRB& v
+		) :
+			LeftChild(0),
+			RightChild(0),
+			Parent(0),
+			Key(k),
+			Value(v),
+			IsRed(true) {}
 
-		RBTree(const KeyTypeRB& k, const ValueTypeRB& v)
-			: LeftChild(0), RightChild(0), Parent(0), Key(k),
-				Value(v), IsRed(true) {}
-
-		void setLeftChild(RBTree* p)
-		{
-			LeftChild=p;
-			if (p)
+		void setLeftChild(
+			RBTree* p
+		) {
+			LeftChild = p;
+			if (p) {
 				p->setParent(this);
+			}
 		}
 
-		void setRightChild(RBTree* p)
-		{
-			RightChild=p;
-			if (p)
+		void setRightChild(
+			RBTree* p
+		) {
+			RightChild = p;
+			if (p) {
 				p->setParent(this);
+			}
 		}
 
-		void setParent(RBTree* p) { Parent=p; }
+		void setParent(
+			RBTree* p
+		) {
+			Parent = p;
+		}
 
-		void setValue(const ValueTypeRB& v) { Value = v; }
+		void setValue(
+			const ValueTypeRB& v
+		) {
+			Value = v;
+		}
 
 		void setRed() { IsRed = true; }
 		void setBlack() { IsRed = false; }
@@ -52,59 +66,35 @@ class map
 		RBTree* getRightChild() const { return RightChild; }
 		RBTree* getParent() const { return Parent; }
 
-		const ValueTypeRB& getValue() const
-		{
-			return Value;
+		const ValueTypeRB& getValue() const { return Value; }
+
+		ValueTypeRB& getValue() { return Value; }
+
+		const KeyTypeRB& getKey() const { return Key; }
+
+		bool isRoot() const { return Parent == 0; }
+
+		bool isLeftChild() const {
+			return (Parent != 0) && (Parent->getLeftChild() == this);
 		}
 
-		ValueTypeRB& getValue()
-		{
-			return Value;
+		bool isRightChild() const {
+			return (Parent != 0) && (Parent->getRightChild() == this);
 		}
 
-		const KeyTypeRB& getKey() const
-		{
-			return Key;
-		}
+		bool isLeaf() const { return (LeftChild == 0) && (RightChild == 0); }
 
-		bool isRoot() const
-		{
-			return Parent==0;
-		}
-
-		bool isLeftChild() const
-		{
-			return (Parent != 0) && (Parent->getLeftChild()==this);
-		}
-
-		bool isRightChild() const
-		{
-			return (Parent!=0) && (Parent->getRightChild()==this);
-		}
-
-		bool isLeaf() const
-		{
-			return (LeftChild==0) && (RightChild==0);
-		}
-
-		unsigned int getLevel() const
-		{
-			if (isRoot())
+		unsigned int getLevel() const {
+			if (isRoot()) {
 				return 1;
-			else
+			} else {
 				return getParent()->getLevel() + 1;
+			}
 		}
 
+		bool isRed() const { return IsRed; }
 
-		bool isRed() const
-		{
-			return IsRed;
-		}
-
-		bool isBlack() const
-		{
-			return !IsRed;
-		}
+		bool isBlack() const { return !IsRed; }
 
 	private:
 		RBTree();
@@ -120,151 +110,147 @@ class map
 		bool IsRed;
 	}; // RBTree
 
-	public:
-
-	typedef RBTree<KeyType,ValueType> Node;
+public:
+	typedef RBTree<KeyType, ValueType> Node;
 	// We need the forward declaration for the friend declaration
 	class ConstIterator;
 
 	//! Normal Iterator
-	class Iterator
-	{
+	class Iterator {
 		friend class ConstIterator;
-	public:
 
-		Iterator() : Root(0), Cur(0) {}
+	public:
+		Iterator() :
+			Root(0),
+			Cur(0) {}
 
 		// Constructor(Node*)
-		Iterator(Node* root) : Root(root)
-		{
+		Iterator(
+			Node* root
+		) :
+			Root(root) {
 			reset();
 		}
 
 		// Copy constructor
-		Iterator(const Iterator& src) : Root(src.Root), Cur(src.Cur) {}
+		Iterator(
+			const Iterator& src
+		) :
+			Root(src.Root),
+			Cur(src.Cur) {}
 
-		void reset(bool atLowest=true)
-		{
-			if (atLowest)
+		void reset(
+			bool atLowest = true
+		) {
+			if (atLowest) {
 				Cur = getMin(Root);
-			else
+			} else {
 				Cur = getMax(Root);
+			}
 		}
 
-		bool atEnd() const
-		{
-			return Cur==0;
-		}
+		bool atEnd() const { return Cur == 0; }
 
-		Node* getNode() const
-		{
-			return Cur;
-		}
+		Node* getNode() const { return Cur; }
 
-		Iterator& operator=(const Iterator& src)
-		{
+		Iterator& operator=(
+			const Iterator& src
+		) {
 			Root = src.Root;
 			Cur = src.Cur;
 			return (*this);
 		}
 
-		void operator++(int)
-		{
+		void operator++(
+			int
+		) {
 			inc();
 		}
 
-		void operator--(int)
-		{
+		void operator--(
+			int
+		) {
 			dec();
 		}
 
-		Node* operator->()
-		{
-			return getNode();
-		}
+		Node* operator->() { return getNode(); }
 
-		Node& operator*()
-		{
+		Node& operator*() {
 			_IRR_DEBUG_BREAK_IF(atEnd()) // access violation
 
 			return *Cur;
 		}
 
 	private:
-
-		Node* getMin(Node* n) const
-		{
-			while(n && n->getLeftChild())
+		Node* getMin(
+			Node* n
+		) const {
+			while (n && n->getLeftChild()) {
 				n = n->getLeftChild();
+			}
 			return n;
 		}
 
-		Node* getMax(Node* n) const
-		{
-			while(n && n->getRightChild())
+		Node* getMax(
+			Node* n
+		) const {
+			while (n && n->getRightChild()) {
 				n = n->getRightChild();
+			}
 			return n;
 		}
 
-		void inc()
-		{
+		void inc() {
 			// Already at end?
-			if (Cur==0)
+			if (Cur == 0) {
 				return;
+			}
 
-			if (Cur->getRightChild())
-			{
-				// If current node has a right child, the next higher node is the
-				// node with lowest key beneath the right child.
+			if (Cur->getRightChild()) {
+				// If current node has a right child, the next higher node
+				// is the node with lowest key beneath the right child.
 				Cur = getMin(Cur->getRightChild());
-			}
-			else if (Cur->isLeftChild())
-			{
-				// No right child? Well if current node is a left child then
-				// the next higher node is the parent
+			} else if (Cur->isLeftChild()) {
+				// No right child? Well if current node is a left child
+				// then the next higher node is the parent
 				Cur = Cur->getParent();
-			}
-			else
-			{
-				// Current node neither is left child nor has a right child.
-				// I.e. it is either right child or root
-				// The next higher node is the parent of the first non-right
-				// child (i.e. either a left child or the root) up in the
+			} else {
+				// Current node neither is left child nor has a right
+				// child. I.e. it is either right child or root The next
+				// higher node is the parent of the first non-right child
+				// (i.e. either a left child or the root) up in the
 				// hierarchy. Root's parent is 0.
-				while(Cur->isRightChild())
+				while (Cur->isRightChild()) {
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}
 
-		void dec()
-		{
+		void dec() {
 			// Already at end?
-			if (Cur==0)
+			if (Cur == 0) {
 				return;
+			}
 
-			if (Cur->getLeftChild())
-			{
-				// If current node has a left child, the next lower node is the
-				// node with highest key beneath the left child.
+			if (Cur->getLeftChild()) {
+				// If current node has a left child, the next lower node
+				// is the node with highest key beneath the left child.
 				Cur = getMax(Cur->getLeftChild());
-			}
-			else if (Cur->isRightChild())
-			{
-				// No left child? Well if current node is a right child then
-				// the next lower node is the parent
+			} else if (Cur->isRightChild()) {
+				// No left child? Well if current node is a right child
+				// then the next lower node is the parent
 				Cur = Cur->getParent();
-			}
-			else
-			{
-				// Current node neither is right child nor has a left child.
-				// It is either left child or root
-				// The next higher node is the parent of the first non-left
-				// child (i.e. either a right child or the root) up in the
-				// hierarchy. Root's parent is 0.
+			} else {
+				// Current node neither is right child nor has a left
+				// child. It is either left child or root The next higher
+				// node is the parent of the first non-left child (i.e.
+				// either a right child or the root) up in the hierarchy.
+				// Root's parent is 0.
 
-				while(Cur->isLeftChild())
+				while (Cur->isLeftChild()) {
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}
@@ -274,145 +260,146 @@ class map
 	}; // Iterator
 
 	//! Const Iterator
-	class ConstIterator
-	{
+	class ConstIterator {
 		friend class Iterator;
-	public:
 
-		ConstIterator() : Root(0), Cur(0) {}
+	public:
+		ConstIterator() :
+			Root(0),
+			Cur(0) {}
 
 		// Constructor(Node*)
-		ConstIterator(const Node* root) : Root(root)
-		{
+		ConstIterator(
+			const Node* root
+		) :
+			Root(root) {
 			reset();
 		}
 
 		// Copy constructor
-		ConstIterator(const ConstIterator& src) : Root(src.Root), Cur(src.Cur) {}
-		ConstIterator(const Iterator& src) : Root(src.Root), Cur(src.Cur) {}
+		ConstIterator(
+			const ConstIterator& src
+		) :
+			Root(src.Root),
+			Cur(src.Cur) {}
+		ConstIterator(
+			const Iterator& src
+		) :
+			Root(src.Root),
+			Cur(src.Cur) {}
 
-		void reset(bool atLowest=true)
-		{
-			if (atLowest)
+		void reset(
+			bool atLowest = true
+		) {
+			if (atLowest) {
 				Cur = getMin(Root);
-			else
+			} else {
 				Cur = getMax(Root);
+			}
 		}
 
-		bool atEnd() const
-		{
-			return Cur==0;
-		}
+		bool atEnd() const { return Cur == 0; }
 
-		const Node* getNode() const
-		{
-			return Cur;
-		}
+		const Node* getNode() const { return Cur; }
 
-		ConstIterator& operator=(const ConstIterator& src)
-		{
+		ConstIterator& operator=(
+			const ConstIterator& src
+		) {
 			Root = src.Root;
 			Cur = src.Cur;
 			return (*this);
 		}
 
-		void operator++(int)
-		{
+		void operator++(
+			int
+		) {
 			inc();
 		}
 
-		void operator--(int)
-		{
+		void operator--(
+			int
+		) {
 			dec();
 		}
 
-		const Node* operator->()
-		{
-			return getNode();
-		}
+		const Node* operator->() { return getNode(); }
 
-		const Node& operator*()
-		{
+		const Node& operator*() {
 			_IRR_DEBUG_BREAK_IF(atEnd()) // access violation
 
 			return *Cur;
 		}
 
 	private:
-
-		const Node* getMin(const Node* n) const
-		{
-			while(n && n->getLeftChild())
+		const Node* getMin(
+			const Node* n
+		) const {
+			while (n && n->getLeftChild()) {
 				n = n->getLeftChild();
+			}
 			return n;
 		}
 
-		const Node* getMax(const Node* n) const
-		{
-			while(n && n->getRightChild())
+		const Node* getMax(
+			const Node* n
+		) const {
+			while (n && n->getRightChild()) {
 				n = n->getRightChild();
+			}
 			return n;
 		}
 
-		void inc()
-		{
+		void inc() {
 			// Already at end?
-			if (Cur==0)
+			if (Cur == 0) {
 				return;
+			}
 
-			if (Cur->getRightChild())
-			{
-				// If current node has a right child, the next higher node is the
-				// node with lowest key beneath the right child.
+			if (Cur->getRightChild()) {
+				// If current node has a right child, the next higher node
+				// is the node with lowest key beneath the right child.
 				Cur = getMin(Cur->getRightChild());
-			}
-			else if (Cur->isLeftChild())
-			{
-				// No right child? Well if current node is a left child then
-				// the next higher node is the parent
+			} else if (Cur->isLeftChild()) {
+				// No right child? Well if current node is a left child
+				// then the next higher node is the parent
 				Cur = Cur->getParent();
-			}
-			else
-			{
-				// Current node neither is left child nor has a right child.
-				// It is either right child or root
-				// The next higher node is the parent of the first non-right
-				// child (i.e. either a left child or the root) up in the
-				// hierarchy. Root's parent is 0.
-				while(Cur->isRightChild())
+			} else {
+				// Current node neither is left child nor has a right
+				// child. It is either right child or root The next higher
+				// node is the parent of the first non-right child (i.e.
+				// either a left child or the root) up in the hierarchy.
+				// Root's parent is 0.
+				while (Cur->isRightChild()) {
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}
 
-		void dec()
-		{
+		void dec() {
 			// Already at end?
-			if (Cur==0)
+			if (Cur == 0) {
 				return;
+			}
 
-			if (Cur->getLeftChild())
-			{
-				// If current node has a left child, the next lower node is the
-				// node with highest key beneath the left child.
+			if (Cur->getLeftChild()) {
+				// If current node has a left child, the next lower node
+				// is the node with highest key beneath the left child.
 				Cur = getMax(Cur->getLeftChild());
-			}
-			else if (Cur->isRightChild())
-			{
-				// No left child? Well if current node is a right child then
-				// the next lower node is the parent
+			} else if (Cur->isRightChild()) {
+				// No left child? Well if current node is a right child
+				// then the next lower node is the parent
 				Cur = Cur->getParent();
-			}
-			else
-			{
-				// Current node neither is right child nor has a left child.
-				// It is either left child or root
-				// The next higher node is the parent of the first non-left
-				// child (i.e. either a right child or the root) up in the
-				// hierarchy. Root's parent is 0.
+			} else {
+				// Current node neither is right child nor has a left
+				// child. It is either left child or root The next higher
+				// node is the parent of the first non-left child (i.e.
+				// either a right child or the root) up in the hierarchy.
+				// Root's parent is 0.
 
-				while(Cur->isLeftChild())
+				while (Cur->isLeftChild()) {
 					Cur = Cur->getParent();
+				}
 				Cur = Cur->getParent();
 			}
 		}
@@ -421,197 +408,173 @@ class map
 		const Node* Cur;
 	}; // ConstIterator
 
-
 	//! Parent First Iterator.
 	/** Traverses the tree from top to bottom. Typical usage is
 	when storing the tree structure, because when reading it
 	later (and inserting elements) the tree structure will
 	be the same. */
-	class ParentFirstIterator
-	{
+	class ParentFirstIterator {
 	public:
+		ParentFirstIterator() :
+			Root(0),
+			Cur(0) {}
 
-	ParentFirstIterator() : Root(0), Cur(0) {}
+		explicit ParentFirstIterator(
+			Node* root
+		) :
+			Root(root),
+			Cur(0) {
+			reset();
+		}
 
-	explicit ParentFirstIterator(Node* root) : Root(root), Cur(0)
-	{
-		reset();
-	}
+		void reset() { Cur = Root; }
 
-	void reset()
-	{
-		Cur = Root;
-	}
+		bool atEnd() const { return Cur == 0; }
 
-	bool atEnd() const
-	{
-		return Cur==0;
-	}
+		Node* getNode() { return Cur; }
 
-	Node* getNode()
-	{
-		return Cur;
-	}
+		ParentFirstIterator& operator=(
+			const ParentFirstIterator& src
+		) {
+			Root = src.Root;
+			Cur = src.Cur;
+			return (*this);
+		}
 
-	ParentFirstIterator& operator=(const ParentFirstIterator& src)
-	{
-		Root = src.Root;
-		Cur = src.Cur;
-		return (*this);
-	}
+		void operator++(
+			int
+		) {
+			inc();
+		}
 
-	void operator++(int)
-	{
-		inc();
-	}
+		Node* operator->() { return getNode(); }
 
-	Node* operator -> ()
-	{
-		return getNode();
-	}
+		Node& operator*() {
+			_IRR_DEBUG_BREAK_IF(atEnd()) // access violation
 
-	Node& operator* ()
-	{
-		_IRR_DEBUG_BREAK_IF(atEnd()) // access violation
-
-		return *getNode();
-	}
+			return *getNode();
+		}
 
 	private:
+		void inc() {
+			// Already at end?
+			if (Cur == 0) {
+				return;
+			}
 
-	void inc()
-	{
-		// Already at end?
-		if (Cur==0)
-			return;
-
-		// First we try down to the left
-		if (Cur->getLeftChild())
-		{
-			Cur = Cur->getLeftChild();
-		}
-		else if (Cur->getRightChild())
-		{
-			// No left child? The we go down to the right.
-			Cur = Cur->getRightChild();
-		}
-		else
-		{
-			// No children? Move up in the hierarchy until
-			// we either reach 0 (and are finished) or
-			// find a right uncle.
-			while (Cur!=0)
-			{
-				// But if parent is left child and has a right "uncle" the parent
-				// has already been processed but the uncle hasn't. Move to
-				// the uncle.
-				if (Cur->isLeftChild() && Cur->getParent()->getRightChild())
-				{
-					Cur = Cur->getParent()->getRightChild();
-					return;
+			// First we try down to the left
+			if (Cur->getLeftChild()) {
+				Cur = Cur->getLeftChild();
+			} else if (Cur->getRightChild()) {
+				// No left child? The we go down to the right.
+				Cur = Cur->getRightChild();
+			} else {
+				// No children? Move up in the hierarchy until
+				// we either reach 0 (and are finished) or
+				// find a right uncle.
+				while (Cur != 0) {
+					// But if parent is left child and has a right
+					// "uncle" the parent has already been processed
+					// but the uncle hasn't. Move to the uncle.
+					if (Cur->isLeftChild() &&
+						Cur->getParent()->getRightChild()) {
+						Cur = Cur->getParent()->getRightChild();
+						return;
+					}
+					Cur = Cur->getParent();
 				}
-				Cur = Cur->getParent();
 			}
 		}
-	}
 
-	Node* Root;
-	Node* Cur;
+		Node* Root;
+		Node* Cur;
 
 	}; // ParentFirstIterator
-
 
 	//! Parent Last Iterator
 	/** Traverse the tree from bottom to top.
 	Typical usage is when deleting all elements in the tree
 	because you must delete the children before you delete
 	their parent. */
-	class ParentLastIterator
-	{
+	class ParentLastIterator {
 	public:
+		ParentLastIterator() :
+			Root(0),
+			Cur(0) {}
 
-		ParentLastIterator() : Root(0), Cur(0) {}
-
-		explicit ParentLastIterator(Node* root) : Root(root), Cur(0)
-		{
+		explicit ParentLastIterator(
+			Node* root
+		) :
+			Root(root),
+			Cur(0) {
 			reset();
 		}
 
-		void reset()
-		{
-			Cur = getMin(Root);
-		}
+		void reset() { Cur = getMin(Root); }
 
-		bool atEnd() const
-		{
-			return Cur==0;
-		}
+		bool atEnd() const { return Cur == 0; }
 
-		Node* getNode()
-		{
-			return Cur;
-		}
+		Node* getNode() { return Cur; }
 
-		ParentLastIterator& operator=(const ParentLastIterator& src)
-		{
+		ParentLastIterator& operator=(
+			const ParentLastIterator& src
+		) {
 			Root = src.Root;
 			Cur = src.Cur;
 			return (*this);
 		}
 
-		void operator++(int)
-		{
+		void operator++(
+			int
+		) {
 			inc();
 		}
 
-		Node* operator -> ()
-		{
-			return getNode();
-		}
+		Node* operator->() { return getNode(); }
 
-		Node& operator* ()
-		{
+		Node& operator*() {
 			_IRR_DEBUG_BREAK_IF(atEnd()) // access violation
 
 			return *getNode();
 		}
-	private:
 
-		Node* getMin(Node* n)
-		{
-			while(n!=0 && (n->getLeftChild()!=0 || n->getRightChild()!=0))
-			{
-				if (n->getLeftChild())
+	private:
+		Node* getMin(
+			Node* n
+		) {
+			while (n != 0 &&
+				(n->getLeftChild() != 0 || n->getRightChild() != 0)) {
+				if (n->getLeftChild()) {
 					n = n->getLeftChild();
-				else
+				} else {
 					n = n->getRightChild();
+				}
 			}
 			return n;
 		}
 
-		void inc()
-		{
+		void inc() {
 			// Already at end?
-			if (Cur==0)
+			if (Cur == 0) {
 				return;
+			}
 
-			// Note: Starting point is the node as far down to the left as possible.
+			// Note: Starting point is the node as far down to the left as
+			// possible.
 
 			// If current node has an uncle to the right, go to the
 			// node as far down to the left from the uncle as possible
 			// else just go up a level to the parent.
-			if (Cur->isLeftChild() && Cur->getParent()->getRightChild())
-			{
+			if (Cur->isLeftChild() && Cur->getParent()->getRightChild()) {
 				Cur = getMin(Cur->getParent()->getRightChild());
-			}
-			else
+			} else {
 				Cur = Cur->getParent();
+			}
 		}
 
 		Node* Root;
 		Node* Cur;
 	}; // ParentLastIterator
-
 
 	// AccessClass is a temporary class used with the [] operator.
 	// It makes it possible to have different behavior in situations like:
@@ -619,34 +582,37 @@ class map
 	// If "Foo" already exists update its value else insert a new element.
 	// int i = myTree["Foo"]
 	// If "Foo" exists return its value.
-	class AccessClass
-	{
+	class AccessClass {
 		// Let map be the only one who can instantiate this class.
 		friend class map<KeyType, ValueType>;
 
 	public:
-
 		// Assignment operator. Handles the myTree["Foo"] = 32; situation
-		void operator=(const ValueType& value)
-		{
-			// Just use the Set method, it handles already exist/not exist situation
-			Tree.set(Key,value);
+		void operator=(
+			const ValueType& value
+		) {
+			// Just use the Set method, it handles already exist/not exist
+			// situation
+			Tree.set(Key, value);
 		}
 
 		// ValueType operator
-		operator ValueType()
-		{
+		operator ValueType() {
 			Node* node = Tree.find(Key);
 
 			// Not found
-			_IRR_DEBUG_BREAK_IF(node==0) // access violation
+			_IRR_DEBUG_BREAK_IF(node == 0) // access violation
 
 			return node->getValue();
 		}
 
 	private:
-
-		AccessClass(map& tree, const KeyType& key) : Tree(tree), Key(key) {}
+		AccessClass(
+			map& tree,
+			const KeyType& key
+		) :
+			Tree(tree),
+			Key(key) {}
 
 		AccessClass();
 
@@ -654,15 +620,13 @@ class map
 		const KeyType& Key;
 	}; // AccessClass
 
-
 	// Constructor.
-	map() : Root(0), Size(0) {}
+	map() :
+		Root(0),
+		Size(0) {}
 
 	// Destructor
-	~map()
-	{
-		clear();
-	}
+	~map() { clear(); }
 
 	// typedefs
 	typedef KeyType key_type;
@@ -677,37 +641,34 @@ class map
 	/** \param keyNew: the index for this value
 	\param v: the value to insert
 	\return True if successful, false if it fails (already exists) */
-	bool insert(const KeyType& keyNew, const ValueType& v)
-	{
+	bool insert(
+		const KeyType& keyNew,
+		const ValueType& v
+	) {
 		// First insert node the "usual" way (no fancy balance logic yet)
-		Node* newNode = new Node(keyNew,v);
-		if (!insert(newNode))
-		{
+		Node* newNode = new Node(keyNew, v);
+		if (!insert(newNode)) {
 			delete newNode;
 			return false;
 		}
 
 		// Then attend a balancing party
-		while (!newNode->isRoot() && (newNode->getParent()->isRed()))
-		{
-			if (newNode->getParent()->isLeftChild())
-			{
+		while (!newNode->isRoot() && (newNode->getParent()->isRed())) {
+			if (newNode->getParent()->isLeftChild()) {
 				// If newNode is a left child, get its right 'uncle'
-				Node* newNodesUncle = newNode->getParent()->getParent()->getRightChild();
-				if ( newNodesUncle!=0 && newNodesUncle->isRed())
-				{
+				Node* newNodesUncle = newNode->getParent()
+							      ->getParent()
+							      ->getRightChild();
+				if (newNodesUncle != 0 && newNodesUncle->isRed()) {
 					// case 1 - change the colors
 					newNode->getParent()->setBlack();
 					newNodesUncle->setBlack();
 					newNode->getParent()->getParent()->setRed();
 					// Move newNode up the tree
 					newNode = newNode->getParent()->getParent();
-				}
-				else
-				{
+				} else {
 					// newNodesUncle is a black node
-					if ( newNode->isRightChild())
-					{
+					if (newNode->isRightChild()) {
 						// and newNode is to the right
 						// case 2 - move newNode up and rotate
 						newNode = newNode->getParent();
@@ -718,25 +679,20 @@ class map
 					newNode->getParent()->getParent()->setRed();
 					rotateRight(newNode->getParent()->getParent());
 				}
-			}
-			else
-			{
+			} else {
 				// If newNode is a right child, get its left 'uncle'
-				Node* newNodesUncle = newNode->getParent()->getParent()->getLeftChild();
-				if ( newNodesUncle!=0 && newNodesUncle->isRed())
-				{
+				Node* newNodesUncle =
+					newNode->getParent()->getParent()->getLeftChild();
+				if (newNodesUncle != 0 && newNodesUncle->isRed()) {
 					// case 1 - change the colors
 					newNode->getParent()->setBlack();
 					newNodesUncle->setBlack();
 					newNode->getParent()->getParent()->setRed();
 					// Move newNode up the tree
 					newNode = newNode->getParent()->getParent();
-				}
-				else
-				{
+				} else {
 					// newNodesUncle is a black node
-					if (newNode->isLeftChild())
-					{
+					if (newNode->isLeftChild()) {
 						// and newNode is to the left
 						// case 2 - move newNode up and rotate
 						newNode = newNode->getParent();
@@ -747,7 +703,6 @@ class map
 					newNode->getParent()->getParent()->setRed();
 					rotateLeft(newNode->getParent()->getParent());
 				}
-
 			}
 		}
 		// Color the root black
@@ -758,29 +713,33 @@ class map
 	//! Replaces the value if the key already exists, otherwise inserts a new element.
 	/** \param k The index for this value
 	\param v The new value of */
-	void set(const KeyType& k, const ValueType& v)
-	{
+	void set(
+		const KeyType& k,
+		const ValueType& v
+	) {
 		Node* p = find(k);
-		if (p)
+		if (p) {
 			p->setValue(v);
-		else
-			insert(k,v);
+		} else {
+			insert(k, v);
+		}
 	}
 
 	//! Removes a node from the tree and returns it.
 	/** The returned node must be deleted by the user
 	\param k the key to remove
 	\return A pointer to the node, or 0 if not found */
-	Node* delink(const KeyType& k)
-	{
+	Node* delink(
+		const KeyType& k
+	) {
 		Node* p = find(k);
-		if (p == 0)
+		if (p == 0) {
 			return 0;
+		}
 
 		// Rotate p down to the left until it has no right child, will get there
 		// sooner or later.
-		while(p->getRightChild())
-		{
+		while (p->getRightChild()) {
 			// "Pull up my right child and let it knock me down to the left"
 			rotateLeft(p);
 		}
@@ -788,14 +747,15 @@ class map
 		Node* left = p->getLeftChild();
 
 		// Let p's parent point to p's child instead of point to p
-		if (p->isLeftChild())
+		if (p->isLeftChild()) {
 			p->getParent()->setLeftChild(left);
+		}
 
-		else if (p->isRightChild())
+		else if (p->isRightChild()) {
 			p->getParent()->setRightChild(left);
+		}
 
-		else
-		{
+		else {
 			// p has no parent => p is the root.
 			// Let the left child be the new root.
 			setRoot(left);
@@ -810,25 +770,25 @@ class map
 
 	//! Removes a node from the tree and deletes it.
 	/** \return True if the node was found and deleted */
-	bool remove(const KeyType& k)
-	{
+	bool remove(
+		const KeyType& k
+	) {
 		Node* p = find(k);
 		return remove(p);
 	}
 
 	//! Removes a node from the tree and deletes it.
 	/** \return True if the node was found and deleted */
-	bool remove(Node* p)
-	{
-		if (p == 0)
-		{
+	bool remove(
+		Node* p
+	) {
+		if (p == 0) {
 			return false;
 		}
 
 		// Rotate p down to the left until it has no right child, will get there
 		// sooner or later.
-		while(p->getRightChild())
-		{
+		while (p->getRightChild()) {
 			// "Pull up my right child and let it knock me down to the left"
 			rotateLeft(p);
 		}
@@ -836,14 +796,15 @@ class map
 		Node* left = p->getLeftChild();
 
 		// Let p's parent point to p's child instead of point to p
-		if (p->isLeftChild())
+		if (p->isLeftChild()) {
 			p->getParent()->setLeftChild(left);
+		}
 
-		else if (p->isRightChild())
+		else if (p->isRightChild()) {
 			p->getParent()->setRightChild(left);
+		}
 
-		else
-		{
+		else {
 			// p has no parent => p is the root.
 			// Let the left child be the new root.
 			setRoot(left);
@@ -858,51 +819,44 @@ class map
 	}
 
 	//! Clear the entire tree
-	void clear()
-	{
+	void clear() {
 		ParentLastIterator i(getParentLastIterator());
 
-		while(!i.atEnd())
-		{
+		while (!i.atEnd()) {
 			Node* p = i.getNode();
 			i++; // Increment it before it is deleted
-				// else iterator will get quite confused.
+			     // else iterator will get quite confused.
 			delete p;
 		}
 		Root = 0;
-		Size= 0;
+		Size = 0;
 	}
 
 	//! Is the tree empty?
 	//! \return Returns true if empty, false if not
-	bool empty() const
-	{
-		return Root == 0;
-	}
+	bool empty() const { return Root == 0; }
 
 	//! \deprecated Use empty() instead. This method may be removed by Irrlicht 1.9
-	_IRR_DEPRECATED_ bool isEmpty() const
-	{
-		return empty();
-	}
+	_IRR_DEPRECATED_ bool isEmpty() const { return empty(); }
 
 	//! Search for a node with the specified key.
 	//! \param keyToFind: The key to find
 	//! \return Returns 0 if node couldn't be found.
-	Node* find(const KeyType& keyToFind) const
-	{
+	Node* find(
+		const KeyType& keyToFind
+	) const {
 		Node* pNode = Root;
 
-		while(pNode!=0)
-		{
-			const KeyType& key=pNode->getKey();
+		while (pNode != 0) {
+			const KeyType& key = pNode->getKey();
 
-			if (keyToFind == key)
+			if (keyToFind == key) {
 				return pNode;
-			else if (keyToFind < key)
+			} else if (keyToFind < key) {
 				pNode = pNode->getLeftChild();
-			else //keyToFind > key
+			} else { // keyToFind > key
 				pNode = pNode->getRightChild();
+			}
 		}
 
 		return 0;
@@ -911,24 +865,19 @@ class map
 	//! Gets the root element.
 	//! \return Returns a pointer to the root node, or
 	//! 0 if the tree is empty.
-	Node* getRoot() const
-	{
-		return Root;
-	}
+	Node* getRoot() const { return Root; }
 
 	//! Returns the number of nodes in the tree.
-	u32 size() const
-	{
-		return Size;
-	}
+	u32 size() const { return Size; }
 
 	//! Swap the content of this map container with the content of another map
-	/** Afterwards this object will contain the content of the other object and the other
-	object will contain the content of this object. Iterators will afterwards be valid for
-	the swapped object.
+	/** Afterwards this object will contain the content of the other object and the
+	other object will contain the content of this object. Iterators will afterwards be
+	valid for the swapped object.
 	\param other Swap content with this object */
-	void swap(map<KeyType, ValueType>& other)
-	{
+	void swap(
+		map<KeyType, ValueType>& other
+	) {
 		core::swap(Root, other.Root);
 		core::swap(Size, other.Size);
 	}
@@ -938,15 +887,13 @@ class map
 	//------------------------------
 
 	//! Returns an iterator
-	Iterator getIterator() const
-	{
+	Iterator getIterator() const {
 		Iterator it(getRoot());
 		return it;
 	}
 
 	//! Returns a Constiterator
-	ConstIterator getConstIterator() const
-	{
+	ConstIterator getConstIterator() const {
 		Iterator it(getRoot());
 		return it;
 	}
@@ -956,8 +903,7 @@ class map
 	//! when storing the tree structure, because when reading it
 	//! later (and inserting elements) the tree structure will
 	//! be the same.
-	ParentFirstIterator getParentFirstIterator() const
-	{
+	ParentFirstIterator getParentFirstIterator() const {
 		ParentFirstIterator it(getRoot());
 		return it;
 	}
@@ -967,8 +913,7 @@ class map
 	//! Typical usage is when deleting all elements in the tree
 	//! because you must delete the children before you delete
 	//! their parent.
-	ParentLastIterator getParentLastIterator() const
-	{
+	ParentLastIterator getParentLastIterator() const {
 		ParentLastIterator it(getRoot());
 		return it;
 	}
@@ -979,12 +924,13 @@ class map
 
 	//! operator [] for access to elements
 	/** for example myMap["key"] */
-	AccessClass operator[](const KeyType& k)
-	{
+	AccessClass operator[](
+		const KeyType& k
+	) {
 		return AccessClass(*this, k);
 	}
-	private:
 
+private:
 	//------------------------------
 	// Disabled methods
 	//------------------------------
@@ -992,18 +938,18 @@ class map
 	// defined but not implemented. The tree should never be
 	// copied, pass along references to it instead.
 	explicit map(const map& src);
-	map& operator = (const map& src);
+	map& operator=(const map& src);
 
 	//! Set node as new root.
 	/** The node will be set to black, otherwise core dumps may arise
 	(patch provided by rogerborg).
 	\param newRoot Node which will be the new root
 	*/
-	void setRoot(Node* newRoot)
-	{
+	void setRoot(
+		Node* newRoot
+	) {
 		Root = newRoot;
-		if (Root != 0)
-		{
+		if (Root != 0) {
 			Root->setParent(0);
 			Root->setBlack();
 		}
@@ -1011,54 +957,44 @@ class map
 
 	//! Insert a node into the tree without using any fancy balancing logic.
 	/** \return false if that key already exist in the tree. */
-	bool insert(Node* newNode)
-	{
-		bool result=true; // Assume success
+	bool insert(
+		Node* newNode
+	) {
+		bool result = true; // Assume success
 
-		if (Root==0)
-		{
+		if (Root == 0) {
 			setRoot(newNode);
 			Size = 1;
-		}
-		else
-		{
+		} else {
 			Node* pNode = Root;
 			const KeyType& keyNew = newNode->getKey();
-			while (pNode)
-			{
-				const KeyType& key=pNode->getKey();
+			while (pNode) {
+				const KeyType& key = pNode->getKey();
 
-				if (keyNew == key)
-				{
+				if (keyNew == key) {
 					result = false;
 					pNode = 0;
-				}
-				else if (keyNew < key)
-				{
-					if (pNode->getLeftChild() == 0)
-					{
+				} else if (keyNew < key) {
+					if (pNode->getLeftChild() == 0) {
 						pNode->setLeftChild(newNode);
 						pNode = 0;
-					}
-					else
+					} else {
 						pNode = pNode->getLeftChild();
-				}
-				else // keyNew > key
+					}
+				} else // keyNew > key
 				{
-					if (pNode->getRightChild()==0)
-					{
+					if (pNode->getRightChild() == 0) {
 						pNode->setRightChild(newNode);
 						pNode = 0;
-					}
-					else
-					{
+					} else {
 						pNode = pNode->getRightChild();
 					}
 				}
 			}
 
-			if (result)
+			if (result) {
 				++Size;
+			}
 		}
 
 		return result;
@@ -1066,36 +1002,40 @@ class map
 
 	//! Rotate left.
 	//! Pull up node's right child and let it knock node down to the left
-	void rotateLeft(Node* p)
-	{
+	void rotateLeft(
+		Node* p
+	) {
 		Node* right = p->getRightChild();
 
 		p->setRightChild(right->getLeftChild());
 
-		if (p->isLeftChild())
+		if (p->isLeftChild()) {
 			p->getParent()->setLeftChild(right);
-		else if (p->isRightChild())
+		} else if (p->isRightChild()) {
 			p->getParent()->setRightChild(right);
-		else
+		} else {
 			setRoot(right);
+		}
 
 		right->setLeftChild(p);
 	}
 
 	//! Rotate right.
 	//! Pull up node's left child and let it knock node down to the right
-	void rotateRight(Node* p)
-	{
+	void rotateRight(
+		Node* p
+	) {
 		Node* left = p->getLeftChild();
 
 		p->setLeftChild(left->getRightChild());
 
-		if (p->isLeftChild())
+		if (p->isLeftChild()) {
 			p->getParent()->setLeftChild(left);
-		else if (p->isRightChild())
+		} else if (p->isRightChild()) {
 			p->getParent()->setRightChild(left);
-		else
+		} else {
 			setRoot(left);
+		}
 
 		left->setRightChild(p);
 	}
@@ -1104,11 +1044,10 @@ class map
 	// Private Members
 	//------------------------------
 	Node* Root; // The top node. 0 if empty.
-	u32 Size; // Number of nodes in the tree
+	u32 Size;   // Number of nodes in the tree
 };
 
 } // end namespace core
 } // end namespace irr
 
 #endif // __IRR_MAP_H_INCLUDED__
-

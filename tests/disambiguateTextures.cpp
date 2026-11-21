@@ -12,13 +12,13 @@ using namespace gui;
 
 /** This tests verifies that textures opened from different places in the filesystem
 	can be distinguished, even if they have the same filename. */
-bool disambiguateTextures(void)
-{
-	IrrlichtDevice *device =
-		createDevice( video::EDT_NULL, dimension2d<u32>(640, 480));
+bool disambiguateTextures(
+	void
+) {
+	IrrlichtDevice* device =
+		createDevice(video::EDT_NULL, dimension2d<u32>(640, 480));
 
-	if (!device)
-	{
+	if (!device) {
 		logTestString("Unable to create EDT_NULL device\n");
 		return false;
 	}
@@ -27,35 +27,40 @@ bool disambiguateTextures(void)
 	// a media directory under this apps' directory with tools.png in it.
 	stringc wd = device->getFileSystem()->getWorkingDirectory();
 
-	if(-1 == wd.find("/tests") && -1 == wd.find("\\tests"))
-	{
-		logTestString("The tests must be run from the /tests directory, regardless of where\n"\
-			"the test executable was built.\n");
+	if (-1 == wd.find("/tests") && -1 == wd.find("\\tests")) {
+		logTestString("The tests must be run from the /tests directory, "
+			      "regardless of where\n"
+			      "the test executable was built.\n");
 		device->drop();
 		return false;
 	}
 
-	IVideoDriver * driver = device->getVideoDriver();
+	IVideoDriver* driver = device->getVideoDriver();
 
-	ITexture * tex1 = driver->getTexture("../media/tools.png");
+	ITexture* tex1 = driver->getTexture("../media/tools.png");
 	assert_log(tex1);
-	if(!tex1)
+	if (!tex1) {
 		logTestString("Unable to open ../media/tools.png\n");
+	}
 
-	ITexture * tex2 = driver->getTexture("../media/tools.png");
+	ITexture* tex2 = driver->getTexture("../media/tools.png");
 	assert_log(tex2);
-	if(!tex2)
+	if (!tex2) {
 		logTestString("Unable to open ../media/tools.png\n");
+	}
 
-	IReadFile * readFile = device->getFileSystem()->createAndOpenFile("../media/tools.png");
+	IReadFile* readFile =
+		device->getFileSystem()->createAndOpenFile("../media/tools.png");
 	assert_log(readFile);
-	if(!readFile)
+	if (!readFile) {
 		logTestString("Unable to open ../media/tools.png\n");
+	}
 
-	ITexture * tex3 = driver->getTexture(readFile);
+	ITexture* tex3 = driver->getTexture(readFile);
 	assert_log(tex3);
-	if(!readFile)
+	if (!readFile) {
 		logTestString("Unable to create texture from ../media/tools.png\n");
+	}
 
 	readFile->drop();
 
@@ -66,10 +71,11 @@ bool disambiguateTextures(void)
 	stringc newWd = wd + "/empty/empty";
 	bool changed = device->getFileSystem()->changeWorkingDirectoryTo(newWd.c_str());
 	assert_log(changed);
-	ITexture * tex4 = driver->getTexture("../../media/tools.png");
+	ITexture* tex4 = driver->getTexture("../../media/tools.png");
 	assert_log(tex4);
-	if(!tex4)
+	if (!tex4) {
 		logTestString("Unable to open ../../media/tools.png\n");
+	}
 	assert_log(tex1 != tex4);
 
 	// The working directory must be restored for the other tests to work.
@@ -81,4 +87,3 @@ bool disambiguateTextures(void)
 
 	return (changed && tex1 == tex2 && tex1 == tex3 && tex1 != tex4) ? true : false;
 }
-

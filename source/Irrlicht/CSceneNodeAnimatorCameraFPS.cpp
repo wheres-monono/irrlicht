@@ -16,99 +16,107 @@ namespace scene
 {
 
 //! constructor
-CSceneNodeAnimatorCameraFPS::CSceneNodeAnimatorCameraFPS(gui::ICursorControl* cursorControl,
-		f32 rotateSpeed, f32 moveSpeed, f32 jumpSpeed,
-		SKeyMap* keyMapArray, u32 keyMapSize, bool noVerticalMovement, bool invertY, float rotateSpeedKeyboard)
-: CursorControl(cursorControl), MaxVerticalAngle(88.0f), NoVerticalMovement(noVerticalMovement),
-	MoveSpeed(moveSpeed), RotateSpeedKeyboard(rotateSpeedKeyboard), RotateSpeed(rotateSpeed),
+CSceneNodeAnimatorCameraFPS::CSceneNodeAnimatorCameraFPS(
+	gui::ICursorControl* cursorControl,
+	f32 rotateSpeed,
+	f32 moveSpeed,
+	f32 jumpSpeed,
+	SKeyMap* keyMapArray,
+	u32 keyMapSize,
+	bool noVerticalMovement,
+	bool invertY,
+	float rotateSpeedKeyboard
+) :
+	CursorControl(cursorControl),
+	MaxVerticalAngle(88.0f),
+	NoVerticalMovement(noVerticalMovement),
+	MoveSpeed(moveSpeed),
+	RotateSpeedKeyboard(rotateSpeedKeyboard),
+	RotateSpeed(rotateSpeed),
 	JumpSpeed(jumpSpeed),
 	MouseYDirection(invertY ? -1.0f : 1.0f),
-	LastAnimationTime(0), firstUpdate(true), firstInput(true)
-{
-	#ifdef _DEBUG
+	LastAnimationTime(0),
+	firstUpdate(true),
+	firstInput(true) {
+#ifdef _DEBUG
 	setDebugName("CCameraSceneNodeAnimatorFPS");
-	#endif
+#endif
 
-	if (CursorControl)
+	if (CursorControl) {
 		CursorControl->grab();
+	}
 
 	allKeysUp();
 
 	// create key map
-	if (!keyMapArray || !keyMapSize)
-	{
+	if (!keyMapArray || !keyMapSize) {
 		// create default key map
 		KeyMap.push_back(SKeyMap(EKA_MOVE_FORWARD, irr::KEY_UP));
 		KeyMap.push_back(SKeyMap(EKA_MOVE_BACKWARD, irr::KEY_DOWN));
 		KeyMap.push_back(SKeyMap(EKA_STRAFE_LEFT, irr::KEY_LEFT));
 		KeyMap.push_back(SKeyMap(EKA_STRAFE_RIGHT, irr::KEY_RIGHT));
 		KeyMap.push_back(SKeyMap(EKA_JUMP_UP, irr::KEY_KEY_J));
-	}
-	else
-	{
+	} else {
 		// create custom key map
 		setKeyMap(keyMapArray, keyMapSize);
 	}
 }
 
-
 //! destructor
-CSceneNodeAnimatorCameraFPS::~CSceneNodeAnimatorCameraFPS()
-{
-	if (CursorControl)
+CSceneNodeAnimatorCameraFPS::~CSceneNodeAnimatorCameraFPS() {
+	if (CursorControl) {
 		CursorControl->drop();
+	}
 }
-
 
 //! It is possible to send mouse and key events to the camera. Most cameras
 //! may ignore this input, but camera scene nodes which are created for
 //! example with scene::ISceneManager::addMayaCameraSceneNode or
 //! scene::ISceneManager::addFPSCameraSceneNode, may want to get this input
 //! for changing their position, look at target or whatever.
-bool CSceneNodeAnimatorCameraFPS::OnEvent(const SEvent& evt)
-{
-	switch(evt.EventType)
-	{
-	case EET_KEY_INPUT_EVENT:
-		for (u32 i=0; i<KeyMap.size(); ++i)
-		{
-			if (KeyMap[i].KeyCode == evt.KeyInput.Key)
-			{
-				CursorKeys[KeyMap[i].Action] = evt.KeyInput.PressedDown;
+bool CSceneNodeAnimatorCameraFPS::OnEvent(
+	const SEvent& evt
+) {
+	switch (evt.EventType) {
+		case EET_KEY_INPUT_EVENT:
+			for (u32 i = 0; i < KeyMap.size(); ++i) {
+				if (KeyMap[i].KeyCode == evt.KeyInput.Key) {
+					CursorKeys[KeyMap[i].Action] =
+						evt.KeyInput.PressedDown;
+					return true;
+				}
+			}
+			break;
+
+		case EET_MOUSE_INPUT_EVENT:
+			if (evt.MouseInput.Event == EMIE_MOUSE_MOVED) {
+				if (CursorControl) {
+					CursorPos = CursorControl->getRelativePosition();
+				}
 				return true;
 			}
-		}
-		break;
+			break;
 
-	case EET_MOUSE_INPUT_EVENT:
-		if (evt.MouseInput.Event == EMIE_MOUSE_MOVED)
-		{
-			if ( CursorControl )
-				CursorPos = CursorControl->getRelativePosition();
-			return true;
-		}
-		break;
-
-	default:
-		break;
+		default:
+			break;
 	}
 
 	return false;
 }
 
-
-void CSceneNodeAnimatorCameraFPS::animateNode(ISceneNode* node, u32 timeMs)
-{
-	if (!node || node->getType() != ESNT_CAMERA)
+void CSceneNodeAnimatorCameraFPS::animateNode(
+	ISceneNode* node,
+	u32 timeMs
+) {
+	if (!node || node->getType() != ESNT_CAMERA) {
 		return;
+	}
 
 	ICameraSceneNode* camera = static_cast<ICameraSceneNode*>(node);
 
-	if (firstUpdate)
-	{
+	if (firstUpdate) {
 		camera->updateAbsolutePosition();
-		if (CursorControl )
-		{
+		if (CursorControl) {
 			CursorControl->setPosition(0.5f, 0.5f);
 			CursorPos = CenterCursor = CursorControl->getRelativePosition();
 		}
@@ -118,25 +126,25 @@ void CSceneNodeAnimatorCameraFPS::animateNode(ISceneNode* node, u32 timeMs)
 		firstUpdate = false;
 	}
 
-	// If the camera isn't the active camera, and receiving input, then don't process it.
-	if(!camera->isInputReceiverEnabled())
-	{
+	// If the camera isn't the active camera, and receiving input, then don't process
+	// it.
+	if (!camera->isInputReceiverEnabled()) {
 		firstInput = true;
 		return;
 	}
 
-	if ( firstInput )
-	{
+	if (firstInput) {
 		allKeysUp();
 		firstInput = false;
 	}
 
-	scene::ISceneManager * smgr = camera->getSceneManager();
-	if(smgr && smgr->getActiveCamera() != camera)
+	scene::ISceneManager* smgr = camera->getSceneManager();
+	if (smgr && smgr->getActiveCamera() != camera) {
 		return;
+	}
 
 	// get time
-	f32 timeDiff = (f32) ( timeMs - LastAnimationTime );
+	f32 timeDiff = (f32)(timeMs - LastAnimationTime);
 	LastAnimationTime = timeMs;
 
 	// update position
@@ -146,12 +154,12 @@ void CSceneNodeAnimatorCameraFPS::animateNode(ISceneNode* node, u32 timeMs)
 	core::vector3df target = (camera->getTarget() - camera->getAbsolutePosition());
 	core::vector3df relativeRotation = target.getHorizontalAngle();
 
-	if (CursorControl)
-	{
-		if (CursorPos != CenterCursor)
-		{
-			relativeRotation.Y -= (CenterCursor.X - CursorPos.X) * RotateSpeed;
-			relativeRotation.X -= (CenterCursor.Y - CursorPos.Y) * RotateSpeed * MouseYDirection;
+	if (CursorControl) {
+		if (CursorPos != CenterCursor) {
+			relativeRotation.Y -=
+				(CenterCursor.X - CursorPos.X) * RotateSpeed;
+			relativeRotation.X -= (CenterCursor.Y - CursorPos.Y) *
+					      RotateSpeed * MouseYDirection;
 
 			// Do the fix as normal, special case below
 			// reset cursor position to the centre of the window.
@@ -164,101 +172,102 @@ void CSceneNodeAnimatorCameraFPS::animateNode(ISceneNode* node, u32 timeMs)
 
 		// Special case, mouse is whipped outside of window before it can update.
 		video::IVideoDriver* driver = smgr->getVideoDriver();
-		core::vector2d<u32> mousepos(u32(CursorControl->getPosition().X), u32(CursorControl->getPosition().Y));
-		core::rect<u32> screenRect(0, 0, driver->getScreenSize().Width, driver->getScreenSize().Height);
+		core::vector2d<u32> mousepos(u32(CursorControl->getPosition().X),
+			u32(CursorControl->getPosition().Y));
+		core::rect<u32> screenRect(0, 0, driver->getScreenSize().Width,
+			driver->getScreenSize().Height);
 
 		// Only if we are moving outside quickly.
 		bool reset = !screenRect.isPointInside(mousepos);
 
-		if(reset)
-		{
+		if (reset) {
 			// Force a reset.
 			CursorControl->setPosition(0.5f, 0.5f);
 			CenterCursor = CursorControl->getRelativePosition();
 			CursorPos = CenterCursor;
- 		}
+		}
 	}
 
 	// keyboard rotation
-	if (CursorKeys[EKA_ROTATE_LEFT])
+	if (CursorKeys[EKA_ROTATE_LEFT]) {
 		relativeRotation.Y -= timeDiff * RotateSpeedKeyboard;
+	}
 
-	if (CursorKeys[EKA_ROTATE_RIGHT])
+	if (CursorKeys[EKA_ROTATE_RIGHT]) {
 		relativeRotation.Y += timeDiff * RotateSpeedKeyboard;
+	}
 
 	// X < MaxVerticalAngle or X > 360-MaxVerticalAngle
 
-	if (relativeRotation.X > MaxVerticalAngle*2 &&
-		relativeRotation.X < 360.0f-MaxVerticalAngle)
-	{
-		relativeRotation.X = 360.0f-MaxVerticalAngle;
-	}
-	else
-	if (relativeRotation.X > MaxVerticalAngle &&
-		relativeRotation.X < 360.0f-MaxVerticalAngle)
-	{
+	if (relativeRotation.X > MaxVerticalAngle * 2 &&
+		relativeRotation.X < 360.0f - MaxVerticalAngle) {
+		relativeRotation.X = 360.0f - MaxVerticalAngle;
+	} else if (relativeRotation.X > MaxVerticalAngle &&
+		   relativeRotation.X < 360.0f - MaxVerticalAngle) {
 		relativeRotation.X = MaxVerticalAngle;
 	}
 
-
 	// set target
 
-	target.set(0,0, core::max_(1.f, pos.getLength()));
+	target.set(0, 0, core::max_(1.f, pos.getLength()));
 	core::vector3df movedir = target;
 
 	core::matrix4 mat;
-	mat.setRotationDegrees(core::vector3df(relativeRotation.X, relativeRotation.Y, 0));
+	mat.setRotationDegrees(core::vector3df(relativeRotation.X, relativeRotation.Y,
+		0));
 	mat.transformVect(target);
 
-	if (NoVerticalMovement)
-	{
+	if (NoVerticalMovement) {
 		mat.setRotationDegrees(core::vector3df(0, relativeRotation.Y, 0));
 		mat.transformVect(movedir);
-	}
-	else
-	{
+	} else {
 		movedir = target;
 	}
 
 	movedir.normalize();
 
-	if (CursorKeys[EKA_MOVE_FORWARD])
+	if (CursorKeys[EKA_MOVE_FORWARD]) {
 		pos += movedir * timeDiff * MoveSpeed;
+	}
 
-	if (CursorKeys[EKA_MOVE_BACKWARD])
+	if (CursorKeys[EKA_MOVE_BACKWARD]) {
 		pos -= movedir * timeDiff * MoveSpeed;
+	}
 
 	// strafing
 
 	core::vector3df strafevect = target;
 	strafevect = strafevect.crossProduct(camera->getUpVector());
 
-	if (NoVerticalMovement)
+	if (NoVerticalMovement) {
 		strafevect.Y = 0.0f;
+	}
 
 	strafevect.normalize();
 
-	if (CursorKeys[EKA_STRAFE_LEFT])
+	if (CursorKeys[EKA_STRAFE_LEFT]) {
 		pos += strafevect * timeDiff * MoveSpeed;
+	}
 
-	if (CursorKeys[EKA_STRAFE_RIGHT])
+	if (CursorKeys[EKA_STRAFE_RIGHT]) {
 		pos -= strafevect * timeDiff * MoveSpeed;
+	}
 
 	// For jumping, we find the collision response animator attached to our camera
 	// and if it's not falling, we tell it to jump.
-	if (CursorKeys[EKA_JUMP_UP])
-	{
+	if (CursorKeys[EKA_JUMP_UP]) {
 		const ISceneNodeAnimatorList& animators = camera->getAnimators();
 		ISceneNodeAnimatorList::ConstIterator it = animators.begin();
-		while(it != animators.end())
-		{
-			if(ESNAT_COLLISION_RESPONSE == (*it)->getType())
-			{
-				ISceneNodeAnimatorCollisionResponse * collisionResponse =
-					static_cast<ISceneNodeAnimatorCollisionResponse *>(*it);
+		while (it != animators.end()) {
+			if (ESNAT_COLLISION_RESPONSE == (*it)->getType()) {
+				ISceneNodeAnimatorCollisionResponse* collisionResponse =
+					static_cast<ISceneNodeAnimatorCollisionResponse*>(
+						*it
+					);
 
-				if(!collisionResponse->isFalling())
+				if (!collisionResponse->isFalling()) {
 					collisionResponse->jump(JumpSpeed);
+				}
 			}
 
 			it++;
@@ -273,94 +282,90 @@ void CSceneNodeAnimatorCameraFPS::animateNode(ISceneNode* node, u32 timeMs)
 	camera->setTarget(target);
 }
 
-
-void CSceneNodeAnimatorCameraFPS::allKeysUp()
-{
-	for (u32 i=0; i<EKA_COUNT; ++i)
+void CSceneNodeAnimatorCameraFPS::allKeysUp() {
+	for (u32 i = 0; i < EKA_COUNT; ++i) {
 		CursorKeys[i] = false;
+	}
 }
 
-
 //! Sets the rotation speed
-void CSceneNodeAnimatorCameraFPS::setRotateSpeed(f32 speed)
-{
+void CSceneNodeAnimatorCameraFPS::setRotateSpeed(
+	f32 speed
+) {
 	RotateSpeed = speed;
 }
 
-
 //! Sets the movement speed
-void CSceneNodeAnimatorCameraFPS::setMoveSpeed(f32 speed)
-{
+void CSceneNodeAnimatorCameraFPS::setMoveSpeed(
+	f32 speed
+) {
 	MoveSpeed = speed;
 }
 
-
 //! Gets the rotation speed
-f32 CSceneNodeAnimatorCameraFPS::getRotateSpeed() const
-{
-	return RotateSpeed;
-}
-
+f32 CSceneNodeAnimatorCameraFPS::getRotateSpeed() const { return RotateSpeed; }
 
 // Gets the movement speed
-f32 CSceneNodeAnimatorCameraFPS::getMoveSpeed() const
-{
-	return MoveSpeed;
-}
+f32 CSceneNodeAnimatorCameraFPS::getMoveSpeed() const { return MoveSpeed; }
 
 //! Sets the keyboard mapping for this animator
-void CSceneNodeAnimatorCameraFPS::setKeyMap(SKeyMap *map, u32 count)
-{
+void CSceneNodeAnimatorCameraFPS::setKeyMap(
+	SKeyMap* map,
+	u32 count
+) {
 	// clear the keymap
 	KeyMap.clear();
 
 	// add actions
-	for (u32 i=0; i<count; ++i)
-	{
+	for (u32 i = 0; i < count; ++i) {
 		KeyMap.push_back(map[i]);
 	}
 }
 
-void CSceneNodeAnimatorCameraFPS::setKeyMap(const core::array<SKeyMap>& keymap)
-{
-	KeyMap=keymap;
+void CSceneNodeAnimatorCameraFPS::setKeyMap(
+	const core::array<SKeyMap>& keymap
+) {
+	KeyMap = keymap;
 }
 
-const core::array<SKeyMap>& CSceneNodeAnimatorCameraFPS::getKeyMap() const
-{
+const core::array<SKeyMap>& CSceneNodeAnimatorCameraFPS::getKeyMap() const {
 	return KeyMap;
 }
 
-
 //! Sets whether vertical movement should be allowed.
-void CSceneNodeAnimatorCameraFPS::setVerticalMovement(bool allow)
-{
+void CSceneNodeAnimatorCameraFPS::setVerticalMovement(
+	bool allow
+) {
 	NoVerticalMovement = !allow;
 }
 
-
 //! Sets whether the Y axis of the mouse should be inverted.
-void CSceneNodeAnimatorCameraFPS::setInvertMouse(bool invert)
-{
-	if (invert)
+void CSceneNodeAnimatorCameraFPS::setInvertMouse(
+	bool invert
+) {
+	if (invert) {
 		MouseYDirection = -1.0f;
-	else
+	} else {
 		MouseYDirection = 1.0f;
+	}
 }
 
-
-ISceneNodeAnimator* CSceneNodeAnimatorCameraFPS::createClone(ISceneNode* node, ISceneManager* newManager)
-{
-	CSceneNodeAnimatorCameraFPS * newAnimator =
-		new CSceneNodeAnimatorCameraFPS(CursorControl,	RotateSpeed, MoveSpeed, JumpSpeed,
-											0, 0, NoVerticalMovement);
+ISceneNodeAnimator* CSceneNodeAnimatorCameraFPS::createClone(
+	ISceneNode* node,
+	ISceneManager* newManager
+) {
+	CSceneNodeAnimatorCameraFPS* newAnimator =
+		new CSceneNodeAnimatorCameraFPS(CursorControl, RotateSpeed, MoveSpeed,
+			JumpSpeed, 0, 0, NoVerticalMovement);
 	newAnimator->cloneMembers(this);
 	newAnimator->setKeyMap(KeyMap);
 	return newAnimator;
 }
 
-void CSceneNodeAnimatorCameraFPS::serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const
-{
+void CSceneNodeAnimatorCameraFPS::serializeAttributes(
+	io::IAttributes* out,
+	io::SAttributeReadWriteOptions* options
+) const {
 	ISceneNodeAnimator::serializeAttributes(out, options);
 
 	out->addFloat("MaxVerticalAngle", MaxVerticalAngle);
@@ -372,8 +377,7 @@ void CSceneNodeAnimatorCameraFPS::serializeAttributes(io::IAttributes* out, io::
 	out->addFloat("MouseYDirection", MouseYDirection);
 
 	out->addInt("KeyMapSize", (s32)KeyMap.size());
-	for ( u32 i=0; i < KeyMap.size(); ++i )
-	{
+	for (u32 i = 0; i < KeyMap.size(); ++i) {
 		core::stringc name("Action");
 		name += core::stringc(i);
 		out->addInt(name.c_str(), (int)KeyMap[i].Action);
@@ -382,36 +386,40 @@ void CSceneNodeAnimatorCameraFPS::serializeAttributes(io::IAttributes* out, io::
 	}
 }
 
-void CSceneNodeAnimatorCameraFPS::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
-{
+void CSceneNodeAnimatorCameraFPS::deserializeAttributes(
+	io::IAttributes* in,
+	io::SAttributeReadWriteOptions* options
+) {
 	ISceneNodeAnimator::deserializeAttributes(in, options);
 
 	MaxVerticalAngle = in->getAttributeAsFloat("MaxVerticalAngle", MaxVerticalAngle);
-	NoVerticalMovement = in->getAttributeAsBool("NoVerticalMovement", NoVerticalMovement);
+	NoVerticalMovement =
+		in->getAttributeAsBool("NoVerticalMovement", NoVerticalMovement);
 	MoveSpeed = in->getAttributeAsFloat("MoveSpeed", MoveSpeed);
-	RotateSpeedKeyboard = in->getAttributeAsFloat("RotateSpeedKeyboard", RotateSpeedKeyboard);
+	RotateSpeedKeyboard =
+		in->getAttributeAsFloat("RotateSpeedKeyboard", RotateSpeedKeyboard);
 	RotateSpeed = in->getAttributeAsFloat("RotateSpeed", RotateSpeed);
 	JumpSpeed = in->getAttributeAsFloat("JumpSpeed", JumpSpeed);
 	MouseYDirection = in->getAttributeAsFloat("MouseYDirection", MouseYDirection);
 
-	if ( in->findAttribute("KeyMapSize") )
-	{
+	if (in->findAttribute("KeyMapSize")) {
 		KeyMap.clear();
 		s32 keyMapSize = in->getAttributeAsInt("KeyMapSize");
-		for ( u32 i=0; i < (u32)keyMapSize; ++i )
-		{
+		for (u32 i = 0; i < (u32)keyMapSize; ++i) {
 			SKeyMap keyMapEntry;
 			core::stringc name("Action");
 			name += core::stringc(i);
-			keyMapEntry.Action = static_cast<EKEY_ACTION>(in->getAttributeAsInt(name.c_str()));
+			keyMapEntry.Action = static_cast<EKEY_ACTION>(
+				in->getAttributeAsInt(name.c_str())
+			);
 			name = core::stringc("KeyCode") + core::stringc(i);
-			keyMapEntry.KeyCode = static_cast<EKEY_CODE>(in->getAttributeAsInt(name.c_str()));
+			keyMapEntry.KeyCode = static_cast<EKEY_CODE>(
+				in->getAttributeAsInt(name.c_str())
+			);
 			KeyMap.push_back(keyMapEntry);
 		}
 	}
 }
 
-
 } // namespace scene
 } // namespace irr
-

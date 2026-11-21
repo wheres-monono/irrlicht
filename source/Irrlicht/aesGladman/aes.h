@@ -39,10 +39,10 @@
 
 #include "irrMath.h"
 
-#define AES_128     /* define if AES with 128 bit keys is needed    */
-#define AES_192     /* define if AES with 192 bit keys is needed    */
-#define AES_256     /* define if AES with 256 bit keys is needed    */
-#define AES_VAR     /* define if a variable key size is needed      */
+#define AES_128 /* define if AES with 128 bit keys is needed    */
+#define AES_192 /* define if AES with 192 bit keys is needed    */
+#define AES_256 /* define if AES with 256 bit keys is needed    */
+#define AES_VAR /* define if a variable key size is needed      */
 
 /* The following must also be set in assembler files if being used  */
 
@@ -53,24 +53,24 @@
 typedef irr::u8 aes_08t;
 typedef irr::u32 aes_32t;
 
-#define AES_BLOCK_SIZE  16  /* the AES block size in bytes          */
-#define N_COLS           4  /* the number of columns in the state   */
+#define AES_BLOCK_SIZE 16 /* the AES block size in bytes          */
+#define N_COLS 4	  /* the number of columns in the state   */
 
 /* a maximum of 60 32-bit words are needed for the key schedule		*/
-#define KS_LENGTH       64
+#define KS_LENGTH 64
 
-#ifdef  AES_ERR_CHK
-#define aes_ret     int
-#define aes_good    0
-#define aes_error  -1
+#ifdef AES_ERR_CHK
+#define aes_ret int
+#define aes_good 0
+#define aes_error -1
 #else
-#define aes_ret     void
+#define aes_ret void
 #endif
 
-#ifndef AES_DLL                 /* implement normal/DLL functions   */
-#define aes_rval    aes_ret
+#ifndef AES_DLL /* implement normal/DLL functions   */
+#define aes_rval aes_ret
 #else
-#define aes_rval    aes_ret __declspec(dllexport) _stdcall
+#define aes_rval aes_ret __declspec(dllexport) _stdcall
 #endif
 
 /* This routine must be called before first use if non-static       */
@@ -81,57 +81,54 @@ void gen_tabs(void);
 /* The key length (klen) is input in bytes when it is in the range  */
 /* 16 <= klen <= 32 or in bits when in the range 128 <= klen <= 256 */
 
-#ifdef  AES_ENCRYPT
+#ifdef AES_ENCRYPT
 
-typedef struct  
-{
+typedef struct {
 	aes_32t ks[KS_LENGTH];
 } aes_encrypt_ctx;
 
 #if defined(AES_128) || defined(AES_VAR)
-aes_rval aes_encrypt_key128(const void *in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key128(const void* in_key, aes_encrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_192) || defined(AES_VAR)
-aes_rval aes_encrypt_key192(const void *in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key192(const void* in_key, aes_encrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_256) || defined(AES_VAR)
-aes_rval aes_encrypt_key256(const void *in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key256(const void* in_key, aes_encrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_VAR)
-aes_rval aes_encrypt_key(const void *in_key, int key_len, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key(const void* in_key, int key_len, aes_encrypt_ctx cx[1]);
 #endif
 
-aes_rval aes_encrypt(const void *in_blk, void *out_blk, const aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt(const void* in_blk, void* out_blk, const aes_encrypt_ctx cx[1]);
 #endif
 
 #ifdef AES_DECRYPT
 
-typedef struct  
-{
+typedef struct {
 	aes_32t ks[KS_LENGTH];
 } aes_decrypt_ctx;
 
 #if defined(AES_128) || defined(AES_VAR)
-aes_rval aes_decrypt_key128(const void *in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key128(const void* in_key, aes_decrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_192) || defined(AES_VAR)
-aes_rval aes_decrypt_key192(const void *in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key192(const void* in_key, aes_decrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_256) || defined(AES_VAR)
-aes_rval aes_decrypt_key256(const void *in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key256(const void* in_key, aes_decrypt_ctx cx[1]);
 #endif
 
 #if defined(AES_VAR)
-aes_rval aes_decrypt_key(const void *in_key, int key_len, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key(const void* in_key, int key_len, aes_decrypt_ctx cx[1]);
 #endif
 
-aes_rval aes_decrypt(const void *in_blk, void *out_blk, const aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt(const void* in_blk, void* out_blk, const aes_decrypt_ctx cx[1]);
 #endif
 
 #endif
-

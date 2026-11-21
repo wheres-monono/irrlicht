@@ -39,36 +39,34 @@
 
 // apply global override
 #ifndef SOFTWARE_DRIVER_2_PERSPECTIVE_CORRECT
-	#undef INVERSE_W
+#undef INVERSE_W
 #endif
 
 #ifndef SOFTWARE_DRIVER_2_SUBTEXEL
-	#undef SUBTEXEL
+#undef SUBTEXEL
 #endif
 
 #ifndef SOFTWARE_DRIVER_2_USE_VERTEX_COLOR
-	#undef IPOL_C0
+#undef IPOL_C0
 #endif
 
+#if !defined(SOFTWARE_DRIVER_2_USE_WBUFFER) && defined(USE_ZBUFFER)
+#ifndef SOFTWARE_DRIVER_2_PERSPECTIVE_CORRECT
+#undef IPOL_W
+#endif
+#define IPOL_Z
 
-#if !defined ( SOFTWARE_DRIVER_2_USE_WBUFFER ) && defined ( USE_ZBUFFER )
-	#ifndef SOFTWARE_DRIVER_2_PERSPECTIVE_CORRECT
-		#undef IPOL_W
-	#endif
-	#define IPOL_Z
-
-	#ifdef CMP_W
-		#undef CMP_W
-		#define CMP_Z
-	#endif
-
-	#ifdef WRITE_W
-		#undef WRITE_W
-		#define WRITE_Z
-	#endif
-
+#ifdef CMP_W
+#undef CMP_W
+#define CMP_Z
 #endif
 
+#ifdef WRITE_W
+#undef WRITE_W
+#define WRITE_Z
+#endif
+
+#endif
 
 namespace irr
 {
@@ -76,49 +74,44 @@ namespace irr
 namespace video
 {
 
-class CTRTextureDetailMap2 : public IBurningShader
-{
+class CTRTextureDetailMap2 : public IBurningShader {
 public:
-
 	//! constructor
 	CTRTextureDetailMap2(CBurningVideoDriver* driver);
 
 	//! draws an indexed triangle list
-	virtual void drawTriangle ( const s4DVertex *a,const s4DVertex *b,const s4DVertex *c ) _IRR_OVERRIDE_;
-
+	virtual void drawTriangle(const s4DVertex* a,
+		const s4DVertex* b,
+		const s4DVertex* c) _IRR_OVERRIDE_;
 
 private:
-	void scanline_bilinear ();
+	void scanline_bilinear();
 	sScanConvertData scan;
 	sScanLineData line;
-
 };
 
 //! constructor
-CTRTextureDetailMap2::CTRTextureDetailMap2(CBurningVideoDriver* driver)
-: IBurningShader(driver)
-{
-	#ifdef _DEBUG
+CTRTextureDetailMap2::CTRTextureDetailMap2(
+	CBurningVideoDriver* driver
+) :
+	IBurningShader(driver) {
+#ifdef _DEBUG
 	setDebugName("CTRTextureDetailMap2");
-	#endif
+#endif
 }
 
-
-
 /*!
-*/
-void CTRTextureDetailMap2::scanline_bilinear ()
-{
-	tVideoSample *dst;
+ */
+void CTRTextureDetailMap2::scanline_bilinear() {
+	tVideoSample* dst;
 
 #ifdef USE_ZBUFFER
-	fp24 *z;
+	fp24* z;
 #endif
 
 	s32 xStart;
 	s32 xEnd;
 	s32 dx;
-
 
 #ifdef SUBTEXEL
 	f32 subPixel;
@@ -138,16 +131,17 @@ void CTRTextureDetailMap2::scanline_bilinear ()
 #endif
 
 	// apply top-left fill-convention, left
-	xStart = core::ceil32( line.x[0] );
-	xEnd = core::ceil32( line.x[1] ) - 1;
+	xStart = core::ceil32(line.x[0]);
+	xEnd = core::ceil32(line.x[1]) - 1;
 
 	dx = xEnd - xStart;
 
-	if ( dx < 0 )
+	if (dx < 0) {
 		return;
+	}
 
 	// slopes
-	const f32 invDeltaX = core::reciprocal_approxim ( line.x[1] - line.x[0] );
+	const f32 invDeltaX = core::reciprocal_approxim(line.x[1] - line.x[0]);
 
 #ifdef IPOL_Z
 	slopeZ = (line.z[1] - line.z[0]) * invDeltaX;
@@ -166,7 +160,7 @@ void CTRTextureDetailMap2::scanline_bilinear ()
 #endif
 
 #ifdef SUBTEXEL
-	subPixel = ( (f32) xStart ) - line.x[0];
+	subPixel = ((f32)xStart) - line.x[0];
 #ifdef IPOL_Z
 	line.z[0] += slopeZ * subPixel;
 #endif
@@ -184,12 +178,13 @@ void CTRTextureDetailMap2::scanline_bilinear ()
 #endif
 #endif
 
-	dst = (tVideoSample*)RenderTarget->getData() + ( line.y * RenderTarget->getDimension().Width ) + xStart;
+	dst = (tVideoSample*)RenderTarget->getData() +
+	      (line.y * RenderTarget->getDimension().Width) + xStart;
 
 #ifdef USE_ZBUFFER
-	z = (fp24*) DepthBuffer->lock() + ( line.y * RenderTarget->getDimension().Width ) + xStart;
+	z = (fp24*)DepthBuffer->lock() + (line.y * RenderTarget->getDimension().Width) +
+	    xStart;
 #endif
-
 
 	f32 inversew = FIX_POINT_F32_MUL;
 
@@ -200,47 +195,44 @@ void CTRTextureDetailMap2::scanline_bilinear ()
 	tFixPoint r1, g1, b1;
 	tFixPoint r2, g2, b2;
 
-
-	for ( s32 i = 0; i <= dx; ++i )
-	{
+	for (s32 i = 0; i <= dx; ++i) {
 #ifdef CMP_Z
-		if ( line.z[0] < z[i] )
+		if (line.z[0] < z[i])
 #endif
 #ifdef CMP_W
-		if ( line.w[0] >= z[i] )
+			if (line.w[0] >= z[i])
 #endif
 
-		{
+			{
 #ifdef INVERSE_W
-			inversew = fix_inverse32 ( line.w[0] );
+				inversew = fix_inverse32(line.w[0]);
 #endif
-			tx0 = tofix ( line.t[0][0].x,inversew);
-			ty0 = tofix ( line.t[0][0].y,inversew);
-			tx1 = tofix ( line.t[1][0].x,inversew);
-			ty1 = tofix ( line.t[1][0].y,inversew);
+				tx0 = tofix(line.t[0][0].x, inversew);
+				ty0 = tofix(line.t[0][0].y, inversew);
+				tx1 = tofix(line.t[1][0].x, inversew);
+				ty1 = tofix(line.t[1][0].y, inversew);
 
-			getSample_texture ( r0, g0, b0, &IT[0], tx0,ty0 );
-			getSample_texture ( r1, g1, b1, &IT[1], tx1,ty1 );
+				getSample_texture(r0, g0, b0, &IT[0], tx0, ty0);
+				getSample_texture(r1, g1, b1, &IT[1], tx1, ty1);
 
-			// bias half color
-			r1 += -FIX_POINT_HALF_COLOR;
-			g1 += -FIX_POINT_HALF_COLOR;
-			b1 += -FIX_POINT_HALF_COLOR;
+				// bias half color
+				r1 += -FIX_POINT_HALF_COLOR;
+				g1 += -FIX_POINT_HALF_COLOR;
+				b1 += -FIX_POINT_HALF_COLOR;
 
-			r2 = clampfix_mincolor ( clampfix_maxcolor ( r0 + r1 ) );
-			g2 = clampfix_mincolor ( clampfix_maxcolor ( g0 + g1 ) );
-			b2 = clampfix_mincolor ( clampfix_maxcolor ( b0 + b1 ) );
+				r2 = clampfix_mincolor(clampfix_maxcolor(r0 + r1));
+				g2 = clampfix_mincolor(clampfix_maxcolor(g0 + g1));
+				b2 = clampfix_mincolor(clampfix_maxcolor(b0 + b1));
 
-			dst[i] = fix_to_color ( r2, g2, b2 );
+				dst[i] = fix_to_color(r2, g2, b2);
 
 #ifdef WRITE_Z
-			z[i] = line.z[0];
+				z[i] = line.z[0];
 #endif
 #ifdef WRITE_W
-			z[i] = line.w[0];
+				z[i] = line.w[0];
 #endif
-
-		}
+			}
 
 #ifdef IPOL_Z
 		line.z[0] += slopeZ;
@@ -258,26 +250,35 @@ void CTRTextureDetailMap2::scanline_bilinear ()
 		line.t[1][0] += slopeT[1];
 #endif
 	}
-
 }
 
-void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,const s4DVertex *c )
-{
+void CTRTextureDetailMap2::drawTriangle(
+	const s4DVertex* a,
+	const s4DVertex* b,
+	const s4DVertex* c
+) {
 	// sort on height, y
-	if ( F32_A_GREATER_B ( a->Pos.y , b->Pos.y ) ) swapVertexPointer(&a, &b);
-	if ( F32_A_GREATER_B ( b->Pos.y , c->Pos.y ) ) swapVertexPointer(&b, &c);
-	if ( F32_A_GREATER_B ( a->Pos.y , b->Pos.y ) ) swapVertexPointer(&a, &b);
+	if (F32_A_GREATER_B(a->Pos.y, b->Pos.y)) {
+		swapVertexPointer(&a, &b);
+	}
+	if (F32_A_GREATER_B(b->Pos.y, c->Pos.y)) {
+		swapVertexPointer(&b, &c);
+	}
+	if (F32_A_GREATER_B(a->Pos.y, b->Pos.y)) {
+		swapVertexPointer(&a, &b);
+	}
 
 	const f32 ca = c->Pos.y - a->Pos.y;
 	const f32 ba = b->Pos.y - a->Pos.y;
 	const f32 cb = c->Pos.y - b->Pos.y;
 	// calculate delta y of the edges
-	scan.invDeltaY[0] = core::reciprocal( ca );
-	scan.invDeltaY[1] = core::reciprocal( ba );
-	scan.invDeltaY[2] = core::reciprocal( cb );
+	scan.invDeltaY[0] = core::reciprocal(ca);
+	scan.invDeltaY[1] = core::reciprocal(ba);
+	scan.invDeltaY[2] = core::reciprocal(cb);
 
-	if ( F32_LOWER_EQUAL_0 ( scan.invDeltaY[0] ) )
+	if (F32_LOWER_EQUAL_0(scan.invDeltaY[0])) {
 		return;
+	}
 
 	// find if the major edge is left or right aligned
 	f32 temp[4];
@@ -287,7 +288,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 	temp[2] = b->Pos.x - a->Pos.x;
 	temp[3] = ba;
 
-	scan.left = ( temp[0] * temp[3] - temp[1] * temp[2] ) > 0.f ? 0 : 1;
+	scan.left = (temp[0] * temp[3] - temp[1] * temp[2]) > 0.f ? 0 : 1;
 	scan.right = 1 - scan.left;
 
 	// calculate slopes for the major edge
@@ -328,8 +329,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 	// rasterize upper sub-triangle
-	if ( (f32) 0.0 != scan.invDeltaY[1]  )
-	{
+	if ((f32)0.0 != scan.invDeltaY[1]) {
 		// calculate slopes for top edge
 		scan.slopeX[1] = (b->Pos.x - a->Pos.x) * scan.invDeltaY[1];
 		scan.x[1] = a->Pos.x;
@@ -360,11 +360,11 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 		// apply top-left fill convention, top part
-		yStart = core::ceil32( a->Pos.y );
-		yEnd = core::ceil32( b->Pos.y ) - 1;
+		yStart = core::ceil32(a->Pos.y);
+		yEnd = core::ceil32(b->Pos.y) - 1;
 
 #ifdef SUBTEXEL
-		subPixel = ( (f32) yStart ) - a->Pos.y;
+		subPixel = ((f32)yStart) - a->Pos.y;
 
 		// correct to pixel center
 		scan.x[0] += scan.slopeX[0] * subPixel;
@@ -398,8 +398,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 		// rasterize the edge scanlines
-		for( line.y = yStart; line.y <= yEnd; ++line.y)
-		{
+		for (line.y = yStart; line.y <= yEnd; ++line.y) {
 			line.x[scan.left] = scan.x[0];
 			line.x[scan.right] = scan.x[1];
 
@@ -429,7 +428,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 			// render a scanline
-			scanline_bilinear ();
+			scanline_bilinear();
 
 			scan.x[0] += scan.slopeX[0];
 			scan.x[1] += scan.slopeX[1];
@@ -458,17 +457,14 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 			scan.t[1][0] += scan.slopeT[1][0];
 			scan.t[1][1] += scan.slopeT[1][1];
 #endif
-
 		}
 	}
 
 	// rasterize lower sub-triangle
-	if ( (f32) 0.0 != scan.invDeltaY[2] )
-	{
+	if ((f32)0.0 != scan.invDeltaY[2]) {
 		// advance to middle point
-		if( (f32) 0.0 != scan.invDeltaY[1] )
-		{
-			temp[0] = b->Pos.y - a->Pos.y;	// dy
+		if ((f32)0.0 != scan.invDeltaY[1]) {
+			temp[0] = b->Pos.y - a->Pos.y; // dy
 
 			scan.x[0] = a->Pos.x + scan.slopeX[0] * temp[0];
 #ifdef IPOL_Z
@@ -486,7 +482,6 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #ifdef IPOL_T1
 			scan.t[1][0] = a->Tex[1] + scan.slopeT[1][0] * temp[0];
 #endif
-
 		}
 
 		// calculate slopes for bottom edge
@@ -519,12 +514,12 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 		// apply top-left fill convention, top part
-		yStart = core::ceil32( b->Pos.y );
-		yEnd = core::ceil32( c->Pos.y ) - 1;
+		yStart = core::ceil32(b->Pos.y);
+		yEnd = core::ceil32(c->Pos.y) - 1;
 
 #ifdef SUBTEXEL
 
-		subPixel = ( (f32) yStart ) - b->Pos.y;
+		subPixel = ((f32)yStart) - b->Pos.y;
 
 		// correct to pixel center
 		scan.x[0] += scan.slopeX[0] * subPixel;
@@ -558,8 +553,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 		// rasterize the edge scanlines
-		for( line.y = yStart; line.y <= yEnd; ++line.y)
-		{
+		for (line.y = yStart; line.y <= yEnd; ++line.y) {
 			line.x[scan.left] = scan.x[0];
 			line.x[scan.right] = scan.x[1];
 
@@ -589,7 +583,7 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 #endif
 
 			// render a scanline
-			scanline_bilinear ();
+			scanline_bilinear();
 
 			scan.x[0] += scan.slopeX[0];
 			scan.x[1] += scan.slopeX[1];
@@ -618,10 +612,8 @@ void CTRTextureDetailMap2::drawTriangle ( const s4DVertex *a,const s4DVertex *b,
 			scan.t[1][0] += scan.slopeT[1][0];
 			scan.t[1][1] += scan.slopeT[1][1];
 #endif
-
 		}
 	}
-
 }
 
 } // end namespace video
@@ -635,17 +627,15 @@ namespace video
 {
 
 //! creates a flat triangle renderer
-IBurningShader* createTriangleRendererTextureDetailMap2(CBurningVideoDriver* driver)
-{
-	#ifdef _IRR_COMPILE_WITH_BURNINGSVIDEO_
+IBurningShader* createTriangleRendererTextureDetailMap2(
+	CBurningVideoDriver* driver
+) {
+#ifdef _IRR_COMPILE_WITH_BURNINGSVIDEO_
 	return new CTRTextureDetailMap2(driver);
-	#else
+#else
 	return 0;
-	#endif // _IRR_COMPILE_WITH_BURNINGSVIDEO_
+#endif // _IRR_COMPILE_WITH_BURNINGSVIDEO_
 }
-
 
 } // end namespace video
 } // end namespace irr
-
-

@@ -40,8 +40,7 @@ easy, we use a pragma comment lib:
 /*
 OK, lets start. Again, we use the main() method as start, not the WinMain().
 */
-int main()
-{
+int main() {
 	/*
 	Like in the HelloWorld example, we create an IrrlichtDevice with
 	createDevice(). The difference now is that we ask the user to select
@@ -51,17 +50,19 @@ int main()
 	*/
 
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole(true);
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole(true);
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// create device and exit if creation failed
 
-	IrrlichtDevice *device =
+	IrrlichtDevice* device =
 		createDevice(driverType, core::dimension2d<u32>(640, 480));
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
 	/*
 	Get a pointer to the video driver and the SceneManager so that
@@ -80,8 +81,8 @@ int main()
 	device->getFileSystem()->addFileArchive(getExampleMediaPath() + "map-20kdm2.pk3");
 
 	/*
-	Now we can load the mesh by calling	irr::scene::ISceneManager::getMesh(). 
-	We get a pointer returned to an	irr::scene::IAnimatedMesh. Quake 3 maps are 
+	Now we can load the mesh by calling	irr::scene::ISceneManager::getMesh().
+	We get a pointer returned to an	irr::scene::IAnimatedMesh. Quake 3 maps are
 	not	really animated, they are only a chunk of static geometry with
 	some materials attached. Hence the IAnimatedMesh consists of only one
 	frame, so we get the "first frame" of the "animation", which is our
@@ -96,15 +97,16 @@ int main()
 	driver. (There is a irr::video::IVideoDriver::getPrimitiveCountDrawn()
 	method in the irr::video::IVideoDriver class). Note that this
 	optimization with the Octree is only useful when drawing huge meshes
-	consisting of lots of geometry and if users can't see the whole scene at 
+	consisting of lots of geometry and if users can't see the whole scene at
 	once.
 	*/
 	scene::IAnimatedMesh* mesh = smgr->getMesh("20kdm2.bsp");
 	scene::ISceneNode* node = 0;
 
-	if (mesh)
+	if (mesh) {
 		node = smgr->addOctreeSceneNode(mesh->getMesh(0), 0, -1, 1024);
-//		node = smgr->addMeshSceneNode(mesh->getMesh(0));
+	}
+	//		node = smgr->addMeshSceneNode(mesh->getMesh(0));
 
 	/*
 	Because the level was not modeled around the origin (0,0,0), we
@@ -114,8 +116,9 @@ int main()
 	irr::scene::ISceneNode::setRotation(), and
 	irr::scene::ISceneNode::setScale().
 	*/
-	if (node)
-		node->setPosition(core::vector3df(-1300,-144,-1249));
+	if (node) {
+		node->setPosition(core::vector3df(-1300, -144, -1249));
+	}
 
 	/*
 	Now we need a camera to look at the Quake 3 map.
@@ -143,24 +146,23 @@ int main()
 	window. The test for irr::IrrlichtDevice::isWindowActive() is optional,
 	but prevents the engine to grab the mouse cursor after task switching
 	when other programs are active. The call to	irr::IrrlichtDevice::yield()
-	will avoid the busy loop to eat up all CPU cycles when the window is not 
+	will avoid the busy loop to eat up all CPU cycles when the window is not
 	active.
 	*/
 	int lastFPS = -1;
 
-	while(device->run())
-	{
-		if (device->isWindowActive())
-		{
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,200,200,200));
+	while (device->run()) {
+		if (device->isWindowActive()) {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 200, 200, 200));
 			smgr->drawAll();
 			driver->endScene();
 
 			int fps = driver->getFPS();
 
-			if (lastFPS != fps)
-			{
-				core::stringw str = L"Irrlicht Engine - Quake 3 Map example [";
+			if (lastFPS != fps) {
+				core::stringw str =
+					L"Irrlicht Engine - Quake 3 Map example [";
 				str += driver->getName();
 				str += "] FPS:";
 				str += fps;
@@ -168,9 +170,9 @@ int main()
 				device->setWindowCaption(str.c_str());
 				lastFPS = fps;
 			}
-		}
-		else
+		} else {
 			device->yield();
+		}
 	}
 
 	/*

@@ -11,15 +11,15 @@ namespace irr
 {
 
 //! Possible log levels.
-//! When used has filter ELL_DEBUG means => log everything and ELL_NONE means => log (nearly) nothing.
-//! When used to print logging information ELL_DEBUG will have lowest priority while ELL_NONE
-//! messages are never filtered and always printed.
-enum ELOG_LEVEL
-{
+//! When used has filter ELL_DEBUG means => log everything and ELL_NONE means => log
+//! (nearly) nothing. When used to print logging information ELL_DEBUG will have lowest
+//! priority while ELL_NONE messages are never filtered and always printed.
+enum ELOG_LEVEL {
 	//! Used for printing information helpful in debugging
 	ELL_DEBUG,
 
-	//! Useful information to print. For example hardware infos or something started/stopped.
+	//! Useful information to print. For example hardware infos or something
+	//! started/stopped.
 	ELL_INFORMATION,
 
 	//! Warnings that something isn't as expected and can cause oddities
@@ -33,12 +33,9 @@ enum ELOG_LEVEL
 	ELL_NONE
 };
 
-
 //! Interface for logging messages, warnings and errors
-class ILogger : public virtual IReferenceCounted
-{
+class ILogger : public virtual IReferenceCounted {
 public:
-
 	//! Destructor
 	virtual ~ILogger() {}
 
@@ -61,7 +58,7 @@ public:
 	is just an informational text, set it to ELL_INFORMATION. Texts are
 	filtered with these levels. If you want to be a text displayed,
 	independent on what level filter is set, use ELL_NONE. */
-	virtual void log(const c8* text, ELOG_LEVEL ll=ELL_INFORMATION) = 0;
+	virtual void log(const c8* text, ELOG_LEVEL ll = ELL_INFORMATION) = 0;
 
 	//! Prints out a text into the log
 	/** \param text: Text to print out.
@@ -72,8 +69,10 @@ public:
 	is just an informational text, set it to ELL_INFORMATION. Texts are
 	filtered with these levels. If you want to be a text displayed,
 	independent on what level filter is set, use ELL_NONE. */
-	virtual void log(const c8* text, const c8* hint, ELOG_LEVEL ll=ELL_INFORMATION) = 0;
-	virtual void log(const c8* text, const wchar_t* hint, ELOG_LEVEL ll=ELL_INFORMATION) = 0;
+	virtual void
+	log(const c8* text, const c8* hint, ELOG_LEVEL ll = ELL_INFORMATION) = 0;
+	virtual void
+	log(const c8* text, const wchar_t* hint, ELOG_LEVEL ll = ELL_INFORMATION) = 0;
 
 	//! Prints out a text into the log
 	/** \param text: Text to print out.
@@ -84,7 +83,9 @@ public:
 	is just an informational text, set it to ELL_INFORMATION. Texts are
 	filtered with these levels. If you want to be a text displayed,
 	independent on what level filter is set, use ELL_NONE. */
-	virtual void log(const wchar_t* text, const wchar_t* hint, ELOG_LEVEL ll=ELL_INFORMATION) = 0;
+	virtual void log(const wchar_t* text,
+		const wchar_t* hint,
+		ELOG_LEVEL ll = ELL_INFORMATION) = 0;
 
 	//! Prints out a text into the log
 	/** \param text: Text to print out.
@@ -93,10 +94,9 @@ public:
 	is just an informational text, set it to ELL_INFORMATION. Texts are
 	filtered with these levels. If you want to be a text displayed,
 	independent on what level filter is set, use ELL_NONE. */
-	virtual void log(const wchar_t* text, ELOG_LEVEL ll=ELL_INFORMATION) = 0;
+	virtual void log(const wchar_t* text, ELOG_LEVEL ll = ELL_INFORMATION) = 0;
 };
 
-} // end namespace
+} // namespace irr
 
 #endif
-

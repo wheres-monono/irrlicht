@@ -5,28 +5,30 @@
 
 using namespace irr;
 
-
-
 // Tests screenshots features
-bool testShots(video::E_DRIVER_TYPE type)
-{
-	IrrlichtDevice *device = createDevice(type, core::dimension2d<u32>(160, 120), 32);
-	if (!device)
+bool testShots(
+	video::E_DRIVER_TYPE type
+) {
+	IrrlichtDevice* device = createDevice(type, core::dimension2d<u32>(160, 120), 32);
+	if (!device) {
 		return true;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	logTestString("Testing driver %ls\n", driver->getName());
 
 	scene::IAnimatedMesh* mesh = smgr->getMesh("../media/sydney.md2");
 	scene::IAnimatedMeshSceneNode* node;
 
-	if (!mesh)
+	if (!mesh) {
 		return false;
+	}
 	node = smgr->addAnimatedMeshSceneNode(mesh);
-	if (!node)
+	if (!node) {
 		return false;
+	}
 
 	stabilizeScreenBackground(driver);
 
@@ -42,18 +44,19 @@ bool testShots(video::E_DRIVER_TYPE type)
 	node->setAnimationSpeed(0);
 
 	device->run();
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255, 255, 255, 0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 255, 255, 0));
 	smgr->drawAll();
 	driver->endScene();
 
-	for (s32 i=0; i<video::ECF_UNKNOWN; ++i)
-	{
+	for (s32 i = 0; i < video::ECF_UNKNOWN; ++i) {
 		video::IImage* img = driver->createScreenShot((video::ECOLOR_FORMAT)i);
-		logTestString("Color Format %d %ssupported\n", i, (img && img->getColorFormat() == i)?"":"un");
+		logTestString("Color Format %d %ssupported\n", i,
+			(img && img->getColorFormat() == i) ? "" : "un");
 
-#if 0	// Enable for a quick check while testing.
-		// If someone adds comparison images please use another scene without animation
-		// and maybe a texture using the full color spectrum.
+#if 0 // Enable for a quick check while testing.
+      // If someone adds comparison images please use another scene without animation
+      // and maybe a texture using the full color spectrum.
 		if ( img )
 		{
 			irr::core::stringc screenshotFilename = "results/";
@@ -65,8 +68,9 @@ bool testShots(video::E_DRIVER_TYPE type)
 		}
 #endif
 
-		if (img)
+		if (img) {
 			img->drop();
+		}
 	}
 	device->closeDevice();
 	device->run();
@@ -75,8 +79,7 @@ bool testShots(video::E_DRIVER_TYPE type)
 	return true;
 }
 
-bool screenshot()
-{
+bool screenshot() {
 	bool result = true;
 	TestWithAllHWDrivers(testShots);
 	return result;

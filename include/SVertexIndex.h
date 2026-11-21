@@ -7,17 +7,11 @@
 
 #include "irrTypes.h"
 
-
 namespace irr
 {
 namespace video
 {
-enum E_INDEX_TYPE
-{
-	EIT_16BIT = 0,
-	EIT_32BIT
-};
-
+enum E_INDEX_TYPE { EIT_16BIT = 0, EIT_32BIT };
 
 /*
 //! vertex index used by the Irrlicht engine.
@@ -71,9 +65,7 @@ struct SSpecificVertexIndex
 typedef u32 SVertexIndex;
 */
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
-

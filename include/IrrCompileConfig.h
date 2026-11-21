@@ -34,15 +34,14 @@
 //! _IRR_COMPILE_WITH_CONSOLE_DEVICE_ for no windowing system, used as a fallback
 //! _IRR_COMPILE_WITH_FB_DEVICE_ for framebuffer systems
 
-//! Passing defines to the compiler which have NO in front of the _IRR definename is an alternative
-//! way which can be used to disable defines (instead of outcommenting them in this header).
-//! So defines can be controlled from Makefiles or Projectfiles which allows building
-//! different library versions without having to change the sources.
-//! Example: NO_IRR_COMPILE_WITH_X11_ would disable X11
-
+//! Passing defines to the compiler which have NO in front of the _IRR definename is an
+//! alternative way which can be used to disable defines (instead of outcommenting them in
+//! this header). So defines can be controlled from Makefiles or Projectfiles which allows
+//! building different library versions without having to change the sources. Example:
+//! NO_IRR_COMPILE_WITH_X11_ would disable X11
 
 //! Uncomment this line to compile with the SDL device
-//#define _IRR_COMPILE_WITH_SDL_DEVICE_
+// #define _IRR_COMPILE_WITH_SDL_DEVICE_
 #ifdef NO_IRR_COMPILE_WITH_SDL_DEVICE_
 #undef _IRR_COMPILE_WITH_SDL_DEVICE_
 #endif
@@ -63,19 +62,20 @@
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER < 1500)
-#  error "Only Microsoft Visual Studio 9.0 and later are supported."
+#error "Only Microsoft Visual Studio 9.0 and later are supported."
 #endif
 
-// XBox is deprecated (as DX8 is removed). Use Irrlicht 1.8 if you still want to work on this.
+// XBox is deprecated (as DX8 is removed). Use Irrlicht 1.8 if you still want to work on
+// this.
 #if defined(_XBOX)
-	#undef _IRR_WINDOWS_
-	#define _IRR_XBOX_PLATFORM_	// deprecated
-	#define _IRR_WINDOWS_API_
-	//#define _IRR_COMPILE_WITH_WINDOWS_DEVICE_
-	#undef _IRR_COMPILE_WITH_WINDOWS_DEVICE_
-	//#define _IRR_COMPILE_WITH_SDL_DEVICE_
+#undef _IRR_WINDOWS_
+#define _IRR_XBOX_PLATFORM_ // deprecated
+#define _IRR_WINDOWS_API_
+// #define _IRR_COMPILE_WITH_WINDOWS_DEVICE_
+#undef _IRR_COMPILE_WITH_WINDOWS_DEVICE_
+// #define _IRR_COMPILE_WITH_SDL_DEVICE_
 
-	#include <xtl.h>
+#include <xtl.h>
 #endif
 
 #if defined(__APPLE__) || defined(MACOSX)
@@ -89,7 +89,7 @@
 #if defined(__SVR4) && defined(__sun)
 #define _IRR_SOLARIS_PLATFORM_
 #if defined(__sparc)
-	#define __BIG_ENDIAN__
+#define __BIG_ENDIAN__
 #endif
 #endif
 
@@ -101,13 +101,11 @@
 #define _IRR_COMPILE_WITH_X11_DEVICE_
 #endif
 
-
 //! Define _IRR_COMPILE_WITH_JOYSTICK_SUPPORT_ if you want joystick events.
 #define _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 #ifdef NO_IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 #undef _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 #endif
-
 
 //! Maximum number of texture an SMaterial can have, up to 8 are supported by Irrlicht.
 #define _IRR_MATERIAL_MAX_TEXTURES_ 8
@@ -118,9 +116,9 @@
 #undef _IRR_COMPILE_WITH_XML_
 #endif
 
-//! Add a leak-hunter to Irrlicht which helps finding unreleased reference counted objects.
-//! NOTE: This is slow and should only be used for debugging
-//#define _IRR_COMPILE_WITH_LEAK_HUNTER_
+//! Add a leak-hunter to Irrlicht which helps finding unreleased reference counted
+//! objects. NOTE: This is slow and should only be used for debugging
+// #define _IRR_COMPILE_WITH_LEAK_HUNTER_
 #ifdef NO_IRR_COMPILE_WITH_LEAK_HUNTER_
 #undef _IRR_COMPILE_WITH_LEAK_HUNTER_
 #endif
@@ -129,7 +127,7 @@
 /** NOTE: The profiler itself always exists and can be used by applications.
 This define is about the engine creating profile data
 while it runs and enabling it will slow down the engine. */
-//#define _IRR_COMPILE_WITH_PROFILING_
+// #define _IRR_COMPILE_WITH_PROFILING_
 #ifdef NO_IRR_COMPILE_WITH_PROFILING_
 #undef _IRR_COMPILE_WITH_PROFILING_
 #endif
@@ -143,16 +141,20 @@ _IRR_COMPILE_WITH_DX9_DEV_PACK_. So you simply need to add something like this
 to the compiler settings: -DIRR_COMPILE_WITH_DX9_DEV_PACK
 and this to the linker settings: -ld3dx9
 */
-#if defined(_IRR_WINDOWS_API_) && (!defined(__GNUC__) || defined(IRR_COMPILE_WITH_DX9_DEV_PACK))
+#if defined(_IRR_WINDOWS_API_) &&                                                        \
+	(!defined(__GNUC__) || defined(IRR_COMPILE_WITH_DX9_DEV_PACK))
 
-//! Define _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_ if you want to use DirectInput for joystick handling.
+//! Define _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_ if you want to use DirectInput for
+//! joystick handling.
 /** This only applies to Windows devices, currently only supported under Win32 device.
-If not defined, Windows Multimedia library is used, which offers also broad support for joystick devices. */
+If not defined, Windows Multimedia library is used, which offers also broad support for
+joystick devices. */
 #define _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
 #ifdef NO_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
 #undef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
 #endif
-// can't get this to compile currently under borland, can be removed if someone has a better solution
+// can't get this to compile currently under borland, can be removed if someone has a
+// better solution
 #if defined(__BORLANDC__)
 #undef _IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_
 #endif
@@ -175,22 +177,20 @@ define out. */
 
 //! Define required options for OpenGL drivers.
 #if defined(_IRR_COMPILE_WITH_OPENGL_)
-	#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_)
-		#define _IRR_OPENGL_USE_EXTPOINTER_
-		#define _IRR_COMPILE_WITH_WGL_MANAGER_
-	#elif defined(_IRR_COMPILE_WITH_X11_DEVICE_)
-		#define _IRR_OPENGL_USE_EXTPOINTER_
-		#define _IRR_COMPILE_WITH_GLX_MANAGER_
-	#elif defined(_IRR_COMPILE_WITH_OSX_DEVICE_)
-		#define _IRR_COMPILE_WITH_NSOGL_MANAGER_
-	#elif defined(_IRR_SOLARIS_PLATFORM_)
-		#define _IRR_COMPILE_WITH_GLX_MANAGER_
-	#elif defined(_IRR_COMPILE_WITH_SDL_DEVICE_)
-		#define _IRR_OPENGL_USE_EXTPOINTER_
-	#endif
+#if defined(_IRR_COMPILE_WITH_WINDOWS_DEVICE_)
+#define _IRR_OPENGL_USE_EXTPOINTER_
+#define _IRR_COMPILE_WITH_WGL_MANAGER_
+#elif defined(_IRR_COMPILE_WITH_X11_DEVICE_)
+#define _IRR_OPENGL_USE_EXTPOINTER_
+#define _IRR_COMPILE_WITH_GLX_MANAGER_
+#elif defined(_IRR_COMPILE_WITH_OSX_DEVICE_)
+#define _IRR_COMPILE_WITH_NSOGL_MANAGER_
+#elif defined(_IRR_SOLARIS_PLATFORM_)
+#define _IRR_COMPILE_WITH_GLX_MANAGER_
+#elif defined(_IRR_COMPILE_WITH_SDL_DEVICE_)
+#define _IRR_OPENGL_USE_EXTPOINTER_
 #endif
-
-
+#endif
 
 //! Define _IRR_COMPILE_WITH_SOFTWARE_ to compile the Irrlicht engine with software driver
 /** If you do not need the software driver, or want to use Burning's Video instead,
@@ -200,7 +200,8 @@ comment this define out */
 #undef _IRR_COMPILE_WITH_SOFTWARE_
 #endif
 
-//! Define _IRR_COMPILE_WITH_BURNINGSVIDEO_ to compile the Irrlicht engine with Burning's video driver
+//! Define _IRR_COMPILE_WITH_BURNINGSVIDEO_ to compile the Irrlicht engine with Burning's
+//! video driver
 /** If you do not need this software driver, you can comment this define out. */
 #define _IRR_COMPILE_WITH_BURNINGSVIDEO_
 #ifdef NO_IRR_COMPILE_WITH_BURNINGSVIDEO_
@@ -216,12 +217,12 @@ define out. */
 #undef _IRR_COMPILE_WITH_X11_
 #endif
 
-//! On some Linux systems the XF86 vidmode extension or X11 RandR are missing. Use these flags
-//! to remove the dependencies such that Irrlicht will compile on those systems, too.
-//! If you don't need colored cursors you can also disable the Xcursor extension
+//! On some Linux systems the XF86 vidmode extension or X11 RandR are missing. Use these
+//! flags to remove the dependencies such that Irrlicht will compile on those systems,
+//! too. If you don't need colored cursors you can also disable the Xcursor extension
 #if defined(_IRR_LINUX_PLATFORM_) && defined(_IRR_COMPILE_WITH_X11_)
 #define _IRR_LINUX_X11_VIDMODE_
-//#define _IRR_LINUX_X11_RANDR_
+// #define _IRR_LINUX_X11_RANDR_
 #ifdef NO_IRR_LINUX_X11_VIDMODE_
 #undef _IRR_LINUX_X11_VIDMODE_
 #endif
@@ -229,10 +230,11 @@ define out. */
 #undef _IRR_LINUX_X11_RANDR_
 #endif
 
-//! X11 has by default only monochrome cursors, but using the Xcursor library we can also get color cursor support.
-//! If you have the need for custom color cursors on X11 then enable this and make sure you also link
-//! to the Xcursor library in your Makefile/Projectfile.
-//#define _IRR_LINUX_XCURSOR_
+//! X11 has by default only monochrome cursors, but using the Xcursor library we can also
+//! get color cursor support. If you have the need for custom color cursors on X11 then
+//! enable this and make sure you also link to the Xcursor library in your
+//! Makefile/Projectfile.
+// #define _IRR_LINUX_XCURSOR_
 #ifdef NO_IRR_LINUX_XCURSOR_
 #undef _IRR_LINUX_XCURSOR_
 #endif
@@ -240,15 +242,18 @@ define out. */
 #endif
 
 //! Define _IRR_COMPILE_WITH_GUI_ to compile the engine with the built-in GUI
-/** Disable this if you are using an external library to draw the GUI. If you disable this then
-you will not be able to use anything provided by the GUI Environment, including loading fonts. */
+/** Disable this if you are using an external library to draw the GUI. If you disable this
+then you will not be able to use anything provided by the GUI Environment, including
+loading fonts. */
 #define _IRR_COMPILE_WITH_GUI_
 #ifdef NO_IRR_COMPILE_WITH_GUI_
 #undef _IRR_COMPILE_WITH_GUI_
 #endif
 
-//! Define _IRR_COMPILE_WITH_PARTICLES to compile the engine the withe build-in particle system
-/** You can disable this if you don't need particles or use an external particle system. */
+//! Define _IRR_COMPILE_WITH_PARTICLES to compile the engine the withe build-in particle
+//! system
+/** You can disable this if you don't need particles or use an external particle system.
+ */
 #define _IRR_COMPILE_WITH_PARTICLES_
 #ifdef NO_IRR_COMPILE_WITH_PARTICLES_
 #undef _IRR_COMPILE_WITH_PARTICLES_
@@ -259,7 +264,7 @@ you will not be able to use anything provided by the GUI Environment, including 
 disable this feature, the engine behave as before (ansi). This is currently only supported
 for Windows based systems. You also have to set #define UNICODE for this to compile.
 */
-//#define _IRR_WCHAR_FILESYSTEM
+// #define _IRR_WCHAR_FILESYSTEM
 #ifdef NO_IRR_WCHAR_FILESYSTEM
 #undef _IRR_WCHAR_FILESYSTEM
 #endif
@@ -272,9 +277,10 @@ the engine will no longer read .jpeg images. */
 #undef _IRR_COMPILE_WITH_LIBJPEG_
 #endif
 
-//! Define _IRR_USE_NON_SYSTEM_JPEG_LIB_ to let irrlicht use the jpeglib which comes with irrlicht.
-/** If this is commented out, Irrlicht will try to compile using the jpeg lib installed in the system.
-	This is only used when _IRR_COMPILE_WITH_LIBJPEG_ is defined. */
+//! Define _IRR_USE_NON_SYSTEM_JPEG_LIB_ to let irrlicht use the jpeglib which comes with
+//! irrlicht.
+/** If this is commented out, Irrlicht will try to compile using the jpeg lib installed in
+   the system. This is only used when _IRR_COMPILE_WITH_LIBJPEG_ is defined. */
 #define _IRR_USE_NON_SYSTEM_JPEG_LIB_
 #ifdef NO_IRR_USE_NON_SYSTEM_JPEG_LIB_
 #undef _IRR_USE_NON_SYSTEM_JPEG_LIB_
@@ -288,9 +294,10 @@ the engine will no longer read .png images. */
 #undef _IRR_COMPILE_WITH_LIBPNG_
 #endif
 
-//! Define _IRR_USE_NON_SYSTEM_LIBPNG_ to let irrlicht use the libpng which comes with irrlicht.
-/** If this is commented out, Irrlicht will try to compile using the libpng installed in the system.
-	This is only used when _IRR_COMPILE_WITH_LIBPNG_ is defined. */
+//! Define _IRR_USE_NON_SYSTEM_LIBPNG_ to let irrlicht use the libpng which comes with
+//! irrlicht.
+/** If this is commented out, Irrlicht will try to compile using the libpng installed in
+   the system. This is only used when _IRR_COMPILE_WITH_LIBPNG_ is defined. */
 #define _IRR_USE_NON_SYSTEM_LIB_PNG_
 #ifdef NO_IRR_USE_NON_SYSTEM_LIB_PNG_
 #undef _IRR_USE_NON_SYSTEM_LIB_PNG_
@@ -304,19 +311,21 @@ into a temporary file at runtime for this purpose. To debug your shaders, choose
 Debug->Direct3D->StartWithDirect3DDebugging in Visual Studio, and for every shader a
 file named 'irr_dbg_shader_%%.vsh' or 'irr_dbg_shader_%%.psh' will be created. Drag'n'drop
 the file you want to debug into visual studio. That's it. You can now set breakpoints and
-watch registers, variables etc. This works with ASM, HLSL, and both with pixel and vertex shaders.
-Note that the engine will run in D3D REF for this, which is a lot slower than HAL. */
+watch registers, variables etc. This works with ASM, HLSL, and both with pixel and vertex
+shaders. Note that the engine will run in D3D REF for this, which is a lot slower than
+HAL. */
 #define _IRR_D3D_NO_SHADER_DEBUGGING
 #ifdef NO_IRR_D3D_NO_SHADER_DEBUGGING
 #undef _IRR_D3D_NO_SHADER_DEBUGGING
 #endif
 
-//! Define _IRR_D3D_USE_LEGACY_HLSL_COMPILER to enable the old HLSL compiler in recent DX SDKs
+//! Define _IRR_D3D_USE_LEGACY_HLSL_COMPILER to enable the old HLSL compiler in recent DX
+//! SDKs
 /** This enables support for ps_1_x shaders for recent DX SDKs. Otherwise, support
 for this shader model is not available anymore in SDKs after Oct2006. You need to
 distribute the OCT2006_d3dx9_31_x86.cab or OCT2006_d3dx9_31_x64.cab though, in order
 to provide the user with the proper DLL. That's why it's disabled by default. */
-//#define _IRR_D3D_USE_LEGACY_HLSL_COMPILER
+// #define _IRR_D3D_USE_LEGACY_HLSL_COMPILER
 #ifdef NO_IRR_D3D_USE_LEGACY_HLSL_COMPILER
 #undef _IRR_D3D_USE_LEGACY_HLSL_COMPILER
 #endif
@@ -329,28 +338,28 @@ tool <http://developer.nvidia.com/object/nvperfhud_home.html>. */
 //! Define one of the three setting for Burning's Video Software Rasterizer
 /** So if we were marketing guys we could say Irrlicht has 4 Software-Rasterizers.
 	In a Nutshell:
-		All Burnings Rasterizers use 32 Bit Backbuffer, 32Bit Texture & 32 Bit Z or WBuffer,
-		16 Bit/32 Bit can be adjusted on a global flag.
+		All Burnings Rasterizers use 32 Bit Backbuffer, 32Bit Texture & 32 Bit Z
+   or WBuffer, 16 Bit/32 Bit can be adjusted on a global flag.
 
 		BURNINGVIDEO_RENDERER_BEAUTIFUL
-			32 Bit + Vertexcolor + Lighting + Per Pixel Perspective Correct + SubPixel/SubTexel Correct +
-			Bilinear Texturefiltering + WBuffer
+			32 Bit + Vertexcolor + Lighting + Per Pixel Perspective Correct +
+   SubPixel/SubTexel Correct + Bilinear Texturefiltering + WBuffer
 
 		BURNINGVIDEO_RENDERER_FAST
-			32 Bit + Per Pixel Perspective Correct + SubPixel/SubTexel Correct + WBuffer +
-			Bilinear Dithering TextureFiltering + WBuffer
+			32 Bit + Per Pixel Perspective Correct + SubPixel/SubTexel Correct
+   + WBuffer + Bilinear Dithering TextureFiltering + WBuffer
 
 		BURNINGVIDEO_RENDERER_ULTRA_FAST
 			16Bit + SubPixel/SubTexel Correct + ZBuffer
 */
 
 #define BURNINGVIDEO_RENDERER_BEAUTIFUL
-//#define BURNINGVIDEO_RENDERER_FAST
-//#define BURNINGVIDEO_RENDERER_ULTRA_FAST
-//#define BURNINGVIDEO_RENDERER_CE
+// #define BURNINGVIDEO_RENDERER_FAST
+// #define BURNINGVIDEO_RENDERER_ULTRA_FAST
+// #define BURNINGVIDEO_RENDERER_CE
 
 //! Uncomment the following line if you want to ignore the deprecated warnings
-//#define IGNORE_DEPRECATED_WARNING
+// #define IGNORE_DEPRECATED_WARNING
 
 //! Define _IRR_COMPILE_WITH_SHADOW_VOLUME_SCENENODE_ to support ShadowVolumes
 #define _IRR_COMPILE_WITH_SHADOW_VOLUME_SCENENODE_
@@ -438,7 +447,8 @@ B3D, MS3D or X meshes */
 #endif
 #endif // _IRR_COMPILE_WITH_SKINNED_MESH_SUPPORT_
 
-//! Define _IRR_COMPILE_WITH_IRR_MESH_LOADER_ if you want to load Irrlicht Engine .irrmesh files
+//! Define _IRR_COMPILE_WITH_IRR_MESH_LOADER_ if you want to load Irrlicht Engine .irrmesh
+//! files
 #define _IRR_COMPILE_WITH_IRR_MESH_LOADER_
 #ifdef NO_IRR_COMPILE_WITH_IRR_MESH_LOADER_
 #undef _IRR_COMPILE_WITH_IRR_MESH_LOADER_
@@ -513,7 +523,8 @@ B3D, MS3D or X meshes */
 #ifdef NO_IRR_COMPILE_WITH_STL_LOADER_
 #undef _IRR_COMPILE_WITH_STL_LOADER_
 #endif
-//! Define _IRR_COMPILE_WITH_PLY_LOADER_ if you want to load Polygon (Stanford Triangle) files
+//! Define _IRR_COMPILE_WITH_PLY_LOADER_ if you want to load Polygon (Stanford Triangle)
+//! files
 #define _IRR_COMPILE_WITH_PLY_LOADER_
 #ifdef NO_IRR_COMPILE_WITH_PLY_LOADER_
 #undef _IRR_COMPILE_WITH_PLY_LOADER_
@@ -601,10 +612,11 @@ B3D, MS3D or X meshes */
 //! loader will decompress these files and will send to the memory as uncompressed files.
 // Outcommented because
 // a) it doesn't compile on 64-bit currently
-// b) anyone enabling it should be aware that S3TC compression algorithm which might be used in that loader
-// is patented in the US by S3 and they do collect license fees when it's used in applications.
-// So if you are unfortunate enough to develop applications for US market and their broken patent system be careful.
-// #define _IRR_COMPILE_WITH_DDS_DECODER_LOADER_
+// b) anyone enabling it should be aware that S3TC compression algorithm which might be
+// used in that loader is patented in the US by S3 and they do collect license fees when
+// it's used in applications. So if you are unfortunate enough to develop applications for
+// US market and their broken patent system be careful. #define
+// _IRR_COMPILE_WITH_DDS_DECODER_LOADER_
 #ifdef NO_IRR_COMPILE_WITH_DDS_DECODER_LOADER_
 #undef _IRR_COMPILE_WITH_DDS_DECODER_LOADER_
 #endif
@@ -626,7 +638,8 @@ B3D, MS3D or X meshes */
 #ifdef NO_IRR_COMPILE_WITH_LMP_LOADER_
 #undef _IRR_COMPILE_WITH_LMP_LOADER_
 #endif
-//! Define _IRR_COMPILE_WITH_RGB_LOADER_ if you want to load Silicon Graphics .rgb/.rgba/.sgi/.int/.inta/.bw files
+//! Define _IRR_COMPILE_WITH_RGB_LOADER_ if you want to load Silicon Graphics
+//! .rgb/.rgba/.sgi/.int/.inta/.bw files
 #define _IRR_COMPILE_WITH_RGB_LOADER_
 #ifdef NO_IRR_COMPILE_WITH_RGB_LOADER_
 #undef _IRR_COMPILE_WITH_RGB_LOADER_
@@ -668,7 +681,8 @@ B3D, MS3D or X meshes */
 #undef _IRR_COMPILE_WITH_TGA_WRITER_
 #endif
 
-//! Define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_ if you want to open ZIP and GZIP archives
+//! Define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_ if you want to open ZIP and GZIP
+//! archives
 /** ZIP reading has several more options below to configure. */
 #define __IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
 #ifdef NO__IRR_COMPILE_WITH_ZIP_ARCHIVE_LOADER_
@@ -683,7 +697,8 @@ ones. */
 #ifdef NO_IRR_COMPILE_WITH_ZLIB_
 #undef _IRR_COMPILE_WITH_ZLIB_
 #endif
-//! Define _IRR_USE_NON_SYSTEM_ZLIB_ to let irrlicht use the zlib which comes with irrlicht.
+//! Define _IRR_USE_NON_SYSTEM_ZLIB_ to let irrlicht use the zlib which comes with
+//! irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the zlib
 installed on the system. This is only used when _IRR_COMPILE_WITH_ZLIB_ is
 defined. */
@@ -691,7 +706,8 @@ defined. */
 #ifdef NO_IRR_USE_NON_SYSTEM_ZLIB_
 #undef _IRR_USE_NON_SYSTEM_ZLIB_
 #endif
-//! Define _IRR_COMPILE_WITH_ZIP_ENCRYPTION_ if you want to read AES-encrypted ZIP archives
+//! Define _IRR_COMPILE_WITH_ZIP_ENCRYPTION_ if you want to read AES-encrypted ZIP
+//! archives
 #define _IRR_COMPILE_WITH_ZIP_ENCRYPTION_
 #ifdef NO_IRR_COMPILE_WITH_ZIP_ENCRYPTION_
 #undef _IRR_COMPILE_WITH_ZIP_ENCRYPTION_
@@ -704,7 +720,8 @@ library. */
 #ifdef NO_IRR_COMPILE_WITH_BZIP2_
 #undef _IRR_COMPILE_WITH_BZIP2_
 #endif
-//! Define _IRR_USE_NON_SYSTEM_BZLIB_ to let irrlicht use the bzlib which comes with irrlicht.
+//! Define _IRR_USE_NON_SYSTEM_BZLIB_ to let irrlicht use the bzlib which comes with
+//! irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the bzlib
 installed on the system. This is only used when _IRR_COMPILE_WITH_BZLIB_ is
 defined. */
@@ -721,17 +738,20 @@ currently only supports zip archives, though. */
 #endif
 #endif
 
-//! Define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_ if you want to mount folders as archives
+//! Define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_ if you want to mount folders as
+//! archives
 #define __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_
 #ifdef NO__IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_
 #undef __IRR_COMPILE_WITH_MOUNT_ARCHIVE_LOADER_
 #endif
-//! Define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_ if you want to open ID software PAK archives
+//! Define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_ if you want to open ID software PAK
+//! archives
 #define __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_
 #ifdef NO__IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_
 #undef __IRR_COMPILE_WITH_PAK_ARCHIVE_LOADER_
 #endif
-//! Define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_ if you want to open Nebula Device NPK archives
+//! Define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_ if you want to open Nebula Device NPK
+//! archives
 #define __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_
 #ifdef NO__IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_
 #undef __IRR_COMPILE_WITH_NPK_ARCHIVE_LOADER_
@@ -752,10 +772,10 @@ currently only supports zip archives, though. */
 precision will be lower but speed higher. currently X86 only
 */
 #if !defined(_IRR_OSX_PLATFORM_) && !defined(_IRR_SOLARIS_PLATFORM_)
-	//#define IRRLICHT_FAST_MATH
-	#ifdef NO_IRRLICHT_FAST_MATH
-	#undef IRRLICHT_FAST_MATH
-	#endif
+// #define IRRLICHT_FAST_MATH
+#ifdef NO_IRRLICHT_FAST_MATH
+#undef IRRLICHT_FAST_MATH
+#endif
 #endif
 
 // Some cleanup and standard stuff
@@ -785,7 +805,7 @@ precision will be lower but speed higher. currently X86 only
 
 // Force symbol export in shared libraries built with gcc.
 #if (__GNUC__ >= 4) && !defined(_IRR_STATIC_LIB_) && defined(IRRLICHT_EXPORTS)
-#define IRRLICHT_API __attribute__ ((visibility("default")))
+#define IRRLICHT_API __attribute__((visibility("default")))
 #else
 #define IRRLICHT_API
 #endif
@@ -795,14 +815,15 @@ precision will be lower but speed higher. currently X86 only
 #endif // _IRR_WINDOWS_API_
 
 #ifndef _IRR_WINDOWS_API_
-	#undef _IRR_WCHAR_FILESYSTEM
+#undef _IRR_WCHAR_FILESYSTEM
 #endif
 
 #if defined(_IRR_SOLARIS_PLATFORM_)
-	#undef _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
+#undef _IRR_COMPILE_WITH_JOYSTICK_EVENTS_
 #endif
 
-//! Define __IRR_HAS_S64 if the irr::s64 type should be enable (needs long long, available on most platforms, but not part of ISO C++ 98)
+//! Define __IRR_HAS_S64 if the irr::s64 type should be enable (needs long long, available
+//! on most platforms, but not part of ISO C++ 98)
 #define __IRR_HAS_S64
 #ifdef NO__IRR_HAS_S64
 #undef __IRR_HAS_S64
@@ -810,46 +831,45 @@ precision will be lower but speed higher. currently X86 only
 
 // These depend on XML
 #ifndef _IRR_COMPILE_WITH_XML_
-	#undef _IRR_COMPILE_WITH_IRR_MESH_LOADER_
-	#undef _IRR_COMPILE_WITH_IRR_WRITER_
-	#undef _IRR_COMPILE_WITH_COLLADA_WRITER_
-	#undef _IRR_COMPILE_WITH_COLLADA_LOADER_
+#undef _IRR_COMPILE_WITH_IRR_MESH_LOADER_
+#undef _IRR_COMPILE_WITH_IRR_WRITER_
+#undef _IRR_COMPILE_WITH_COLLADA_WRITER_
+#undef _IRR_COMPILE_WITH_COLLADA_LOADER_
 #endif
 
 #if defined(__BORLANDC__)
-	#include <tchar.h>
+#include <tchar.h>
 
-	// Borland 5.5.1 does not have _strcmpi defined
-	#if __BORLANDC__ == 0x551
-	//    #define _strcmpi strcmpi
-		#undef _tfinddata_t
-		#undef _tfindfirst
-		#undef _tfindnext
+// Borland 5.5.1 does not have _strcmpi defined
+#if __BORLANDC__ == 0x551
+//    #define _strcmpi strcmpi
+#undef _tfinddata_t
+#undef _tfindfirst
+#undef _tfindnext
 
-		#define _tfinddata_t __tfinddata_t
-		#define _tfindfirst  __tfindfirst
-		#define _tfindnext   __tfindnext
-		typedef long intptr_t;
-	#endif
+#define _tfinddata_t __tfinddata_t
+#define _tfindfirst __tfindfirst
+#define _tfindnext __tfindnext
+typedef long intptr_t;
+#endif
 #endif
 
 #ifndef __has_feature
-  #define __has_feature(x) 0  // Compatibility with non-clang compilers.
+#define __has_feature(x) 0 // Compatibility with non-clang compilers.
 #endif
 
 #ifdef _DEBUG
-	//! A few attributes are written in CSceneManager when _IRR_SCENEMANAGER_DEBUG is enabled
-	// NOTE: Those attributes were used always until 1.8.0 and became a global define for 1.8.1
-	// which is only enabled in debug because it had a large (sometimes >5%) impact on speed.
-	// A better solution in the long run is to break the interface and remove _all_ attribute
-	// access in functions like CSceneManager::drawAll and instead put that information in some
-	// own struct/class or in CSceneManager.
-	// See http://irrlicht.sourceforge.net/forum/viewtopic.php?f=2&t=48211 for the discussion.
-	#define _IRR_SCENEMANAGER_DEBUG
-	#ifdef NO_IRR_SCENEMANAGER_DEBUG
-		#undef _IRR_SCENEMANAGER_DEBUG
-	#endif
+//! A few attributes are written in CSceneManager when _IRR_SCENEMANAGER_DEBUG is enabled
+// NOTE: Those attributes were used always until 1.8.0 and became a global define
+// for 1.8.1 which is only enabled in debug because it had a large (sometimes >5%) impact
+// on speed. A better solution in the long run is to break the interface and remove _all_
+// attribute access in functions like CSceneManager::drawAll and instead put that
+// information in some own struct/class or in CSceneManager. See
+// http://irrlicht.sourceforge.net/forum/viewtopic.php?f=2&t=48211 for the discussion.
+#define _IRR_SCENEMANAGER_DEBUG
+#ifdef NO_IRR_SCENEMANAGER_DEBUG
+#undef _IRR_SCENEMANAGER_DEBUG
+#endif
 #endif
 
 #endif // __IRR_COMPILE_CONFIG_H_INCLUDED__
-

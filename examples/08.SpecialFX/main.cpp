@@ -7,7 +7,7 @@ surface scene node.
 We start like in some tutorials before. Please note that this time, the
 'shadows' flag in createDevice() is set to true, for we want to have a dynamic
 shadow cast from an animated character. If this example runs too slow,
-set it to false. The Irrlicht Engine also checks if your hardware doesn't 
+set it to false. The Irrlicht Engine also checks if your hardware doesn't
 support the stencil buffer, and then disables shadows by itself.
 */
 
@@ -22,8 +22,7 @@ using namespace irr;
 #pragma comment(lib, "Irrlicht.lib")
 #endif
 
-int main()
-{
+int main() {
 	// ask if user would like shadows
 	char i = 'y';
 	printf("Please press 'y' if you want to use realtime shadows.\n");
@@ -33,22 +32,22 @@ int main()
 	const bool shadows = (i == 'y');
 
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
-
+	}
 
 	/*
 	Create device and exit if creation failed. We make the stencil flag
 	optional to avoid slow screen modes for runs without shadows.
 	*/
 
-	IrrlichtDevice *device =
-		createDevice(driverType, core::dimension2d<u32>(640, 480),
-		16, false, shadows);
+	IrrlichtDevice* device = createDevice(driverType,
+		core::dimension2d<u32>(640, 480), 16, false, shadows);
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
@@ -77,7 +76,7 @@ int main()
 
 	node = smgr->addAnimatedMeshSceneNode(mesh);
 	node->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.jpg"));
-	node->getMaterial(0).SpecularColor.set(0,0,0,0);
+	node->getMaterial(0).SpecularColor.set(0, 0, 0, 0);
 
 	/*
 	Now, for the first special effect: Animated water. It works like this:
@@ -90,14 +89,12 @@ int main()
 	want to.
 	*/
 
-	mesh = smgr->addHillPlaneMesh( "myHill",
-		core::dimension2d<f32>(20,20),
-		core::dimension2d<u32>(40,40), 0, 0,
-		core::dimension2d<f32>(0,0),
-		core::dimension2d<f32>(10,10));
+	mesh = smgr->addHillPlaneMesh("myHill", core::dimension2d<f32>(20, 20),
+		core::dimension2d<u32>(40, 40), 0, 0, core::dimension2d<f32>(0, 0),
+		core::dimension2d<f32>(10, 10));
 
 	node = smgr->addWaterSurfaceSceneNode(mesh->getMesh(0), 3.0f, 300.0f, 30.0f);
-	node->setPosition(core::vector3df(0,7,0));
+	node->setPosition(core::vector3df(0, 7, 0));
 
 	node->setMaterialTexture(0, driver->getTexture(mediaPath + "stones.jpg"));
 	node->setMaterialTexture(1, driver->getTexture(mediaPath + "water.jpg"));
@@ -113,10 +110,10 @@ int main()
 
 	// create light
 
-	node = smgr->addLightSceneNode(0, core::vector3df(0,0,0),
+	node = smgr->addLightSceneNode(0, core::vector3df(0, 0, 0),
 		video::SColorf(1.0f, 0.6f, 0.7f, 1.0f), 800.0f);
 	scene::ISceneNodeAnimator* anim = 0;
-	anim = smgr->createFlyCircleAnimator (core::vector3df(0,150,0),250.0f);
+	anim = smgr->createFlyCircleAnimator(core::vector3df(0, 150, 0), 250.0f);
 	node->addAnimator(anim);
 	anim->drop();
 
@@ -164,31 +161,30 @@ int main()
 
 	// create a particle system
 
-	scene::IParticleSystemSceneNode* ps =
-		smgr->addParticleSystemSceneNode(false);
+	scene::IParticleSystemSceneNode* ps = smgr->addParticleSystemSceneNode(false);
 
-	if (ps)
-	{
+	if (ps) {
 		scene::IParticleEmitter* em = ps->createBoxEmitter(
-			core::aabbox3d<f32>(-7,0,-7,7,1,7), // emitter size
-			core::vector3df(0.0f,0.06f,0.0f),   // initial direction
-			80,100,                             // emit rate
-			video::SColor(0,255,255,255),       // darkest color
-			video::SColor(0,255,255,255),       // brightest color
-			800,2000,0,                         // min and max age, angle
-			core::dimension2df(10.f,10.f),         // min size
-			core::dimension2df(20.f,20.f));        // max size
+			core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7), // emitter size
+			core::vector3df(0.0f, 0.06f, 0.0f),	 // initial direction
+			80, 100,				 // emit rate
+			video::SColor(0, 255, 255, 255),	 // darkest color
+			video::SColor(0, 255, 255, 255),	 // brightest color
+			800, 2000, 0,				 // min and max age, angle
+			core::dimension2df(10.f, 10.f),		 // min size
+			core::dimension2df(20.f, 20.f)
+		); // max size
 
 		ps->setEmitter(em); // this grabs the emitter
-		em->drop(); // so we can drop it here without deleting it
+		em->drop();	    // so we can drop it here without deleting it
 
 		scene::IParticleAffector* paf = ps->createFadeOutParticleAffector();
 
 		ps->addAffector(paf); // same goes for the affector
 		paf->drop();
 
-		ps->setPosition(core::vector3df(-70,60,40));
-		ps->setScale(core::vector3df(2,2,2));
+		ps->setPosition(core::vector3df(-70, 60, 40));
+		ps->setScale(core::vector3df(2, 2, 2));
 		ps->setMaterialFlag(video::EMF_LIGHTING, false);
 		ps->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
 		ps->setMaterialTexture(0, driver->getTexture(mediaPath + "fire.bmp"));
@@ -201,31 +197,30 @@ int main()
 	texture for the desired effect, though this time we'll use a texture animator
 	to create the illusion of a magical glowing area effect.
 	*/
-	scene::IVolumeLightSceneNode * n = smgr->addVolumeLightSceneNode(0, -1,
-				32,                              // Subdivisions on U axis
-				32,                              // Subdivisions on V axis
-				video::SColor(0, 255, 255, 255), // foot color
-				video::SColor(0, 0, 0, 0));      // tail color
+	scene::IVolumeLightSceneNode* n = smgr->addVolumeLightSceneNode(0, -1,
+		32,				 // Subdivisions on U axis
+		32,				 // Subdivisions on V axis
+		video::SColor(0, 255, 255, 255), // foot color
+		video::SColor(0, 0, 0, 0));	 // tail color
 
-	if (n)
-	{
+	if (n) {
 		n->setScale(core::vector3df(56.0f, 56.0f, 56.0f));
-		n->setPosition(core::vector3df(-120,50,40));
+		n->setPosition(core::vector3df(-120, 50, 40));
 
 		// load textures for animation
 		core::array<video::ITexture*> textures;
-		for (s32 g=7; g > 0; --g)
-		{
+		for (s32 g = 7; g > 0; --g) {
 			core::stringc tmp(mediaPath);
 			tmp += "portal";
 			tmp += g;
 			tmp += ".bmp";
-			video::ITexture* t = driver->getTexture( tmp.c_str() );
+			video::ITexture* t = driver->getTexture(tmp.c_str());
 			textures.push_back(t);
 		}
 
 		// create texture animator
-		scene::ISceneNodeAnimator* glow = smgr->createTextureAnimator(textures, 150);
+		scene::ISceneNodeAnimator* glow =
+			smgr->createTextureAnimator(textures, 150);
 
 		// add the animator
 		n->addAnimator(glow);
@@ -256,16 +251,16 @@ int main()
 	scene::IAnimatedMeshSceneNode* anode = 0;
 
 	anode = smgr->addAnimatedMeshSceneNode(mesh);
-	anode->setPosition(core::vector3df(-50,20,-60));
+	anode->setPosition(core::vector3df(-50, 20, -60));
 	anode->setAnimationSpeed(15);
 
 	// add shadow
 	anode->addShadowVolumeSceneNode();
-	smgr->setShadowColor(video::SColor(150,0,0,0));
+	smgr->setShadowColor(video::SColor(150, 0, 0, 0));
 
 	// make the model a little bit bigger and normalize its normals
 	// because of the scaling, for correct lighting
-	anode->setScale(core::vector3df(2,2,2));
+	anode->setScale(core::vector3df(2, 2, 2));
 	anode->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 
 	/*
@@ -273,7 +268,7 @@ int main()
 	*/
 
 	scene::ICameraSceneNode* camera = smgr->addCameraSceneNodeFPS();
-	camera->setPosition(core::vector3df(-50,50,-150));
+	camera->setPosition(core::vector3df(-50, 50, -150));
 	camera->setFarValue(10000.0f); // this increase a shadow visible range.
 
 	// disable mouse cursor
@@ -281,26 +276,27 @@ int main()
 
 	s32 lastFPS = -1;
 
-	while(device->run())
-	if (device->isWindowActive())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0));
+	while (device->run()) {
+		if (device->isWindowActive()) {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(0));
 
-		smgr->drawAll();
+			smgr->drawAll();
 
-		driver->endScene();
+			driver->endScene();
 
-		const s32 fps = driver->getFPS();
+			const s32 fps = driver->getFPS();
 
-		if (lastFPS != fps)
-		{
-			core::stringw str = L"Irrlicht Engine - SpecialFX example [";
-			str += driver->getName();
-			str += "] FPS:";
-			str += fps;
+			if (lastFPS != fps) {
+				core::stringw str =
+					L"Irrlicht Engine - SpecialFX example [";
+				str += driver->getName();
+				str += "] FPS:";
+				str += fps;
 
-			device->setWindowCaption(str.c_str());
-			lastFPS = fps;
+				device->setWindowCaption(str.c_str());
+				lastFPS = fps;
+			}
 		}
 	}
 
@@ -310,4 +306,4 @@ int main()
 }
 
 /*
-**/
+ **/

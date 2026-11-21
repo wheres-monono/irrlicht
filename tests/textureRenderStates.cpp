@@ -6,14 +6,17 @@
 using namespace irr;
 using namespace core;
 
-static bool manyTextures(video::E_DRIVER_TYPE driverType)
-{
-	IrrlichtDevice *device = createDevice(driverType, dimension2d<u32>(160, 120), 32);
-	if (!device)
-		return true; // Treat a failure to create a driver as benign; this saves a lot of #ifdefs
+static bool manyTextures(
+	video::E_DRIVER_TYPE driverType
+) {
+	IrrlichtDevice* device = createDevice(driverType, dimension2d<u32>(160, 120), 32);
+	if (!device) {
+		return true; // Treat a failure to create a driver as benign; this saves a
+			     // lot of #ifdefs
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	stabilizeScreenBackground(driver);
 
@@ -26,10 +29,14 @@ static bool manyTextures(video::E_DRIVER_TYPE driverType)
 	mesh->Vertices.reallocate(4);
 	mesh->Indices.reallocate(6);
 
-	mesh->Vertices.push_back(video::S3DVertex2TCoords(-50,50,80,irr::video::SColor(255,100,100,100),0,1,0,1));
-	mesh->Vertices.push_back(video::S3DVertex2TCoords(50,50,80,irr::video::SColor(255,100,100,100),1,1,1,1));
-	mesh->Vertices.push_back(video::S3DVertex2TCoords(50,-50,80,irr::video::SColor(255,100,100,100),1,0,1,0));
-	mesh->Vertices.push_back(video::S3DVertex2TCoords(-50,-50,80,irr::video::SColor(255,100,100,100),0,0,0,0));
+	mesh->Vertices.push_back(video::S3DVertex2TCoords(-50, 50, 80,
+		irr::video::SColor(255, 100, 100, 100), 0, 1, 0, 1));
+	mesh->Vertices.push_back(video::S3DVertex2TCoords(50, 50, 80,
+		irr::video::SColor(255, 100, 100, 100), 1, 1, 1, 1));
+	mesh->Vertices.push_back(video::S3DVertex2TCoords(50, -50, 80,
+		irr::video::SColor(255, 100, 100, 100), 1, 0, 1, 0));
+	mesh->Vertices.push_back(video::S3DVertex2TCoords(-50, -50, 80,
+		irr::video::SColor(255, 100, 100, 100), 0, 0, 0, 0));
 
 	mesh->Indices.push_back(0);
 	mesh->Indices.push_back(1);
@@ -40,14 +47,15 @@ static bool manyTextures(video::E_DRIVER_TYPE driverType)
 
 	video::SMaterial& mat = mesh->getMaterial();
 	mat.Lighting = false;
-	mat.setTexture(0,driver->getTexture("../media/fire.bmp"));
-	mat.setTexture(1,driver->getTexture("../media/fire.bmp"));
-	mat.setTexture(2,driver->getTexture("../media/fire.bmp"));
-	mat.setTexture(3,driver->getTexture("../media/fire.bmp"));
+	mat.setTexture(0, driver->getTexture("../media/fire.bmp"));
+	mat.setTexture(1, driver->getTexture("../media/fire.bmp"));
+	mat.setTexture(2, driver->getTexture("../media/fire.bmp"));
+	mat.setTexture(3, driver->getTexture("../media/fire.bmp"));
 
 	mesh->setDirty();
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
 	// set camera
 	smgr->drawAll();
 	// draw meshbuffer
@@ -56,7 +64,8 @@ static bool manyTextures(video::E_DRIVER_TYPE driverType)
 	driver->endScene();
 	mesh->drop();
 
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-multiTexture.png", 99.31f);
+	bool result = takeScreenshotAndCompareAgainstReference(driver,
+		"-multiTexture.png", 99.31f);
 
 	device->closeDevice();
 	device->run();
@@ -69,14 +78,17 @@ static bool manyTextures(video::E_DRIVER_TYPE driverType)
 /** The test loads a texture, renders it using draw2dimage, loads another
 	texture and renders the first one again. Due to the texture cache this
 	can lead to rendering of the second texture in second place. */
-static bool renderAndLoad(video::E_DRIVER_TYPE driverType)
-{
-	IrrlichtDevice *device = createDevice( driverType, dimension2d<u32>(160, 120), 32);
-	if (!device)
-		return true; // Treat a failure to create a driver as benign; this saves a lot of #ifdefs
+static bool renderAndLoad(
+	video::E_DRIVER_TYPE driverType
+) {
+	IrrlichtDevice* device = createDevice(driverType, dimension2d<u32>(160, 120), 32);
+	if (!device) {
+		return true; // Treat a failure to create a driver as benign; this saves a
+			     // lot of #ifdefs
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	stabilizeScreenBackground(driver);
 
@@ -86,17 +98,20 @@ static bool renderAndLoad(video::E_DRIVER_TYPE driverType)
 
 	(void)smgr->addCameraSceneNode();
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
-	driver->draw2DImage(tex1, position2di(0,0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
+	driver->draw2DImage(tex1, position2di(0, 0));
 	driver->endScene();
 
 	driver->getTexture("../media/tools.png");
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
-	driver->draw2DImage(tex1, position2di(0,0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
+	driver->draw2DImage(tex1, position2di(0, 0));
 	driver->endScene();
 
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-textureRenderStates.png", 99.85f);
+	bool result = takeScreenshotAndCompareAgainstReference(driver,
+		"-textureRenderStates.png", 99.85f);
 
 	device->closeDevice();
 	device->run();
@@ -105,39 +120,44 @@ static bool renderAndLoad(video::E_DRIVER_TYPE driverType)
 	return result;
 }
 
-
 // This test would cause a crash if it does not work
 // in 1.5.1 and 1.6 an illegal access in the OpenGL driver caused this
-static bool renderAndRemove(video::E_DRIVER_TYPE driverType)
-{
-	IrrlichtDevice *device = createDevice( driverType, dimension2d<u32>(160, 120), 32);
-	if (!device)
-		return true; // Treat a failure to create a driver as benign; this saves a lot of #ifdefs
+static bool renderAndRemove(
+	video::E_DRIVER_TYPE driverType
+) {
+	IrrlichtDevice* device = createDevice(driverType, dimension2d<u32>(160, 120), 32);
+	if (!device) {
+		return true; // Treat a failure to create a driver as benign; this saves a
+			     // lot of #ifdefs
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	stabilizeScreenBackground(driver);
 
 	logTestString("Testing driver %ls\n", driver->getName());
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255, 0, 255, 0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 0, 255, 0));
 	smgr->drawAll();
 	driver->endScene();
 
 	smgr->addCameraSceneNode();
-	video::ITexture* texture = driver->getTexture ("media/tools.png");
-	scene::ISceneNode * img = smgr->addCubeSceneNode();
+	video::ITexture* texture = driver->getTexture("media/tools.png");
+	scene::ISceneNode* img = smgr->addCubeSceneNode();
 	img->setMaterialTexture(0, texture);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor (255, 0, 255, 0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 0, 255, 0));
 	smgr->drawAll();
 	driver->endScene();
 
-	smgr->clear();	// Remove anything that used the texture
+	smgr->clear(); // Remove anything that used the texture
 	driver->removeTexture(texture);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
 	smgr->drawAll();
 	driver->endScene();
 
@@ -146,7 +166,8 @@ static bool renderAndRemove(video::E_DRIVER_TYPE driverType)
 	img = smgr->addCubeSceneNode();
 	img->setMaterialTexture(0, texture);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, irr::video::SColor (255, 0, 255, 0));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		irr::video::SColor(255, 0, 255, 0));
 	smgr->drawAll();
 	driver->endScene();
 
@@ -157,19 +178,19 @@ static bool renderAndRemove(video::E_DRIVER_TYPE driverType)
 	return true;
 }
 
-
-static bool testTextureMatrixInMixedScenes(video::E_DRIVER_TYPE driverType)
-{
-	irr::IrrlichtDevice* device = createDevice(driverType, dimension2du(160,120));
-	if (!device)
+static bool testTextureMatrixInMixedScenes(
+	video::E_DRIVER_TYPE driverType
+) {
+	irr::IrrlichtDevice* device = createDevice(driverType, dimension2du(160, 120));
+	if (!device) {
 		return true;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* sceneManager = device->getSceneManager();
 	gui::IGUIEnvironment* gui = device->getGUIEnvironment();
 
-	if (!driver->queryFeature(video::EVDF_TEXTURE_MATRIX))
-	{
+	if (!driver->queryFeature(video::EVDF_TEXTURE_MATRIX)) {
 		device->closeDevice();
 		device->run();
 		device->drop();
@@ -181,32 +202,36 @@ static bool testTextureMatrixInMixedScenes(video::E_DRIVER_TYPE driverType)
 	logTestString("Testing driver %ls\n", driver->getName());
 
 	scene::ICameraSceneNode* camera = sceneManager->addCameraSceneNode();
-	camera->setPosition(vector3df(0,10,0));
+	camera->setPosition(vector3df(0, 10, 0));
 
-	gui::IGUIStaticText* stext = gui->addStaticText(L" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 ",
-			rect<s32>(5,100,150,125),false,false,0,false);
-	stext->setBackgroundColor(video::SColor(255,128,0,0));
-	stext->setOverrideColor(video::SColor(255,255,255,255));
+	gui::IGUIStaticText* stext =
+		gui->addStaticText(L" ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 ",
+			rect<s32>(5, 100, 150, 125), false, false, 0, false);
+	stext->setBackgroundColor(video::SColor(255, 128, 0, 0));
+	stext->setOverrideColor(video::SColor(255, 255, 255, 255));
 
-	gui->addEditBox(L"Test edit box", rect<s32>(5,50,150,75));
+	gui->addEditBox(L"Test edit box", rect<s32>(5, 50, 150, 75));
 
-	gui->addCheckBox(true, rect<s32>(5, 20, 150, 45),0,-1,L"Test CheckBox");
+	gui->addCheckBox(true, rect<s32>(5, 20, 150, 45), 0, -1, L"Test CheckBox");
 
 	video::SMaterial mat;
 	mat.MaterialType = video::EMT_SOLID;
 	mat.setFlag(video::EMF_LIGHTING, false);
 	// problem doesn't occur if the scale defaults: (1.f,1.f).
-	mat.getTextureMatrix(0).setTextureScale(2.0,2.0);
+	mat.getTextureMatrix(0).setTextureScale(2.0, 2.0);
 
-	scene::IAnimatedMesh* pmesh = sceneManager->addHillPlaneMesh("testMesh",dimension2d<f32>(50,50),dimension2d<u32>(6,6),&mat);
+	scene::IAnimatedMesh* pmesh = sceneManager->addHillPlaneMesh("testMesh",
+		dimension2d<f32>(50, 50), dimension2d<u32>(6, 6), &mat);
 	sceneManager->addAnimatedMeshSceneNode(pmesh);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
 	sceneManager->drawAll();
 	gui->drawAll();
 	driver->endScene();
 
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-textureMatrixInMixedScenes.png", 99.33f);
+	bool result = takeScreenshotAndCompareAgainstReference(driver,
+		"-textureMatrixInMixedScenes.png", 99.33f);
 
 	device->closeDevice();
 	device->run();
@@ -216,17 +241,18 @@ static bool testTextureMatrixInMixedScenes(video::E_DRIVER_TYPE driverType)
 }
 
 // animated texture matrix test.
-static bool textureMatrix(video::E_DRIVER_TYPE driverType)
-{
-	irr::IrrlichtDevice* device = createDevice(driverType, dimension2du(160,120));
-	if (!device)
+static bool textureMatrix(
+	video::E_DRIVER_TYPE driverType
+) {
+	irr::IrrlichtDevice* device = createDevice(driverType, dimension2du(160, 120));
+	if (!device) {
 		return true;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* sceneManager = device->getSceneManager();
 
-	if (!driver->queryFeature(video::EVDF_TEXTURE_MATRIX))
-	{
+	if (!driver->queryFeature(video::EVDF_TEXTURE_MATRIX)) {
 		device->closeDevice();
 		device->run();
 		device->drop();
@@ -238,21 +264,26 @@ static bool textureMatrix(video::E_DRIVER_TYPE driverType)
 	logTestString("Testing driver %ls\n", driver->getName());
 
 	scene::ICameraSceneNode* camera = sceneManager->addCameraSceneNode();
-	camera->setPosition(vector3df(0,0,-10));
+	camera->setPosition(vector3df(0, 0, -10));
 
 	// set up plane mesh to face the camera
-	scene::IMesh* mesh = sceneManager->getGeometryCreator()->createPlaneMesh(dimension2df(150,150), core::dimension2du(1,1),0,core::dimension2df(1,1));
-	scene::IMeshSceneNode* node = sceneManager->addMeshSceneNode(mesh, 0, -1, vector3df(0, 0, 150), vector3df(-90, 0, 0));
-	if (mesh)
+	scene::IMesh* mesh = sceneManager->getGeometryCreator()->createPlaneMesh(
+		dimension2df(150, 150), core::dimension2du(1, 1), 0,
+		core::dimension2df(1, 1)
+	);
+	scene::IMeshSceneNode* node = sceneManager->addMeshSceneNode(mesh, 0, -1,
+		vector3df(0, 0, 150), vector3df(-90, 0, 0));
+	if (mesh) {
 		mesh->drop();
+	}
 
 	// set the hillplane material texture & save a reference
 	// to the texture matrix.
 	video::SMaterial& material = node->getMaterial(0);
 	video::ITexture* tex = driver->getTexture("../media/water.jpg");
 
-	material.setTexture(0,tex);
-	material.setFlag(video::EMF_LIGHTING,false);
+	material.setTexture(0, tex);
+	material.setFlag(video::EMF_LIGHTING, false);
 	matrix4& textureMatrix = material.TextureLayer[0].getTextureMatrix();
 
 	const vector2df rcenter, scale(1.f, 1.f);
@@ -261,16 +292,19 @@ static bool textureMatrix(video::E_DRIVER_TYPE driverType)
 	trans.X += 0.0005f;
 	textureMatrix.buildTextureTransform(0.f, rcenter, trans, scale);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
 	sceneManager->drawAll();
 	driver->endScene();
 
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-textureMatrix.png");
+	bool result =
+		takeScreenshotAndCompareAgainstReference(driver, "-textureMatrix.png");
 
 	trans.X += 0.45f;
 	textureMatrix.buildTextureTransform(0.f, rcenter, trans, scale);
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,100,101,140));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 100, 101, 140));
 	sceneManager->drawAll();
 	driver->endScene();
 
@@ -283,27 +317,27 @@ static bool textureMatrix(video::E_DRIVER_TYPE driverType)
 	return result;
 }
 
-bool danglingTexturePointer()
-{
-// A demo of the OpenGL "white texture" bug in Irrlicht
-// Author: Matt Giuca
-// (Vaguely based on the Irrlicht 2D graphics tutorial)
+bool danglingTexturePointer() {
+	// A demo of the OpenGL "white texture" bug in Irrlicht
+	// Author: Matt Giuca
+	// (Vaguely based on the Irrlicht 2D graphics tutorial)
 
-// I have found that in some situations, when using the OpenGL driver, some
-// textures appear white.
-// This is caused by deleting a texture while it is active (the last texture
-// read or written to), and then loading a new texture at the same memory
-// location. The new texture will not be loaded properly.
+	// I have found that in some situations, when using the OpenGL driver, some
+	// textures appear white.
+	// This is caused by deleting a texture while it is active (the last texture
+	// read or written to), and then loading a new texture at the same memory
+	// location. The new texture will not be loaded properly.
 
-// This demo triggers the bug (though there is some probability that it won't
-// be triggered; just run it again until it shows a white square instead of
-// the Irrlicht logo).
+	// This demo triggers the bug (though there is some probability that it won't
+	// be triggered; just run it again until it shows a white square instead of
+	// the Irrlicht logo).
 
 	// This is only a problem in the OpenGL driver
 	irr::IrrlichtDevice* device = irr::createDevice(irr::video::EDT_OPENGL,
 		irr::core::dimension2d<irr::u32>(160, 120));
-	if (!device)
+	if (!device) {
 		return true;
+	}
 
 	irr::video::IVideoDriver* driver = device->getVideoDriver();
 
@@ -325,7 +359,8 @@ bool danglingTexturePointer()
 
 	device->run();
 	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, irr::video::SColor(255,100,101,140));
+		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+			irr::video::SColor(255, 100, 101, 140));
 
 		// This is required to trigger the white appearance (this unbinds the
 		// texture, forcing draw2DImage to rebind the logo3 texture (#2)).
@@ -339,7 +374,8 @@ bool danglingTexturePointer()
 		driver->endScene();
 	}
 
-	const bool result = takeScreenshotAndCompareAgainstReference(driver, "-texturePointer.png");
+	const bool result =
+		takeScreenshotAndCompareAgainstReference(driver, "-texturePointer.png");
 
 	device->closeDevice();
 	device->run();
@@ -348,8 +384,9 @@ bool danglingTexturePointer()
 	return result;
 }
 
-bool textureRenderStates(void)
-{
+bool textureRenderStates(
+	void
+) {
 	bool result = true;
 	TestWithAllDrivers(renderAndLoad);
 	TestWithAllDrivers(renderAndRemove);

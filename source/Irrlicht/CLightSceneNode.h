@@ -14,13 +14,15 @@ namespace scene
 
 //! Scene node which is a dynamic light. You can switch the light on and off by
 //! making it visible or not, and let it be animated by ordinary scene node animators.
-class CLightSceneNode : public ILightSceneNode
-{
+class CLightSceneNode : public ILightSceneNode {
 public:
-
 	//! constructor
-	CLightSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-		const core::vector3df& position, video::SColorf color, f32 range);
+	CLightSceneNode(ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id,
+		const core::vector3df& position,
+		video::SColorf color,
+		f32 range);
 
 	//! pre render event
 	virtual void OnRegisterSceneNode() _IRR_OVERRIDE_;
@@ -50,13 +52,16 @@ public:
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ { return ESNT_LIGHT; }
 
 	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options=0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options=0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
 
 	//! Creates a clone of this scene node and its children.
-	virtual ISceneNode* clone(ISceneNode* newParent=0, ISceneManager* newManager=0) _IRR_OVERRIDE_;
+	virtual ISceneNode* clone(ISceneNode* newParent = 0,
+		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
 
 	//! Sets the light's radius of influence.
 	/** Outside this radius the light won't lighten geometry and cast no
@@ -83,7 +88,7 @@ public:
 	will still need shadow scene nodes attached. But one can enable or
 	disable distinct lights for shadow casting for performance reasons.
 	\param shadow True if this light shall cast shadows. */
-	virtual void enableCastShadow(bool shadow=true) _IRR_OVERRIDE_;
+	virtual void enableCastShadow(bool shadow = true) _IRR_OVERRIDE_;
 
 	//! Check whether this light casts shadows.
 	/** \return True if light would cast shadows, else false. */
@@ -93,7 +98,6 @@ public:
 	virtual void updateAbsolutePosition() _IRR_OVERRIDE_;
 
 private:
-
 	video::SLight LightData;
 	core::aabbox3d<f32> BBox;
 	s32 DriverLightIndex;
@@ -101,9 +105,7 @@ private:
 	void doLightRecalc();
 };
 
-
 } // end namespace scene
 } // end namespace irr
 
 #endif
-

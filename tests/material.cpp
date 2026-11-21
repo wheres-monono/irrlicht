@@ -2,16 +2,17 @@
 
 using namespace irr;
 
-static bool polygonOffset(video::E_DRIVER_TYPE type)
-{
+static bool polygonOffset(
+	video::E_DRIVER_TYPE type
+) {
 	IrrlichtDevice* device = createDevice(type, core::dimension2d<u32>(160, 120));
 
-	if (device == 0)
+	if (device == 0) {
 		return true;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	if (!driver->queryFeature(video::EVDF_POLYGON_OFFSET))
-	{
+	if (!driver->queryFeature(video::EVDF_POLYGON_OFFSET)) {
 		device->closeDevice();
 		device->run();
 		device->drop();
@@ -23,21 +24,24 @@ static bool polygonOffset(video::E_DRIVER_TYPE type)
 	scene::ISceneManager* smgr = device->getSceneManager();
 
 	// create first plane
-	scene::ISceneNode* plane = smgr->addMeshSceneNode(smgr->addHillPlaneMesh(
-		"plane", core::dimension2df(10,10), core::dimension2du(2,2)), 0, -1,
-		core::vector3df(0,0,20), core::vector3df(270,0,0));
+	scene::ISceneNode* plane = smgr->addMeshSceneNode(
+		smgr->addHillPlaneMesh("plane", core::dimension2df(10, 10),
+			core::dimension2du(2, 2)),
+		0, -1, core::vector3df(0, 0, 20), core::vector3df(270, 0, 0)
+	);
 
-	if (plane)
-	{
+	if (plane) {
 		plane->setMaterialTexture(0, driver->getTexture("../media/t351sml.jpg"));
 		plane->setMaterialFlag(video::EMF_LIGHTING, false);
 		plane->setMaterialFlag(video::EMF_BACK_FACE_CULLING, true);
 	}
 
 	// create second plane exactly on top of the first one
-	scene::ISceneNode* plane2 = smgr->addMeshSceneNode(smgr->addHillPlaneMesh(
-		"plane2", core::dimension2df(5,5), core::dimension2du(2,2)), 0, -1,
-		core::vector3df(0,0,20), core::vector3df(270,0,0));
+	scene::ISceneNode* plane2 = smgr->addMeshSceneNode(
+		smgr->addHillPlaneMesh("plane2", core::dimension2df(5, 5),
+			core::dimension2du(2, 2)),
+		0, -1, core::vector3df(0, 0, 20), core::vector3df(270, 0, 0)
+	);
 	plane2->setMaterialFlag(video::EMF_BACK_FACE_CULLING, false);
 
 	smgr->addCameraSceneNode();
@@ -45,22 +49,27 @@ static bool polygonOffset(video::E_DRIVER_TYPE type)
 	// test back plane to back
 	plane->getMaterial(0).PolygonOffsetSlopeScale = 1.f;
 	plane->getMaterial(0).PolygonOffsetDepthBias = 1.f;
-	if ( type == video::EDT_DIRECT3D9 )
-		plane->getMaterial(0).PolygonOffsetDepthBias *= 2.f*4.8e-7f;
+	if (type == video::EDT_DIRECT3D9) {
+		plane->getMaterial(0).PolygonOffsetDepthBias *= 2.f * 4.8e-7f;
+	}
 
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,113,113,133));
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 113, 113, 133));
 	smgr->drawAll();
 	driver->endScene();
-	bool result = takeScreenshotAndCompareAgainstReference(driver, "-polygonBack.png");
+	bool result =
+		takeScreenshotAndCompareAgainstReference(driver, "-polygonBack.png");
 
-	//reset back plane
-	plane->getMaterial(0).PolygonOffsetDepthBias=0;
+	// reset back plane
+	plane->getMaterial(0).PolygonOffsetDepthBias = 0;
 	// test front plane to front
-	plane2->getMaterial(0).PolygonOffsetSlopeScale=-1.f;
-	plane2->getMaterial(0).PolygonOffsetDepthBias=-1.f;
-	if ( type == video::EDT_DIRECT3D9 )
-		plane2->getMaterial(0).PolygonOffsetDepthBias *= 2.f*4.8e-7f;
-	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,113,113,133));
+	plane2->getMaterial(0).PolygonOffsetSlopeScale = -1.f;
+	plane2->getMaterial(0).PolygonOffsetDepthBias = -1.f;
+	if (type == video::EDT_DIRECT3D9) {
+		plane2->getMaterial(0).PolygonOffsetDepthBias *= 2.f * 4.8e-7f;
+	}
+	driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+		video::SColor(255, 113, 113, 133));
 	smgr->drawAll();
 	driver->endScene();
 	result &= takeScreenshotAndCompareAgainstReference(driver, "-polygonFront.png");
@@ -68,11 +77,10 @@ static bool polygonOffset(video::E_DRIVER_TYPE type)
 	device->closeDevice();
 	device->run();
 	device->drop();
-    return result;
+	return result;
 }
 
-bool material()
-{
+bool material() {
 	bool result = true;
 	TestWithAllDrivers(polygonOffset);
 	return result;

@@ -11,8 +11,8 @@ an indoor portal based renderer or an advanced terrain scene
 node with it. By creating custom scene nodes, you can
 easily extend the Irrlicht Engine and adapt it to your needs.
 
-I will keep the tutorial simple: Keep everything very short 
-and  everything in one .cpp file. This is the style which 
+I will keep the tutorial simple: Keep everything very short
+and  everything in one .cpp file. This is the style which
 will also be used in most of the following tutorials.
 
 To start, I include the header files, use the irr namespace,
@@ -43,8 +43,7 @@ Engine scene, the class we create needs to be derived from the
 irr::scene::ISceneNode class and has to override some methods.
 */
 
-class CSampleSceneNode : public scene::ISceneNode
-{
+class CSampleSceneNode : public scene::ISceneNode {
 
 	/*
 	First, we declare some member variables:
@@ -55,41 +54,44 @@ class CSampleSceneNode : public scene::ISceneNode
 	video::SMaterial Material;
 
 public:
-
 	/*
 	The parameters of the constructor specify the parent of the scene node,
 	a pointer to the scene manager, and an id of the scene node.
 	In the constructor we call the parent class' constructor,
-	set some properties of the material, and create the 4 vertices of 
+	set some properties of the material, and create the 4 vertices of
 	the tetrahedron.
 	*/
 
-	CSampleSceneNode(scene::ISceneNode* parent, scene::ISceneManager* mgr, s32 id)
-		: scene::ISceneNode(parent, mgr, id)
-	{
+	CSampleSceneNode(
+		scene::ISceneNode* parent,
+		scene::ISceneManager* mgr,
+		s32 id
+	) :
+		scene::ISceneNode(parent, mgr, id) {
 		Material.Wireframe = false;
 		Material.Lighting = false;
 
-		Vertices[0] = video::S3DVertex(0,0,10, 1,1,0,
-				video::SColor(255,0,255,255), 0, 1);
-		Vertices[1] = video::S3DVertex(10,0,-10, 1,0,0,
-				video::SColor(255,255,0,255), 1, 1);
-		Vertices[2] = video::S3DVertex(0,20,0, 0,1,1,
-				video::SColor(255,255,255,0), 1, 0);
-		Vertices[3] = video::S3DVertex(-10,0,-10, 0,0,1,
-				video::SColor(255,0,255,0), 0, 0);
+		Vertices[0] = video::S3DVertex(0, 0, 10, 1, 1, 0,
+			video::SColor(255, 0, 255, 255), 0, 1);
+		Vertices[1] = video::S3DVertex(10, 0, -10, 1, 0, 0,
+			video::SColor(255, 255, 0, 255), 1, 1);
+		Vertices[2] = video::S3DVertex(0, 20, 0, 0, 1, 1,
+			video::SColor(255, 255, 255, 0), 1, 0);
+		Vertices[3] = video::S3DVertex(-10, 0, -10, 0, 0, 1,
+			video::SColor(255, 0, 255, 0), 0, 0);
 
-	/*
-	The Irrlicht Engine needs to know the bounding box of a scene node.
-	It will use it for automatic culling and other things. Hence, we
-	need to create a bounding box from the 4 vertices we use.
-	If you do not want the engine to use the box for automatic culling,
-	and/or don't want to create the box, you could also call
-	irr::scene::ISceneNode::setAutomaticCulling() with irr::scene::EAC_OFF.
-	*/
+		/*
+		The Irrlicht Engine needs to know the bounding box of a scene node.
+		It will use it for automatic culling and other things. Hence, we
+		need to create a bounding box from the 4 vertices we use.
+		If you do not want the engine to use the box for automatic culling,
+		and/or don't want to create the box, you could also call
+		irr::scene::ISceneNode::setAutomaticCulling() with irr::scene::EAC_OFF.
+		*/
 		Box.reset(Vertices[0].Pos);
-		for (s32 i=1; i<4; ++i)
+		for (s32 i = 1; i < 4; ++i) {
 			Box.addInternalPoint(Vertices[i].Pos);
+		}
 	}
 
 	/*
@@ -105,14 +107,14 @@ public:
 	scene node to render normally. If we would like to let it be rendered
 	like cameras or light, we would have to call
 	SceneManager->registerNodeForRendering(this, SNRT_LIGHT_AND_CAMERA);
-	After this, we call the actual irr::scene::ISceneNode::OnRegisterSceneNode() 
-	method of the base class, which lets all the child scene nodes of this node 
+	After this, we call the actual irr::scene::ISceneNode::OnRegisterSceneNode()
+	method of the base class, which lets all the child scene nodes of this node
 	register themselves.
 	*/
-	virtual void OnRegisterSceneNode()
-	{
-		if (IsVisible)
+	virtual void OnRegisterSceneNode() {
+		if (IsVisible) {
 			SceneManager->registerNodeForRendering(this);
+		}
 
 		ISceneNode::OnRegisterSceneNode();
 	}
@@ -122,17 +124,17 @@ public:
 	Scene node renders itself. We override this method and draw the
 	tetrahedron.
 	*/
-	virtual void render()
-	{
-		/* Indices into the 'Vertices' array. A triangle needs 3 vertices 
-		so you have to pass the 3 corresponding indices for each triangle to 
+	virtual void render() {
+		/* Indices into the 'Vertices' array. A triangle needs 3 vertices
+		so you have to pass the 3 corresponding indices for each triangle to
 		tell which of the vertices should be used for it.	*/
-		u16 indices[] = {	0,2,3, 2,1,3, 1,0,3, 2,0,1	}; 
+		u16 indices[] = {0, 2, 3, 2, 1, 3, 1, 0, 3, 2, 0, 1};
 		video::IVideoDriver* driver = SceneManager->getVideoDriver();
 
 		driver->setMaterial(Material);
 		driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
-		driver->drawVertexPrimitiveList(&Vertices[0], 4, &indices[0], 4, video::EVT_STANDARD, scene::EPT_TRIANGLES, video::EIT_16BIT);
+		driver->drawVertexPrimitiveList(&Vertices[0], 4, &indices[0], 4,
+			video::EVT_STANDARD, scene::EPT_TRIANGLES, video::EIT_16BIT);
 	}
 
 	/*
@@ -142,42 +144,38 @@ public:
 	amount of materials in this scene node (our tetrahedron only has one
 	material), and irr::scene::ISceneNode::getMaterial() returns the
 	material at an index. Because we have only one material, we can
-	return that and assume that no one ever calls getMaterial() with an index 
+	return that and assume that no one ever calls getMaterial() with an index
 	greater than 0.
 	*/
-	virtual const core::aabbox3d<f32>& getBoundingBox() const
-	{
-		return Box;
-	}
+	virtual const core::aabbox3d<f32>& getBoundingBox() const { return Box; }
 
-	virtual u32 getMaterialCount() const
-	{
-		return 1;
-	}
+	virtual u32 getMaterialCount() const { return 1; }
 
-	virtual video::SMaterial& getMaterial(u32 i)
-	{
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) {
 		return Material;
-	}	
+	}
 };
 
 /*
-That's it. The Scene node is done. Now we start the engine, 
+That's it. The Scene node is done. Now we start the engine,
 create the scene node and a camera, and look at the result.
 */
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// create device
-	IrrlichtDevice *device = createDevice(driverType,
-			core::dimension2d<u32>(640, 480), 16, false);
-		
-	if (device == 0)
+	IrrlichtDevice* device =
+		createDevice(driverType, core::dimension2d<u32>(640, 480), 16, false);
+
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
 	// set window caption, get some pointers, create a camera
 
@@ -186,7 +184,7 @@ int main()
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
 
-	smgr->addCameraSceneNode(0, core::vector3df(0,-40,0), core::vector3df(0,0,0));
+	smgr->addCameraSceneNode(0, core::vector3df(0, -40, 0), core::vector3df(0, 0, 0));
 
 	/*
 	Create our scene node. I don't check the result of calling new, as it
@@ -197,7 +195,7 @@ int main()
 	to drop it only *after* I have finished using it, regardless of what
 	the reference count of the object is after creation.
 	*/
-	CSampleSceneNode *myNode =
+	CSampleSceneNode* myNode =
 		new CSampleSceneNode(smgr->getRootSceneNode(), smgr, 666);
 
 	/*
@@ -211,10 +209,9 @@ int main()
 	scene::ISceneNodeAnimator* anim =
 		smgr->createRotationAnimator(core::vector3df(0.8f, 0, 0.8f));
 
-	if(anim)
-	{
+	if (anim) {
 		myNode->addAnimator(anim);
-		
+
 		/*
 		I'm done referring to anim, so must
 		irr::IReferenceCounted::drop() this reference now because it
@@ -237,15 +234,16 @@ int main()
 	/*
 	Now draw everything and finish.
 	*/
-	u32 frames=0;
-	while(device->run())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0,100,100,100));
+	u32 frames = 0;
+	while (device->run()) {
+		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+			video::SColor(0, 100, 100, 100));
 
 		smgr->drawAll();
 
 		driver->endScene();
-		if (++frames==100) // don't update more often, setWindowCaption can be expensive
+		if (++frames ==
+			100) // don't update more often, setWindowCaption can be expensive
 		{
 			core::stringw str = L"Irrlicht Engine [";
 			str += driver->getName();
@@ -253,12 +251,12 @@ int main()
 			str += (s32)driver->getFPS();
 
 			device->setWindowCaption(str.c_str());
-			frames=0;
+			frames = 0;
 		}
 	}
 
 	device->drop();
-	
+
 	return 0;
 }
 

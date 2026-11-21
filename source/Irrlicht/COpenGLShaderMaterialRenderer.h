@@ -22,22 +22,27 @@ class COpenGLDriver;
 class IShaderConstantSetCallBack;
 
 //! Class for using vertex and pixel shaders with OpenGL
-class COpenGLShaderMaterialRenderer : public IMaterialRenderer
-{
+class COpenGLShaderMaterialRenderer : public IMaterialRenderer {
 public:
-
 	//! Constructor
 	COpenGLShaderMaterialRenderer(COpenGLDriver* driver,
-		s32& outMaterialTypeNr, const c8* vertexShaderProgram, const c8* pixelShaderProgram,
-		IShaderConstantSetCallBack* callback, E_MATERIAL_TYPE baseMaterial, s32 userData);
+		s32& outMaterialTypeNr,
+		const c8* vertexShaderProgram,
+		const c8* pixelShaderProgram,
+		IShaderConstantSetCallBack* callback,
+		E_MATERIAL_TYPE baseMaterial,
+		s32 userData);
 
 	//! Destructor
 	virtual ~COpenGLShaderMaterialRenderer();
 
-	virtual void OnSetMaterial(const SMaterial& material, const SMaterial& lastMaterial,
-		bool resetAllRenderstates, IMaterialRendererServices* services) _IRR_OVERRIDE_;
+	virtual void OnSetMaterial(const SMaterial& material,
+		const SMaterial& lastMaterial,
+		bool resetAllRenderstates,
+		IMaterialRendererServices* services) _IRR_OVERRIDE_;
 
-	virtual bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
+	virtual bool OnRender(IMaterialRendererServices* service,
+		E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
 
 	virtual void OnUnsetMaterial() _IRR_OVERRIDE_;
 
@@ -45,22 +50,24 @@ public:
 	virtual bool isTransparent() const _IRR_OVERRIDE_;
 
 	//! Access the callback provided by the users when creating shader materials
-	virtual IShaderConstantSetCallBack* getShaderConstantSetCallBack() const _IRR_OVERRIDE_
-	{ 
+	virtual IShaderConstantSetCallBack*
+	getShaderConstantSetCallBack() const _IRR_OVERRIDE_ {
 		return CallBack;
 	}
 
 protected:
-
 	//! constructor only for use by derived classes who want to
 	//! create a fall back material for example.
 	COpenGLShaderMaterialRenderer(COpenGLDriver* driver,
-					IShaderConstantSetCallBack* callback,
-					E_MATERIAL_TYPE baseMaterial, s32 userData=0);
+		IShaderConstantSetCallBack* callback,
+		E_MATERIAL_TYPE baseMaterial,
+		s32 userData = 0);
 
 	// must not be called more than once!
-	void init(s32& outMaterialTypeNr, const c8* vertexShaderProgram,
-		const c8* pixelShaderProgram, E_VERTEX_TYPE type);
+	void init(s32& outMaterialTypeNr,
+		const c8* vertexShaderProgram,
+		const c8* pixelShaderProgram,
+		E_VERTEX_TYPE type);
 
 	bool createPixelShader(const c8* pxsh);
 	bool createVertexShader(const c8* vtxsh);
@@ -81,10 +88,8 @@ protected:
 	s32 UserData;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
 #endif
-

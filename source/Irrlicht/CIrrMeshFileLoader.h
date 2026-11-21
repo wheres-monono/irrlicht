@@ -19,18 +19,17 @@ namespace irr
 namespace scene
 {
 
-
-//! Meshloader capable of loading .irrmesh meshes, the Irrlicht Engine mesh format for static meshes
-class CIrrMeshFileLoader : public IMeshLoader
-{
+//! Meshloader capable of loading .irrmesh meshes, the Irrlicht Engine mesh format for
+//! static meshes
+class CIrrMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CIrrMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -39,7 +38,6 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 	//! reads a mesh sections and creates a mesh from it
 	IAnimatedMesh* readMesh(io::IXMLReader* reader);
 
@@ -70,11 +68,12 @@ private:
 	void readFloatsInsideElement(io::IXMLReader* reader, f32* floats, u32 count);
 
 	//! read the mesh buffers
-	void readMeshBuffer(io::IXMLReader* reader, int vertexCount, CDynamicMeshBuffer* sbuffer);
+	void readMeshBuffer(io::IXMLReader* reader,
+		int vertexCount,
+		CDynamicMeshBuffer* sbuffer);
 
 	//! read indices
 	void readIndices(io::IXMLReader* reader, int indexCount, IIndexBuffer& indices);
-
 
 	// member variables
 
@@ -82,9 +81,7 @@ private:
 	io::IFileSystem* FileSystem;
 };
 
-
 } // end namespace scene
 } // end namespace irr
 
 #endif
-

@@ -18,38 +18,38 @@ namespace video
 
 #include "irrpack.h"
 
-struct SPVRHeader
-{
-    u32 Version;
-    u32 Flags;
-    u64 PixelFormat;
-    u32 ColourSpace;
-    u32 ChannelType;
-    u32 Height;
-    u32 Width;
-    u32 Depth;
-    u32 NumSurfaces;
-    u32 NumFaces;
-    u32 MipMapCount;
-    u32 MetDataSize;
+struct SPVRHeader {
+	u32 Version;
+	u32 Flags;
+	u64 PixelFormat;
+	u32 ColourSpace;
+	u32 ChannelType;
+	u32 Height;
+	u32 Width;
+	u32 Depth;
+	u32 NumSurfaces;
+	u32 NumFaces;
+	u32 MipMapCount;
+	u32 MetDataSize;
 } PACK_STRUCT;
 
 #include "irrunpack.h"
 
-class CImageLoaderPVR : public IImageLoader
-{
+class CImageLoaderPVR : public IImageLoader {
 public:
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
 
 	virtual IImage* loadImage(io::IReadFile* file) const _IRR_OVERRIDE_;
 
-	virtual core::array<IImage*> loadImages(io::IReadFile* file, E_TEXTURE_TYPE* type) const _IRR_OVERRIDE_;
+	virtual core::array<IImage*> loadImages(io::IReadFile* file,
+		E_TEXTURE_TYPE* type) const _IRR_OVERRIDE_;
 };
 
-}
-}
+} // namespace video
+} // namespace irr
 
 #endif
 #endif

@@ -12,73 +12,74 @@ namespace irr
 {
 namespace io
 {
-	//! Irrlicht implementation of the file read callback for the xml parser
-	class CIrrXMLFileReadCallBack : public IFileReadCallBack
-	{
-	public:
-
-		//! construct from FILE pointer
-		CIrrXMLFileReadCallBack(IReadFile* file)
-			: ReadFile(file)
-		{
-			ReadFile->grab();
-		}
-
-		//! destructor
-		virtual ~CIrrXMLFileReadCallBack()
-		{
-			ReadFile->drop();
-		}
-
-		//! Reads an amount of bytes from the file.
-		virtual int read(void* buffer, int sizeToRead) _IRR_OVERRIDE_
-		{
-			return (int)ReadFile->read(buffer, sizeToRead);
-		}
-
-		//! Returns size of file in bytes
-		virtual long getSize() const _IRR_OVERRIDE_
-		{
-			return ReadFile->getSize();
-		}
-
-	private:
-
-		IReadFile* ReadFile;
-	}; // end class CMyXMLFileReadCallBack
-
-
-	// now create an implementation for IXMLReader using irrXML.
-
-	//! Creates an instance of a wide character xml parser.
-	IXMLReader* createIXMLReader(IReadFile* file)
-	{
-		if (!file)
-			return 0;
-
-		return new CXMLReaderImpl<wchar_t, IReferenceCounted>(new CIrrXMLFileReadCallBack(file));
+//! Irrlicht implementation of the file read callback for the xml parser
+class CIrrXMLFileReadCallBack : public IFileReadCallBack {
+public:
+	//! construct from FILE pointer
+	CIrrXMLFileReadCallBack(
+		IReadFile* file
+	) :
+		ReadFile(file) {
+		ReadFile->grab();
 	}
 
-	//! Creates an instance of an UFT-8 or ASCII character xml parser.
-	IXMLReaderUTF8* createIXMLReaderUTF8(IReadFile* file)
-	{
-		if (!file)
-			return 0;
+	//! destructor
+	virtual ~CIrrXMLFileReadCallBack() { ReadFile->drop(); }
 
-		return new CXMLReaderImpl<char, IReferenceCounted>(new CIrrXMLFileReadCallBack(file));
+	//! Reads an amount of bytes from the file.
+	virtual int read(
+		void* buffer,
+		int sizeToRead
+	) _IRR_OVERRIDE_ {
+		return (int)ReadFile->read(buffer, sizeToRead);
 	}
 
-} // end namespace
-} // end namespace
+	//! Returns size of file in bytes
+	virtual long getSize() const _IRR_OVERRIDE_ { return ReadFile->getSize(); }
+
+private:
+	IReadFile* ReadFile;
+}; // end class CMyXMLFileReadCallBack
+
+// now create an implementation for IXMLReader using irrXML.
+
+//! Creates an instance of a wide character xml parser.
+IXMLReader* createIXMLReader(
+	IReadFile* file
+) {
+	if (!file) {
+		return 0;
+	}
+
+	return new CXMLReaderImpl<wchar_t, IReferenceCounted>(
+		new CIrrXMLFileReadCallBack(file)
+	);
+}
+
+//! Creates an instance of an UFT-8 or ASCII character xml parser.
+IXMLReaderUTF8* createIXMLReaderUTF8(
+	IReadFile* file
+) {
+	if (!file) {
+		return 0;
+	}
+
+	return new CXMLReaderImpl<char, IReferenceCounted>(
+		new CIrrXMLFileReadCallBack(file)
+	);
+}
+
+} // namespace io
+} // namespace irr
 #else // not _IRR_COMPILE_WITH_XML_
 #include "os.h"
 namespace irr
 {
 
-void noXML()
-{
-	irr::os::Printer::log("XML support disabled in IrrCompileConfig.", irr::ELL_ERROR);
+void noXML() {
+	irr::os::Printer::log("XML support disabled in IrrCompileConfig.",
+		irr::ELL_ERROR);
 }
 
-} // end namespace
+} // namespace irr
 #endif // _IRR_COMPILE_WITH_XML_

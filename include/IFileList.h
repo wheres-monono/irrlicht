@@ -16,8 +16,7 @@ namespace io
 //! Provides a list of files and folders.
 /** File lists usually contain a list of all files in a given folder,
 but can also contain a complete directory structure. */
-class IFileList : public virtual IReferenceCounted
-{
+class IFileList : public virtual IReferenceCounted {
 public:
 	//! Get the number of files in the filelist.
 	/** \return Amount of files and directories in the file list. */
@@ -30,7 +29,8 @@ public:
 	\return File name of the file. Returns 0, if an error occurred. */
 	virtual const io::path& getFileName(u32 index) const = 0;
 
-	//! Gets the full name of a file in the list including the path, based on an index.
+	//! Gets the full name of a file in the list including the path, based on an
+	//! index.
 	/** \param index is the zero based index of the file which name should
 	be returned. The index must be less than the amount getFileCount() returns.
 	\return File name of the file. Returns 0 if an error occurred. */
@@ -50,8 +50,8 @@ public:
 
 	//! Returns the ID of a file in the file list, based on an index.
 	/** This optional ID can be used to link the file list entry to information held
-	elsewhere. For example this could be an index in an IFileArchive, linking the entry
-	to its data offset, uncompressed size and CRC.
+	elsewhere. For example this could be an index in an IFileArchive, linking the
+	entry to its data offset, uncompressed size and CRC.
 	\param index is the zero based index of the file which should be returned.
 	The index must be less than the amount getFileCount() returns.
 	\return The ID of the file. */
@@ -66,10 +66,11 @@ public:
 	//! Searches for a file or folder in the list
 	/** Searches for a file by name
 	\param filename The name of the file to search for.
-	\param isFolder True if you are searching for a directory path, false if you are searching for a file
+	\param isFolder True if you are searching for a directory path, false if you are
+	searching for a file
 	\return Returns the index of the file in the file list, or -1 if
 	no matching name name was found. */
-	virtual s32 findFile(const io::path& filename, bool isFolder=false) const = 0;
+	virtual s32 findFile(const io::path& filename, bool isFolder = false) const = 0;
 
 	//! Returns the base path of the file list
 	virtual const io::path& getPath() const = 0;
@@ -80,15 +81,18 @@ public:
 	\param offset The file offset inside an archive
 	\param size The size of the file in bytes.
 	\param id The ID of the file in the archive which owns it */
-	virtual u32 addItem(const io::path& fullPath, u32 offset, u32 size, bool isDirectory, u32 id=0) = 0;
+	virtual u32 addItem(const io::path& fullPath,
+		u32 offset,
+		u32 size,
+		bool isDirectory,
+		u32 id = 0) = 0;
 
-	//! Sorts the file list. You should call this after adding any items to the file list
+	//! Sorts the file list. You should call this after adding any items to the file
+	//! list
 	virtual void sort() = 0;
 };
 
-} // end namespace irr
-} // end namespace io
-
+} // namespace io
+} // namespace irr
 
 #endif
-

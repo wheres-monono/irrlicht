@@ -23,12 +23,11 @@ class IShaderConstantSetCallBack;
 class IMaterialRenderer;
 
 //! Class for using vertex and pixel shaders via HLSL with D3D9
-class CD3D9HLSLMaterialRenderer : public CD3D9ShaderMaterialRenderer
-{
+class CD3D9HLSLMaterialRenderer : public CD3D9ShaderMaterialRenderer {
 public:
-
 	//! Public constructor
-	CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev, video::IVideoDriver* driver,
+	CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev,
+		video::IVideoDriver* driver,
 		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,
@@ -51,15 +50,17 @@ public:
 	//! \param index: Index of the variable
 	//! \param floats: Pointer to array of floats
 	//! \param count: Amount of floats in array.
-	virtual bool setVariable(bool vertexShader, s32 index, const f32* floats, int count);
+	virtual bool
+	setVariable(bool vertexShader, s32 index, const f32* floats, int count);
 
 	//! Int interface for the above.
-	virtual bool setVariable(bool vertexShader, s32 index, const s32* ints, int count);
+	virtual bool
+	setVariable(bool vertexShader, s32 index, const s32* ints, int count);
 
-	bool OnRender(IMaterialRendererServices* service, E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
+	bool OnRender(IMaterialRendererServices* service,
+		E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
 
 protected:
-
 	bool createHLSLVertexShader(const char* vertexShaderProgram,
 		const char* shaderEntryPointName,
 		const char* shaderTargetName);
@@ -74,11 +75,9 @@ protected:
 	LPD3DXCONSTANTTABLE PSConstantsTable;
 };
 
-
 } // end namespace video
 } // end namespace irr
 
 #endif
 #endif
 #endif
-

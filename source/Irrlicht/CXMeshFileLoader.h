@@ -9,29 +9,27 @@
 #include "irrString.h"
 #include "CSkinnedMesh.h"
 
-
 namespace irr
 {
 namespace io
 {
-	class IFileSystem;
-	class IReadFile;
+class IFileSystem;
+class IReadFile;
 } // end namespace io
 namespace scene
 {
 class IMeshManipulator;
 
 //! Meshloader capable of loading x meshes.
-class CXMeshFileLoader : public IMeshLoader
-{
+class CXMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CXMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -39,15 +37,19 @@ public:
 	//! See IReferenceCounted::drop() for more information.
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
-	struct SXTemplateMaterial
-	{
-		core::stringc Name; // template name from Xfile
+	struct SXTemplateMaterial {
+		core::stringc Name;	   // template name from Xfile
 		video::SMaterial Material; // material
 	};
 
-	struct SXMesh
-	{
-		SXMesh() : MaxSkinWeightsPerVertex(0), MaxSkinWeightsPerFace(0), BoneCount(0),AttachedJointID(-1),HasSkinning(false), HasVertexColors(false) {}
+	struct SXMesh {
+		SXMesh() :
+			MaxSkinWeightsPerVertex(0),
+			MaxSkinWeightsPerFace(0),
+			BoneCount(0),
+			AttachedJointID(-1),
+			HasSkinning(false),
+			HasVertexColors(false) {}
 		// this mesh contains triangulated texture data.
 		// because in an .x file, faces can be made of more than 3
 		// vertices, the indices data structure is triangulated during the
@@ -85,7 +87,6 @@ public:
 	};
 
 private:
-
 	bool load(io::IReadFile* file);
 
 	bool readFileIntoMemory(io::IReadFile* file);
@@ -96,23 +97,23 @@ private:
 
 	bool parseDataObjectTemplate();
 
-	bool parseDataObjectFrame(CSkinnedMesh::SJoint *parent);
+	bool parseDataObjectFrame(CSkinnedMesh::SJoint* parent);
 
-	bool parseDataObjectTransformationMatrix(core::matrix4 &mat);
+	bool parseDataObjectTransformationMatrix(core::matrix4& mat);
 
-	bool parseDataObjectMesh(SXMesh &mesh);
+	bool parseDataObjectMesh(SXMesh& mesh);
 
-	bool parseDataObjectSkinWeights(SXMesh &mesh);
+	bool parseDataObjectSkinWeights(SXMesh& mesh);
 
-	bool parseDataObjectSkinMeshHeader(SXMesh &mesh);
+	bool parseDataObjectSkinMeshHeader(SXMesh& mesh);
 
-	bool parseDataObjectMeshNormals(SXMesh &mesh);
+	bool parseDataObjectMeshNormals(SXMesh& mesh);
 
-	bool parseDataObjectMeshTextureCoords(SXMesh &mesh);
+	bool parseDataObjectMeshTextureCoords(SXMesh& mesh);
 
-	bool parseDataObjectMeshVertexColors(SXMesh &mesh);
+	bool parseDataObjectMeshVertexColors(SXMesh& mesh);
 
-	bool parseDataObjectMeshMaterialList(SXMesh &mesh);
+	bool parseDataObjectMeshMaterialList(SXMesh& mesh);
 
 	bool parseDataObjectMaterial(video::SMaterial& material);
 
@@ -122,7 +123,7 @@ private:
 
 	bool parseDataObjectAnimation();
 
-	bool parseDataObjectAnimationKey(ISkinnedMesh::SJoint *joint);
+	bool parseDataObjectAnimationKey(ISkinnedMesh::SJoint* joint);
 
 	bool parseDataObjectTextureFilename(core::stringc& texturename);
 
@@ -141,7 +142,7 @@ private:
 	//! reads header of dataobject including the opening brace.
 	//! returns false if error happened, and writes name of object
 	//! if there is one
-	bool readHeadOfDataObject(core::stringc* outname=0);
+	bool readHeadOfDataObject(core::stringc* outname = 0);
 
 	//! checks for closing curly brace, returns false if not there
 	bool checkForClosingBrace();
@@ -180,7 +181,7 @@ private:
 	u32 Line;
 	io::path FilePath;
 
-	CSkinnedMesh::SJoint *CurFrame;
+	CSkinnedMesh::SJoint* CurFrame;
 
 	core::array<SXMesh*> Meshes;
 

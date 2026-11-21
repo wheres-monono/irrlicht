@@ -11,18 +11,20 @@ using namespace io;
 using namespace gui;
 
 //! Tests lightmaps under all drivers that support them
-static bool runTestWithDriver(E_DRIVER_TYPE driverType)
-{
-	IrrlichtDevice *device = createDevice( driverType, dimension2d<u32>(160, 120), 32);
-	if (!device)
-		return true; // Treat a failure to create a driver as benign; this saves a lot of #ifdefs
+static bool runTestWithDriver(
+	E_DRIVER_TYPE driverType
+) {
+	IrrlichtDevice* device = createDevice(driverType, dimension2d<u32>(160, 120), 32);
+	if (!device) {
+		return true; // Treat a failure to create a driver as benign; this saves a
+			     // lot of #ifdefs
+	}
 
 	IVideoDriver* driver = device->getVideoDriver();
-	ISceneManager * smgr = device->getSceneManager();
+	ISceneManager* smgr = device->getSceneManager();
 
 	logTestString("Testing driver %ls\n", driver->getName());
-	if (driver->getDriverAttributes().getAttributeAsInt("MaxTextures")<2)
-	{
+	if (driver->getDriverAttributes().getAttributeAsInt("MaxTextures") < 2) {
 		device->closeDevice();
 		device->run();
 		device->drop();
@@ -35,24 +37,27 @@ static bool runTestWithDriver(E_DRIVER_TYPE driverType)
 	bool added = device->getFileSystem()->addFileArchive("../media/map-20kdm2.pk3");
 	assert_log(added);
 
-	if(added)
-	{
-		ISceneNode * node = smgr->addOctreeSceneNode(smgr->getMesh("20kdm2.bsp")->getMesh(0), 0, -1, 1024);
+	if (added) {
+		ISceneNode* node =
+			smgr->addOctreeSceneNode(smgr->getMesh("20kdm2.bsp")->getMesh(0),
+				0, -1, 1024);
 		assert_log(node);
 
-		if (node)
-		{
+		if (node) {
 			node->setMaterialFlag(EMF_LIGHTING, false);
-			node->setPosition(core::vector3df(-1300,-820,-1249));
+			node->setPosition(core::vector3df(-1300, -820, -1249));
 			node->setScale(core::vector3df(1, 5, 1));
 
-			(void)smgr->addCameraSceneNode(0, core::vector3df(0,0,0), core::vector3df(40,100,30));
+			(void)smgr->addCameraSceneNode(0, core::vector3df(0, 0, 0),
+				core::vector3df(40, 100, 30));
 
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,255,255,0));
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 255, 255, 0));
 			smgr->drawAll();
 			driver->endScene();
 
-			result = takeScreenshotAndCompareAgainstReference(driver, "-lightmaps.png", 96);
+			result = takeScreenshotAndCompareAgainstReference(driver,
+				"-lightmaps.png", 96);
 		}
 	}
 
@@ -63,11 +68,10 @@ static bool runTestWithDriver(E_DRIVER_TYPE driverType)
 	return result;
 }
 
-
-bool lightMaps(void)
-{
+bool lightMaps(
+	void
+) {
 	bool result = true;
 	TestWithAllDrivers(runTestWithDriver);
 	return result;
 }
-

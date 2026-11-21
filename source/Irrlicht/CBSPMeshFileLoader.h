@@ -17,10 +17,8 @@ namespace scene
 {
 
 //! Meshloader capable of loading Quake 3 BSP files and shaders
-class CBSPMeshFileLoader : public IMeshLoader
-{
+class CBSPMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CBSPMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
 
@@ -29,7 +27,8 @@ public:
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -38,7 +37,6 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 	io::IFileSystem* FileSystem;
 	scene::ISceneManager* SceneManager;
 
@@ -49,4 +47,3 @@ private:
 } // end namespace irr
 
 #endif
-

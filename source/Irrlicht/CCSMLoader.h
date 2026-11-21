@@ -20,20 +20,22 @@
 //
 // The original readme of this file looks like this:
 //
-// This component provides a loader for the Cartography shop 4.x .csm maps for Irrlicht Engine.
-// This is a part of the M_TRIX Project.
-// This is licensed under the ZLib/LibPNG license
-// The IrrCSM library is written by Saurav Mohapatra.
+// This component provides a loader for the Cartography shop 4.x .csm maps for Irrlicht
+// Engine. This is a part of the M_TRIX Project. This is licensed under the ZLib/LibPNG
+// license The IrrCSM library is written by Saurav Mohapatra.
 //
 // Features
 //
 // The IrrCSM library features the following capabilities
 //
 //  * Loads the .csm 4.0 and 4.1 files transparently
-//  * Presents the loaded file as irr::scene::IAnimatedMesh for easy creation of IOctreeSceneNode
-//  * Loads the textures given the correct texture root. hence map and textures can be in separate directories
+//  * Presents the loaded file as irr::scene::IAnimatedMesh for easy creation of
+//  IOctreeSceneNode
+//  * Loads the textures given the correct texture root. hence map and textures can be in
+//  separate directories
 //
-// For more information go to http://www.geocities.com/standard_template/irrcsm/downloads.html
+// For more information go to
+// http://www.geocities.com/standard_template/irrcsm/downloads.html
 
 #ifndef __CSM_LOADER_H_INCLUDED__
 #define __CSM_LOADER_H_INCLUDED__
@@ -48,34 +50,32 @@ namespace irr
 {
 namespace scene
 {
-	class CSMFile;
-	class ISceneManager;
+class CSMFile;
+class ISceneManager;
 
-	class CCSMLoader : public scene::IMeshLoader
-	{
-	public:
+class CCSMLoader : public scene::IMeshLoader {
+public:
+	CCSMLoader(ISceneManager* manager, io::IFileSystem* fs);
 
-		CCSMLoader(ISceneManager* manager, io::IFileSystem* fs);
+	//! returns true if the file maybe is able to be loaded by this class
+	//! based on the file extension (e.g. ".bsp")
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
-		//! returns true if the file maybe is able to be loaded by this class
-		//! based on the file extension (e.g. ".bsp")
-		virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	//! creates/loads an animated mesh from the file.
+	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
-		//! creates/loads an animated mesh from the file.
-		virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+private:
+	scene::IMesh* createCSMMesh(io::IReadFile* file);
 
-	private:
+	scene::IMesh* createIrrlichtMesh(const CSMFile* csmFile,
+		const io::path& lmprefix);
 
-		scene::IMesh* createCSMMesh(io::IReadFile* file);
+	io::IFileSystem* FileSystem;
+	scene::ISceneManager* SceneManager;
+};
 
-		scene::IMesh* createIrrlichtMesh(const CSMFile* csmFile, const io::path& lmprefix);
-
-		io::IFileSystem* FileSystem;
-		scene::ISceneManager* SceneManager;
-	};
-
-} // end namespace
-} // end namespace
+} // namespace scene
+} // namespace irr
 
 #endif
-

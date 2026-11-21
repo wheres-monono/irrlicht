@@ -10,27 +10,26 @@
 namespace irr
 {
 #ifdef _IRR_COMPILE_WITH_PROFILING_
-    enum EPROFILE_ID
-    {
-		// We use negative ID's to avoid clashing with user application id's.
-		EPID_FIRST = -INT_MAX,	// not used
+enum EPROFILE_ID {
+	// We use negative ID's to avoid clashing with user application id's.
+	EPID_FIRST = -INT_MAX, // not used
 
-		//! scenemanager.
-		EPID_SM_DRAW_ALL,
-		EPID_SM_ANIMATE,
-		EPID_SM_RENDER_CAMERAS,
-		EPID_SM_RENDER_LIGHTS,
-		EPID_SM_RENDER_SKYBOXES,
-		EPID_SM_RENDER_DEFAULT,
-		EPID_SM_RENDER_SHADOWS,
-		EPID_SM_RENDER_TRANSPARENT,
-		EPID_SM_RENDER_EFFECT,
-		EPID_SM_REGISTER,
+	//! scenemanager.
+	EPID_SM_DRAW_ALL,
+	EPID_SM_ANIMATE,
+	EPID_SM_RENDER_CAMERAS,
+	EPID_SM_RENDER_LIGHTS,
+	EPID_SM_RENDER_SKYBOXES,
+	EPID_SM_RENDER_DEFAULT,
+	EPID_SM_RENDER_SHADOWS,
+	EPID_SM_RENDER_TRANSPARENT,
+	EPID_SM_RENDER_EFFECT,
+	EPID_SM_REGISTER,
 
-		//! octrees
-		EPID_OC_RENDER,
-		EPID_OC_CALCPOLYS
-    };
+	//! octrees
+	EPID_OC_RENDER,
+	EPID_OC_CALCPOLYS
+};
 #endif
 } // end namespace irr
 

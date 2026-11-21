@@ -16,35 +16,60 @@ namespace scene
 {
 
 //! Particle Affector for attracting particles to a point
-class CParticleAttractionAffector : public IParticleAttractionAffector
-{
+class CParticleAttractionAffector : public IParticleAttractionAffector {
 public:
-
-	CParticleAttractionAffector(
-		const core::vector3df& point = core::vector3df(), f32 speed = 1.0f,
-		bool attract = true, bool affectX = true,
-		bool affectY = true, bool affectZ = true );
+	CParticleAttractionAffector(const core::vector3df& point = core::vector3df(),
+		f32 speed = 1.0f,
+		bool attract = true,
+		bool affectX = true,
+		bool affectY = true,
+		bool affectZ = true);
 
 	//! Affects a particle.
 	virtual void affect(u32 now, SParticle* particlearray, u32 count) _IRR_OVERRIDE_;
 
 	//! Set the point that particles will attract to
-	virtual void setPoint( const core::vector3df& point ) _IRR_OVERRIDE_ { Point = point; }
+	virtual void setPoint(
+		const core::vector3df& point
+	) _IRR_OVERRIDE_ {
+		Point = point;
+	}
 
-	//! Set the speed, in game units per second that the particles will attract to the specified point
-	virtual void setSpeed( f32 speed ) _IRR_OVERRIDE_ { Speed = speed; }
+	//! Set the speed, in game units per second that the particles will attract to the
+	//! specified point
+	virtual void setSpeed(
+		f32 speed
+	) _IRR_OVERRIDE_ {
+		Speed = speed;
+	}
 
 	//! Set whether or not the particles are attracting or detracting
-	virtual void setAttract( bool attract ) _IRR_OVERRIDE_ { Attract = attract; }
+	virtual void setAttract(
+		bool attract
+	) _IRR_OVERRIDE_ {
+		Attract = attract;
+	}
 
 	//! Set whether or not this will affect particles in the X direction
-	virtual void setAffectX( bool affect ) _IRR_OVERRIDE_ { AffectX = affect; }
+	virtual void setAffectX(
+		bool affect
+	) _IRR_OVERRIDE_ {
+		AffectX = affect;
+	}
 
 	//! Set whether or not this will affect particles in the Y direction
-	virtual void setAffectY( bool affect ) _IRR_OVERRIDE_ { AffectY = affect; }
+	virtual void setAffectY(
+		bool affect
+	) _IRR_OVERRIDE_ {
+		AffectY = affect;
+	}
 
 	//! Set whether or not this will affect particles in the Z direction
-	virtual void setAffectZ( bool affect ) _IRR_OVERRIDE_ { AffectZ = affect; }
+	virtual void setAffectZ(
+		bool affect
+	) _IRR_OVERRIDE_ {
+		AffectZ = affect;
+	}
 
 	//! Get the point that particles are attracted to
 	virtual const core::vector3df& getPoint() const _IRR_OVERRIDE_ { return Point; }
@@ -65,13 +90,14 @@ public:
 	virtual bool getAffectZ() const _IRR_OVERRIDE_ { return AffectZ; }
 
 	//! Writes attributes of the object.
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the object.
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
 
 private:
-
 	core::vector3df Point;
 	f32 Speed;
 	bool AffectX;
@@ -87,4 +113,3 @@ private:
 #endif // _IRR_COMPILE_WITH_PARTICLES_
 
 #endif // __C_PARTICLE_ATTRACTION_AFFECTOR_H_INCLUDED__
-

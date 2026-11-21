@@ -12,7 +12,7 @@ namespace irr
 
 namespace gui
 {
-	class IGUIFont;
+class IGUIFont;
 }
 
 namespace scene
@@ -24,14 +24,16 @@ namespace scene
   inheritance. Hence, changes to the ITextSceneNode interface have
   to be copied here manually.
 */
-class IBillboardTextSceneNode : public IBillboardSceneNode
-{
+class IBillboardTextSceneNode : public IBillboardSceneNode {
 public:
-
 	//! Constructor
-	IBillboardTextSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-		const core::vector3df& position = core::vector3df(0,0,0))
-		: IBillboardSceneNode(parent, mgr, id, position) {}
+	IBillboardTextSceneNode(
+		ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id,
+		const core::vector3df& position = core::vector3df(0, 0, 0)
+	) :
+		IBillboardSceneNode(parent, mgr, id, position) {}
 
 	//! Sets the size of the billboard.
 	virtual void setSize(const core::dimension2d<f32>& size) = 0;
@@ -41,17 +43,19 @@ public:
 
 	//! Set the color of all vertices of the billboard
 	/** \param overallColor: the color to set */
-	virtual void setColor(const video::SColor & overallColor) = 0;
+	virtual void setColor(const video::SColor& overallColor) = 0;
 
 	//! Set the color of the top and bottom vertices of the billboard
 	/** \param topColor: the color to set the top vertices
 	\param bottomColor: the color to set the bottom vertices */
-	virtual void setColor(const video::SColor & topColor, const video::SColor & bottomColor) = 0;
+	virtual void setColor(const video::SColor& topColor,
+		const video::SColor& bottomColor) = 0;
 
 	//! Gets the color of the top and bottom vertices of the billboard
 	/** \param topColor: stores the color of the top vertices
 	\param bottomColor: stores the color of the bottom vertices */
-	virtual void getColor(video::SColor & topColor, video::SColor & bottomColor) const = 0;
+	virtual void getColor(video::SColor& topColor,
+		video::SColor& bottomColor) const = 0;
 
 	//! sets the text string
 	virtual void setText(const wchar_t* text) = 0;
@@ -61,8 +65,9 @@ public:
 
 	//! sets the color of the text
 	//! You can use setColor instead which does the same
-	virtual void setTextColor(video::SColor color)
-	{
+	virtual void setTextColor(
+		video::SColor color
+	) {
 		setColor(color);
 	}
 
@@ -73,6 +78,4 @@ public:
 } // end namespace scene
 } // end namespace irr
 
-
 #endif
-

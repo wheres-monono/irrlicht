@@ -16,44 +16,54 @@ namespace scene
 
 //! constructor
 CParticlePointEmitter::CParticlePointEmitter(
-	const core::vector3df& direction, u32 minParticlesPerSecond,
-	u32 maxParticlesPerSecond, video::SColor minStartColor,
-	video::SColor maxStartColor, u32 lifeTimeMin, u32 lifeTimeMax,
+	const core::vector3df& direction,
+	u32 minParticlesPerSecond,
+	u32 maxParticlesPerSecond,
+	video::SColor minStartColor,
+	video::SColor maxStartColor,
+	u32 lifeTimeMin,
+	u32 lifeTimeMax,
 	s32 maxAngleDegrees,
 	const core::dimension2df& minStartSize,
-	const core::dimension2df& maxStartSize)
- : Direction(direction),
-	MinStartSize(minStartSize), MaxStartSize(maxStartSize),
+	const core::dimension2df& maxStartSize
+) :
+	Direction(direction),
+	MinStartSize(minStartSize),
+	MaxStartSize(maxStartSize),
 	MinParticlesPerSecond(minParticlesPerSecond),
 	MaxParticlesPerSecond(maxParticlesPerSecond),
-	MinStartColor(minStartColor), MaxStartColor(maxStartColor),
-	MinLifeTime(lifeTimeMin), MaxLifeTime(lifeTimeMax),
-	MaxAngleDegrees(maxAngleDegrees), Time(0)
-{
-	#ifdef _DEBUG
+	MinStartColor(minStartColor),
+	MaxStartColor(maxStartColor),
+	MinLifeTime(lifeTimeMin),
+	MaxLifeTime(lifeTimeMax),
+	MaxAngleDegrees(maxAngleDegrees),
+	Time(0) {
+#ifdef _DEBUG
 	setDebugName("CParticlePointEmitter");
-	#endif
+#endif
 }
-
 
 //! Prepares an array with new particles to emitt into the system
 //! and returns how much new particles there are.
-s32 CParticlePointEmitter::emitt(u32 now, u32 timeSinceLastCall, SParticle*& outArray)
-{
+s32 CParticlePointEmitter::emitt(
+	u32 now,
+	u32 timeSinceLastCall,
+	SParticle*& outArray
+) {
 	Time += timeSinceLastCall;
 
 	const u32 pps = (MaxParticlesPerSecond - MinParticlesPerSecond);
-	const f32 perSecond = pps ? ((f32)MinParticlesPerSecond + os::Randomizer::frand() * pps) : MinParticlesPerSecond;
+	const f32 perSecond =
+		pps ? ((f32)MinParticlesPerSecond + os::Randomizer::frand() * pps)
+		    : MinParticlesPerSecond;
 	const f32 everyWhatMillisecond = 1000.0f / perSecond;
 
-	if (Time > everyWhatMillisecond)
-	{
+	if (Time > everyWhatMillisecond) {
 		Time = 0;
 		Particle.startTime = now;
 		Particle.vector = Direction;
 
-		if (MaxAngleDegrees)
-		{
+		if (MaxAngleDegrees) {
 			core::vector3df tgt = Direction;
 			tgt.rotateXYBy(os::Randomizer::frand() * MaxAngleDegrees);
 			tgt.rotateYZBy(os::Randomizer::frand() * MaxAngleDegrees);
@@ -62,21 +72,27 @@ s32 CParticlePointEmitter::emitt(u32 now, u32 timeSinceLastCall, SParticle*& out
 		}
 
 		Particle.endTime = now + MinLifeTime;
-		if (MaxLifeTime != MinLifeTime)
-			Particle.endTime += os::Randomizer::rand() % (MaxLifeTime - MinLifeTime);
+		if (MaxLifeTime != MinLifeTime) {
+			Particle.endTime +=
+				os::Randomizer::rand() % (MaxLifeTime - MinLifeTime);
+		}
 
-		if (MinStartColor==MaxStartColor)
-			Particle.color=MinStartColor;
-		else
-			Particle.color = MinStartColor.getInterpolated(MaxStartColor, os::Randomizer::frand());
+		if (MinStartColor == MaxStartColor) {
+			Particle.color = MinStartColor;
+		} else {
+			Particle.color = MinStartColor.getInterpolated(MaxStartColor,
+				os::Randomizer::frand());
+		}
 
 		Particle.startColor = Particle.color;
 		Particle.startVector = Particle.vector;
 
-		if (MinStartSize==MaxStartSize)
+		if (MinStartSize == MaxStartSize) {
 			Particle.startSize = MinStartSize;
-		else
-			Particle.startSize = MinStartSize.getInterpolated(MaxStartSize, os::Randomizer::frand());
+		} else {
+			Particle.startSize = MinStartSize.getInterpolated(MaxStartSize,
+				os::Randomizer::frand());
+		}
 		Particle.size = Particle.startSize;
 
 		outArray = &Particle;
@@ -86,10 +102,11 @@ s32 CParticlePointEmitter::emitt(u32 now, u32 timeSinceLastCall, SParticle*& out
 	return 0;
 }
 
-
 //! Writes attributes of the object.
-void CParticlePointEmitter::serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const
-{
+void CParticlePointEmitter::serializeAttributes(
+	io::IAttributes* out,
+	io::SAttributeReadWriteOptions* options
+) const {
 	out->addVector3d("Direction", Direction);
 	out->addFloat("MinStartSizeWidth", MinStartSize.Width);
 	out->addFloat("MinStartSizeHeight", MinStartSize.Height);
@@ -105,25 +122,32 @@ void CParticlePointEmitter::serializeAttributes(io::IAttributes* out, io::SAttri
 }
 
 //! Reads attributes of the object.
-void CParticlePointEmitter::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
-{
+void CParticlePointEmitter::deserializeAttributes(
+	io::IAttributes* in,
+	io::SAttributeReadWriteOptions* options
+) {
 	Direction = in->getAttributeAsVector3d("Direction");
-	if (Direction.getLength() == 0)
-		Direction.set(0,0.01f,0);
+	if (Direction.getLength() == 0) {
+		Direction.set(0, 0.01f, 0);
+	}
 
 	int idx = -1;
 	idx = in->findAttribute("MinStartSizeWidth");
-	if ( idx >= 0 )
+	if (idx >= 0) {
 		MinStartSize.Width = in->getAttributeAsFloat(idx);
+	}
 	idx = in->findAttribute("MinStartSizeHeight");
-	if ( idx >= 0 )
+	if (idx >= 0) {
 		MinStartSize.Height = in->getAttributeAsFloat(idx);
+	}
 	idx = in->findAttribute("MaxStartSizeWidth");
-	if ( idx >= 0 )
+	if (idx >= 0) {
 		MaxStartSize.Width = in->getAttributeAsFloat(idx);
+	}
 	idx = in->findAttribute("MaxStartSizeHeight");
-	if ( idx >= 0 )
+	if (idx >= 0) {
 		MaxStartSize.Height = in->getAttributeAsFloat(idx);
+	}
 
 	MinParticlesPerSecond = in->getAttributeAsInt("MinParticlesPerSecond");
 	MaxParticlesPerSecond = in->getAttributeAsInt("MaxParticlesPerSecond");
@@ -143,7 +167,6 @@ void CParticlePointEmitter::deserializeAttributes(io::IAttributes* in, io::SAttr
 	MaxLifeTime = core::max_(MaxLifeTime, MinLifeTime);
 	MinLifeTime = core::min_(MinLifeTime, MaxLifeTime);
 }
-
 
 } // end namespace scene
 } // end namespace irr

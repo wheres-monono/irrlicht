@@ -11,8 +11,7 @@ namespace irr
 {
 
 //! Interface for getting and manipulating the virtual time
-class ITimer : public virtual IReferenceCounted
-{
+class ITimer : public virtual IReferenceCounted {
 public:
 	//! Returns current real time in milliseconds of the system.
 	/** This value does not start with 0 when the application starts.
@@ -21,9 +20,8 @@ public:
 	*/
 	virtual u32 getRealTime() const = 0;
 
-	enum EWeekday
-	{
-		EWD_SUNDAY=0,
+	enum EWeekday {
+		EWD_SUNDAY = 0,
 		EWD_MONDAY,
 		EWD_TUESDAY,
 		EWD_WEDNESDAY,
@@ -32,8 +30,7 @@ public:
 		EWD_SATURDAY
 	};
 
-	struct RealTimeDate
-	{
+	struct RealTimeDate {
 		// Hour of the day, from 0 to 23
 		u32 Hour;
 		// Minute of the hour, from 0 to 59

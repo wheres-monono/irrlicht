@@ -7,7 +7,8 @@
 
 #include "IrrCompileConfig.h"
 
-#if defined(_IRR_COMPILE_WITH_OPENGL_) || defined(_IRR_COMPILE_WITH_OGLES1_) || defined(_IRR_COMPILE_WITH_OGLES2_)
+#if defined(_IRR_COMPILE_WITH_OPENGL_) || defined(_IRR_COMPILE_WITH_OGLES1_) ||          \
+	defined(_IRR_COMPILE_WITH_OGLES2_)
 
 #include "irrTypes.h"
 
@@ -16,26 +17,25 @@ namespace irr
 namespace video
 {
 
-class COpenGLCoreFeature
-{
+class COpenGLCoreFeature {
 public:
-	COpenGLCoreFeature() : BlendOperation(false), ColorAttachment(0), MultipleRenderTarget(0), MaxTextureUnits(1)
-	{
-	}
+	COpenGLCoreFeature() :
+		BlendOperation(false),
+		ColorAttachment(0),
+		MultipleRenderTarget(0),
+		MaxTextureUnits(1) {}
 
-	virtual ~COpenGLCoreFeature()
-	{
-	}
+	virtual ~COpenGLCoreFeature() {}
 
 	bool BlendOperation;
-	
+
 	u8 ColorAttachment;
 	u8 MultipleRenderTarget;
 	u8 MaxTextureUnits;
 };
 
-}
-}
+} // namespace video
+} // namespace irr
 
 #endif
 #endif

@@ -17,19 +17,18 @@ namespace scene
 {
 
 //! Meshloader capable of loading md3 files.
-class CMD3MeshFileLoader : public IMeshLoader
-{
+class CMD3MeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
-	CMD3MeshFileLoader( scene::ISceneManager* smgr );
+	CMD3MeshFileLoader(scene::ISceneManager* smgr);
 
 	//! destructor
 	virtual ~CMD3MeshFileLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -39,11 +38,9 @@ public:
 
 private:
 	scene::ISceneManager* SceneManager;
-
 };
 
 } // end namespace scene
 } // end namespace irr
 
 #endif
-

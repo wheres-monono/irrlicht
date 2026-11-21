@@ -9,10 +9,10 @@
 using namespace irr;
 using namespace core;
 
-
 template <class DIMENSION, class VECTOR, class POSITION, class T>
-static bool doTest(void)
-{
+static bool doTest(
+	void
+) {
 	bool result = true;
 
 	DIMENSION dimension((T)99.9, (T)99.9);
@@ -65,29 +65,32 @@ static bool doTest(void)
 	return result;
 }
 
-bool vectorPositionDimension2d(void)
-{
+bool vectorPositionDimension2d(
+	void
+) {
 	bool result = true;
 
 	logTestString("vector,position,dimension test with s32\n\n");
 	result &= doTest<dimension2di, vector2di, position2di, s32>();
-	if (result)
+	if (result) {
 		logTestString("tests passed\n\n");
-	else
+	} else {
 		logTestString("\ntests failed\n\n");
+	}
 	logTestString("vector,position,dimension test with f32\n\n");
 	result &= doTest<dimension2df, vector2df, position2df, f32>();
-	if (result)
+	if (result) {
 		logTestString("tests passed\n\n");
-	else
+	} else {
 		logTestString("\ntests failed\n\n");
+	}
 	logTestString("vector,position,dimension test with f64\n\n");
 	result &= doTest<dimension2d<f64>, vector2d<f64>, position2d<f64>, f64>();
-	if (result)
+	if (result) {
 		logTestString("tests passed\n\n");
-	else
+	} else {
 		logTestString("\ntests failed\n\n");
+	}
 
 	return result;
 }
-

@@ -9,47 +9,52 @@ using namespace core;
 namespace
 {
 // Tests MD2 animations.
-/** At the moment, this just verifies that the last frame of the animation produces the expected bitmap. */
-bool testLastFrame()
-{
-	// Use EDT_BURNINGSVIDEO since it is not dependent on (e.g.) OpenGL driver versions.
-	IrrlichtDevice *device = createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
-	if (!device)
+/** At the moment, this just verifies that the last frame of the animation produces the
+ * expected bitmap. */
+bool testLastFrame() {
+	// Use EDT_BURNINGSVIDEO since it is not dependent on (e.g.) OpenGL driver
+	// versions.
+	IrrlichtDevice* device =
+		createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
+	if (!device) {
 		return false;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	scene::IAnimatedMesh* mesh = smgr->getMesh("./media/sydney.md2");
 
 	bool result = (mesh != 0);
-	if (mesh)
-	{
-		scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+	if (mesh) {
+		scene::IAnimatedMeshSceneNode* node =
+			smgr->addAnimatedMeshSceneNode(mesh);
 
-		if (node)
-		{
+		if (node) {
 			node->setPosition(vector3df(20, 0, 30));
 			node->setMaterialFlag(video::EMF_LIGHTING, false);
-			node->setMaterialTexture(0, driver->getTexture("./media/sydney.bmp"));
+			node->setMaterialTexture(0,
+				driver->getTexture("./media/sydney.bmp"));
 			node->setLoopMode(false);
 
 			(void)smgr->addCameraSceneNode();
 
-			// Just jump to the last frame since that's all we're interested in.
+			// Just jump to the last frame since that's all we're interested
+			// in.
 			node->setMD2Animation(scene::EMAT_DEATH_FALLBACK);
 			node->setCurrentFrame((f32)(node->getEndFrame()));
 			node->setAnimationSpeed(0);
 			device->run();
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255, 255, 255, 0));
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 255, 255, 0));
 			smgr->drawAll();
 			driver->endScene();
-			if (mesh->getBoundingBox() != mesh->getMesh(node->getEndFrame())->getBoundingBox())
-			{
+			if (mesh->getBoundingBox() !=
+				mesh->getMesh(node->getEndFrame())->getBoundingBox()) {
 				logTestString("bbox of md2 mesh not updated.\n");
 				result = false;
 			}
-			//TODO: Does not yet work, not sure if this is correct or not
+			// TODO: Does not yet work, not sure if this is correct or not
 #if 0
 			if (node->getBoundingBox() != mesh->getMesh(node->getFrameNr())->getBoundingBox())
 			{
@@ -57,8 +62,7 @@ bool testLastFrame()
 				result = false;
 			}
 #endif
-			if (node->getTransformedBoundingBox() == core::aabbox3df())
-			{
+			if (node->getTransformedBoundingBox() == core::aabbox3df()) {
 				logTestString("md2 node returns empty bbox.\n");
 				result = false;
 			}
@@ -74,28 +78,30 @@ bool testLastFrame()
 }
 
 // Tests MD2 normals.
-bool testNormals()
-{
-	// Use EDT_BURNINGSVIDEO since it is not dependent on (e.g.) OpenGL driver versions.
-	IrrlichtDevice *device = createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
-	if (!device)
+bool testNormals() {
+	// Use EDT_BURNINGSVIDEO since it is not dependent on (e.g.) OpenGL driver
+	// versions.
+	IrrlichtDevice* device =
+		createDevice(video::EDT_BURNINGSVIDEO, dimension2d<u32>(160, 120), 32);
+	if (!device) {
 		return false;
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager * smgr = device->getSceneManager();
+	scene::ISceneManager* smgr = device->getSceneManager();
 
 	scene::IAnimatedMesh* mesh = smgr->getMesh("./media/sydney.md2");
 
 	bool result = (mesh != 0);
-	if (mesh)
-	{
-		scene::IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
-		if (node)
-		{
+	if (mesh) {
+		scene::IAnimatedMeshSceneNode* node =
+			smgr->addAnimatedMeshSceneNode(mesh);
+		if (node) {
 			node->setPosition(vector3df(20, 0, 30));
 			node->setMaterialFlag(video::EMF_LIGHTING, false);
 			node->setDebugDataVisible(scene::EDS_NORMALS);
-			node->setMaterialTexture(0, driver->getTexture("./media/sydney.bmp"));
+			node->setMaterialTexture(0,
+				driver->getTexture("./media/sydney.bmp"));
 			node->setLoopMode(false);
 
 			(void)smgr->addCameraSceneNode();
@@ -103,7 +109,8 @@ bool testNormals()
 			node->setMD2Animation(scene::EMAT_STAND);
 			node->setAnimationSpeed(0);
 			device->run();
-			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255, 255, 255, 0));
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(255, 255, 255, 0));
 			smgr->drawAll();
 			driver->endScene();
 		}
@@ -117,11 +124,12 @@ bool testNormals()
 	return result;
 }
 
-}
+} // namespace
 
 // test md2 features
-bool md2Animation(void)
-{
+bool md2Animation(
+	void
+) {
 	bool result = testLastFrame();
 	result &= testNormals();
 	return result;

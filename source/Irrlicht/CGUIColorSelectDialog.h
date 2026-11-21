@@ -14,57 +14,56 @@
 #include "IGUIImage.h"
 #include "irrArray.h"
 
-
 namespace irr
 {
 namespace gui
 {
 
-	class CGUIColorSelectDialog : public IGUIColorSelectDialog
-	{
-	public:
+class CGUIColorSelectDialog : public IGUIColorSelectDialog {
+public:
+	//! constructor
+	CGUIColorSelectDialog(const wchar_t* title,
+		IGUIEnvironment* environment,
+		IGUIElement* parent,
+		s32 id);
 
-		//! constructor
-		CGUIColorSelectDialog(const wchar_t* title, IGUIEnvironment* environment, IGUIElement* parent, s32 id);
+	//! destructor
+	virtual ~CGUIColorSelectDialog();
 
-		//! destructor
-		virtual ~CGUIColorSelectDialog();
+	//! called if an event happened.
+	virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
 
-		//! called if an event happened.
-		virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+	//! draws the element and its children
+	virtual void draw() _IRR_OVERRIDE_;
 
-		//! draws the element and its children
-		virtual void draw() _IRR_OVERRIDE_;
+	virtual video::SColor getColor() _IRR_OVERRIDE_;
+	virtual video::SColorHSL getColorHSL() _IRR_OVERRIDE_;
 
-		virtual video::SColor getColor() _IRR_OVERRIDE_;
-		virtual video::SColorHSL getColorHSL() _IRR_OVERRIDE_;
+private:
+	//! sends the event that the file has been selected.
+	void sendSelectedEvent();
 
-	private:
+	//! sends the event that the file choose process has been canceld
+	void sendCancelEvent();
 
-		//! sends the event that the file has been selected.
-		void sendSelectedEvent();
+	core::position2d<s32> DragStart;
+	bool Dragging;
+	IGUIButton* CloseButton;
+	IGUIButton* OKButton;
+	IGUIButton* CancelButton;
 
-		//! sends the event that the file choose process has been canceld
-		void sendCancelEvent();
+	core::array<IGUISpinBox*> Battery;
 
-		core::position2d<s32> DragStart;
-		bool Dragging;
-		IGUIButton* CloseButton;
-		IGUIButton* OKButton;
-		IGUIButton* CancelButton;
-
-		core::array<IGUISpinBox*> Battery;
-
-		struct SColorCircle
-		{
-			IGUIImage * Control;
-			video::ITexture * Texture;
-		};
-		SColorCircle ColorRing;
-
-		void buildColorRing( const core::dimension2d<u32> & dim, s32 supersample, const video::SColor& borderColor );
+	struct SColorCircle {
+		IGUIImage* Control;
+		video::ITexture* Texture;
 	};
+	SColorCircle ColorRing;
 
+	void buildColorRing(const core::dimension2d<u32>& dim,
+		s32 supersample,
+		const video::SColor& borderColor);
+};
 
 } // end namespace gui
 } // end namespace irr

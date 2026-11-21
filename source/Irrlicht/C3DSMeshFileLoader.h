@@ -18,10 +18,8 @@ namespace scene
 {
 
 //! Meshloader capable of loading 3ds meshes.
-class C3DSMeshFileLoader : public IMeshLoader
-{
+class C3DSMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	C3DSMeshFileLoader(ISceneManager* smgr, io::IFileSystem* fs);
 
@@ -30,7 +28,8 @@ public:
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -39,12 +38,10 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 // byte-align structures
 #include "irrpack.h"
 
-	struct ChunkHeader
-	{
+	struct ChunkHeader {
 		u16 id;
 		s32 length;
 	} PACK_STRUCT;
@@ -52,29 +49,28 @@ private:
 // Default alignment
 #include "irrunpack.h"
 
-	struct ChunkData
-	{
-		ChunkData() : read(0) {}
+	struct ChunkData {
+		ChunkData() :
+			read(0) {}
 
 		ChunkHeader header;
 		s32 read;
 	};
 
-	struct SCurrentMaterial
-	{
+	struct SCurrentMaterial {
 		void clear() {
-			Material=video::SMaterial();
-			Name="";
-			Filename[0]="";
-			Filename[1]="";
-			Filename[2]="";
-			Filename[3]="";
-			Filename[4]="";
-			Strength[0]=0.f;
-			Strength[1]=0.f;
-			Strength[2]=0.f;
-			Strength[3]=0.f;
-			Strength[4]=0.f;
+			Material = video::SMaterial();
+			Name = "";
+			Filename[0] = "";
+			Filename[1] = "";
+			Filename[2] = "";
+			Filename[3] = "";
+			Filename[4] = "";
+			Strength[0] = 0.f;
+			Strength[1] = 0.f;
+			Strength[2] = 0.f;
+			Strength[3] = 0.f;
+			Strength[4] = 0.f;
 		}
 
 		video::SMaterial Material;
@@ -83,34 +79,34 @@ private:
 		f32 Strength[5];
 	};
 
-	struct SMaterialGroup
-	{
-		SMaterialGroup() : faceCount(0), faces(0) {};
+	struct SMaterialGroup {
+		SMaterialGroup() :
+			faceCount(0),
+			faces(0) {};
 
-		SMaterialGroup(const SMaterialGroup& o)
-		{
+		SMaterialGroup(
+			const SMaterialGroup& o
+		) {
 			*this = o;
 		}
 
-		~SMaterialGroup()
-		{
-			clear();
-		}
+		~SMaterialGroup() { clear(); }
 
-		void clear()
-		{
-			delete [] faces;
+		void clear() {
+			delete[] faces;
 			faces = 0;
 			faceCount = 0;
 		}
 
-		void operator =(const SMaterialGroup& o)
-		{
+		void operator=(
+			const SMaterialGroup& o
+		) {
 			MaterialName = o.MaterialName;
 			faceCount = o.faceCount;
 			faces = new u16[faceCount];
-			for (u16 i=0; i<faceCount; ++i)
+			for (u16 i = 0; i < faceCount; ++i) {
 				faces[i] = o.faces[i];
+			}
 		}
 
 		core::stringc MaterialName;
@@ -121,8 +117,10 @@ private:
 	bool readChunk(io::IReadFile* file, ChunkData* parent);
 	bool readMaterialChunk(io::IReadFile* file, ChunkData* parent);
 	bool readFrameChunk(io::IReadFile* file, ChunkData* parent);
-	bool readTrackChunk(io::IReadFile* file, ChunkData& data,
-				IMeshBuffer* mb, const core::vector3df& pivot);
+	bool readTrackChunk(io::IReadFile* file,
+		ChunkData& data,
+		IMeshBuffer* mb,
+		const core::vector3df& pivot);
 	bool readObjectChunk(io::IReadFile* file, ChunkData* parent);
 	bool readPercentageChunk(io::IReadFile* file, ChunkData* chunk, f32& percentage);
 	bool readColorChunk(io::IReadFile* file, ChunkData* chunk, video::SColor& out);
@@ -163,4 +161,3 @@ private:
 } // end namespace irr
 
 #endif
-

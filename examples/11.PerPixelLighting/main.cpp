@@ -25,13 +25,14 @@ receiver will create some small GUI window which displays what material is
 currently being used. There is nothing special done in this class, so maybe you
 want to skip reading it.
 */
-class MyEventReceiver : public IEventReceiver
-{
+class MyEventReceiver : public IEventReceiver {
 public:
-
-	MyEventReceiver(scene::ISceneNode* room,scene::ISceneNode* earth,
-		gui::IGUIEnvironment* env, video::IVideoDriver* driver)
-	{
+	MyEventReceiver(
+		scene::ISceneNode* room,
+		scene::ISceneNode* earth,
+		gui::IGUIEnvironment* env,
+		video::IVideoDriver* driver
+	) {
 		// store pointer to room so we can change its drawing mode
 		Room = room;
 		Earth = earth;
@@ -39,16 +40,18 @@ public:
 
 		// set a nicer font
 		gui::IGUISkin* skin = env->getSkin();
-		gui::IGUIFont* font = env->getFont(getExampleMediaPath() + "fonthaettenschweiler.bmp");
-		if (font)
+		gui::IGUIFont* font =
+			env->getFont(getExampleMediaPath() + "fonthaettenschweiler.bmp");
+		if (font) {
 			skin->setFont(font);
+		}
 
 		// add window and listbox
-		gui::IGUIWindow* window = env->addWindow(
-			core::rect<s32>(460,375,630,470), false, L"Use 'E' + 'R' to change");
+		gui::IGUIWindow* window =
+			env->addWindow(core::rect<s32>(460, 375, 630, 470), false,
+				L"Use 'E' + 'R' to change");
 
-		ListBox = env->addListBox(
-			core::rect<s32>(2,22,165,88), window);
+		ListBox = env->addListBox(core::rect<s32>(2, 22, 165, 88), window);
 
 		ListBox->addItem(L"Diffuse");
 		ListBox->addItem(L"Bump mapping");
@@ -57,41 +60,47 @@ public:
 
 		// create problem text
 		ProblemText = env->addStaticText(
-			L"Your hardware or this renderer is not able to use the "\
+			L"Your hardware or this renderer is not able to use the "
 			L"needed shaders for this material. Using fall back materials.",
-			core::rect<s32>(150,20,470,80));
+			core::rect<s32>(150, 20, 470, 80)
+		);
 
-		ProblemText->setOverrideColor(video::SColor(100,255,255,255));
+		ProblemText->setOverrideColor(video::SColor(100, 255, 255, 255));
 
 		// set start material (prefer parallax mapping if available)
 		video::IMaterialRenderer* renderer =
 			Driver->getMaterialRenderer(video::EMT_PARALLAX_MAP_SOLID);
-		if (renderer && renderer->getRenderCapability() == 0)
+		if (renderer && renderer->getRenderCapability() == 0) {
 			ListBox->setSelected(2);
+		}
 
 		// set the material which is selected in the listbox
 		setMaterial();
 	}
 
-	bool OnEvent(const SEvent& event)
-	{
+	bool OnEvent(
+		const SEvent& event
+	) {
 		// check if user presses the key 'E' or 'R'
 		if (event.EventType == irr::EET_KEY_INPUT_EVENT &&
-			!event.KeyInput.PressedDown && Room && ListBox)
-		{
+			!event.KeyInput.PressedDown && Room && ListBox) {
 			// change selected item in listbox
 
 			int sel = ListBox->getSelected();
-			if (event.KeyInput.Key == irr::KEY_KEY_R)
+			if (event.KeyInput.Key == irr::KEY_KEY_R) {
 				++sel;
-			else
-			if (event.KeyInput.Key == irr::KEY_KEY_E)
+			} else if (event.KeyInput.Key == irr::KEY_KEY_E) {
 				--sel;
-			else
+			} else {
 				return false;
+			}
 
-			if (sel > 2) sel = 0;
-			if (sel < 0) sel = 2;
+			if (sel > 2) {
+				sel = 0;
+			}
+			if (sel < 0) {
+				sel = 2;
+			}
 			ListBox->setSelected(sel);
 
 			// set the material which is selected in the listbox
@@ -102,35 +111,37 @@ public:
 	}
 
 private:
-
 	// sets the material of the room mesh the the one set in the
 	// list box.
-	void setMaterial()
-	{
+	void setMaterial() {
 		video::E_MATERIAL_TYPE type = video::EMT_SOLID;
 
 		// change material setting
-		switch(ListBox->getSelected())
-		{
-		case 0: type = video::EMT_SOLID;
-			break;
-		case 1: type = video::EMT_NORMAL_MAP_SOLID;
-			break;
-		case 2: type = video::EMT_PARALLAX_MAP_SOLID;
-			break;
+		switch (ListBox->getSelected()) {
+			case 0:
+				type = video::EMT_SOLID;
+				break;
+			case 1:
+				type = video::EMT_NORMAL_MAP_SOLID;
+				break;
+			case 2:
+				type = video::EMT_PARALLAX_MAP_SOLID;
+				break;
 		}
 
 		Room->setMaterialType(type);
 
 		// change material setting
-		switch(ListBox->getSelected())
-		{
-		case 0: type = video::EMT_TRANSPARENT_VERTEX_ALPHA;
-			break;
-		case 1: type = video::EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA;
-			break;
-		case 2: type = video::EMT_PARALLAX_MAP_TRANSPARENT_VERTEX_ALPHA;
-			break;
+		switch (ListBox->getSelected()) {
+			case 0:
+				type = video::EMT_TRANSPARENT_VERTEX_ALPHA;
+				break;
+			case 1:
+				type = video::EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA;
+				break;
+			case 2:
+				type = video::EMT_PARALLAX_MAP_TRANSPARENT_VERTEX_ALPHA;
+				break;
 		}
 
 		Earth->setMaterialType(type);
@@ -148,14 +159,14 @@ private:
 		video::IMaterialRenderer* renderer = Driver->getMaterialRenderer(type);
 
 		// display some problem text when problem
-		if (!renderer || renderer->getRenderCapability() != 0)
+		if (!renderer || renderer->getRenderCapability() != 0) {
 			ProblemText->setVisible(true);
-		else
+		} else {
 			ProblemText->setVisible(false);
+		}
 	}
 
 private:
-
 	gui::IGUIStaticText* ProblemText;
 	gui::IGUIListBox* ListBox;
 
@@ -164,24 +175,24 @@ private:
 	video::IVideoDriver* Driver;
 };
 
-
 /*
 Now for the real fun. We create an Irrlicht Device and start to setup the scene.
 */
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// create device
 
-	IrrlichtDevice* device = createDevice(driverType,
-			core::dimension2d<u32>(640, 480));
+	IrrlichtDevice* device =
+		createDevice(driverType, core::dimension2d<u32>(640, 480));
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
 	/*
 	Before we start with the interesting stuff, we do some simple things:
@@ -203,11 +214,11 @@ int main()
 
 	// add irrlicht logo
 	env->addImage(driver->getTexture(mediaPath + "irrlichtlogo3.png"),
-		core::position2d<s32>(10,10));
+		core::position2d<s32>(10, 10));
 
 	// add camera
 	scene::ICameraSceneNode* camera = smgr->addCameraSceneNodeFPS();
-	camera->setPosition(core::vector3df(-200,200,-200));
+	camera->setPosition(core::vector3df(-200, 200, -200));
 
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
@@ -220,7 +231,8 @@ int main()
 	Please note that you will have to set the material flag EMF_FOG_ENABLE
 	to 'true' in every scene node which should be affected by this fog.
 	*/
-	driver->setFog(video::SColor(0,138,125,81), video::EFT_FOG_LINEAR, 250, 1000, .003f, true, false);
+	driver->setFog(video::SColor(0, 138, 125, 81), video::EFT_FOG_LINEAR, 250, 1000,
+		.003f, true, false);
 
 	/*
 	To be able to display something interesting, we load a mesh from a .3ds
@@ -235,12 +247,11 @@ int main()
 	scene::ISceneNode* room = 0;
 	scene::ISceneNode* earth = 0;
 
-	if (roomMesh)
-	{
+	if (roomMesh) {
 		// The room mesh doesn't have proper texture mapping on the
 		// floor, so we can recreate the mapping on runtime.
-		smgr->getMeshManipulator()->makePlanarTextureMapping(
-				roomMesh->getMesh(0), 0.003f);
+		smgr->getMeshManipulator()->makePlanarTextureMapping(roomMesh->getMesh(0),
+			0.003f);
 
 		/*
 		Now for the first exciting thing: If we successfully loaded the
@@ -261,8 +272,9 @@ int main()
 		video::ITexture* normalMap =
 			driver->getTexture(mediaPath + "rockwall_height.bmp");
 
-		if (normalMap)
+		if (normalMap) {
 			driver->makeNormalMapTexture(normalMap, 9.0f);
+		}
 
 		/*
 		But just setting color and normal map is not everything. The
@@ -277,16 +289,18 @@ int main()
 		EMF_FOG_ENABLE to true to enable fog in the room.
 		*/
 
-		scene::IMesh* tangentMesh = smgr->getMeshManipulator()->
-				createMeshWithTangents(roomMesh->getMesh(0));
+		scene::IMesh* tangentMesh =
+			smgr->getMeshManipulator()->createMeshWithTangents(
+				roomMesh->getMesh(0)
+			);
 
 		room = smgr->addMeshSceneNode(tangentMesh);
 		room->setMaterialTexture(0,
-				driver->getTexture(mediaPath + "rockwall.jpg"));
+			driver->getTexture(mediaPath + "rockwall.jpg"));
 		room->setMaterialTexture(1, normalMap);
 
 		// Stones don't glitter..
-		room->getMaterial(0).SpecularColor.set(0,0,0,0);
+		room->getMaterial(0).SpecularColor.set(0, 0, 0, 0);
 		room->getMaterial(0).Shininess = 0.f;
 
 		room->setMaterialFlag(video::EMF_FOG_ENABLE, true);
@@ -311,10 +325,9 @@ int main()
 	// add earth sphere
 
 	scene::IAnimatedMesh* earthMesh = smgr->getMesh(mediaPath + "earth.x");
-	if (earthMesh)
-	{
-		//perform various tasks with the mesh manipulator
-		scene::IMeshManipulator *manipulator = smgr->getMeshManipulator();
+	if (earthMesh) {
+		// perform various tasks with the mesh manipulator
+		scene::IMeshManipulator* manipulator = smgr->getMeshManipulator();
 
 		// create mesh copy with tangent information from original earth.x mesh
 		scene::IMesh* tangentSphereMesh =
@@ -325,20 +338,22 @@ int main()
 
 		// scale the mesh by factor 50
 		core::matrix4 m;
-		m.setScale ( core::vector3df(50,50,50) );
-		manipulator->transform( tangentSphereMesh, m );
+		m.setScale(core::vector3df(50, 50, 50));
+		manipulator->transform(tangentSphereMesh, m);
 
 		earth = smgr->addMeshSceneNode(tangentSphereMesh);
 
-		earth->setPosition(core::vector3df(-70,130,45));
+		earth->setPosition(core::vector3df(-70, 130, 45));
 
 		// load heightmap, create normal map from it and set it
-		video::ITexture* earthNormalMap = driver->getTexture(mediaPath + "earthbump.jpg");
-		if (earthNormalMap)
-		{
+		video::ITexture* earthNormalMap =
+			driver->getTexture(mediaPath + "earthbump.jpg");
+		if (earthNormalMap) {
 			driver->makeNormalMapTexture(earthNormalMap, 20.0f);
 			earth->setMaterialTexture(1, earthNormalMap);
-			earth->setMaterialType(video::EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA);
+			earth->setMaterialType(
+				video::EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA
+			);
 		}
 
 		// adjust material settings
@@ -346,7 +361,7 @@ int main()
 
 		// add rotation animator
 		scene::ISceneNodeAnimator* anim =
-			smgr->createRotationAnimator(core::vector3df(0,0.1f,0));
+			smgr->createRotationAnimator(core::vector3df(0, 0.1f, 0));
 		earth->addAnimator(anim);
 		anim->drop();
 
@@ -363,13 +378,13 @@ int main()
 	*/
 
 	// add light 1 (more green)
-	scene::ILightSceneNode* light1 =
-		smgr->addLightSceneNode(0, core::vector3df(0,0,0),
-		video::SColorf(0.5f, 1.0f, 0.5f, 0.0f), 800.0f);
+	scene::ILightSceneNode* light1 = smgr->addLightSceneNode(0,
+		core::vector3df(0, 0, 0), video::SColorf(0.5f, 1.0f, 0.5f, 0.0f), 800.0f);
 
 	// add fly circle animator to light 1
 	scene::ISceneNodeAnimator* anim =
-		smgr->createFlyCircleAnimator (core::vector3df(50,300,0),190.0f, -0.003f);
+		smgr->createFlyCircleAnimator(core::vector3df(50, 300, 0), 190.0f,
+			-0.003f);
 	light1->addAnimator(anim);
 	anim->drop();
 
@@ -396,13 +411,12 @@ int main()
 	*/
 
 	// add light 2 (red)
-	scene::ISceneNode* light2 =
-		smgr->addLightSceneNode(0, core::vector3df(0,0,0),
+	scene::ISceneNode* light2 = smgr->addLightSceneNode(0, core::vector3df(0, 0, 0),
 		video::SColorf(1.0f, 0.2f, 0.2f, 0.0f), 800.0f);
 
 	// add fly circle animator to light 2
-	anim = smgr->createFlyCircleAnimator(core::vector3df(0,150,0), 200.0f,
-			0.001f, core::vector3df(0.2f, 0.9f, 0.f));
+	anim = smgr->createFlyCircleAnimator(core::vector3df(0, 150, 0), 200.0f, 0.001f,
+		core::vector3df(0.2f, 0.9f, 0.f));
 	light2->addAnimator(anim);
 	anim->drop();
 
@@ -418,12 +432,11 @@ int main()
 		smgr->addParticleSystemSceneNode(false, light2);
 
 	// create and set emitter
-	scene::IParticleEmitter* em = ps->createBoxEmitter(
-		core::aabbox3d<f32>(-3,0,-3,3,1,3),
-		core::vector3df(0.0f,0.03f,0.0f),
-		80,100,
-		video::SColor(10,255,255,255), video::SColor(10,255,255,255),
-		400,1100);
+	scene::IParticleEmitter* em =
+		ps->createBoxEmitter(core::aabbox3d<f32>(-3, 0, -3, 3, 1, 3),
+			core::vector3df(0.0f, 0.03f, 0.0f), 80, 100,
+			video::SColor(10, 255, 255, 255),
+			video::SColor(10, 255, 255, 255), 400, 1100);
 	em->setMinStartSize(core::dimension2d<f32>(30.0f, 40.0f));
 	em->setMaxStartSize(core::dimension2d<f32>(30.0f, 40.0f));
 
@@ -450,27 +463,28 @@ int main()
 
 	int lastFPS = -1;
 
-	while(device->run())
-	if (device->isWindowActive())
-	{
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(0));
+	while (device->run()) {
+		if (device->isWindowActive()) {
+			driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+				video::SColor(0));
 
-		smgr->drawAll();
-		env->drawAll();
+			smgr->drawAll();
+			env->drawAll();
 
-		driver->endScene();
+			driver->endScene();
 
-		int fps = driver->getFPS();
+			int fps = driver->getFPS();
 
-		if (lastFPS != fps)
-		{
-			core::stringw str = L"Per pixel lighting example - Irrlicht Engine [";
-			str += driver->getName();
-			str += "] FPS:";
-			str += fps;
+			if (lastFPS != fps) {
+				core::stringw str =
+					L"Per pixel lighting example - Irrlicht Engine [";
+				str += driver->getName();
+				str += "] FPS:";
+				str += fps;
 
-			device->setWindowCaption(str.c_str());
-			lastFPS = fps;
+				device->setWindowCaption(str.c_str());
+				lastFPS = fps;
+			}
 		}
 	}
 
@@ -480,4 +494,4 @@ int main()
 }
 
 /*
-**/
+ **/

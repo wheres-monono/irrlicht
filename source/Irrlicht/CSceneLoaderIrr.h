@@ -14,7 +14,7 @@ namespace irr
 
 namespace io
 {
-	class IFileSystem;
+class IFileSystem;
 }
 
 namespace scene
@@ -23,31 +23,30 @@ namespace scene
 class ISceneManager;
 
 //! Class which can load a scene into the scene manager.
-class CSceneLoaderIrr : public virtual ISceneLoader
-{
+class CSceneLoaderIrr : public virtual ISceneLoader {
 public:
-
 	//! Constructor
-	CSceneLoaderIrr(ISceneManager *smgr, io::IFileSystem* fs);
+	CSceneLoaderIrr(ISceneManager* smgr, io::IFileSystem* fs);
 
 	//! Destructor
 	virtual ~CSceneLoaderIrr();
 
 	//! Returns true if the class might be able to load this file.
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! Returns true if the class might be able to load this file.
-	virtual bool isALoadableFileFormat(io::IReadFile *file) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
 
 	//! Loads the scene into the scene manager.
 	virtual bool loadScene(io::IReadFile* file,
-		ISceneUserDataSerializer* userDataSerializer=0,
-		ISceneNode* rootNode=0) _IRR_OVERRIDE_;
+		ISceneUserDataSerializer* userDataSerializer = 0,
+		ISceneNode* rootNode = 0) _IRR_OVERRIDE_;
 
 private:
-
 	//! Recursively reads nodes from the xml file
-	void readSceneNode(io::IXMLReader* reader, ISceneNode* parent,
+	void readSceneNode(io::IXMLReader* reader,
+		ISceneNode* parent,
 		ISceneUserDataSerializer* userDataSerializer);
 
 	//! read a node's materials
@@ -57,11 +56,12 @@ private:
 	void readAnimators(io::IXMLReader* reader, ISceneNode* node);
 
 	//! read any other data into the user serializer
-	void readUserData(io::IXMLReader* reader, ISceneNode* node,
+	void readUserData(io::IXMLReader* reader,
+		ISceneNode* node,
 		ISceneUserDataSerializer* userDataSerializer);
 
-	ISceneManager   *SceneManager;
-	io::IFileSystem *FileSystem;
+	ISceneManager* SceneManager;
+	io::IFileSystem* FileSystem;
 
 	//! constants for reading and writing XML.
 	//! Not made static due to portability problems.
@@ -75,9 +75,7 @@ private:
 	const core::stringw IRR_XML_FORMAT_USERDATA;
 };
 
-
 } // end namespace scene
 } // end namespace irr
 
 #endif
-

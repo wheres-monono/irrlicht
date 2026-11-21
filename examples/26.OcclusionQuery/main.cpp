@@ -49,29 +49,31 @@ using namespace irr;
 /*
 We need keyboard input events to switch some parameters
 */
-class MyEventReceiver : public IEventReceiver
-{
+class MyEventReceiver : public IEventReceiver {
 public:
 	// This is the one method that we have to implement
-	virtual bool OnEvent(const SEvent& event)
-	{
+	virtual bool OnEvent(
+		const SEvent& event
+	) {
 		// Remember whether each key is down or up
-		if (event.EventType == irr::EET_KEY_INPUT_EVENT)
+		if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 			KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+		}
 
 		return false;
 	}
 
 	// This is used to check whether a key is being held down
-	virtual bool IsKeyDown(EKEY_CODE keyCode) const
-	{
+	virtual bool IsKeyDown(
+		EKEY_CODE keyCode
+	) const {
 		return KeyIsDown[keyCode];
 	}
-	
-	MyEventReceiver()
-	{
-		for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
+
+	MyEventReceiver() {
+		for (u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i) {
 			KeyIsDown[i] = false;
+		}
 	}
 
 private:
@@ -79,41 +81,41 @@ private:
 	bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
 
-
 /*
 We create an irr::IrrlichtDevice and the scene nodes. One occluder, one
 occluded. The latter is a complex sphere, which has many triangles.
 */
-int main()
-{
+int main() {
 	// ask user for driver
-	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	if (driverType==video::EDT_COUNT)
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	if (driverType == video::EDT_COUNT) {
 		return 1;
+	}
 
 	// create device
 	MyEventReceiver receiver;
 
 	IrrlichtDevice* device = createDevice(driverType,
-			core::dimension2d<u32>(640, 480), 16, false, false, false, &receiver);
+		core::dimension2d<u32>(640, 480), 16, false, false, false, &receiver);
 
-	if (device == 0)
+	if (device == 0) {
 		return 1; // could not create selected driver.
+	}
 
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
 
 	const io::path mediaPath = getExampleMediaPath();
 
-	smgr->getGUIEnvironment()->addStaticText(L"Press Space to hide occluder.", core::recti(10,10, 200,50));
+	smgr->getGUIEnvironment()->addStaticText(L"Press Space to hide occluder.",
+		core::recti(10, 10, 200, 50));
 
 	/*
 	Create the node to be occluded. We create a sphere node with high poly count.
 	*/
-	scene::ISceneNode * node = smgr->addSphereSceneNode(10, 64);
-	if (node)
-	{
-		node->setPosition(core::vector3df(0,0,60));
+	scene::ISceneNode* node = smgr->addSphereSceneNode(10, 64);
+	if (node) {
+		node->setPosition(core::vector3df(0, 0, 60));
 		node->setMaterialTexture(0, driver->getTexture(mediaPath + "wall.bmp"));
 		node->setMaterialFlag(video::EMF_LIGHTING, false);
 	}
@@ -121,13 +123,15 @@ int main()
 	/*
 	Now we create another node, the occluder. It's a simple plane.
 	*/
-	scene::ISceneNode* plane = smgr->addMeshSceneNode(smgr->addHillPlaneMesh(
-		"plane", core::dimension2df(10,10), core::dimension2du(2,2)), 0, -1,
-		core::vector3df(0,0,20), core::vector3df(270,0,0));
+	scene::ISceneNode* plane = smgr->addMeshSceneNode(
+		smgr->addHillPlaneMesh("plane", core::dimension2df(10, 10),
+			core::dimension2du(2, 2)),
+		0, -1, core::vector3df(0, 0, 20), core::vector3df(270, 0, 0)
+	);
 
-	if (plane)
-	{
-		plane->setMaterialTexture(0, driver->getTexture(mediaPath + "t351sml.jpg"));
+	if (plane) {
+		plane->setMaterialTexture(0,
+			driver->getTexture(mediaPath + "t351sml.jpg"));
 		plane->setMaterialFlag(video::EMF_LIGHTING, false);
 		plane->setMaterialFlag(video::EMF_BACK_FACE_CULLING, true);
 	}
@@ -151,48 +155,47 @@ int main()
 	smgr->addCameraSceneNode();
 	int lastFPS = -1;
 	u32 timeNow = device->getTimer()->getTime();
-	bool nodeVisible=true;
+	bool nodeVisible = true;
 
-	while(device->run())
-	{
+	while (device->run()) {
 		plane->setVisible(!receiver.IsKeyDown(irr::KEY_SPACE));
 
-		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH, video::SColor(255,113,113,133));
+		driver->beginScene(video::ECBF_COLOR | video::ECBF_DEPTH,
+			video::SColor(255, 113, 113, 133));
 		/*
-		First, we draw the scene, possibly without the occluded element. This is necessary
-		because we need the occluder to be drawn first. You can also use several scene
-		managers to collect a number of possible occluders in a separately rendered
-		scene.
+		First, we draw the scene, possibly without the occluded element. This is
+		necessary because we need the occluder to be drawn first. You can also use
+		several scene managers to collect a number of possible occluders in a
+		separately rendered scene.
 		*/
 		node->setVisible(nodeVisible);
 		smgr->drawAll();
 		smgr->getGUIEnvironment()->drawAll();
 
 		/*
-		Once in a while, here every 100 ms, we check the visibility. We run the queries,
-		update the pixel value, and query the result. Since we already rendered the node
-		we render the query invisible. The update is made blocking, as we need the result
-		immediately. If you don't need the result immediately, e.g. because you have other
-		things to render, you can call the update non-blocking. This gives the GPU more
-		time to pass back the results without flushing the render pipeline.
-		If the update was called non-blocking, the result from getOcclusionQueryResult is
-		either the previous value, or 0xffffffff if no value has been generated at all, yet.
+		Once in a while, here every 100 ms, we check the visibility. We run the
+		queries, update the pixel value, and query the result. Since we already
+		rendered the node we render the query invisible. The update is made
+		blocking, as we need the result immediately. If you don't need the result
+		immediately, e.g. because you have other things to render, you can call
+		the update non-blocking. This gives the GPU more time to pass back the
+		results without flushing the render pipeline. If the update was called
+		non-blocking, the result from getOcclusionQueryResult is either the
+		previous value, or 0xffffffff if no value has been generated at all, yet.
 		The result is taken immediately as visibility flag for the node.
 		*/
-		if (device->getTimer()->getTime()-timeNow>100)
-		{
+		if (device->getTimer()->getTime() - timeNow > 100) {
 			driver->runAllOcclusionQueries(false);
 			driver->updateAllOcclusionQueries();
-			nodeVisible=driver->getOcclusionQueryResult(node)>0;
-			timeNow=device->getTimer()->getTime();
+			nodeVisible = driver->getOcclusionQueryResult(node) > 0;
+			timeNow = device->getTimer()->getTime();
 		}
 
 		driver->endScene();
 
 		int fps = driver->getFPS();
 
-		if (lastFPS != fps)
-		{
+		if (lastFPS != fps) {
 			core::stringw tmp(L"OcclusionQuery Example [");
 			tmp += driver->getName();
 			tmp += L"] fps: ";
@@ -207,7 +210,7 @@ int main()
 	In the end, delete the Irrlicht device.
 	*/
 	device->drop();
-	
+
 	return 0;
 }
 

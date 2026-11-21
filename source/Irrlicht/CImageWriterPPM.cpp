@@ -16,29 +16,25 @@ namespace irr
 namespace video
 {
 
+IImageWriter* createImageWriterPPM() { return new CImageWriterPPM; }
 
-IImageWriter* createImageWriterPPM()
-{
-	return new CImageWriterPPM;
-}
-
-
-CImageWriterPPM::CImageWriterPPM()
-{
+CImageWriterPPM::CImageWriterPPM() {
 #ifdef _DEBUG
 	setDebugName("CImageWriterPPM");
 #endif
 }
 
-
-bool CImageWriterPPM::isAWriteableFileExtension(const io::path& filename) const
-{
-	return core::hasFileExtension ( filename, "ppm" );
+bool CImageWriterPPM::isAWriteableFileExtension(
+	const io::path& filename
+) const {
+	return core::hasFileExtension(filename, "ppm");
 }
 
-
-bool CImageWriterPPM::writeImage(io::IWriteFile *file, IImage *image, u32 param) const
-{
+bool CImageWriterPPM::writeImage(
+	io::IWriteFile* file,
+	IImage* image,
+	u32 param
+) const {
 	char cache[70];
 	int size;
 
@@ -46,34 +42,38 @@ bool CImageWriterPPM::writeImage(io::IWriteFile *file, IImage *image, u32 param)
 
 	const bool binary = false;
 
-	if (binary)
+	if (binary) {
 		size = snprintf_irr(cache, 70, "P6\n");
-	else
+	} else {
 		size = snprintf_irr(cache, 70, "P3\n");
-	if ( size < 0 )
+	}
+	if (size < 0) {
 		return false;
+	}
 
-	if (file->write(cache, (size_t)size) != (size_t)size)
+	if (file->write(cache, (size_t)size) != (size_t)size) {
 		return false;
+	}
 
 	size = snprintf_irr(cache, 70, "%u %u\n", imageSize.Width, imageSize.Height);
-	if ( size < 0 )
+	if (size < 0) {
 		return false;
-	if (file->write(cache, (size_t)size) != (size_t)size)
+	}
+	if (file->write(cache, (size_t)size) != (size_t)size) {
 		return false;
+	}
 
 	size = snprintf_irr(cache, 70, "255\n");
-	if ( size < 0 )
+	if (size < 0) {
 		return false;
-	if (file->write(cache, (size_t)size) != (size_t)size)
+	}
+	if (file->write(cache, (size_t)size) != (size_t)size) {
 		return false;
+	}
 
-	if (binary)
-	{
-		for (u32 h = 0; h < imageSize.Height; ++h)
-		{
-			for (u32 c = 0; c < imageSize.Width; ++c)
-			{
+	if (binary) {
+		for (u32 h = 0; h < imageSize.Height; ++h) {
+			for (u32 c = 0; c < imageSize.Width; ++c) {
 				const video::SColor& pixel = image->getPixel(c, h);
 				const u8 r = (u8)(pixel.getRed() & 0xff);
 				const u8 g = (u8)(pixel.getGreen() & 0xff);
@@ -83,21 +83,21 @@ bool CImageWriterPPM::writeImage(io::IWriteFile *file, IImage *image, u32 param)
 				file->write(&b, 1);
 			}
 		}
-	}
-	else
-	{
+	} else {
 		s32 n = 0;
 
-		for (u32 h = 0; h < imageSize.Height; ++h)
-		{
-			for (u32 c = 0; c < imageSize.Width; ++c, ++n)
-			{
+		for (u32 h = 0; h < imageSize.Height; ++h) {
+			for (u32 c = 0; c < imageSize.Width; ++c, ++n) {
 				const video::SColor& pixel = image->getPixel(c, h);
-				size = snprintf_irr(cache, 70, "%.3u %.3u %.3u%s", pixel.getRed(), pixel.getGreen(), pixel.getBlue(), n % 5 == 4 ? "\n" : "  ");
-				if ( size < 0 )
+				size = snprintf_irr(cache, 70, "%.3u %.3u %.3u%s",
+					pixel.getRed(), pixel.getGreen(), pixel.getBlue(),
+					n % 5 == 4 ? "\n" : "  ");
+				if (size < 0) {
 					return false;
-				if (file->write(cache, (size_t)size) != (size_t)size)
+				}
+				if (file->write(cache, (size_t)size) != (size_t)size) {
 					return false;
+				}
 			}
 		}
 	}
@@ -105,9 +105,7 @@ bool CImageWriterPPM::writeImage(io::IWriteFile *file, IImage *image, u32 param)
 	return true;
 }
 
-
 } // namespace video
 } // namespace irr
 
 #endif
-

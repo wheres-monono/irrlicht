@@ -21,34 +21,41 @@ class ISceneNode;
 class ITriangleSelector;
 class IMeshBuffer;
 
-//! Additional information about the triangle arrays returned by ITriangleSelector::getTriangles
+//! Additional information about the triangle arrays returned by
+//! ITriangleSelector::getTriangles
 /** ITriangleSelector are free to fill out this information fully, partly or ignore it.
     Usually they will try to fill it when they can and set values to 0 otherwise.
 */
-struct SCollisionTriangleRange
-{
-	SCollisionTriangleRange()
-		: RangeStart(0), RangeSize(0)
-		, Selector(0), SceneNode(0)
-		, MeshBuffer(0), MaterialIndex(0)
-	{}
+struct SCollisionTriangleRange {
+	SCollisionTriangleRange() :
+		RangeStart(0),
+		RangeSize(0),
+		Selector(0),
+		SceneNode(0),
+		MeshBuffer(0),
+		MaterialIndex(0) {}
 
 	//! Check if this triangle index inside the range
 	/**
-	\param triangleIndex Index to an element inside the array of triangles returned by ITriangleSelector::getTriangles
+	\param triangleIndex Index to an element inside the array of triangles returned by
+	ITriangleSelector::getTriangles
 	*/
-	bool isIndexInRange(irr::u32 triangleIndex) const
-	{
-		return triangleIndex >= RangeStart && triangleIndex < RangeStart+RangeSize;
+	bool isIndexInRange(
+		irr::u32 triangleIndex
+	) const {
+		return triangleIndex >= RangeStart &&
+		       triangleIndex < RangeStart + RangeSize;
 	}
 
 	//! First index in the returned triangle array for which this struct is valid
 	irr::u32 RangeStart;
 
-	//! Number of elements in the returned triangle array for which this struct is valid (starting with RangeStart)
+	//! Number of elements in the returned triangle array for which this struct is
+	//! valid (starting with RangeStart)
 	irr::u32 RangeSize;
 
-	//! Real selector which contained those triangles (useful when working with MetaTriangleSelector)
+	//! Real selector which contained those triangles (useful when working with
+	//! MetaTriangleSelector)
 	ITriangleSelector* Selector;
 
 	//! SceneNode from which the triangles are from
@@ -58,7 +65,8 @@ struct SCollisionTriangleRange
 	//! Is 0 when the ITriangleSelector doesn't support meshbuffer selection
 	const IMeshBuffer* MeshBuffer;
 
-	//! Index of selected material in the SceneNode. Usually only valid when MeshBuffer is also set, otherwise always 0
+	//! Index of selected material in the SceneNode. Usually only valid when
+	//! MeshBuffer is also set, otherwise always 0
 	irr::u32 MaterialIndex;
 };
 
@@ -69,10 +77,8 @@ This is used for doing collision detection: For example if you know, that a
 collision may have happened in the area between (1,1,1) and (10,10,10), you
 can get all triangles of the scene node in this area with the
 ITriangleSelector easily and check every triangle if it collided. */
-class ITriangleSelector : public virtual IReferenceCounted
-{
+class ITriangleSelector : public virtual IReferenceCounted {
 public:
-
 	//! Get amount of all available triangles in this selector
 	virtual s32 getTriangleCount() const = 0;
 
@@ -97,12 +103,15 @@ public:
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer.
 	*/
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::matrix4* transform=0,
-		bool useNodeTransform=true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo=0) const = 0;
+	virtual void getTriangles(core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::matrix4* transform = 0,
+		bool useNodeTransform = true,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
 
-	//! Gets the triangles for one associated node which may lie within a specific bounding box.
+	//! Gets the triangles for one associated node which may lie within a specific
+	//! bounding box.
 	/**
 	This returns all triangles for one scene node associated with this
 	selector.  If there is more than one scene node associated (e.g. for
@@ -127,12 +136,16 @@ public:
 	array is filled with additional information about the returned triangles.
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer. */
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::aabbox3d<f32>& box,
-		const core::matrix4* transform=0, bool useNodeTransform=true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo=0) const = 0;
+	virtual void getTriangles(core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::aabbox3d<f32>& box,
+		const core::matrix4* transform = 0,
+		bool useNodeTransform = true,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
 
-	//! Gets the triangles for one associated node which have or may have contact with a 3d line.
+	//! Gets the triangles for one associated node which have or may have contact with
+	//! a 3d line.
 	/**
 	This returns all triangles for one scene node associated with this
 	selector.  If there is more than one scene node associated (e.g. for
@@ -157,32 +170,36 @@ public:
 	array is filled with additional information about the returned triangles.
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer. */
-	virtual void getTriangles(core::triangle3df* triangles, s32 arraySize,
-		s32& outTriangleCount, const core::line3d<f32>& line,
-		const core::matrix4* transform=0, bool useNodeTransform=true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo=0) const = 0;
+	virtual void getTriangles(core::triangle3df* triangles,
+		s32 arraySize,
+		s32& outTriangleCount,
+		const core::line3d<f32>& line,
+		const core::matrix4* transform = 0,
+		bool useNodeTransform = true,
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
 
 	//! Get number of TriangleSelectors that are part of this one
 	/** Only useful for MetaTriangleSelector, others return 1
-	*/
+	 */
 	virtual u32 getSelectorCount() const = 0;
 
 	//! Get TriangleSelector based on index based on getSelectorCount
 	/** Only useful for MetaTriangleSelector, others return 'this' or 0
-	*/
+	 */
 	virtual ITriangleSelector* getSelector(u32 index) = 0;
 
 	//! Get TriangleSelector based on index based on getSelectorCount
 	/** Only useful for MetaTriangleSelector, others return 'this' or 0
-	*/
+	 */
 	virtual const ITriangleSelector* getSelector(u32 index) const = 0;
 
 	//! Get scene node associated with a given triangle.
 	/**	With CMetaTriangleSelector-selectors it's possible to find out a node
 	belonging to a certain triangle index.
-	NOTE: triangleIndex has nothing to do with the order of triangles returned by getTriangles functions!
-	So you can _not_ use this function to find out anything about to which node returned triangles belong.
-	Use STriangleCollisionInfo struct for that.
+	NOTE: triangleIndex has nothing to do with the order of triangles returned by
+	getTriangles functions! So you can _not_ use this function to find out anything
+	about to which node returned triangles belong. Use STriangleCollisionInfo struct
+	for that.
 	\param triangleIndex: the index of the triangle for which you want to find.
 	\return The scene node associated with that triangle.
 	*/

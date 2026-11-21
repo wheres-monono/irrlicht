@@ -12,21 +12,19 @@ namespace irr
 {
 namespace io
 {
-	class IReadFile;
+class IReadFile;
 } // end namespace io
 namespace scene
 {
-	class ISceneNode;
-	class ISceneUserDataSerializer;
+class ISceneNode;
+class ISceneUserDataSerializer;
 
 //! Class which can load a scene into the scene manager.
 /** If you want Irrlicht to be able to load currently unsupported
 scene file formats (e.g. .vrml), then implement this and add your
 new Sceneloader to the engine with ISceneManager::addExternalSceneLoader(). */
-class ISceneLoader : public virtual IReferenceCounted
-{
+class ISceneLoader : public virtual IReferenceCounted {
 public:
-
 	//! Returns true if the class might be able to load this file.
 	/** This decision should be based on the file extension (e.g. ".vrml")
 	only.
@@ -49,14 +47,12 @@ public:
 	\param rootNode The node to load the scene into, if none is provided then the
 	scene will be loaded into the root node.
 	\return Returns true on success, false on failure. Returns 0 if loading failed. */
-	virtual bool loadScene(io::IReadFile* file, ISceneUserDataSerializer* userDataSerializer=0,
-	                       ISceneNode* rootNode=0) = 0;
-
+	virtual bool loadScene(io::IReadFile* file,
+		ISceneUserDataSerializer* userDataSerializer = 0,
+		ISceneNode* rootNode = 0) = 0;
 };
-
 
 } // end namespace scene
 } // end namespace irr
 
 #endif
-

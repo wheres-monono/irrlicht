@@ -34,25 +34,22 @@ You can for example easily create a campfire by doing this:
 	scene::IParticleEmitter* em = p->createBoxEmitter(
 		core::aabbox3d<f32>(-5,0,-5,5,1,5),
 		core::vector3df(0.0f,0.03f,0.0f),
-		40,80, video::SColor(0,255,255,255),video::SColor(0,255,255,255), 1100,2000);
-	p->setEmitter(em);
-	em->drop();
-	scene::IParticleAffector* paf = p->createFadeOutParticleAffector();
-	p->addAffector(paf);
-	paf->drop();
+		40,80, video::SColor(0,255,255,255),video::SColor(0,255,255,255),
+1100,2000); p->setEmitter(em); em->drop(); scene::IParticleAffector* paf =
+p->createFadeOutParticleAffector(); p->addAffector(paf); paf->drop();
 \endcode
 */
 
 //! Bitflags to control particle behavior
-enum EParticleBehavior
-{
+enum EParticleBehavior {
 	//! Continue emitting new particles even when the node is invisible
 	EPB_INVISIBLE_EMITTING = 1,
 
 	//! Continue affecting particles even when the node is invisible
 	EPB_INVISIBLE_AFFECTING = 2,
 
-	//! Continue updating particle positions or deleting them even when the node is invisible
+	//! Continue updating particle positions or deleting them even when the node is
+	//! invisible
 	EPB_INVISIBLE_ANIMATING = 4,
 
 	//! Clear all particles when node gets invisible
@@ -62,53 +59,51 @@ enum EParticleBehavior
 	//! This is mainly to allow backward compatible behavior to Irrlicht 1.8
 	EPB_EMITTER_VECTOR_IGNORE_ROTATION = 16,
 
-	//! On emitting global particles interpolate the positions randomly between the last and current node transformations.
-	//! This can be set to avoid gaps caused by fast node movement or low framerates, but will be somewhat
-	//! slower to calculate.
+	//! On emitting global particles interpolate the positions randomly between the
+	//! last and current node transformations. This can be set to avoid gaps caused by
+	//! fast node movement or low framerates, but will be somewhat slower to
+	//! calculate.
 	EPB_EMITTER_FRAME_INTERPOLATION = 32
 };
 
-class IParticleSystemSceneNode : public ISceneNode
-{
+class IParticleSystemSceneNode : public ISceneNode {
 public:
-
 	//! Constructor
-	IParticleSystemSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id,
-		const core::vector3df& position = core::vector3df(0,0,0),
-		const core::vector3df& rotation = core::vector3df(0,0,0),
-		const core::vector3df& scale = core::vector3df(1.0f, 1.0f, 1.0f))
-			: ISceneNode(parent, mgr, id, position, rotation, scale)
-			, ParticleBehavior(0)
-	{
-	}
+	IParticleSystemSceneNode(
+		ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id,
+		const core::vector3df& position = core::vector3df(0, 0, 0),
+		const core::vector3df& rotation = core::vector3df(0, 0, 0),
+		const core::vector3df& scale = core::vector3df(1.0f, 1.0f, 1.0f)
+	) :
+		ISceneNode(parent, mgr, id, position, rotation, scale),
+		ParticleBehavior(0) {}
 
 	//! Sets the size of all particles.
 	virtual void setParticleSize(
-		const core::dimension2d<f32> &size = core::dimension2d<f32>(5.0f, 5.0f)) = 0;
+		const core::dimension2d<f32>& size = core::dimension2d<f32>(5.0f, 5.0f)
+	) = 0;
 
 	//! Sets if the particles should be global.
 	/** If they are, the particles are affected by the movement of the
 	particle system scene node too, otherwise they completely ignore it.
 	Default is true. */
-	virtual void setParticlesAreGlobal(bool global=true) = 0;
-
+	virtual void setParticlesAreGlobal(bool global = true) = 0;
 
 	//! Bitflags to change the particle behavior
 	/**
 	\param flags A combination of ::EParticleBehavior bit-flags. Default is 0.	*/
-	virtual void setParticleBehavior(irr::u32 flags)
-	{
+	virtual void setParticleBehavior(
+		irr::u32 flags
+	) {
 		ParticleBehavior = flags;
 	}
-
 
 	//! Gets how particles behave in different situations
 	/**
 	\return A combination of ::EParticleBehavior flags */
-	virtual irr::u32 getParticleBehavior() const
-	{
-		return ParticleBehavior;
-	}
+	virtual irr::u32 getParticleBehavior() const { return ParticleBehavior; }
 
 	//! Remove all currently visible particles
 	virtual void clearParticles() = 0;
@@ -121,7 +116,7 @@ public:
 
 	//! Gets the particle emitter, which creates the particles.
 	/** \return The particle emitter. Can be 0 if none is set. */
-	virtual IParticleEmitter* getEmitter() =0;
+	virtual IParticleEmitter* getEmitter() = 0;
 
 	//! Sets the particle emitter, which creates the particles.
 	/** A particle emitter can be created using one of the createEmitter
@@ -198,17 +193,22 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleAnimatedMeshSceneNodeEmitter* createAnimatedMeshSceneNodeEmitter(
-		scene::IAnimatedMeshSceneNode* node, bool useNormalDirection = true,
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
-		f32 normalDirectionModifier = 100.0f, s32 mbNumber = -1,
+		scene::IAnimatedMeshSceneNode* node,
+		bool useNormalDirection = true,
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
+		f32 normalDirectionModifier = 100.0f,
+		s32 mbNumber = -1,
 		bool everyMeshVertex = false,
-		u32 minParticlesPerSecond = 5, u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin = 2000, u32 lifeTimeMax = 4000,
+		u32 minParticlesPerSecond = 5,
+		u32 maxParticlesPerSecond = 10,
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a box particle emitter.
 	/** \param box: The box for the emitter.
@@ -238,16 +238,18 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleBoxEmitter* createBoxEmitter(
-		const core::aabbox3df& box = core::aabbox3df(-10,28,-10,10,30,10),
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
+		const core::aabbox3df& box = core::aabbox3df(-10, 28, -10, 10, 30, 10),
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
 		u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin=2000, u32 lifeTimeMax=4000,
-		s32 maxAngleDegrees=0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
+		s32 maxAngleDegrees = 0,
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a particle emitter for emitting from a cylinder
 	/** \param center: The center of the circle at the base of the cylinder
@@ -282,17 +284,22 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleCylinderEmitter* createCylinderEmitter(
-		const core::vector3df& center, f32 radius,
-		const core::vector3df& normal, f32 length,
+		const core::vector3df& center,
+		f32 radius,
+		const core::vector3df& normal,
+		f32 length,
 		bool outlineOnly = false,
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
-		u32 minParticlesPerSecond = 5, u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin = 2000, u32 lifeTimeMax = 4000,
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
+		u32 minParticlesPerSecond = 5,
+		u32 maxParticlesPerSecond = 10,
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a mesh particle emitter.
 	/** \param mesh: Pointer to mesh to emit particles from
@@ -337,18 +344,22 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleMeshEmitter* createMeshEmitter(
-		scene::IMesh* mesh, bool useNormalDirection = true,
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
-		f32 normalDirectionModifier = 100.0f, s32 mbNumber = -1,
+	virtual IParticleMeshEmitter* createMeshEmitter(scene::IMesh* mesh,
+		bool useNormalDirection = true,
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
+		f32 normalDirectionModifier = 100.0f,
+		s32 mbNumber = -1,
 		bool everyMeshVertex = false,
-		u32 minParticlesPerSecond = 5, u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin = 2000, u32 lifeTimeMax = 4000,
+		u32 minParticlesPerSecond = 5,
+		u32 maxParticlesPerSecond = 10,
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
+			5.0f)) = 0;
 
 	//! Creates a point particle emitter.
 	/** \param direction: Direction and speed of particle emission.
@@ -377,15 +388,17 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticlePointEmitter* createPointEmitter(
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
 		u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin=2000, u32 lifeTimeMax=4000,
-		s32 maxAngleDegrees=0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
+		s32 maxAngleDegrees = 0,
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a ring particle emitter.
 	/** \param center: Center of ring
@@ -418,17 +431,20 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleRingEmitter* createRingEmitter(
-		const core::vector3df& center, f32 radius, f32 ringThickness,
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
+	virtual IParticleRingEmitter* createRingEmitter(const core::vector3df& center,
+		f32 radius,
+		f32 ringThickness,
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
 		u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin=2000, u32 lifeTimeMax=4000,
-		s32 maxAngleDegrees=0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
+		s32 maxAngleDegrees = 0,
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
+			5.0f)) = 0;
 
 	//! Creates a sphere particle emitter.
 	/** \param center: Center of sphere
@@ -458,17 +474,19 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleSphereEmitter* createSphereEmitter(
-		const core::vector3df& center, f32 radius,
-		const core::vector3df& direction = core::vector3df(0.0f,0.03f,0.0f),
+	virtual IParticleSphereEmitter* createSphereEmitter(const core::vector3df& center,
+		f32 radius,
+		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
 		u32 maxParticlesPerSecond = 10,
-		const video::SColor& minStartColor = video::SColor(255,0,0,0),
-		const video::SColor& maxStartColor = video::SColor(255,255,255,255),
-		u32 lifeTimeMin=2000, u32 lifeTimeMax=4000,
-		s32 maxAngleDegrees=0,
-		const core::dimension2df& minStartSize = core::dimension2df(5.0f,5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,5.0f) ) = 0;
+		const video::SColor& minStartColor = video::SColor(255, 0, 0, 0),
+		const video::SColor& maxStartColor = video::SColor(255, 255, 255, 255),
+		u32 lifeTimeMin = 2000,
+		u32 lifeTimeMax = 4000,
+		s32 maxAngleDegrees = 0,
+		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
+			5.0f)) = 0;
 
 	//! Creates a point attraction affector.
 	/** This affector modifies the positions of the particles and attracts
@@ -488,20 +506,27 @@ public:
 	as new affector of this particle system, just call addAffector(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleAttractionAffector* createAttractionAffector(
-		const core::vector3df& point, f32 speed = 1.0f, bool attract = true,
-		bool affectX = true, bool affectY = true, bool affectZ = true) = 0;
+	virtual IParticleAttractionAffector*
+	createAttractionAffector(const core::vector3df& point,
+		f32 speed = 1.0f,
+		bool attract = true,
+		bool affectX = true,
+		bool affectY = true,
+		bool affectZ = true) = 0;
 
 	//! Creates a scale particle affector.
 	/** This affector scales the particle to the a multiple of its size defined
 	by the scaleTo variable.
-	\param scaleTo: multiple of the size which the particle will be scaled to until deletion
+	\param scaleTo: multiple of the size which the particle will be scaled to until
+	deletion
 	\return Pointer to the created particle affector.
 	To add this affector as new affector of this particle system,
 	just call addAffector(). Note that you'll have to drop() the
 	returned pointer, after you don't need it any more, see
 	IReferenceCounted::drop() for more information. */
-	virtual IParticleAffector* createScaleParticleAffector(const core::dimension2df& scaleTo = core::dimension2df(1.0f, 1.0f)) = 0;
+	virtual IParticleAffector* createScaleParticleAffector(
+		const core::dimension2df& scaleTo = core::dimension2df(1.0f, 1.0f)
+	) = 0;
 
 	//! Creates a fade out particle affector.
 	/** This affector modifies the color of every particle and and reaches
@@ -517,8 +542,9 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleFadeOutAffector* createFadeOutParticleAffector(
-		const video::SColor& targetColor = video::SColor(0,0,0,0),
-		u32 timeNeededToFadeOut = 1000) = 0;
+		const video::SColor& targetColor = video::SColor(0, 0, 0, 0),
+		u32 timeNeededToFadeOut = 1000
+	) = 0;
 
 	//! Creates a gravity affector.
 	/** This affector modifies the direction of the particle. It assumes
@@ -534,8 +560,9 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleGravityAffector* createGravityAffector(
-		const core::vector3df& gravity = core::vector3df(0.0f,-0.03f,0.0f),
-		u32 timeForceLost = 1000) = 0;
+		const core::vector3df& gravity = core::vector3df(0.0f, -0.03f, 0.0f),
+		u32 timeForceLost = 1000
+	) = 0;
 
 	//! Creates a rotation affector.
 	/** This affector modifies the positions of the particles and attracts
@@ -547,19 +574,25 @@ public:
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
 	virtual IParticleRotationAffector* createRotationAffector(
-		const core::vector3df& speed = core::vector3df(5.0f,5.0f,5.0f),
-		const core::vector3df& pivotPoint = core::vector3df(0.0f,0.0f,0.0f) ) = 0;
+		const core::vector3df& speed = core::vector3df(5.0f, 5.0f, 5.0f),
+		const core::vector3df& pivotPoint = core::vector3df(0.0f, 0.0f, 0.0f)
+	) = 0;
 
 	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_
-	{
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_ {
 		out->addInt("ParticleBehavior", ParticleBehavior);
 	}
 
 	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_
-	{
-		ParticleBehavior = in->getAttributeAsInt("ParticleBehavior", ParticleBehavior);
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_ {
+		ParticleBehavior =
+			in->getAttributeAsInt("ParticleBehavior", ParticleBehavior);
 	}
 
 protected:

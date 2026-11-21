@@ -11,8 +11,8 @@
 #include "irrArray.h"
 #include "ITexture.h"
 #include "IImage.h"
-#if defined(__BORLANDC__) || defined (__BCPLUSPLUS__)
-#include "irrMath.h"    // needed by borland for sqrtf define
+#if defined(__BORLANDC__) || defined(__BCPLUSPLUS__)
+#include "irrMath.h" // needed by borland for sqrtf define
 #endif
 #include <d3d9.h>
 
@@ -23,16 +23,25 @@ namespace video
 
 class CD3D9Driver;
 
-class CD3D9Texture : public ITexture
-{
+class CD3D9Texture : public ITexture {
 public:
-	CD3D9Texture(const io::path& name, const core::array<IImage*>& image, E_TEXTURE_TYPE type, CD3D9Driver* driver);
+	CD3D9Texture(const io::path& name,
+		const core::array<IImage*>& image,
+		E_TEXTURE_TYPE type,
+		CD3D9Driver* driver);
 
-	CD3D9Texture(CD3D9Driver* driver, const core::dimension2d<u32>& size, const io::path& name, E_TEXTURE_TYPE type, const ECOLOR_FORMAT format = ECF_UNKNOWN);
+	CD3D9Texture(CD3D9Driver* driver,
+		const core::dimension2d<u32>& size,
+		const io::path& name,
+		E_TEXTURE_TYPE type,
+		const ECOLOR_FORMAT format = ECF_UNKNOWN);
 
 	virtual ~CD3D9Texture();
 
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE, u32 mipmapLevel=0, u32 layer = 0, E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
+	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+		u32 mipmapLevel = 0,
+		u32 layer = 0,
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
 
 	virtual void unlock() _IRR_OVERRIDE_;
 
@@ -71,8 +80,8 @@ private:
 	IDirect3DSurface9* RTTSurface;
 };
 
-}
-}
+} // namespace video
+} // namespace irr
 
 #endif
 #endif

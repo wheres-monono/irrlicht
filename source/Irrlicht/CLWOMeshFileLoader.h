@@ -13,20 +13,18 @@ namespace irr
 {
 namespace io
 {
-	class IReadFile;
-	class IFileSystem;
+class IReadFile;
+class IFileSystem;
 } // end namespace io
 namespace scene
 {
 
-	struct SMesh;
-	class ISceneManager;
+struct SMesh;
+class ISceneManager;
 
 //! Meshloader capable of loading Lightwave 3D meshes.
-class CLWOMeshFileLoader : public IMeshLoader
-{
+class CLWOMeshFileLoader : public IMeshLoader {
 public:
-
 	//! Constructor
 	CLWOMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
 
@@ -35,7 +33,8 @@ public:
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool
+	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
@@ -44,7 +43,6 @@ public:
 	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
 
 private:
-
 	struct tLWOMaterial;
 
 	bool readFileHeader();
@@ -52,10 +50,10 @@ private:
 	void readObj1(u32 size);
 	void readTagMapping(u32 size);
 	void readVertexMapping(u32 size);
-	void readDiscVertexMapping (u32 size);
+	void readDiscVertexMapping(u32 size);
 	void readObj2(u32 size);
 	void readMat(u32 size);
-	u32 readString(core::stringc& name, u32 size=0);
+	u32 readString(core::stringc& name, u32 size = 0);
 	u32 readVec(core::vector3df& vec);
 	u32 readVX(u32& num);
 	u32 readColor(video::SColor& color);
@@ -67,15 +65,15 @@ private:
 	SMesh* Mesh;
 
 	core::array<core::vector3df> Points;
-	core::array<core::array<u32> > Indices;
+	core::array<core::array<u32>> Indices;
 	core::array<core::stringc> UvName;
-	core::array<core::array<u32> > UvIndex;
+	core::array<core::array<u32>> UvIndex;
 	core::array<core::stringc> DUvName;
-	core::array<core::array<u32> > VmPolyPointsIndex;
-	core::array<core::array<core::vector2df> > VmCoordsIndex;
+	core::array<core::array<u32>> VmPolyPointsIndex;
+	core::array<core::array<core::vector2df>> VmCoordsIndex;
 
 	core::array<u16> MaterialMapping;
-	core::array<core::array<core::vector2df> > TCoords;
+	core::array<core::array<core::vector2df>> TCoords;
 	core::array<tLWOMaterial*> Materials;
 	core::array<core::stringc> Images;
 	u8 FormatVersion;
