@@ -20,8 +20,12 @@ public:
 	virtual IVertexBuffer& getVertexBuffer() const = 0;
 	virtual IIndexBuffer& getIndexBuffer() const = 0;
 
-	virtual void setVertexBuffer(IVertexBuffer* vertexBuffer) = 0;
-	virtual void setIndexBuffer(IIndexBuffer* indexBuffer) = 0;
+	virtual void setVertexBuffer(
+		IVertexBuffer* vertexBuffer
+	) = 0;
+	virtual void setIndexBuffer(
+		IIndexBuffer* indexBuffer
+	) = 0;
 
 	//! Get the material of this meshbuffer
 	/** \return Material of this buffer. */
@@ -38,7 +42,9 @@ public:
 	//! Set axis aligned bounding box
 	/** \param box User defined axis aligned bounding box to use
 	for this buffer. */
-	virtual void setBoundingBox(const core::aabbox3df& box) = 0;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) = 0;
 
 	//! Recalculates the bounding box. Should be called if the mesh changed.
 	virtual void recalculateBoundingBox() = 0;

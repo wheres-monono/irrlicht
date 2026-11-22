@@ -25,13 +25,15 @@ can be controlled by setting the right particle emitters and affectors.
 class CParticleSystemSceneNode : public IParticleSystemSceneNode {
 public:
 	//! constructor
-	CParticleSystemSceneNode(bool createDefaultEmitter,
+	CParticleSystemSceneNode(
+		bool createDefaultEmitter,
 		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		const core::vector3df& position,
 		const core::vector3df& rotation,
-		const core::vector3df& scale);
+		const core::vector3df& scale
+	);
 
 	//! destructor
 	virtual ~CParticleSystemSceneNode();
@@ -40,10 +42,14 @@ public:
 	virtual IParticleEmitter* getEmitter() _IRR_OVERRIDE_;
 
 	//! Sets the particle emitter, which creates the particles.
-	virtual void setEmitter(IParticleEmitter* emitter) _IRR_OVERRIDE_;
+	virtual void setEmitter(
+		IParticleEmitter* emitter
+	) _IRR_OVERRIDE_;
 
 	//! Adds new particle affector to the particle system.
-	virtual void addAffector(IParticleAffector* affector) _IRR_OVERRIDE_;
+	virtual void addAffector(
+		IParticleAffector* affector
+	) _IRR_OVERRIDE_;
 
 	//! Get a list of all particle affectors.
 	virtual const core::list<IParticleAffector*>& getAffectors() const _IRR_OVERRIDE_;
@@ -52,7 +58,9 @@ public:
 	virtual void removeAllAffectors() _IRR_OVERRIDE_;
 
 	//! Returns the material based on the zero based index i.
-	virtual video::SMaterial& getMaterial(u32 i) _IRR_OVERRIDE_;
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) _IRR_OVERRIDE_;
 
 	//! Returns amount of materials used by this scene node.
 	virtual u32 getMaterialCount() const _IRR_OVERRIDE_;
@@ -120,7 +128,8 @@ public:
 	) _IRR_OVERRIDE_;
 
 	//! Creates a mesh particle emitter.
-	virtual IParticleMeshEmitter* createMeshEmitter(scene::IMesh* mesh,
+	virtual IParticleMeshEmitter* createMeshEmitter(
+		scene::IMesh* mesh,
 		bool useNormalDirection = true,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		f32 normalDirectionModifier = 100.0f,
@@ -134,8 +143,8 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) _IRR_OVERRIDE_;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) _IRR_OVERRIDE_;
 
 	//! Creates a point particle emitter.
 	virtual IParticlePointEmitter* createPointEmitter(
@@ -152,7 +161,8 @@ public:
 	) _IRR_OVERRIDE_;
 
 	//! Creates a ring particle emitter.
-	virtual IParticleRingEmitter* createRingEmitter(const core::vector3df& center,
+	virtual IParticleRingEmitter* createRingEmitter(
+		const core::vector3df& center,
 		f32 radius,
 		f32 ringThickness,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
@@ -164,11 +174,12 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) _IRR_OVERRIDE_;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) _IRR_OVERRIDE_;
 
 	//! Creates a sphere particle emitter.
-	virtual IParticleSphereEmitter* createSphereEmitter(const core::vector3df& center,
+	virtual IParticleSphereEmitter* createSphereEmitter(
+		const core::vector3df& center,
 		f32 radius,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
@@ -179,19 +190,20 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) _IRR_OVERRIDE_;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) _IRR_OVERRIDE_;
 
 	//! Creates a point attraction affector. This affector modifies the positions of
 	//! the particles and attracts them to a specified point at a specified speed per
 	//! second.
-	virtual IParticleAttractionAffector*
-	createAttractionAffector(const core::vector3df& point,
+	virtual IParticleAttractionAffector* createAttractionAffector(
+		const core::vector3df& point,
 		f32 speed = 1.0f,
 		bool attract = true,
 		bool affectX = true,
 		bool affectY = true,
-		bool affectZ = true) _IRR_OVERRIDE_;
+		bool affectZ = true
+	) _IRR_OVERRIDE_;
 
 	//! Creates a scale particle affector.
 	virtual IParticleAffector* createScaleParticleAffector(
@@ -225,26 +237,36 @@ public:
 	//! Sets if the particles should be global. If they are, the particles are
 	//! affected by the movement of the particle system scene node too, otherwise they
 	//! completely ignore it. Default is true.
-	virtual void setParticlesAreGlobal(bool global = true) _IRR_OVERRIDE_;
+	virtual void setParticlesAreGlobal(
+		bool global = true
+	) _IRR_OVERRIDE_;
 
 	//! Remove all currently visible particles
 	virtual void clearParticles() _IRR_OVERRIDE_;
 
 	//! Sets if the node should be visible or not.
-	virtual void setVisible(bool isVisible) _IRR_OVERRIDE_;
+	virtual void setVisible(
+		bool isVisible
+	) _IRR_OVERRIDE_;
 
 	//! Do manually update the particles.
 	//! This should only be called when you want to render the node outside the
 	//! scenegraph, as the node will care about this otherwise automatically.
-	virtual void doParticleSystem(u32 time) _IRR_OVERRIDE_;
+	virtual void doParticleSystem(
+		u32 time
+	) _IRR_OVERRIDE_;
 
 	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	) _IRR_OVERRIDE_;
 
 	//! Returns type of the scene node
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ {

@@ -845,8 +845,11 @@
 #define v2(p) bytes2word(fd(p), fb(p), fe(p), f9(p))
 #define v3(p) bytes2word(f9(p), fd(p), fb(p), fe(p))
 
-const aes_32t t_dec(r, c)[RC_LENGTH] = {w0(0x01), w0(0x02), w0(0x04), w0(0x08), w0(0x10),
-	w0(0x20), w0(0x40), w0(0x80), w0(0x1b), w0(0x36)};
+const aes_32t t_dec(
+	r,
+	c
+)[RC_LENGTH] = {w0(0x01), w0(0x02), w0(0x04), w0(0x08), w0(0x10), w0(0x20), w0(0x40),
+	w0(0x80), w0(0x1b), w0(0x36)};
 
 #if defined(__BORLANDC__)
 #define concat(s1, s2) s1##s2
@@ -861,7 +864,10 @@ const aes_32t t_dec(r, c)[RC_LENGTH] = {w0(0x01), w0(0x02), w0(0x04), w0(0x08), 
 
 #else /* declare and instantiate tables for dynamic value generation in in tab.c  */
 
-aes_32t t_dec(r, c)[RC_LENGTH];
+aes_32t t_dec(
+	r,
+	c
+)[RC_LENGTH];
 
 #define d_1(t, n, b, v) t n[256]
 #define d_4(t, n, b, v) t n[4][256]
@@ -872,7 +878,10 @@ aes_32t t_dec(r, c)[RC_LENGTH];
 
 #if defined(FIXED_TABLES)
 
-extern const aes_32t t_dec(r, c)[RC_LENGTH];
+extern const aes_32t t_dec(
+	r,
+	c
+)[RC_LENGTH];
 
 #if defined(_MSC_VER) && defined(TABLE_ALIGN)
 #define d_1(t, n, b, v) extern __declspec(align(TABLE_ALIGN)) const t n[256]
@@ -883,7 +892,10 @@ extern const aes_32t t_dec(r, c)[RC_LENGTH];
 #endif
 #else
 
-extern aes_32t t_dec(r, c)[RC_LENGTH];
+extern aes_32t t_dec(
+	r,
+	c
+)[RC_LENGTH];
 
 #if defined(_MSC_VER) && defined(TABLE_ALIGN)
 #define d_1(t, n, b, v) extern __declspec(align(TABLE_ALIGN)) t n[256]
@@ -897,45 +909,100 @@ extern aes_32t t_dec(r, c)[RC_LENGTH];
 #endif
 
 #ifdef SBX_SET
-d_1(aes_08t, t_dec(s, box), sb_data, h);
+d_1(
+	aes_08t,
+	t_dec(s, box),
+	sb_data,
+	h
+);
 #endif
 #ifdef ISB_SET
-d_1(aes_08t, t_dec(i, box), isb_data, h);
+d_1(
+	aes_08t,
+	t_dec(i, box),
+	isb_data,
+	h
+);
 #endif
 
 #ifdef FT1_SET
-d_1(aes_32t, t_dec(f, n), sb_data, u);
+d_1(
+	aes_32t,
+	t_dec(f, n),
+	sb_data,
+	u
+);
 #endif
 #ifdef FT4_SET
-d_4(aes_32t, t_dec(f, n), sb_data, u);
+d_4(
+	aes_32t,
+	t_dec(f, n),
+	sb_data,
+	u
+);
 #endif
 
 #ifdef FL1_SET
-d_1(aes_32t, t_dec(f, l), sb_data, w);
+d_1(
+	aes_32t,
+	t_dec(f, l),
+	sb_data,
+	w
+);
 #endif
 #ifdef FL4_SET
-d_4(aes_32t, t_dec(f, l), sb_data, w);
+d_4(
+	aes_32t,
+	t_dec(f, l),
+	sb_data,
+	w
+);
 #endif
 
 #ifdef IT1_SET
-d_1(aes_32t, t_dec(i, n), isb_data, v);
+d_1(
+	aes_32t,
+	t_dec(i, n),
+	isb_data,
+	v
+);
 #endif
 #ifdef IT4_SET
-d_4(aes_32t, t_dec(i, n), isb_data, v);
+d_4(
+	aes_32t,
+	t_dec(i, n),
+	isb_data,
+	v
+);
 #endif
 
 #ifdef IL1_SET
-d_1(aes_32t, t_dec(i, l), isb_data, w);
+d_1(
+	aes_32t,
+	t_dec(i, l),
+	isb_data,
+	w
+);
 #endif
 #ifdef IL4_SET
-d_4(aes_32t, t_dec(i, l), isb_data, w);
+d_4(
+	aes_32t,
+	t_dec(i, l),
+	isb_data,
+	w
+);
 #endif
 
 #ifdef LS1_SET
 #ifdef FL1_SET
 #undef LS1_SET
 #else
-d_1(aes_32t, t_dec(l, s), sb_data, w);
+d_1(
+	aes_32t,
+	t_dec(l, s),
+	sb_data,
+	w
+);
 #endif
 #endif
 
@@ -943,15 +1010,30 @@ d_1(aes_32t, t_dec(l, s), sb_data, w);
 #ifdef FL4_SET
 #undef LS4_SET
 #else
-d_4(aes_32t, t_dec(l, s), sb_data, w);
+d_4(
+	aes_32t,
+	t_dec(l, s),
+	sb_data,
+	w
+);
 #endif
 #endif
 
 #ifdef IM1_SET
-d_1(aes_32t, t_dec(i, m), mm_data, v);
+d_1(
+	aes_32t,
+	t_dec(i, m),
+	mm_data,
+	v
+);
 #endif
 #ifdef IM4_SET
-d_4(aes_32t, t_dec(i, m), mm_data, v);
+d_4(
+	aes_32t,
+	t_dec(i, m),
+	mm_data,
+	v
+);
 #endif
 
 #endif

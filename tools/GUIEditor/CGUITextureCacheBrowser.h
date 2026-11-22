@@ -23,15 +23,19 @@ const u32 TEXTURE_BROWSER_TEXTURE_SELECTED =
 class CGUITextureCacheBrowser : public IGUIWindow {
 public:
 	//! constructor
-	CGUITextureCacheBrowser(IGUIEnvironment* environment,
+	CGUITextureCacheBrowser(
+		IGUIEnvironment* environment,
 		s32 id = -1,
-		IGUIElement* parent = 0);
+		IGUIElement* parent = 0
+	);
 
 	//! destructor
 	~CGUITextureCacheBrowser();
 
 	//! event handler
-	virtual bool OnEvent(const SEvent& event);
+	virtual bool OnEvent(
+		const SEvent& event
+	);
 
 	//! draws the element
 	virtual void draw();
@@ -55,7 +59,9 @@ public:
 	virtual bool isDraggable() const;
 
 	//! get draggable
-	virtual void setDraggable(bool draggable);
+	virtual void setDraggable(
+		bool draggable
+	);
 
 	//! not used
 	virtual core::rect<s32> getClientRect() const;
@@ -68,7 +74,9 @@ public:
 	) {}
 	virtual bool getDrawTitlebar() const { return true; }
 
-	void setSelected(s32 index = -1);
+	void setSelected(
+		s32 index = -1
+	);
 
 private:
 	void updateImageList();

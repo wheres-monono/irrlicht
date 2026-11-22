@@ -18,23 +18,32 @@ namespace scene
 class CSceneNodeAnimatorFollowSpline : public ISceneNodeAnimatorFinishing {
 public:
 	//! constructor
-	CSceneNodeAnimatorFollowSpline(u32 startTime,
+	CSceneNodeAnimatorFollowSpline(
+		u32 startTime,
 		const core::array<core::vector3df>& points,
 		f32 speed = 1.0f,
 		f32 tightness = 0.5f,
 		bool loop = true,
-		bool pingpong = false);
+		bool pingpong = false
+	);
 
 	//! animates a scene node
-	virtual void animateNode(ISceneNode* node, u32 timeMs) _IRR_OVERRIDE_;
+	virtual void animateNode(
+		ISceneNode* node,
+		u32 timeMs
+	) _IRR_OVERRIDE_;
 
 	//! Writes attributes of the scene node animator.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node animator.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	) _IRR_OVERRIDE_;
 
 	//! Returns type of the scene node animator
 	virtual ESCENE_NODE_ANIMATOR_TYPE getType() const _IRR_OVERRIDE_ {
@@ -45,12 +54,17 @@ public:
 	/** Please note that you will have to drop
 	(IReferenceCounted::drop()) the returned pointer after calling
 	this. */
-	virtual ISceneNodeAnimator* createClone(ISceneNode* node,
-		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
+	virtual ISceneNodeAnimator* createClone(
+		ISceneNode* node,
+		ISceneManager* newManager = 0
+	) _IRR_OVERRIDE_;
 
 protected:
 	//! clamps a the value idx to fit into range 0..size-1
-	s32 clamp(s32 idx, s32 size);
+	s32 clamp(
+		s32 idx,
+		s32 size
+	);
 
 	core::array<core::vector3df> Points;
 	f32 Speed;

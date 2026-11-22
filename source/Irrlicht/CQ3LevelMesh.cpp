@@ -1981,7 +1981,7 @@ void CQ3LevelMesh::loadTextures() {
 	}
 
 	//	Driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS,
-	//oldMipMapState);
+	// oldMipMapState);
 
 	// load textures
 	Tex.set_used(NumTextures);

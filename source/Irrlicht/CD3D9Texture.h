@@ -25,27 +25,36 @@ class CD3D9Driver;
 
 class CD3D9Texture : public ITexture {
 public:
-	CD3D9Texture(const io::path& name,
+	CD3D9Texture(
+		const io::path& name,
 		const core::array<IImage*>& image,
 		E_TEXTURE_TYPE type,
-		CD3D9Driver* driver);
+		CD3D9Driver* driver
+	);
 
-	CD3D9Texture(CD3D9Driver* driver,
+	CD3D9Texture(
+		CD3D9Driver* driver,
 		const core::dimension2d<u32>& size,
 		const io::path& name,
 		E_TEXTURE_TYPE type,
-		const ECOLOR_FORMAT format = ECF_UNKNOWN);
+		const ECOLOR_FORMAT format = ECF_UNKNOWN
+	);
 
 	virtual ~CD3D9Texture();
 
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+	virtual void* lock(
+		E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
 		u32 mipmapLevel = 0,
 		u32 layer = 0,
-		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT
+	) _IRR_OVERRIDE_;
 
 	virtual void unlock() _IRR_OVERRIDE_;
 
-	virtual void regenerateMipMapLevels(void* data = 0, u32 layer = 0) _IRR_OVERRIDE_;
+	virtual void regenerateMipMapLevels(
+		void* data = 0,
+		u32 layer = 0
+	) _IRR_OVERRIDE_;
 
 	IDirect3DBaseTexture9* getDX9BaseTexture() const;
 	IDirect3DTexture9* getDX9Texture() const;
@@ -58,11 +67,19 @@ private:
 
 	void generateRenderTarget();
 
-	ECOLOR_FORMAT getBestColorFormat(ECOLOR_FORMAT format);
+	ECOLOR_FORMAT getBestColorFormat(
+		ECOLOR_FORMAT format
+	);
 
-	void getImageValues(const IImage* image);
+	void getImageValues(
+		const IImage* image
+	);
 
-	void uploadTexture(u32 layer, u32 level, void* data);
+	void uploadTexture(
+		u32 layer,
+		u32 level,
+		void* data
+	);
 
 	CD3D9Driver* Driver;
 

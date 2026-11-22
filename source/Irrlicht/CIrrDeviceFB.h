@@ -25,7 +25,9 @@ namespace irr
 class CIrrDeviceFB : public CIrrDeviceStub, public video::IImagePresenter {
 public:
 	//! constructor
-	CIrrDeviceFB(const SIrrlichtCreationParameters& params);
+	CIrrDeviceFB(
+		const SIrrlichtCreationParameters& params
+	);
 
 	//! destructor
 	virtual ~CIrrDeviceFB();
@@ -39,10 +41,15 @@ public:
 	virtual void yield() _IRR_OVERRIDE_;
 
 	//! Pause execution and let other processes to run for a specified amount of time.
-	virtual void sleep(u32 timeMs, bool pauseTimer) _IRR_OVERRIDE_;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer
+	) _IRR_OVERRIDE_;
 
 	//! sets the caption of the window
-	virtual void setWindowCaption(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns if window is active. if not, nothing need to be drawn
 	virtual bool isWindowActive() const _IRR_OVERRIDE_;
@@ -68,15 +75,19 @@ public:
 	}
 
 	//! presents a surface in the client area
-	virtual bool present(video::IImage* surface,
+	virtual bool present(
+		video::IImage* surface,
 		void* windowId = 0,
-		core::rect<s32>* src = 0) _IRR_OVERRIDE_;
+		core::rect<s32>* src = 0
+	) _IRR_OVERRIDE_;
 
 	//! notifies the device that it should close itself
 	virtual void closeDevice() _IRR_OVERRIDE_;
 
 	//! Sets if the window should be resizeable in windowed mode.
-	virtual void setResizable(bool resize = false) _IRR_OVERRIDE_;
+	virtual void setResizable(
+		bool resize = false
+	) _IRR_OVERRIDE_;
 
 	//! Returns the type of this device
 	virtual E_DEVICE_TYPE getType() const _IRR_OVERRIDE_;
@@ -85,7 +96,10 @@ private:
 	//! create the driver
 	void createDriver();
 
-	bool createWindow(const core::dimension2d<u32>& windowSize, u32 bits);
+	bool createWindow(
+		const core::dimension2d<u32>& windowSize,
+		u32 bits
+	);
 
 	//! Implementation of the cursor control
 	class CCursorControl : public gui::ICursorControl {

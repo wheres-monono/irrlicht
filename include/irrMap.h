@@ -937,8 +937,12 @@ private:
 	// Copy constructor and assignment operator deliberately
 	// defined but not implemented. The tree should never be
 	// copied, pass along references to it instead.
-	explicit map(const map& src);
-	map& operator=(const map& src);
+	explicit map(
+		const map& src
+	);
+	map& operator=(
+		const map& src
+	);
 
 	//! Set node as new root.
 	/** The node will be set to black, otherwise core dumps may arise

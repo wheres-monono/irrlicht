@@ -36,12 +36,16 @@ typedef int DCTELEM; /* 16 or 32 bits is fine */
 typedef INT32 DCTELEM; /* must have 32 bits */
 #endif
 
-typedef JMETHOD(void,
+typedef JMETHOD(
+	void,
 	forward_DCT_method_ptr,
-	(DCTELEM * data, JSAMPARRAY sample_data, JDIMENSION start_col));
-typedef JMETHOD(void,
+	(DCTELEM * data, JSAMPARRAY sample_data, JDIMENSION start_col)
+);
+typedef JMETHOD(
+	void,
 	float_DCT_method_ptr,
-	(FAST_FLOAT * data, JSAMPARRAY sample_data, JDIMENSION start_col));
+	(FAST_FLOAT * data, JSAMPARRAY sample_data, JDIMENSION start_col)
+);
 
 /*
  * An inverse DCT routine is given a pointer to the input JBLOCK and a pointer

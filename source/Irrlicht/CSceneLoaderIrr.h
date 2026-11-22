@@ -26,39 +26,57 @@ class ISceneManager;
 class CSceneLoaderIrr : public virtual ISceneLoader {
 public:
 	//! Constructor
-	CSceneLoaderIrr(ISceneManager* smgr, io::IFileSystem* fs);
+	CSceneLoaderIrr(
+		ISceneManager* smgr,
+		io::IFileSystem* fs
+	);
 
 	//! Destructor
 	virtual ~CSceneLoaderIrr();
 
 	//! Returns true if the class might be able to load this file.
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! Returns true if the class might be able to load this file.
-	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileFormat(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
 	//! Loads the scene into the scene manager.
-	virtual bool loadScene(io::IReadFile* file,
+	virtual bool loadScene(
+		io::IReadFile* file,
 		ISceneUserDataSerializer* userDataSerializer = 0,
-		ISceneNode* rootNode = 0) _IRR_OVERRIDE_;
+		ISceneNode* rootNode = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	//! Recursively reads nodes from the xml file
-	void readSceneNode(io::IXMLReader* reader,
+	void readSceneNode(
+		io::IXMLReader* reader,
 		ISceneNode* parent,
-		ISceneUserDataSerializer* userDataSerializer);
+		ISceneUserDataSerializer* userDataSerializer
+	);
 
 	//! read a node's materials
-	void readMaterials(io::IXMLReader* reader, ISceneNode* node);
+	void readMaterials(
+		io::IXMLReader* reader,
+		ISceneNode* node
+	);
 
 	//! read a node's animators
-	void readAnimators(io::IXMLReader* reader, ISceneNode* node);
+	void readAnimators(
+		io::IXMLReader* reader,
+		ISceneNode* node
+	);
 
 	//! read any other data into the user serializer
-	void readUserData(io::IXMLReader* reader,
+	void readUserData(
+		io::IXMLReader* reader,
 		ISceneNode* node,
-		ISceneUserDataSerializer* userDataSerializer);
+		ISceneUserDataSerializer* userDataSerializer
+	);
 
 	ISceneManager* SceneManager;
 	io::IFileSystem* FileSystem;

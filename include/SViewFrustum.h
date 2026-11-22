@@ -48,23 +48,33 @@ struct SViewFrustum {
 		FarNearDistance(0.f) {}
 
 	//! Copy Constructor
-	SViewFrustum(const SViewFrustum& other);
+	SViewFrustum(
+		const SViewFrustum& other
+	);
 
 	//! This constructor creates a view frustum based on a projection and/or view
 	//! matrix.
 	//\param zClipFromZero: Clipping of z can be projected from 0 to w when true (D3D
-	//style) and from -w to w when false (OGL style).
-	SViewFrustum(const core::matrix4& mat, bool zClipFromZero);
+	// style) and from -w to w when false (OGL style).
+	SViewFrustum(
+		const core::matrix4& mat,
+		bool zClipFromZero
+	);
 
 	//! This constructor creates a view frustum based on a projection and/or view
 	//! matrix.
 	//\param zClipFromZero: Clipping of z can be projected from 0 to w when true (D3D
-	//style) and from -w to w when false (OGL style).
-	inline void setFrom(const core::matrix4& mat, bool zClipFromZero);
+	// style) and from -w to w when false (OGL style).
+	inline void setFrom(
+		const core::matrix4& mat,
+		bool zClipFromZero
+	);
 
 	//! transforms the frustum by the matrix
 	/** \param mat: Matrix by which the view frustum is transformed.*/
-	void transform(const core::matrix4& mat);
+	void transform(
+		const core::matrix4& mat
+	);
 
 	//! returns the point which is on the far left upper corner inside the the view
 	//! frustum.
@@ -111,17 +121,25 @@ struct SViewFrustum {
 	core::vector3df getBoundingCenter() const;
 
 	//! the cam should tell the frustum the distance between far and near
-	void setFarNearDistance(float distance);
+	void setFarNearDistance(
+		float distance
+	);
 
 	//! get the given state's matrix based on frustum E_TRANSFORMATION_STATE
-	core::matrix4& getTransform(video::E_TRANSFORMATION_STATE state);
+	core::matrix4& getTransform(
+		video::E_TRANSFORMATION_STATE state
+	);
 
 	//! get the given state's matrix based on frustum E_TRANSFORMATION_STATE
-	const core::matrix4& getTransform(video::E_TRANSFORMATION_STATE state) const;
+	const core::matrix4& getTransform(
+		video::E_TRANSFORMATION_STATE state
+	) const;
 
 	//! clips a line to the view frustum.
 	/** \return True if the line was clipped, false if not */
-	bool clipLine(core::line3d<f32>& line) const;
+	bool clipLine(
+		core::line3d<f32>& line
+	) const;
 
 	//! the position of the camera
 	core::vector3df cameraPosition;

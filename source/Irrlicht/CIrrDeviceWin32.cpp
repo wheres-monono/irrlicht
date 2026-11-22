@@ -47,15 +47,19 @@ namespace irr
 namespace video
 {
 #ifdef _IRR_COMPILE_WITH_DIRECT3D_9_
-IVideoDriver* createDirectX9Driver(const irr::SIrrlichtCreationParameters& params,
+IVideoDriver* createDirectX9Driver(
+	const irr::SIrrlichtCreationParameters& params,
 	io::IFileSystem* io,
-	HWND window);
+	HWND window
+);
 #endif
 
 #ifdef _IRR_COMPILE_WITH_OPENGL_
-IVideoDriver* createOpenGLDriver(const irr::SIrrlichtCreationParameters& params,
+IVideoDriver* createOpenGLDriver(
+	const irr::SIrrlichtCreationParameters& params,
 	io::IFileSystem* io,
-	IContextManager* contextManager);
+	IContextManager* contextManager
+);
 #endif
 } // namespace video
 } // end namespace irr
@@ -85,18 +89,30 @@ struct SJoystickWin32Control {
 	core::array<JoystickInfo> ActiveJoysticks;
 #endif
 
-	SJoystickWin32Control(CIrrDeviceWin32* dev);
+	SJoystickWin32Control(
+		CIrrDeviceWin32* dev
+	);
 	~SJoystickWin32Control();
 
 #if defined(_IRR_COMPILE_WITH_JOYSTICK_EVENTS_) &&                                       \
 	defined(_IRR_COMPILE_WITH_DIRECTINPUT_JOYSTICK_)
-	static BOOL CALLBACK EnumJoysticks(LPCDIDEVICEINSTANCE lpddi, LPVOID cp);
-	void directInputAddJoystick(LPCDIDEVICEINSTANCE lpddi);
+	static BOOL CALLBACK EnumJoysticks(
+		LPCDIDEVICEINSTANCE lpddi,
+		LPVOID cp
+	);
+	void directInputAddJoystick(
+		LPCDIDEVICEINSTANCE lpddi
+	);
 #endif
 
 	void pollJoysticks();
-	bool activateJoysticks(core::array<SJoystickInfo>& joystickInfo);
-	irr::core::stringc findJoystickName(int index, const JOYCAPS& caps) const;
+	bool activateJoysticks(
+		core::array<SJoystickInfo>& joystickInfo
+	);
+	irr::core::stringc findJoystickName(
+		int index,
+		const JOYCAPS& caps
+	) const;
 };
 
 SJoystickWin32Control::SJoystickWin32Control(

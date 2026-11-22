@@ -71,21 +71,36 @@ public:
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".tga")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! returns true if the file maybe is able to be loaded by this class
-	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileFormat(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
 	//! creates a surface from the file
-	virtual IImage* loadImage(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual IImage* loadImage(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
 private:
-	void
-	decompress8BitRLE(u8*& BmpData, s32 size, s32 width, s32 height, s32 pitch) const;
+	void decompress8BitRLE(
+		u8*& BmpData,
+		s32 size,
+		s32 width,
+		s32 height,
+		s32 pitch
+	) const;
 
-	void
-	decompress4BitRLE(u8*& BmpData, s32 size, s32 width, s32 height, s32 pitch) const;
+	void decompress4BitRLE(
+		u8*& BmpData,
+		s32 size,
+		s32 width,
+		s32 height,
+		s32 pitch
+	) const;
 };
 
 #endif // compiled with loader

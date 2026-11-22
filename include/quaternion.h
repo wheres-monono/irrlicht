@@ -52,69 +52,114 @@ public:
 		W(w) {}
 
 	//! Constructor which converts Euler angles (radians) to a quaternion
-	quaternion(f32 x, f32 y, f32 z);
+	quaternion(
+		f32 x,
+		f32 y,
+		f32 z
+	);
 
 	//! Constructor which converts Euler angles (radians) to a quaternion
-	quaternion(const vector3df& vec);
+	quaternion(
+		const vector3df& vec
+	);
 
 #ifndef IRR_TEST_BROKEN_QUATERNION_USE
 	//! Constructor which converts a matrix to a quaternion
-	quaternion(const matrix4& mat);
+	quaternion(
+		const matrix4& mat
+	);
 #endif
 
 	//! Equality operator
-	bool operator==(const quaternion& other) const;
+	bool operator==(
+		const quaternion& other
+	) const;
 
 	//! inequality operator
-	bool operator!=(const quaternion& other) const;
+	bool operator!=(
+		const quaternion& other
+	) const;
 
 	//! Assignment operator
-	inline quaternion& operator=(const quaternion& other);
+	inline quaternion& operator=(
+		const quaternion& other
+	);
 
 #ifndef IRR_TEST_BROKEN_QUATERNION_USE
 	//! Matrix assignment operator
-	inline quaternion& operator=(const matrix4& other);
+	inline quaternion& operator=(
+		const matrix4& other
+	);
 #endif
 
 	//! Add operator
-	quaternion operator+(const quaternion& other) const;
+	quaternion operator+(
+		const quaternion& other
+	) const;
 
 	//! Multiplication operator
 	//! Be careful, unfortunately the operator order here is opposite of that in
 	//! CMatrix4::operator*
-	quaternion operator*(const quaternion& other) const;
+	quaternion operator*(
+		const quaternion& other
+	) const;
 
 	//! Multiplication operator with scalar
-	quaternion operator*(f32 s) const;
+	quaternion operator*(
+		f32 s
+	) const;
 
 	//! Multiplication operator with scalar
-	quaternion& operator*=(f32 s);
+	quaternion& operator*=(
+		f32 s
+	);
 
 	//! Multiplication operator
-	vector3df operator*(const vector3df& v) const;
+	vector3df operator*(
+		const vector3df& v
+	) const;
 
 	//! Multiplication operator
-	quaternion& operator*=(const quaternion& other);
+	quaternion& operator*=(
+		const quaternion& other
+	);
 
 	//! Calculates the dot product
-	inline f32 dotProduct(const quaternion& other) const;
+	inline f32 dotProduct(
+		const quaternion& other
+	) const;
 
 	//! Sets new quaternion
-	inline quaternion& set(f32 x, f32 y, f32 z, f32 w);
+	inline quaternion& set(
+		f32 x,
+		f32 y,
+		f32 z,
+		f32 w
+	);
 
 	//! Sets new quaternion based on Euler angles (radians)
-	inline quaternion& set(f32 x, f32 y, f32 z);
+	inline quaternion& set(
+		f32 x,
+		f32 y,
+		f32 z
+	);
 
 	//! Sets new quaternion based on Euler angles (radians)
-	inline quaternion& set(const core::vector3df& vec);
+	inline quaternion& set(
+		const core::vector3df& vec
+	);
 
 	//! Sets new quaternion from other quaternion
-	inline quaternion& set(const core::quaternion& quat);
+	inline quaternion& set(
+		const core::quaternion& quat
+	);
 
 	//! returns if this quaternion equals the other one, taking floating point
 	//! rounding errors into account
-	inline bool equals(const quaternion& other,
-		const f32 tolerance = ROUNDING_ERROR_f32) const;
+	inline bool equals(
+		const quaternion& other,
+		const f32 tolerance = ROUNDING_ERROR_f32
+	) const;
 
 	//! Normalizes the quaternion
 	inline quaternion& normalize();
@@ -125,11 +170,15 @@ public:
 #endif
 	//! Faster method to create a rotation matrix, you should normalize the quaternion
 	//! before!
-	void getMatrixFast(matrix4& dest) const;
+	void getMatrixFast(
+		matrix4& dest
+	) const;
 
 	//! Creates a matrix from this quaternion
-	void getMatrix(matrix4& dest,
-		const core::vector3df& translation = core::vector3df()) const;
+	void getMatrix(
+		matrix4& dest,
+		const core::vector3df& translation = core::vector3df()
+	) const;
 
 	/*!
 		Creates a matrix from this quaternion
@@ -148,12 +197,16 @@ public:
 		lookat *= m3;
 
 	*/
-	void getMatrixCenter(matrix4& dest,
+	void getMatrixCenter(
+		matrix4& dest,
 		const core::vector3df& center,
-		const core::vector3df& translation) const;
+		const core::vector3df& translation
+	) const;
 
 	//! Creates a matrix from this quaternion
-	inline void getMatrix_transposed(matrix4& dest) const;
+	inline void getMatrix_transposed(
+		matrix4& dest
+	) const;
 
 	//! Inverts this quaternion
 	quaternion& makeInverse();
@@ -165,7 +218,11 @@ public:
 	q1, for time=1 the result is q2. Otherwise interpolation
 	between q1 and q2.
 	*/
-	quaternion& lerp(quaternion q1, quaternion q2, f32 time);
+	quaternion& lerp(
+		quaternion q1,
+		quaternion q2,
+		f32 time
+	);
 
 	//! Set this quaternion to the result of the spherical interpolation between two
 	//! quaternions
@@ -180,7 +237,12 @@ public:
 	be calculated with lerp. Everything from 1-threshold up will be
 	linear interpolation.
 	*/
-	quaternion& slerp(quaternion q1, quaternion q2, f32 time, f32 threshold = .05f);
+	quaternion& slerp(
+		quaternion q1,
+		quaternion q2,
+		f32 time,
+		f32 threshold = .05f
+	);
 
 	//! Set this quaternion to represent a rotation from angle and axis.
 	/** Axis must be unit length.
@@ -188,19 +250,30 @@ public:
 	q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k).
 	\param angle Rotation Angle in radians.
 	\param axis Rotation axis. */
-	quaternion& fromAngleAxis(f32 angle, const vector3df& axis);
+	quaternion& fromAngleAxis(
+		f32 angle,
+		const vector3df& axis
+	);
 
 	//! Fills an angle (radians) around an axis (unit vector)
-	void toAngleAxis(f32& angle, core::vector3df& axis) const;
+	void toAngleAxis(
+		f32& angle,
+		core::vector3df& axis
+	) const;
 
 	//! Output this quaternion to an Euler angle (radians)
-	void toEuler(vector3df& euler) const;
+	void toEuler(
+		vector3df& euler
+	) const;
 
 	//! Set quaternion to identity
 	quaternion& makeIdentity();
 
 	//! Set quaternion to represent a rotation from one vector to another.
-	quaternion& rotationFromTo(const vector3df& from, const vector3df& to);
+	quaternion& rotationFromTo(
+		const vector3df& from,
+		const vector3df& to
+	);
 
 	//! Quaternion elements.
 	f32 X; // vectorial (imaginary) part

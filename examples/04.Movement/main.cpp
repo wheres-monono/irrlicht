@@ -176,7 +176,7 @@ int main() {
 		ninjaNode->setScale(core::vector3df(2.f, 2.f, 2.f));
 		ninjaNode->setRotation(core::vector3df(0, -90, 0));
 		//		ninjaNode->setMaterialTexture(0,
-		//driver->getTexture(mediaPath + "sydney.bmp"));
+		// driver->getTexture(mediaPath + "sydney.bmp"));
 	}
 
 	/*

@@ -30,8 +30,10 @@ public:
 	~CNSOGLManager();
 
 	// Initialize
-	bool initialize(const SIrrlichtCreationParameters& params,
-		const SExposedVideoData& data);
+	bool initialize(
+		const SIrrlichtCreationParameters& params,
+		const SExposedVideoData& data
+	);
 
 	// Terminate
 	void terminate();
@@ -52,7 +54,9 @@ public:
 	const SExposedVideoData& getContext() const;
 
 	//! Change render context, disable old and activate new defined by videoData
-	bool activateContext(const SExposedVideoData& videoData);
+	bool activateContext(
+		const SExposedVideoData& videoData
+	);
 
 	// Swap buffers.
 	bool swapBuffers();

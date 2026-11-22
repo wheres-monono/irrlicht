@@ -21,21 +21,27 @@ namespace scene
 class C3DSMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	C3DSMeshFileLoader(ISceneManager* smgr, io::IFileSystem* fs);
+	C3DSMeshFileLoader(
+		ISceneManager* smgr,
+		io::IFileSystem* fs
+	);
 
 	//! destructor
 	virtual ~C3DSMeshFileLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 // byte-align structures
@@ -114,26 +120,72 @@ private:
 		u16* faces;
 	};
 
-	bool readChunk(io::IReadFile* file, ChunkData* parent);
-	bool readMaterialChunk(io::IReadFile* file, ChunkData* parent);
-	bool readFrameChunk(io::IReadFile* file, ChunkData* parent);
-	bool readTrackChunk(io::IReadFile* file,
+	bool readChunk(
+		io::IReadFile* file,
+		ChunkData* parent
+	);
+	bool readMaterialChunk(
+		io::IReadFile* file,
+		ChunkData* parent
+	);
+	bool readFrameChunk(
+		io::IReadFile* file,
+		ChunkData* parent
+	);
+	bool readTrackChunk(
+		io::IReadFile* file,
 		ChunkData& data,
 		IMeshBuffer* mb,
-		const core::vector3df& pivot);
-	bool readObjectChunk(io::IReadFile* file, ChunkData* parent);
-	bool readPercentageChunk(io::IReadFile* file, ChunkData* chunk, f32& percentage);
-	bool readColorChunk(io::IReadFile* file, ChunkData* chunk, video::SColor& out);
+		const core::vector3df& pivot
+	);
+	bool readObjectChunk(
+		io::IReadFile* file,
+		ChunkData* parent
+	);
+	bool readPercentageChunk(
+		io::IReadFile* file,
+		ChunkData* chunk,
+		f32& percentage
+	);
+	bool readColorChunk(
+		io::IReadFile* file,
+		ChunkData* chunk,
+		video::SColor& out
+	);
 
-	void readChunkData(io::IReadFile* file, ChunkData& data);
-	void readString(io::IReadFile* file, ChunkData& data, core::stringc& out);
-	void readVertices(io::IReadFile* file, ChunkData& data);
-	void readIndices(io::IReadFile* file, ChunkData& data);
-	void readMaterialGroup(io::IReadFile* file, ChunkData& data);
-	void readTextureCoords(io::IReadFile* file, ChunkData& data);
+	void readChunkData(
+		io::IReadFile* file,
+		ChunkData& data
+	);
+	void readString(
+		io::IReadFile* file,
+		ChunkData& data,
+		core::stringc& out
+	);
+	void readVertices(
+		io::IReadFile* file,
+		ChunkData& data
+	);
+	void readIndices(
+		io::IReadFile* file,
+		ChunkData& data
+	);
+	void readMaterialGroup(
+		io::IReadFile* file,
+		ChunkData& data
+	);
+	void readTextureCoords(
+		io::IReadFile* file,
+		ChunkData& data
+	);
 
-	void composeObject(io::IReadFile* file, const core::stringc& name);
-	void loadMaterials(io::IReadFile* file);
+	void composeObject(
+		io::IReadFile* file,
+		const core::stringc& name
+	);
+	void loadMaterials(
+		io::IReadFile* file
+	);
 	void cleanUp();
 
 	scene::ISceneManager* SceneManager;

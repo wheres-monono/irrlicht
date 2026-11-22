@@ -17,7 +17,9 @@ class IGUIEnvironment;
 //!	Interface making it possible to dynamicly create gui elements
 class CGUIEditFactory : public IGUIElementFactory {
 public:
-	CGUIEditFactory(IGUIEnvironment* env);
+	CGUIEditFactory(
+		IGUIEnvironment* env
+	);
 	~CGUIEditFactory();
 
 	//! adds a GUI element to the GUI Environment based on its type name
@@ -25,7 +27,10 @@ public:
 	\param parent: Parent scene node of the new element, can be null to add it to the
 	root.
 	\return Returns pointer to the new element or null if not successful. */
-	virtual IGUIElement* addGUIElement(const c8* typeName, IGUIElement* parent = 0);
+	virtual IGUIElement* addGUIElement(
+		const c8* typeName,
+		IGUIElement* parent = 0
+	);
 
 	//! returns amount of GUI element types this factory is able to create
 	virtual s32 getCreatableGUIElementTypeCount() const;
@@ -33,7 +38,9 @@ public:
 	//! returns type name of a creatable GUI element type by index
 	/** \param idx: Index of the type in this factory. Must be a value between 0 and
 	getCreatableGUIElementTypeCount() */
-	virtual const c8* getCreateableGUIElementTypeName(s32 idx) const;
+	virtual const c8* getCreateableGUIElementTypeName(
+		s32 idx
+	) const;
 
 	// not used:
 	virtual const c8* getCreateableGUIElementTypeName(

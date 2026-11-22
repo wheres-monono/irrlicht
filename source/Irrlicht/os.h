@@ -19,26 +19,54 @@ namespace os
 {
 class Byteswap {
 public:
-	static u16 byteswap(u16 num);
-	static s16 byteswap(s16 num);
-	static u32 byteswap(u32 num);
-	static s32 byteswap(s32 num);
-	static f32 byteswap(f32 num);
+	static u16 byteswap(
+		u16 num
+	);
+	static s16 byteswap(
+		s16 num
+	);
+	static u32 byteswap(
+		u32 num
+	);
+	static s32 byteswap(
+		s32 num
+	);
+	static f32 byteswap(
+		f32 num
+	);
 	// prevent accidental swapping of chars
-	static u8 byteswap(u8 num);
-	static c8 byteswap(c8 num);
+	static u8 byteswap(
+		u8 num
+	);
+	static c8 byteswap(
+		c8 num
+	);
 };
 
 class Printer {
 public:
 	// prints out a string to the console out stdout or debug log or whatever
-	static void print(const c8* message);
-	static void log(const c8* message, ELOG_LEVEL ll = ELL_INFORMATION);
-	static void log(const wchar_t* message, ELOG_LEVEL ll = ELL_INFORMATION);
-	static void
-	log(const c8* message, const c8* hint, ELOG_LEVEL ll = ELL_INFORMATION);
-	static void
-	log(const c8* message, const io::path& hint, ELOG_LEVEL ll = ELL_INFORMATION);
+	static void print(
+		const c8* message
+	);
+	static void log(
+		const c8* message,
+		ELOG_LEVEL ll = ELL_INFORMATION
+	);
+	static void log(
+		const wchar_t* message,
+		ELOG_LEVEL ll = ELL_INFORMATION
+	);
+	static void log(
+		const c8* message,
+		const c8* hint,
+		ELOG_LEVEL ll = ELL_INFORMATION
+	);
+	static void log(
+		const c8* message,
+		const io::path& hint,
+		ELOG_LEVEL ll = ELL_INFORMATION
+	);
 	static ILogger* Logger;
 };
 
@@ -48,7 +76,9 @@ public:
 class Randomizer {
 public:
 	//! resets the randomizer
-	static void reset(s32 value = 0x0f0f0f0f);
+	static void reset(
+		s32 value = 0x0f0f0f0f
+	);
 
 	//! generates a pseudo random number in the range 0..randMax()
 	static s32 rand();
@@ -78,10 +108,14 @@ public:
 	static ITimer::RealTimeDate getRealTimeAndDate();
 
 	//! initializes the real timer
-	static void initTimer(bool usePerformanceTimer = true);
+	static void initTimer(
+		bool usePerformanceTimer = true
+	);
 
 	//! sets the current virtual (game) time
-	static void setTime(u32 time);
+	static void setTime(
+		u32 time
+	);
 
 	//! stops the virtual (game) timer
 	static void stopTimer();
@@ -90,7 +124,9 @@ public:
 	static void startTimer();
 
 	//! sets the speed of the virtual timer
-	static void setSpeed(f32 speed);
+	static void setSpeed(
+		f32 speed
+	);
 
 	//! gets the speed of the virtual timer
 	static f32 getSpeed();

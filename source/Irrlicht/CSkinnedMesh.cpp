@@ -252,8 +252,8 @@ void CSkinnedMesh::buildAllLocalAnimatedMatrices() {
 			// getMatrix_transposed instead of getMatrix for downward
 			// compatibility.
 			//								   Not
-			//tested so far if this was correct or wrong before quaternion
-			//fix!
+			// tested so far if this was correct or wrong before quaternion
+			// fix!
 			joint->Animatedrotation.getMatrix_transposed(
 				joint->LocalAnimatedMatrix
 			);

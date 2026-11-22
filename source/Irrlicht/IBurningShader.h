@@ -116,26 +116,46 @@ enum EBurningFFShader {
 class CBurningVideoDriver;
 class IBurningShader : public virtual IReferenceCounted {
 public:
-	IBurningShader(CBurningVideoDriver* driver);
+	IBurningShader(
+		CBurningVideoDriver* driver
+	);
 
 	//! destructor
 	virtual ~IBurningShader();
 
 	//! sets a render target
-	virtual void setRenderTarget(video::IImage* surface,
-		const core::rect<s32>& viewPort);
+	virtual void setRenderTarget(
+		video::IImage* surface,
+		const core::rect<s32>& viewPort
+	);
 
 	//! sets the Texture
-	virtual void
-	setTextureParam(u32 stage, video::CSoftwareTexture2* texture, s32 lodLevel);
-	virtual void
-	drawTriangle(const s4DVertex* a, const s4DVertex* b, const s4DVertex* c) = 0;
-	virtual void drawLine(const s4DVertex* a, const s4DVertex* b) {};
+	virtual void setTextureParam(
+		u32 stage,
+		video::CSoftwareTexture2* texture,
+		s32 lodLevel
+	);
+	virtual void drawTriangle(
+		const s4DVertex* a,
+		const s4DVertex* b,
+		const s4DVertex* c
+	) = 0;
+	virtual void drawLine(
+		const s4DVertex* a,
+		const s4DVertex* b
+	) {};
 
-	virtual void setParam(u32 index, f32 value) {};
-	virtual void setZCompareFunc(u32 func) {};
+	virtual void setParam(
+		u32 index,
+		f32 value
+	) {};
+	virtual void setZCompareFunc(
+		u32 func
+	) {};
 
-	virtual void setMaterial(const SBurningShaderMaterial& material) {};
+	virtual void setMaterial(
+		const SBurningShaderMaterial& material
+	) {};
 
 protected:
 	CBurningVideoDriver* Driver;
@@ -150,37 +170,91 @@ protected:
 	static const tFixPointu dithermask[4 * 4];
 };
 
-IBurningShader* createTriangleRendererTextureGouraud2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureLightMap2_M1(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureLightMap2_M2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureLightMap2_M4(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererGTextureLightMap2_M4(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureLightMap2_Add(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureDetailMap2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureVertexAlpha2(CBurningVideoDriver* driver);
+IBurningShader* createTriangleRendererTextureGouraud2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureLightMap2_M1(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureLightMap2_M2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureLightMap2_M4(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererGTextureLightMap2_M4(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureLightMap2_Add(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureDetailMap2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureVertexAlpha2(
+	CBurningVideoDriver* driver
+);
 
-IBurningShader* createTriangleRendererTextureGouraudWire2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererGouraud2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererGouraudAlpha2(CBurningVideoDriver* driver);
-IBurningShader* createTRGouraudAlphaNoZ2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererGouraudWire2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureFlat2(CBurningVideoDriver* driver);
-IBurningShader* createTriangleRendererTextureFlatWire2(CBurningVideoDriver* driver);
-IBurningShader* createTRFlat2(CBurningVideoDriver* driver);
-IBurningShader* createTRFlatWire2(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureGouraudNoZ2(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureGouraudAdd2(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureGouraudAddNoZ2(CBurningVideoDriver* driver);
+IBurningShader* createTriangleRendererTextureGouraudWire2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererGouraud2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererGouraudAlpha2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRGouraudAlphaNoZ2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererGouraudWire2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureFlat2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTriangleRendererTextureFlatWire2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRFlat2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRFlatWire2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureGouraudNoZ2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureGouraudAdd2(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureGouraudAddNoZ2(
+	CBurningVideoDriver* driver
+);
 
-IBurningShader* createTRTextureGouraudAlpha(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureGouraudAlphaNoZ(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureBlend(CBurningVideoDriver* driver);
-IBurningShader* createTRTextureInverseAlphaBlend(CBurningVideoDriver* driver);
+IBurningShader* createTRTextureGouraudAlpha(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureGouraudAlphaNoZ(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureBlend(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRTextureInverseAlphaBlend(
+	CBurningVideoDriver* driver
+);
 
-IBurningShader* createTRNormalMap(CBurningVideoDriver* driver);
-IBurningShader* createTRStencilShadow(CBurningVideoDriver* driver);
+IBurningShader* createTRNormalMap(
+	CBurningVideoDriver* driver
+);
+IBurningShader* createTRStencilShadow(
+	CBurningVideoDriver* driver
+);
 
-IBurningShader* createTriangleRendererReference(CBurningVideoDriver* driver);
+IBurningShader* createTriangleRendererReference(
+	CBurningVideoDriver* driver
+);
 
 } // end namespace video
 } // end namespace irr

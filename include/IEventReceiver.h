@@ -442,7 +442,9 @@ public:
 	* Therefore your return value for all unprocessed events should be 'false'.
 	\return True if the event was processed.
 	*/
-	virtual bool OnEvent(const SEvent& event) = 0;
+	virtual bool OnEvent(
+		const SEvent& event
+	) = 0;
 };
 
 //! Information on a joystick, returned from @ref irr::IrrlichtDevice::activateJoysticks()

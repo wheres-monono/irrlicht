@@ -41,10 +41,12 @@ public:
 	\param cubeSurfaces When rendering to cube textures, set the surface to be used
 	for each texture. Can be empty otherwise.
 	*/
-	virtual void setTexture(const core::array<ITexture*>& texture,
+	virtual void setTexture(
+		const core::array<ITexture*>& texture,
 		ITexture* depthStencil,
 		const core::array<E_CUBE_SURFACE>& cubeSurfaces =
-			core::array<E_CUBE_SURFACE>()) = 0;
+			core::array<E_CUBE_SURFACE>()
+	) = 0;
 
 	//! Set one texture.
 	void setTexture(
@@ -91,8 +93,12 @@ protected:
 private:
 	// no copying (IReferenceCounted still allows that for reasons which take some
 	// time to work around)
-	IRenderTarget(const IRenderTarget&);
-	IRenderTarget& operator=(const IRenderTarget&);
+	IRenderTarget(
+		const IRenderTarget&
+	);
+	IRenderTarget& operator=(
+		const IRenderTarget&
+	);
 };
 
 } // namespace video

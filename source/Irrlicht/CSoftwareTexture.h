@@ -22,18 +22,22 @@ class CSoftwareDriver;
 class CSoftwareTexture : public ITexture {
 public:
 	//! constructor
-	CSoftwareTexture(IImage* surface,
+	CSoftwareTexture(
+		IImage* surface,
 		const io::path& name,
-		bool renderTarget = false);
+		bool renderTarget = false
+	);
 
 	//! destructor
 	virtual ~CSoftwareTexture();
 
 	//! lock function
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+	virtual void* lock(
+		E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
 		u32 mipmapLevel = 0,
 		u32 layer = 0,
-		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) _IRR_OVERRIDE_;
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT
+	) _IRR_OVERRIDE_;
 
 	//! unlock function
 	virtual void unlock() _IRR_OVERRIDE_;
@@ -44,7 +48,10 @@ public:
 	//! returns texture surface
 	virtual CImage* getTexture();
 
-	virtual void regenerateMipMapLevels(void* data = 0, u32 layer = 0) _IRR_OVERRIDE_;
+	virtual void regenerateMipMapLevels(
+		void* data = 0,
+		u32 layer = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	CImage* Image;
@@ -56,12 +63,16 @@ private:
 */
 class CSoftwareRenderTarget : public IRenderTarget {
 public:
-	CSoftwareRenderTarget(CSoftwareDriver* driver);
+	CSoftwareRenderTarget(
+		CSoftwareDriver* driver
+	);
 	virtual ~CSoftwareRenderTarget();
 
-	virtual void setTexture(const core::array<ITexture*>& texture,
+	virtual void setTexture(
+		const core::array<ITexture*>& texture,
 		ITexture* depthStencil,
-		const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
+		const core::array<E_CUBE_SURFACE>& cubeSurfaces
+	) _IRR_OVERRIDE_;
 
 	ITexture* getTexture() const;
 

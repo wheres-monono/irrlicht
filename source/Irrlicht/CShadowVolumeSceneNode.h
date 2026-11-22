@@ -16,12 +16,14 @@ namespace scene
 class CShadowVolumeSceneNode : public IShadowVolumeSceneNode {
 public:
 	//! constructor
-	CShadowVolumeSceneNode(const IMesh* shadowMesh,
+	CShadowVolumeSceneNode(
+		const IMesh* shadowMesh,
 		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		bool zfailmethod = true,
-		f32 infinity = 10000.0f);
+		f32 infinity = 10000.0f
+	);
 
 	//! destructor
 	virtual ~CShadowVolumeSceneNode();
@@ -29,7 +31,9 @@ public:
 	//! Sets the mesh from which the shadow volume should be generated.
 	/** To optimize shadow rendering, use a simpler mesh for shadows.
 	 */
-	virtual void setShadowMesh(const IMesh* mesh) _IRR_OVERRIDE_;
+	virtual void setShadowMesh(
+		const IMesh* mesh
+	) _IRR_OVERRIDE_;
 
 	//! Updates the shadow volumes for current light positions.
 	/** Called each render cycle from Animated Mesh SceneNode render method. */
@@ -52,10 +56,15 @@ public:
 private:
 	typedef core::array<core::vector3df> SShadowVolume;
 
-	void createShadowVolume(const core::vector3df& pos, bool isDirectional = false);
-	u32 createEdgesAndCaps(const core::vector3df& light,
+	void createShadowVolume(
+		const core::vector3df& pos,
+		bool isDirectional = false
+	);
+	u32 createEdgesAndCaps(
+		const core::vector3df& light,
 		SShadowVolume* svp,
-		core::aabbox3d<f32>* bb);
+		core::aabbox3d<f32>* bb
+	);
 
 	//! Generates adjacency information based on mesh indices.
 	void calculateAdjacency();

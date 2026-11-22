@@ -1468,7 +1468,7 @@ bool CXMeshFileLoader::parseDataObjectMeshMaterialList(
 	// all the other faces have to obey then, so check is disabled
 	// if (nFaceIndices != mesh.IndexCountPerFace.size())
 	//	os::Printer::log("Index count per face not equal to face material index
-	//count in x file.", ELL_WARNING);
+	// count in x file.", ELL_WARNING);
 
 	// read non triangulated face indices and create triangulated ones
 	mesh.FaceMaterialIndices.set_used(mesh.Indices.size() / 3);

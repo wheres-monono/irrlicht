@@ -15,10 +15,14 @@ namespace io
 class IReadFile;
 
 //! creates an IXMLReader
-IXMLReader* createIXMLReader(IReadFile* file);
+IXMLReader* createIXMLReader(
+	IReadFile* file
+);
 
 //! creates an IXMLReader
-IXMLReaderUTF8* createIXMLReaderUTF8(IReadFile* file);
+IXMLReaderUTF8* createIXMLReaderUTF8(
+	IReadFile* file
+);
 } // namespace io
 #else  // _IRR_COMPILE_WITH_XML_
        //! print a message that Irrlicht is compiled without _IRR_COMPILE_WITH_XML_

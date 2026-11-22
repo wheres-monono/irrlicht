@@ -19,11 +19,16 @@ namespace scene
 
 class CMeshTextureLoader : public IMeshTextureLoader {
 public:
-	CMeshTextureLoader(irr::io::IFileSystem* fs, irr::video::IVideoDriver* driver);
+	CMeshTextureLoader(
+		irr::io::IFileSystem* fs,
+		irr::video::IVideoDriver* driver
+	);
 
 	//! Set a custom texture path.
 	/**	This is the first path the texture-loader should search.  */
-	virtual void setTexturePath(const irr::io::path& path) _IRR_OVERRIDE_;
+	virtual void setTexturePath(
+		const irr::io::path& path
+	) _IRR_OVERRIDE_;
 
 	//! Get the current custom texture path.
 	virtual const irr::io::path& getTexturePath() const _IRR_OVERRIDE_;
@@ -34,20 +39,24 @@ public:
 	IMeshLoader's.
 	\param textureName Texturename as used in the mesh-format
 	\return Pointer to the texture. Returns 0 if loading failed.*/
-	virtual irr::video::ITexture*
-	getTexture(const irr::io::path& textureName) _IRR_OVERRIDE_;
+	virtual irr::video::ITexture* getTexture(
+		const irr::io::path& textureName
+	) _IRR_OVERRIDE_;
 
 	//! Meshloaders will search paths relative to the meshFile.
 	/** Usually you do not have to use this method, it is used internally by
 	   IMeshLoader's. Any values you set here will likely be overwritten internally.
 	 */
-	virtual void setMeshFile(const irr::io::IReadFile* meshFile) _IRR_OVERRIDE_;
+	virtual void setMeshFile(
+		const irr::io::IReadFile* meshFile
+	) _IRR_OVERRIDE_;
 
 	//! Meshloaders will try to look relative to the path of the materialFile
 	/** Usually you do not have to use this method, it is used internally by
 	IMeshLoader's. Any values you set here will likely be overwritten internally.	*/
-	virtual void
-	setMaterialFile(const irr::io::IReadFile* materialFile) _IRR_OVERRIDE_;
+	virtual void setMaterialFile(
+		const irr::io::IReadFile* materialFile
+	) _IRR_OVERRIDE_;
 
 protected:
 	// make certain path's have a certain internal format
@@ -67,7 +76,9 @@ protected:
 	}
 
 	// Save the texturename when it's a an existing file
-	bool checkTextureName(const irr::io::path& filename);
+	bool checkTextureName(
+		const irr::io::path& filename
+	);
 
 private:
 	irr::io::IFileSystem* FileSystem;

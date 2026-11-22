@@ -26,38 +26,67 @@ class ISceneManager;
 class CLWOMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	CLWOMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
+	CLWOMeshFileLoader(
+		scene::ISceneManager* smgr,
+		io::IFileSystem* fs
+	);
 
 	//! destructor
 	virtual ~CLWOMeshFileLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IUnknown::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 	struct tLWOMaterial;
 
 	bool readFileHeader();
 	bool readChunks();
-	void readObj1(u32 size);
-	void readTagMapping(u32 size);
-	void readVertexMapping(u32 size);
-	void readDiscVertexMapping(u32 size);
-	void readObj2(u32 size);
-	void readMat(u32 size);
-	u32 readString(core::stringc& name, u32 size = 0);
-	u32 readVec(core::vector3df& vec);
-	u32 readVX(u32& num);
-	u32 readColor(video::SColor& color);
-	video::ITexture* loadTexture(const core::stringc& file);
+	void readObj1(
+		u32 size
+	);
+	void readTagMapping(
+		u32 size
+	);
+	void readVertexMapping(
+		u32 size
+	);
+	void readDiscVertexMapping(
+		u32 size
+	);
+	void readObj2(
+		u32 size
+	);
+	void readMat(
+		u32 size
+	);
+	u32 readString(
+		core::stringc& name,
+		u32 size = 0
+	);
+	u32 readVec(
+		core::vector3df& vec
+	);
+	u32 readVX(
+		u32& num
+	);
+	u32 readColor(
+		video::SColor& color
+	);
+	video::ITexture* loadTexture(
+		const core::stringc& file
+	);
 
 	scene::ISceneManager* SceneManager;
 	io::IFileSystem* FileSystem;

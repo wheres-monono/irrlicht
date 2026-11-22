@@ -18,15 +18,21 @@ namespace scene
 //! Particle Affector for attracting particles to a point
 class CParticleAttractionAffector : public IParticleAttractionAffector {
 public:
-	CParticleAttractionAffector(const core::vector3df& point = core::vector3df(),
+	CParticleAttractionAffector(
+		const core::vector3df& point = core::vector3df(),
 		f32 speed = 1.0f,
 		bool attract = true,
 		bool affectX = true,
 		bool affectY = true,
-		bool affectZ = true);
+		bool affectZ = true
+	);
 
 	//! Affects a particle.
-	virtual void affect(u32 now, SParticle* particlearray, u32 count) _IRR_OVERRIDE_;
+	virtual void affect(
+		u32 now,
+		SParticle* particlearray,
+		u32 count
+	) _IRR_OVERRIDE_;
 
 	//! Set the point that particles will attract to
 	virtual void setPoint(
@@ -90,12 +96,16 @@ public:
 	virtual bool getAffectZ() const _IRR_OVERRIDE_ { return AffectZ; }
 
 	//! Writes attributes of the object.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the object.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_;
 
 private:
 	core::vector3df Point;

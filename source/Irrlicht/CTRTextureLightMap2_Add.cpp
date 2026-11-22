@@ -77,12 +77,16 @@ namespace video
 class CTRTextureLightMap2_Add : public IBurningShader {
 public:
 	//! constructor
-	CTRTextureLightMap2_Add(CBurningVideoDriver* driver);
+	CTRTextureLightMap2_Add(
+		CBurningVideoDriver* driver
+	);
 
 	//! draws an indexed triangle list
-	virtual void drawTriangle(const s4DVertex* a,
+	virtual void drawTriangle(
+		const s4DVertex* a,
 		const s4DVertex* b,
-		const s4DVertex* c) _IRR_OVERRIDE_;
+		const s4DVertex* c
+	) _IRR_OVERRIDE_;
 
 private:
 	void scanline_bilinear();

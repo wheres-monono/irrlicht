@@ -89,24 +89,36 @@ typedef struct {
 
 /* initialise file encryption or decryption */
 
-int fcrypt_init(int mode,	    /* the mode to be used (input)          */
+int fcrypt_init(
+	int mode,		    /* the mode to be used (input)          */
 	const unsigned char pwd[],  /* the user specified password (input)  */
 	unsigned int pwd_len,	    /* the length of the password (input)   */
 	const unsigned char salt[], /* the salt (input)                     */
 #ifdef PASSWORD_VERIFIER
 	unsigned char pwd_ver[PWD_VER_LENGTH], /* 2 byte password verifier (output)    */
 #endif
-	fcrypt_ctx cx[1]); /* the file encryption context (output) */
+	fcrypt_ctx cx[1]
+); /* the file encryption context (output) */
 
 /* perform 'in place' encryption or decryption and authentication               */
 
-void fcrypt_encrypt(unsigned char data[], unsigned int data_len, fcrypt_ctx cx[1]);
-void fcrypt_decrypt(unsigned char data[], unsigned int data_len, fcrypt_ctx cx[1]);
+void fcrypt_encrypt(
+	unsigned char data[],
+	unsigned int data_len,
+	fcrypt_ctx cx[1]
+);
+void fcrypt_decrypt(
+	unsigned char data[],
+	unsigned int data_len,
+	fcrypt_ctx cx[1]
+);
 
 /* close encryption/decryption and return the MAC value */
 /* the return value is the length of the MAC            */
 
-int fcrypt_end(unsigned char mac[], /* the MAC value (output)   */
-	fcrypt_ctx cx[1]);	    /* the context (input)      */
+int fcrypt_end(
+	unsigned char mac[], /* the MAC value (output)   */
+	fcrypt_ctx cx[1]
+); /* the context (input)      */
 
 #endif

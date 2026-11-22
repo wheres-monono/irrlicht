@@ -121,8 +121,12 @@ extern "C" IRRLICHT_API IrrlichtDevice* IRRCALLCONV createDeviceEx(
 
 namespace core
 {
-const matrix4 IdentityMatrix(matrix4::EM4CONST_IDENTITY);
-irr::core::stringc LOCALE_DECIMAL_POINTS(".");
+const matrix4 IdentityMatrix(
+	matrix4::EM4CONST_IDENTITY
+);
+irr::core::stringc LOCALE_DECIMAL_POINTS(
+	"."
+);
 } // namespace core
 
 namespace video

@@ -761,7 +761,7 @@ IImage* CImageLoaderDDS::loadImage(
 		if (header.PixelFormat.Flags & DDPF_RGB) // Uncompressed formats
 		{
 			//			u32 byteCount =
-			//header.PixelFormat.RGBBitCount / 8;
+			// header.PixelFormat.RGBBitCount / 8;
 
 			if (header.Flags & DDSD_PITCH) {
 				dataSize = header.PitchOrLinearSize * header.Height *

@@ -76,7 +76,9 @@ typedef irr::u32 aes_32t;
 /* This routine must be called before first use if non-static       */
 /* tables are being used                                            */
 
-void gen_tabs(void);
+void gen_tabs(
+	void
+);
 
 /* The key length (klen) is input in bytes when it is in the range  */
 /* 16 <= klen <= 32 or in bits when in the range 128 <= klen <= 256 */
@@ -88,22 +90,39 @@ typedef struct {
 } aes_encrypt_ctx;
 
 #if defined(AES_128) || defined(AES_VAR)
-aes_rval aes_encrypt_key128(const void* in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key128(
+	const void* in_key,
+	aes_encrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_192) || defined(AES_VAR)
-aes_rval aes_encrypt_key192(const void* in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key192(
+	const void* in_key,
+	aes_encrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_256) || defined(AES_VAR)
-aes_rval aes_encrypt_key256(const void* in_key, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key256(
+	const void* in_key,
+	aes_encrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_VAR)
-aes_rval aes_encrypt_key(const void* in_key, int key_len, aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt_key(
+	const void* in_key,
+	int key_len,
+	aes_encrypt_ctx cx[1]
+);
 #endif
 
-aes_rval aes_encrypt(const void* in_blk, void* out_blk, const aes_encrypt_ctx cx[1]);
+aes_rval aes_encrypt(
+	const void* in_blk,
+	void* out_blk,
+	const aes_encrypt_ctx cx[1]
+);
 #endif
 
 #ifdef AES_DECRYPT
@@ -113,22 +132,39 @@ typedef struct {
 } aes_decrypt_ctx;
 
 #if defined(AES_128) || defined(AES_VAR)
-aes_rval aes_decrypt_key128(const void* in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key128(
+	const void* in_key,
+	aes_decrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_192) || defined(AES_VAR)
-aes_rval aes_decrypt_key192(const void* in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key192(
+	const void* in_key,
+	aes_decrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_256) || defined(AES_VAR)
-aes_rval aes_decrypt_key256(const void* in_key, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key256(
+	const void* in_key,
+	aes_decrypt_ctx cx[1]
+);
 #endif
 
 #if defined(AES_VAR)
-aes_rval aes_decrypt_key(const void* in_key, int key_len, aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt_key(
+	const void* in_key,
+	int key_len,
+	aes_decrypt_ctx cx[1]
+);
 #endif
 
-aes_rval aes_decrypt(const void* in_blk, void* out_blk, const aes_decrypt_ctx cx[1]);
+aes_rval aes_decrypt(
+	const void* in_blk,
+	void* out_blk,
+	const aes_decrypt_ctx cx[1]
+);
 #endif
 
 #endif

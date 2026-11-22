@@ -34,7 +34,9 @@ public:
 	//! Sets another skin independent font.
 	/** If this is set to zero, the button uses the font of the skin.
 	\param font: New font to set. */
-	virtual void setOverrideFont(IGUIFont* font = 0) = 0;
+	virtual void setOverrideFont(
+		IGUIFont* font = 0
+	) = 0;
 
 	//! Gets the override font (if any)
 	/** \return The override font (may be 0) */
@@ -53,7 +55,9 @@ public:
 	If you set a color, and you want the text displayed with the color
 	of the skin again, call IGUIEditBox::enableOverrideColor(false);
 	\param color: New color of the text. */
-	virtual void setOverrideColor(video::SColor color) = 0;
+	virtual void setOverrideColor(
+		video::SColor color
+	) = 0;
 
 	//! Gets the override color
 	virtual video::SColor getOverrideColor() const = 0;
@@ -62,14 +66,20 @@ public:
 	/** \param enable: If set to true, the override color, which can be set
 	with IGUIEditBox::setOverrideColor is used, otherwise the
 	EGDC_BUTTON_TEXT color of the skin. */
-	virtual void enableOverrideColor(bool enable) = 0;
+	virtual void enableOverrideColor(
+		bool enable
+	) = 0;
 
 	//! Checks if an override color is enabled
 	/** \return true if the override color is enabled, false otherwise */
-	virtual bool isOverrideColorEnabled(void) const = 0;
+	virtual bool isOverrideColorEnabled(
+		void
+	) const = 0;
 
 	//! Sets whether to draw the background
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Checks if background drawing is enabled
 	/** \return true if background drawing is enabled, false otherwise */
@@ -77,7 +87,9 @@ public:
 
 	//! Turns the border on or off
 	/** \param border: true if you want the border to be drawn, false if not */
-	virtual void setDrawBorder(bool border) = 0;
+	virtual void setDrawBorder(
+		bool border
+	) = 0;
 
 	//! Checks if border drawing is enabled
 	/** \return true if border drawing is enabled, false otherwise */
@@ -88,13 +100,17 @@ public:
 	EGUIA_LOWERRIGHT for right justified, or EGUIA_CENTER for centered text.
 	\param vertical: EGUIA_UPPERLEFT to align with top edge,
 	EGUIA_LOWERRIGHT for bottom edge, or EGUIA_CENTER for centered text (default). */
-	virtual void setTextAlignment(EGUI_ALIGNMENT horizontal,
-		EGUI_ALIGNMENT vertical) = 0;
+	virtual void setTextAlignment(
+		EGUI_ALIGNMENT horizontal,
+		EGUI_ALIGNMENT vertical
+	) = 0;
 
 	//! Enables or disables word wrap.
 	/** \param enable: If set to true, words going over one line are
 	broken to the next line. */
-	virtual void setWordWrap(bool enable) = 0;
+	virtual void setWordWrap(
+		bool enable
+	) = 0;
 
 	//! Checks if word wrap is enabled
 	/** \return true if word wrap is enabled, false otherwise */
@@ -103,7 +119,9 @@ public:
 	//! Enables or disables newlines.
 	/** \param enable: If set to true, the EGET_EDITBOX_ENTER event will not be fired,
 	instead a newline character will be inserted. */
-	virtual void setMultiLine(bool enable) = 0;
+	virtual void setMultiLine(
+		bool enable
+	) = 0;
 
 	//! Checks if multi line editing is enabled
 	/** \return true if multi-line is enabled, false otherwise */
@@ -112,7 +130,9 @@ public:
 	//! Enables or disables automatic scrolling with cursor position
 	/** \param enable: If set to true, the text will move around with the cursor
 	 * position */
-	virtual void setAutoScroll(bool enable) = 0;
+	virtual void setAutoScroll(
+		bool enable
+	) = 0;
 
 	//! Checks to see if automatic scrolling is enabled
 	/** \return true if automatic scrolling is enabled, false if not */
@@ -122,7 +142,10 @@ public:
 	/** disable MultiLine, WordWrap and the ability to copy with ctrl+c or ctrl+x
 	\param passwordBox: true to enable password, false to disable
 	\param passwordChar: the character that is displayed instead of letters */
-	virtual void setPasswordBox(bool passwordBox, wchar_t passwordChar = L'*') = 0;
+	virtual void setPasswordBox(
+		bool passwordBox,
+		wchar_t passwordChar = L'*'
+	) = 0;
 
 	//! Returns true if the edit box is currently a password box.
 	virtual bool isPasswordBox() const = 0;
@@ -134,22 +157,28 @@ public:
 	//! Sets the maximum amount of characters which may be entered in the box.
 	/** \param max: Maximum amount of characters. If 0, the character amount is
 	infinity. */
-	virtual void setMax(u32 max) = 0;
+	virtual void setMax(
+		u32 max
+	) = 0;
 
 	//! Returns maximum amount of characters, previously set by setMax();
 	virtual u32 getMax() const = 0;
 
 	//! Set the character used for the cursor.
 	/** By default it's "_" */
-	virtual void setCursorChar(const wchar_t cursorChar) = 0;
+	virtual void setCursorChar(
+		const wchar_t cursorChar
+	) = 0;
 
 	//! Get the character used for the cursor.
 	virtual wchar_t getCursorChar() const = 0;
 
 	//! Set the blinktime for the cursor. 2x blinktime is one full cycle.
 	//** \param timeMs Blinktime in milliseconds. When set to 0 the cursor is
-	//constantly on without blinking */
-	virtual void setCursorBlinkTime(irr::u32 timeMs) = 0;
+	// constantly on without blinking */
+	virtual void setCursorBlinkTime(
+		irr::u32 timeMs
+	) = 0;
 
 	//! Get the cursor blinktime
 	virtual irr::u32 getCursorBlinkTime() const = 0;

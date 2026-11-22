@@ -429,7 +429,7 @@ bool COctreeSceneNode::createTree(
 		// (which looks like a horrible idea. If a user wanted that material
 		// without mesh he should still get it...
 		//	but not going to change that now. Only documenting it after
-		//figuring out what happens here.
+		// figuring out what happens here.
 		//  It works at least as Materials are reset in deleteTree).
 		VertexType = video::EVT_STANDARD;
 		u32 meshReserve = 0;

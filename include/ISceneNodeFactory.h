@@ -34,8 +34,10 @@ public:
 	\return Returns pointer to the new scene node or null if not successful.
 	This pointer should not be dropped. See IReferenceCounted::drop() for more
 	information. */
-	virtual ISceneNode* addSceneNode(ESCENE_NODE_TYPE type,
-		ISceneNode* parent = 0) = 0;
+	virtual ISceneNode* addSceneNode(
+		ESCENE_NODE_TYPE type,
+		ISceneNode* parent = 0
+	) = 0;
 
 	//! adds a scene node to the scene graph based on its type name
 	/** \param typeName: Type name of the scene node to add.
@@ -44,7 +46,10 @@ public:
 	\return Returns pointer to the new scene node or null if not successful.
 	This pointer should not be dropped. See IReferenceCounted::drop() for more
 	information. */
-	virtual ISceneNode* addSceneNode(const c8* typeName, ISceneNode* parent = 0) = 0;
+	virtual ISceneNode* addSceneNode(
+		const c8* typeName,
+		ISceneNode* parent = 0
+	) = 0;
 
 	//! returns amount of scene node types this factory is able to create
 	virtual u32 getCreatableSceneNodeTypeCount() const = 0;
@@ -52,18 +57,24 @@ public:
 	//! returns type of a creatable scene node type
 	/** \param idx: Index of scene node type in this factory. Must be a value between
 	0 and getCreatableSceneNodeTypeCount() */
-	virtual ESCENE_NODE_TYPE getCreateableSceneNodeType(u32 idx) const = 0;
+	virtual ESCENE_NODE_TYPE getCreateableSceneNodeType(
+		u32 idx
+	) const = 0;
 
 	//! returns type name of a creatable scene node type by index
 	/** \param idx: Index of scene node type in this factory. Must be a value between
 	0 and getCreatableSceneNodeTypeCount() */
-	virtual const c8* getCreateableSceneNodeTypeName(u32 idx) const = 0;
+	virtual const c8* getCreateableSceneNodeTypeName(
+		u32 idx
+	) const = 0;
 
 	//! returns type name of a creatable scene node type
 	/** \param type: Type of scene node.
 	\return: Returns name of scene node type if this factory can create the type,
 	otherwise 0. */
-	virtual const c8* getCreateableSceneNodeTypeName(ESCENE_NODE_TYPE type) const = 0;
+	virtual const c8* getCreateableSceneNodeTypeName(
+		ESCENE_NODE_TYPE type
+	) const = 0;
 };
 
 } // end namespace scene

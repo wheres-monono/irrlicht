@@ -70,7 +70,9 @@ public:
 
 	//! Sets the animation mode of the bone.
 	/** \return True if successful. (Unused) */
-	virtual bool setAnimationMode(E_BONE_ANIMATION_MODE mode) = 0;
+	virtual bool setAnimationMode(
+		E_BONE_ANIMATION_MODE mode
+	) = 0;
 
 	//! Gets the current animation mode of the bone
 	virtual E_BONE_ANIMATION_MODE getAnimationMode() const = 0;
@@ -82,14 +84,18 @@ public:
 	// virtual core::matrix4 getRelativeTransformation() const = 0;
 
 	//! The animation method.
-	virtual void OnAnimate(u32 timeMs) = 0;
+	virtual void OnAnimate(
+		u32 timeMs
+	) = 0;
 
 	//! The render method.
 	/** Does nothing as bones are not visible. */
 	virtual void render() _IRR_OVERRIDE_ {}
 
 	//! How the relative transformation of the bone is used
-	virtual void setSkinningSpace(E_BONE_SKINNING_SPACE space) = 0;
+	virtual void setSkinningSpace(
+		E_BONE_SKINNING_SPACE space
+	) = 0;
 
 	//! How the relative transformation of the bone is used
 	virtual E_BONE_SKINNING_SPACE getSkinningSpace() const = 0;

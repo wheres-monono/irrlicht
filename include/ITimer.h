@@ -61,7 +61,9 @@ public:
 	virtual u32 getTime() const = 0;
 
 	//! sets current virtual time
-	virtual void setTime(u32 time) = 0;
+	virtual void setTime(
+		u32 time
+	) = 0;
 
 	//! Stops the virtual timer.
 	/** The timer is reference counted, which means everything which calls
@@ -78,7 +80,9 @@ public:
 	//! Sets the speed of the timer
 	/** The speed is the factor with which the time is running faster or
 	slower then the real system time. */
-	virtual void setSpeed(f32 speed = 1.0f) = 0;
+	virtual void setSpeed(
+		f32 speed = 1.0f
+	) = 0;
 
 	//! Returns current speed of the timer
 	/** The speed is the factor with which the time is running faster or

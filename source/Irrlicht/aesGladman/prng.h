@@ -62,12 +62,21 @@ typedef struct {
 } prng_ctx;
 
 /* initialise the random stream generator   */
-void prng_init(prng_entropy_fn fun, prng_ctx ctx[1]);
+void prng_init(
+	prng_entropy_fn fun,
+	prng_ctx ctx[1]
+);
 
 /* obtain random bytes from the generator   */
-void prng_rand(unsigned char data[], unsigned int data_len, prng_ctx ctx[1]);
+void prng_rand(
+	unsigned char data[],
+	unsigned int data_len,
+	prng_ctx ctx[1]
+);
 
 /* close the random stream generator        */
-void prng_end(prng_ctx ctx[1]);
+void prng_end(
+	prng_ctx ctx[1]
+);
 
 #endif

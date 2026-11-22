@@ -21,22 +21,28 @@ namespace scene
 //! Scene node which is a quake3 shader.
 class CQuake3ShaderSceneNode : public scene::IMeshSceneNode {
 public:
-	CQuake3ShaderSceneNode(ISceneNode* parent,
+	CQuake3ShaderSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		io::IFileSystem* fileSystem,
 		const IMeshBuffer* original,
-		const quake3::IShader* shader);
+		const quake3::IShader* shader
+	);
 
 	virtual ~CQuake3ShaderSceneNode();
 
 	virtual void OnRegisterSceneNode() _IRR_OVERRIDE_;
 	virtual void render() _IRR_OVERRIDE_;
-	virtual void OnAnimate(u32 timeMs) _IRR_OVERRIDE_;
+	virtual void OnAnimate(
+		u32 timeMs
+	) _IRR_OVERRIDE_;
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
 	virtual u32 getMaterialCount() const _IRR_OVERRIDE_;
-	virtual video::SMaterial& getMaterial(u32 i) _IRR_OVERRIDE_;
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) _IRR_OVERRIDE_;
 
 	//! Returns type of the scene node
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ {
@@ -54,15 +60,19 @@ public:
 
 	//! Creates shadow volume scene node as child of this node
 	//! and returns a pointer to it.
-	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh,
+	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(
+		const IMesh* shadowMesh,
 		s32 id,
 		bool zfailmethod = true,
-		f32 infinity = 10000.0f) _IRR_OVERRIDE_;
+		f32 infinity = 10000.0f
+	) _IRR_OVERRIDE_;
 
 	//! Removes a child from this scene node.
 	//! Implemented here, to be able to remove the shadow properly, if there is one,
 	//! or to remove attached childs.
-	virtual bool removeChild(ISceneNode* child) _IRR_OVERRIDE_;
+	virtual bool removeChild(
+		ISceneNode* child
+	) _IRR_OVERRIDE_;
 
 private:
 	const quake3::IShader* Shader;
@@ -89,28 +99,67 @@ private:
 
 	core::array<SQ3Texture> Q3Texture;
 
-	void loadTextures(io::IFileSystem* fileSystem);
-	void addBuffer(scene::SMeshBufferLightMap* buffer);
-	void cloneBuffer(scene::SMeshBuffer* dest,
+	void loadTextures(
+		io::IFileSystem* fileSystem
+	);
+	void addBuffer(
+		scene::SMeshBufferLightMap* buffer
+	);
+	void cloneBuffer(
+		scene::SMeshBuffer* dest,
 		const scene::SMeshBufferLightMap* buffer,
-		bool translateCenter);
+		bool translateCenter
+	);
 
-	void deformvertexes_wave(f32 dt, quake3::SModifierFunction& function);
-	void deformvertexes_move(f32 dt, quake3::SModifierFunction& function);
-	void deformvertexes_bulge(f32 dt, quake3::SModifierFunction& function);
-	void deformvertexes_autosprite(f32 dt, quake3::SModifierFunction& function);
-	void deformvertexes_autosprite2(f32 dt, quake3::SModifierFunction& function);
-	void deformvertexes_normal(f32 dt, quake3::SModifierFunction& function);
+	void deformvertexes_wave(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void deformvertexes_move(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void deformvertexes_bulge(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void deformvertexes_autosprite(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void deformvertexes_autosprite2(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void deformvertexes_normal(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
 
-	void vertextransform_tcgen(f32 dt, quake3::SModifierFunction& function);
-	void vertextransform_rgbgen(f32 dt, quake3::SModifierFunction& function);
-	void vertextransform_alphagen(f32 dt, quake3::SModifierFunction& function);
+	void vertextransform_tcgen(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void vertextransform_rgbgen(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
+	void vertextransform_alphagen(
+		f32 dt,
+		quake3::SModifierFunction& function
+	);
 
-	void transformtex(const core::matrix4& m, const u32 clamp);
+	void transformtex(
+		const core::matrix4& m,
+		const u32 clamp
+	);
 
 	f32 TimeAbs;
 
-	void animate(u32 stage, core::matrix4& texture);
+	void animate(
+		u32 stage,
+		core::matrix4& texture
+	);
 
 	E_SCENE_NODE_RENDER_PASS getRenderStage() const;
 };

@@ -39,7 +39,9 @@ namespace irr
 class CIrrDeviceConsole : public CIrrDeviceStub, video::IImagePresenter {
 public:
 	//! constructor
-	CIrrDeviceConsole(const SIrrlichtCreationParameters& params);
+	CIrrDeviceConsole(
+		const SIrrlichtCreationParameters& params
+	);
 
 	//! destructor
 	virtual ~CIrrDeviceConsole();
@@ -53,10 +55,15 @@ public:
 	virtual void yield() _IRR_OVERRIDE_;
 
 	//! Pause execution and let other processes to run for a specified amount of time.
-	virtual void sleep(u32 timeMs, bool pauseTimer) _IRR_OVERRIDE_;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer
+	) _IRR_OVERRIDE_;
 
 	//! sets the caption of the window
-	virtual void setWindowCaption(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns if window is active. if not, nothing need to be drawn
 	virtual bool isWindowActive() const _IRR_OVERRIDE_;
@@ -73,15 +80,19 @@ public:
 	}
 
 	//! presents a surface in the client area
-	virtual bool present(video::IImage* surface,
+	virtual bool present(
+		video::IImage* surface,
 		void* windowId = 0,
-		core::rect<s32>* src = 0) _IRR_OVERRIDE_;
+		core::rect<s32>* src = 0
+	) _IRR_OVERRIDE_;
 
 	//! notifies the device that it should close itself
 	virtual void closeDevice() _IRR_OVERRIDE_;
 
 	//! Sets if the window should be resizable in windowed mode.
-	virtual void setResizable(bool resize = false) _IRR_OVERRIDE_;
+	virtual void setResizable(
+		bool resize = false
+	) _IRR_OVERRIDE_;
 
 	//! Minimizes the window.
 	virtual void minimizeWindow() _IRR_OVERRIDE_;
@@ -95,7 +106,11 @@ public:
 	//! Get the device type
 	virtual E_DEVICE_TYPE getType() const _IRR_OVERRIDE_ { return EIDT_CONSOLE; }
 
-	void addPostPresentText(s16 X, s16 Y, const wchar_t* text);
+	void addPostPresentText(
+		s16 X,
+		s16 Y,
+		const wchar_t* text
+	);
 
 	//! Implementation of the win32 console mouse cursor
 	class CCursorControl : public gui::ICursorControl {
@@ -230,7 +245,10 @@ public:
 
 private:
 	//! Set the position of the text caret
-	void setTextCursorPos(s16 x, s16 y);
+	void setTextCursorPos(
+		s16 x,
+		s16 y
+	);
 
 	// text to be added after drawing the screen
 	struct SPostPresentText {

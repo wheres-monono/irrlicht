@@ -17,7 +17,8 @@ namespace scene
 class CSkyBoxSceneNode : public ISceneNode {
 public:
 	//! constructor
-	CSkyBoxSceneNode(video::ITexture* top,
+	CSkyBoxSceneNode(
+		video::ITexture* top,
 		video::ITexture* bottom,
 		video::ITexture* left,
 		video::ITexture* right,
@@ -25,7 +26,8 @@ public:
 		video::ITexture* back,
 		ISceneNode* parent,
 		ISceneManager* mgr,
-		s32 id);
+		s32 id
+	);
 
 	virtual void OnRegisterSceneNode() _IRR_OVERRIDE_;
 
@@ -40,7 +42,9 @@ public:
 	//! This function is needed for inserting the node into the scene hirachy on a
 	//! optimal position for minimizing renderstate changes, but can also be used
 	//! to directly modify the material of a scene node.
-	virtual video::SMaterial& getMaterial(u32 i) _IRR_OVERRIDE_;
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) _IRR_OVERRIDE_;
 
 	//! returns amount of materials used by this scene node.
 	virtual u32 getMaterialCount() const _IRR_OVERRIDE_;
@@ -49,8 +53,10 @@ public:
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ { return ESNT_SKY_BOX; }
 
 	//! Creates a clone of this scene node and its children.
-	virtual ISceneNode* clone(ISceneNode* newParent = 0,
-		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
+	virtual ISceneNode* clone(
+		ISceneNode* newParent = 0,
+		ISceneManager* newManager = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	core::aabbox3d<f32> Box;

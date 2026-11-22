@@ -56,7 +56,9 @@ public:
 
 	//! Default constructor
 	/** \param constructor Choose the initialization style */
-	CMatrix4(eConstructor constructor = EM4CONST_IDENTITY);
+	CMatrix4(
+		eConstructor constructor = EM4CONST_IDENTITY
+	);
 
 	//! Constructor with value initialization
 	CMatrix4(
@@ -98,7 +100,10 @@ public:
 	//! Copy constructor
 	/** \param other Other matrix to copy from
 	\param constructor Choose the initialization style */
-	CMatrix4(const CMatrix4<T>& other, eConstructor constructor = EM4CONST_COPY);
+	CMatrix4(
+		const CMatrix4<T>& other,
+		eConstructor constructor = EM4CONST_COPY
+	);
 
 	//! Simple operator for directly accessing every element of the matrix.
 	T& operator()(
@@ -137,10 +142,14 @@ public:
 	}
 
 	//! Sets this matrix equal to the other matrix.
-	inline CMatrix4<T>& operator=(const CMatrix4<T>& other);
+	inline CMatrix4<T>& operator=(
+		const CMatrix4<T>& other
+	);
 
 	//! Sets all elements of this matrix to the value.
-	inline CMatrix4<T>& operator=(const T& scalar);
+	inline CMatrix4<T>& operator=(
+		const T& scalar
+	);
 
 	//! Returns pointer to internal array
 	const T* pointer() const { return M; }
@@ -152,47 +161,71 @@ public:
 	}
 
 	//! Returns true if other matrix is equal to this matrix.
-	bool operator==(const CMatrix4<T>& other) const;
+	bool operator==(
+		const CMatrix4<T>& other
+	) const;
 
 	//! Returns true if other matrix is not equal to this matrix.
-	bool operator!=(const CMatrix4<T>& other) const;
+	bool operator!=(
+		const CMatrix4<T>& other
+	) const;
 
 	//! Add another matrix.
-	CMatrix4<T> operator+(const CMatrix4<T>& other) const;
+	CMatrix4<T> operator+(
+		const CMatrix4<T>& other
+	) const;
 
 	//! Add another matrix.
-	CMatrix4<T>& operator+=(const CMatrix4<T>& other);
+	CMatrix4<T>& operator+=(
+		const CMatrix4<T>& other
+	);
 
 	//! Subtract another matrix.
-	CMatrix4<T> operator-(const CMatrix4<T>& other) const;
+	CMatrix4<T> operator-(
+		const CMatrix4<T>& other
+	) const;
 
 	//! Subtract another matrix.
-	CMatrix4<T>& operator-=(const CMatrix4<T>& other);
+	CMatrix4<T>& operator-=(
+		const CMatrix4<T>& other
+	);
 
 	//! set this matrix to the product of two matrices
 	/** Calculate b*a */
-	inline CMatrix4<T>& setbyproduct(const CMatrix4<T>& other_a,
-		const CMatrix4<T>& other_b);
+	inline CMatrix4<T>& setbyproduct(
+		const CMatrix4<T>& other_a,
+		const CMatrix4<T>& other_b
+	);
 
 	//! Set this matrix to the product of two matrices
 	/** Calculate b*a, no optimization used,
 	use it if you know you never have a identity matrix */
-	CMatrix4<T>& setbyproduct_nocheck(const CMatrix4<T>& other_a,
-		const CMatrix4<T>& other_b);
+	CMatrix4<T>& setbyproduct_nocheck(
+		const CMatrix4<T>& other_a,
+		const CMatrix4<T>& other_b
+	);
 
 	//! Multiply by another matrix.
 	/** Calculate other*this */
-	CMatrix4<T> operator*(const CMatrix4<T>& other) const;
+	CMatrix4<T> operator*(
+		const CMatrix4<T>& other
+	) const;
 
 	//! Multiply by another matrix.
 	/** Calculate and return other*this */
-	CMatrix4<T>& operator*=(const CMatrix4<T>& other);
+	CMatrix4<T>& operator*=(
+		const CMatrix4<T>& other
+	);
 
 	//! Multiply by scalar.
-	CMatrix4<T> operator*(const T& scalar) const;
+	CMatrix4<T> operator*(
+		const T& scalar
+	) const;
 
 	//! Multiply by scalar.
-	CMatrix4<T>& operator*=(const T& scalar);
+	CMatrix4<T>& operator*=(
+		const T& scalar
+	);
 
 	//! Set matrix to identity.
 	inline CMatrix4<T>& makeIdentity();
@@ -207,29 +240,39 @@ public:
 	bool isIdentity_integer_base() const;
 
 	//! Set the translation of the current matrix. Will erase any previous values.
-	CMatrix4<T>& setTranslation(const vector3d<T>& translation);
+	CMatrix4<T>& setTranslation(
+		const vector3d<T>& translation
+	);
 
 	//! Gets the current translation
 	vector3d<T> getTranslation() const;
 
 	//! Set the inverse translation of the current matrix. Will erase any previous
 	//! values.
-	CMatrix4<T>& setInverseTranslation(const vector3d<T>& translation);
+	CMatrix4<T>& setInverseTranslation(
+		const vector3d<T>& translation
+	);
 
 	//! Make a rotation matrix from Euler angles. The 4th row and column are
 	//! unmodified.
-	inline CMatrix4<T>& setRotationRadians(const vector3d<T>& rotation);
+	inline CMatrix4<T>& setRotationRadians(
+		const vector3d<T>& rotation
+	);
 
 	//! Make a rotation matrix from Euler angles. The 4th row and column are
 	//! unmodified.
-	CMatrix4<T>& setRotationDegrees(const vector3d<T>& rotation);
+	CMatrix4<T>& setRotationDegrees(
+		const vector3d<T>& rotation
+	);
 
 	//! Get the rotation, as set by setRotation() when you already know the scale.
 	/** If you already know the scale then this function is faster than the other
 	getRotationDegrees overload. NOTE: You will have the same end-rotation as used in
 	setRotation, but it might not use the same axis values.
 	*/
-	core::vector3d<T> getRotationDegrees(const vector3d<T>& scale) const;
+	core::vector3d<T> getRotationDegrees(
+		const vector3d<T>& scale
+	) const;
 
 	//! Returns the rotation, as set by setRotation().
 	/** NOTE: You will have the same end-rotation as used in setRotation, but it might
@@ -239,19 +282,27 @@ public:
 
 	//! Make an inverted rotation matrix from Euler angles.
 	/** The 4th row and column are unmodified. */
-	inline CMatrix4<T>& setInverseRotationRadians(const vector3d<T>& rotation);
+	inline CMatrix4<T>& setInverseRotationRadians(
+		const vector3d<T>& rotation
+	);
 
 	//! Make an inverted rotation matrix from Euler angles.
 	/** The 4th row and column are unmodified. */
-	inline CMatrix4<T>& setInverseRotationDegrees(const vector3d<T>& rotation);
+	inline CMatrix4<T>& setInverseRotationDegrees(
+		const vector3d<T>& rotation
+	);
 
 	//! Make a rotation matrix from angle and axis, assuming left handed rotation.
 	/** The 4th row and column are unmodified. */
-	inline CMatrix4<T>& setRotationAxisRadians(const T& angle,
-		const vector3d<T>& axis);
+	inline CMatrix4<T>& setRotationAxisRadians(
+		const T& angle,
+		const vector3d<T>& axis
+	);
 
 	//! Set Scale
-	CMatrix4<T>& setScale(const vector3d<T>& scale);
+	CMatrix4<T>& setScale(
+		const vector3d<T>& scale
+	);
 
 	//! Set Scale
 	CMatrix4<T>& setScale(
@@ -264,68 +315,107 @@ public:
 	core::vector3d<T> getScale() const;
 
 	//! Translate a vector by the inverse of the translation part of this matrix.
-	void inverseTranslateVect(vector3df& vect) const;
+	void inverseTranslateVect(
+		vector3df& vect
+	) const;
 
 	//! Rotate a vector by the inverse of the rotation part of this matrix.
-	void inverseRotateVect(vector3df& vect) const;
+	void inverseRotateVect(
+		vector3df& vect
+	) const;
 
 	//! Rotate a vector by the rotation part of this matrix.
-	void rotateVect(vector3df& vect) const;
+	void rotateVect(
+		vector3df& vect
+	) const;
 
 	//! An alternate transform vector method, writing into a second vector
-	void rotateVect(core::vector3df& out, const core::vector3df& in) const;
+	void rotateVect(
+		core::vector3df& out,
+		const core::vector3df& in
+	) const;
 
 	//! An alternate transform vector method, writing into an array of 3 floats
-	void rotateVect(T* out, const core::vector3df& in) const;
+	void rotateVect(
+		T* out,
+		const core::vector3df& in
+	) const;
 
 	//! Transforms the vector by this matrix
 	/** This operation is performed as if the vector was 4d with the 4th component =1
 	 */
-	void transformVect(vector3df& vect) const;
+	void transformVect(
+		vector3df& vect
+	) const;
 
 	//! Transforms input vector by this matrix and stores result in output vector
 	/** This operation is performed as if the vector was 4d with the 4th component =1
 	 */
-	void transformVect(vector3df& out, const vector3df& in) const;
+	void transformVect(
+		vector3df& out,
+		const vector3df& in
+	) const;
 
 	//! An alternate transform vector method, writing into an array of 4 floats
 	/** This operation is performed as if the vector was 4d with the 4th component =1.
 		NOTE: out[3] will be written to (4th vector component)*/
-	void transformVect(T* out, const core::vector3df& in) const;
+	void transformVect(
+		T* out,
+		const core::vector3df& in
+	) const;
 
 	//! An alternate transform vector method, reading from and writing to an array of
 	//! 3 floats
 	/** This operation is performed as if the vector was 4d with the 4th component =1
 		NOTE: out[3] will be written to (4th vector component)*/
-	void transformVec3(T* out, const T* in) const;
+	void transformVec3(
+		T* out,
+		const T* in
+	) const;
 
 	//! An alternate transform vector method, reading from and writing to an array of
 	//! 4 floats
-	void transformVec4(T* out, const T* in) const;
+	void transformVec4(
+		T* out,
+		const T* in
+	) const;
 
 	//! Translate a vector by the translation part of this matrix.
 	/** This operation is performed as if the vector was 4d with the 4th component =1
 	 */
-	void translateVect(vector3df& vect) const;
+	void translateVect(
+		vector3df& vect
+	) const;
 
 	//! Transforms a plane by this matrix
-	void transformPlane(core::plane3d<f32>& plane) const;
+	void transformPlane(
+		core::plane3d<f32>& plane
+	) const;
 
 	//! Transforms a plane by this matrix
-	void transformPlane(const core::plane3d<f32>& in, core::plane3d<f32>& out) const;
+	void transformPlane(
+		const core::plane3d<f32>& in,
+		core::plane3d<f32>& out
+	) const;
 
 	//! Transforms a axis aligned bounding box
 	/** The result box of this operation may not be accurate at all. For
 	correct results, use transformBoxEx() */
-	void transformBox(core::aabbox3d<f32>& box) const;
+	void transformBox(
+		core::aabbox3d<f32>& box
+	) const;
 
 	//! Transforms a axis aligned bounding box
 	/** The result box of this operation should be accurate, but this operation
 	is slower than transformBox(). */
-	void transformBoxEx(core::aabbox3d<f32>& box) const;
+	void transformBoxEx(
+		core::aabbox3d<f32>& box
+	) const;
 
 	//! Multiplies this matrix by a 1x4 matrix
-	void multiplyWith1x4Matrix(T* matrix) const;
+	void multiplyWith1x4Matrix(
+		T* matrix
+	) const;
 
 	//! Calculates inverse of matrix. Slow.
 	/** \return Returns false if there is no inverse matrix.*/
@@ -333,116 +423,152 @@ public:
 
 	//! Inverts a primitive matrix which only contains a translation and a rotation
 	/** \param out: where result matrix is written to. */
-	bool getInversePrimitive(CMatrix4<T>& out) const;
+	bool getInversePrimitive(
+		CMatrix4<T>& out
+	) const;
 
 	//! Gets the inverse matrix of this one
 	/** \param out: where result matrix is written to.
 	\return Returns false if there is no inverse matrix. */
-	bool getInverse(CMatrix4<T>& out) const;
+	bool getInverse(
+		CMatrix4<T>& out
+	) const;
 
 	//! Builds a right-handed perspective projection matrix based on a field of view
 	//\param zClipFromZero: Clipping of z can be projected from 0 to w when true (D3D
-	//style) and from -w to w when false (OGL style).
-	CMatrix4<T>& buildProjectionMatrixPerspectiveFovRH(f32 fieldOfViewRadians,
+	// style) and from -w to w when false (OGL style).
+	CMatrix4<T>& buildProjectionMatrixPerspectiveFovRH(
+		f32 fieldOfViewRadians,
 		f32 aspectRatio,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a left-handed perspective projection matrix based on a field of view
-	CMatrix4<T>& buildProjectionMatrixPerspectiveFovLH(f32 fieldOfViewRadians,
+	CMatrix4<T>& buildProjectionMatrixPerspectiveFovLH(
+		f32 fieldOfViewRadians,
 		f32 aspectRatio,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a left-handed perspective projection matrix based on a field of view,
 	//! with far plane at infinity
-	CMatrix4<T>& buildProjectionMatrixPerspectiveFovInfinityLH(f32 fieldOfViewRadians,
+	CMatrix4<T>& buildProjectionMatrixPerspectiveFovInfinityLH(
+		f32 fieldOfViewRadians,
 		f32 aspectRatio,
 		f32 zNear,
-		f32 epsilon = 0);
+		f32 epsilon = 0
+	);
 
 	//! Builds a right-handed perspective projection matrix.
-	CMatrix4<T>& buildProjectionMatrixPerspectiveRH(f32 widthOfViewVolume,
+	CMatrix4<T>& buildProjectionMatrixPerspectiveRH(
+		f32 widthOfViewVolume,
 		f32 heightOfViewVolume,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a left-handed perspective projection matrix.
-	CMatrix4<T>& buildProjectionMatrixPerspectiveLH(f32 widthOfViewVolume,
+	CMatrix4<T>& buildProjectionMatrixPerspectiveLH(
+		f32 widthOfViewVolume,
 		f32 heightOfViewVolume,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a left-handed orthogonal projection matrix.
 	//\param zClipFromZero: Clipping of z can be projected from 0 to 1 when true (D3D
-	//style) and from -1 to 1 when false (OGL style).
-	CMatrix4<T>& buildProjectionMatrixOrthoLH(f32 widthOfViewVolume,
+	// style) and from -1 to 1 when false (OGL style).
+	CMatrix4<T>& buildProjectionMatrixOrthoLH(
+		f32 widthOfViewVolume,
 		f32 heightOfViewVolume,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a right-handed orthogonal projection matrix.
-	CMatrix4<T>& buildProjectionMatrixOrthoRH(f32 widthOfViewVolume,
+	CMatrix4<T>& buildProjectionMatrixOrthoRH(
+		f32 widthOfViewVolume,
 		f32 heightOfViewVolume,
 		f32 zNear,
 		f32 zFar,
-		bool zClipFromZero = true);
+		bool zClipFromZero = true
+	);
 
 	//! Builds a left-handed look-at matrix.
-	CMatrix4<T>& buildCameraLookAtMatrixLH(const vector3df& position,
+	CMatrix4<T>& buildCameraLookAtMatrixLH(
+		const vector3df& position,
 		const vector3df& target,
-		const vector3df& upVector);
+		const vector3df& upVector
+	);
 
 	//! Builds a right-handed look-at matrix.
-	CMatrix4<T>& buildCameraLookAtMatrixRH(const vector3df& position,
+	CMatrix4<T>& buildCameraLookAtMatrixRH(
+		const vector3df& position,
 		const vector3df& target,
-		const vector3df& upVector);
+		const vector3df& upVector
+	);
 
 	//! Builds a matrix that flattens geometry into a plane.
 	/** \param light: light source
 	\param plane: plane into which the geometry if flattened into
 	\param point: value between 0 and 1, describing the light source.
 	If this is 1, it is a point light, if it is 0, it is a directional light. */
-	CMatrix4<T>& buildShadowMatrix(const core::vector3df& light,
+	CMatrix4<T>& buildShadowMatrix(
+		const core::vector3df& light,
 		core::plane3df plane,
-		f32 point = 1.0f);
+		f32 point = 1.0f
+	);
 
 	//! Builds a matrix which transforms a normalized Device Coordinate to Device
 	//! Coordinates.
 	/** Used to scale <-1,-1><1,1> to viewport, for example from <-1,-1> <1,1> to the
 	 * viewport <0,0><0,640> */
-	CMatrix4<T>& buildNDCToDCMatrix(const core::rect<s32>& area, f32 zScale);
+	CMatrix4<T>& buildNDCToDCMatrix(
+		const core::rect<s32>& area,
+		f32 zScale
+	);
 
 	//! Creates a new matrix as interpolated matrix from two other ones.
 	/** \param b: other matrix to interpolate with
 	\param time: Must be a value between 0 and 1. */
-	CMatrix4<T> interpolate(const core::CMatrix4<T>& b, f32 time) const;
+	CMatrix4<T> interpolate(
+		const core::CMatrix4<T>& b,
+		f32 time
+	) const;
 
 	//! Gets transposed matrix
 	CMatrix4<T> getTransposed() const;
 
 	//! Gets transposed matrix
-	inline void getTransposed(CMatrix4<T>& dest) const;
+	inline void getTransposed(
+		CMatrix4<T>& dest
+	) const;
 
 	//! Builds a matrix that rotates from one vector to another
 	/** \param from: vector to rotate from
 	\param to: vector to rotate to
 	 */
-	CMatrix4<T>& buildRotateFromTo(const core::vector3df& from,
-		const core::vector3df& to);
+	CMatrix4<T>& buildRotateFromTo(
+		const core::vector3df& from,
+		const core::vector3df& to
+	);
 
 	//! Builds a combined matrix which translates to a center before rotation and
 	//! translates from origin afterwards
 	/** \param center Position to rotate around
 	\param translate Translation applied after the rotation
 	 */
-	void setRotationCenter(const core::vector3df& center,
-		const core::vector3df& translate);
+	void setRotationCenter(
+		const core::vector3df& center,
+		const core::vector3df& translate
+	);
 
 	//! Builds a matrix which rotates a source vector to a look vector over an
 	//! arbitrary axis
@@ -452,79 +578,109 @@ public:
 	\param axis: axis to rotate about
 	\param from: source vector to rotate from
 	 */
-	void buildAxisAlignedBillboard(const core::vector3df& camPos,
+	void buildAxisAlignedBillboard(
+		const core::vector3df& camPos,
 		const core::vector3df& center,
 		const core::vector3df& translation,
 		const core::vector3df& axis,
-		const core::vector3df& from);
+		const core::vector3df& from
+	);
 
 	/*
 		construct 2D Texture transformations
 		rotate about center, scale, and transform.
 	*/
 	//! Set to a texture transformation matrix with the given parameters.
-	CMatrix4<T>& buildTextureTransform(f32 rotateRad,
+	CMatrix4<T>& buildTextureTransform(
+		f32 rotateRad,
 		const core::vector2df& rotatecenter,
 		const core::vector2df& translate,
-		const core::vector2df& scale);
+		const core::vector2df& scale
+	);
 
 	//! Set texture transformation rotation
 	/** Rotate about z axis, recenter at (0.5,0.5).
 	Doesn't clear other elements than those affected
 	\param radAngle Angle in radians
 	\return Altered matrix */
-	CMatrix4<T>& setTextureRotationCenter(f32 radAngle);
+	CMatrix4<T>& setTextureRotationCenter(
+		f32 radAngle
+	);
 
 	//! Set texture transformation translation
 	/** Doesn't clear other elements than those affected.
 	\param x Offset on x axis
 	\param y Offset on y axis
 	\return Altered matrix */
-	CMatrix4<T>& setTextureTranslate(f32 x, f32 y);
+	CMatrix4<T>& setTextureTranslate(
+		f32 x,
+		f32 y
+	);
 
 	//! Get texture transformation translation
 	/** \param x returns offset on x axis
 	\param y returns offset on y axis */
-	void getTextureTranslate(f32& x, f32& y) const;
+	void getTextureTranslate(
+		f32& x,
+		f32& y
+	) const;
 
 	//! Set texture transformation translation, using a transposed representation
 	/** Doesn't clear other elements than those affected.
 	\param x Offset on x axis
 	\param y Offset on y axis
 	\return Altered matrix */
-	CMatrix4<T>& setTextureTranslateTransposed(f32 x, f32 y);
+	CMatrix4<T>& setTextureTranslateTransposed(
+		f32 x,
+		f32 y
+	);
 
 	//! Set texture transformation scale
 	/** Doesn't clear other elements than those affected.
 	\param sx Scale factor on x axis
 	\param sy Scale factor on y axis
 	\return Altered matrix. */
-	CMatrix4<T>& setTextureScale(f32 sx, f32 sy);
+	CMatrix4<T>& setTextureScale(
+		f32 sx,
+		f32 sy
+	);
 
 	//! Get texture transformation scale
 	/** \param sx Returns x axis scale factor
 	\param sy Returns y axis scale factor */
-	void getTextureScale(f32& sx, f32& sy) const;
+	void getTextureScale(
+		f32& sx,
+		f32& sy
+	) const;
 
 	//! Set texture transformation scale, and recenter at (0.5,0.5)
 	/** Doesn't clear other elements than those affected.
 	\param sx Scale factor on x axis
 	\param sy Scale factor on y axis
 	\return Altered matrix. */
-	CMatrix4<T>& setTextureScaleCenter(f32 sx, f32 sy);
+	CMatrix4<T>& setTextureScaleCenter(
+		f32 sx,
+		f32 sy
+	);
 
 	//! Sets all matrix data members at once
-	CMatrix4<T>& setM(const T* data);
+	CMatrix4<T>& setM(
+		const T* data
+	);
 
 	//! Sets if the matrix is definitely identity matrix
-	void setDefinitelyIdentityMatrix(bool isDefinitelyIdentityMatrix);
+	void setDefinitelyIdentityMatrix(
+		bool isDefinitelyIdentityMatrix
+	);
 
 	//! Gets if the matrix is definitely identity matrix
 	bool getDefinitelyIdentityMatrix() const;
 
 	//! Compare two matrices using the equal method
-	bool equals(const core::CMatrix4<T>& other,
-		const T tolerance = (T)ROUNDING_ERROR_f64) const;
+	bool equals(
+		const core::CMatrix4<T>& other,
+		const T tolerance = (T)ROUNDING_ERROR_f64
+	) const;
 
 private:
 	//! Matrix data, stored in row-major order

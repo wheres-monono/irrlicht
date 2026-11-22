@@ -52,7 +52,9 @@ typedef unsigned short UInt16;
 
 #ifndef BZ_NO_STDIO
 
-extern void BZ2_bz__AssertH__fail(int errcode);
+extern void BZ2_bz__AssertH__fail(
+	int errcode
+);
 #define AssertH(cond, errcode)                                                           \
 	{                                                                                \
 		if (!(cond))                                                             \
@@ -82,7 +84,9 @@ extern void BZ2_bz__AssertH__fail(int errcode);
 
 #else
 
-extern void bz_internal_error(int errcode);
+extern void bz_internal_error(
+	int errcode
+);
 #define AssertH(cond, errcode)                                                           \
 	{                                                                                \
 		if (!(cond))                                                             \
@@ -267,15 +271,33 @@ typedef struct {
 
 /*-- externs for compression. --*/
 
-extern void BZ2_blockSort(EState*);
+extern void BZ2_blockSort(
+	EState*
+);
 
-extern void BZ2_compressBlock(EState*, Bool);
+extern void BZ2_compressBlock(
+	EState*,
+	Bool
+);
 
-extern void BZ2_bsInitWrite(EState*);
+extern void BZ2_bsInitWrite(
+	EState*
+);
 
-extern void BZ2_hbAssignCodes(Int32*, UChar*, Int32, Int32, Int32);
+extern void BZ2_hbAssignCodes(
+	Int32*,
+	UChar*,
+	Int32,
+	Int32,
+	Int32
+);
 
-extern void BZ2_hbMakeCodeLengths(UChar*, Int32*, Int32, Int32);
+extern void BZ2_hbMakeCodeLengths(
+	UChar*,
+	Int32*,
+	Int32,
+	Int32
+);
 
 /*-- states for decompression. --*/
 
@@ -467,11 +489,24 @@ typedef struct {
 
 /*-- externs for decompression. --*/
 
-extern Int32 BZ2_indexIntoF(Int32, Int32*);
+extern Int32 BZ2_indexIntoF(
+	Int32,
+	Int32*
+);
 
-extern Int32 BZ2_decompress(DState*);
+extern Int32 BZ2_decompress(
+	DState*
+);
 
-extern void BZ2_hbCreateDecodeTables(Int32*, Int32*, Int32*, UChar*, Int32, Int32, Int32);
+extern void BZ2_hbCreateDecodeTables(
+	Int32*,
+	Int32*,
+	Int32*,
+	UChar*,
+	Int32,
+	Int32,
+	Int32
+);
 
 #endif
 

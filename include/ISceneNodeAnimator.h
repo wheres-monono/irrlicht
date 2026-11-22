@@ -39,13 +39,18 @@ public:
 	//! Animates a scene node.
 	/** \param node Node to animate.
 	\param timeMs Current time in milliseconds. */
-	virtual void animateNode(ISceneNode* node, u32 timeMs) = 0;
+	virtual void animateNode(
+		ISceneNode* node,
+		u32 timeMs
+	) = 0;
 
 	//! Creates a clone of this animator.
 	/** Please note that you will have to drop
 	(IReferenceCounted::drop()) the returned pointer after calling this. */
-	virtual ISceneNodeAnimator* createClone(ISceneNode* node,
-		ISceneManager* newManager = 0) = 0;
+	virtual ISceneNodeAnimator* createClone(
+		ISceneNode* node,
+		ISceneManager* newManager = 0
+	) = 0;
 
 	//! Returns true if this animator receives events.
 	/** When attached to an active camera, this animator will be

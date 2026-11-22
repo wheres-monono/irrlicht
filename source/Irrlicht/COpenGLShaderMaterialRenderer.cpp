@@ -208,7 +208,7 @@ void COpenGLShaderMaterialRenderer::OnSetMaterial(
 				GLint curFogMode;
 				glGetIntegerv(GL_FOG_MODE, &curFogMode);
 				//				if (Driver->LinearFog &&
-				//PixelShader[1])
+				// PixelShader[1])
 				if (curFogMode == GL_LINEAR && PixelShader[1]) {
 					nextShader = PixelShader[1];
 				}

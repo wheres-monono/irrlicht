@@ -1240,7 +1240,8 @@ void COpenGLDriver::renderArray(
 				GLfloat particleSize = Material.Thickness;
 				//			if (AntiAlias)
 				//				particleSize=core::clamp(particleSize,
-				//DimSmoothedPoint[0], DimSmoothedPoint[1]); 			else
+				// DimSmoothedPoint[0], DimSmoothedPoint[1]);
+				// else
 				particleSize = core::clamp(particleSize,
 					DimAliasedPoint[0], DimAliasedPoint[1]);
 #if defined(GL_VERSION_1_4) || defined(GL_ARB_point_parameters) ||                       \
@@ -3065,7 +3066,7 @@ void COpenGLDriver::setBasicRenderStates(
 	if (resetAllRenderStates || lastmaterial.Thickness != material.Thickness) {
 		if (AntiAlias) {
 			//			glPointSize(core::clamp(static_cast<GLfloat>(material.Thickness),
-			//DimSmoothedPoint[0], DimSmoothedPoint[1]));
+			// DimSmoothedPoint[0], DimSmoothedPoint[1]));
 			// we don't use point smoothing
 			glPointSize(core::clamp(static_cast<GLfloat>(material.Thickness),
 				DimAliasedPoint[0], DimAliasedPoint[1]));

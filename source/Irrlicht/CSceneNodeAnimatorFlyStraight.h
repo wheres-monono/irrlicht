@@ -14,23 +14,32 @@ namespace scene
 class CSceneNodeAnimatorFlyStraight : public ISceneNodeAnimatorFinishing {
 public:
 	//! constructor
-	CSceneNodeAnimatorFlyStraight(const core::vector3df& startPoint,
+	CSceneNodeAnimatorFlyStraight(
+		const core::vector3df& startPoint,
 		const core::vector3df& endPoint,
 		u32 timeForWay,
 		bool loop,
 		u32 now,
-		bool pingpong);
+		bool pingpong
+	);
 
 	//! animates a scene node
-	virtual void animateNode(ISceneNode* node, u32 timeMs) _IRR_OVERRIDE_;
+	virtual void animateNode(
+		ISceneNode* node,
+		u32 timeMs
+	) _IRR_OVERRIDE_;
 
 	//! Writes attributes of the scene node animator.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node animator.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	) _IRR_OVERRIDE_;
 
 	//! Returns type of the scene node animator
 	virtual ESCENE_NODE_ANIMATOR_TYPE getType() const _IRR_OVERRIDE_ {
@@ -40,8 +49,10 @@ public:
 	//! Creates a clone of this animator.
 	/** Please note that you will have to drop
 	(IReferenceCounted::drop()) the returned pointer after calling this. */
-	virtual ISceneNodeAnimator* createClone(ISceneNode* node,
-		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
+	virtual ISceneNodeAnimator* createClone(
+		ISceneNode* node,
+		ISceneManager* newManager = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	void recalculateIntermediateValues();

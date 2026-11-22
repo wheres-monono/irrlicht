@@ -29,7 +29,10 @@ public:
 	u32 getPrimitiveTotal() const;
 
 	//! to be called every frame
-	void registerFrame(u32 now, u32 primitive);
+	void registerFrame(
+		u32 now,
+		u32 primitive
+	);
 
 private:
 	s32 FPS;

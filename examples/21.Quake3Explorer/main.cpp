@@ -40,8 +40,12 @@ struct GameData {
 	}
 
 	void setDefault();
-	s32 save(const path& filename);
-	s32 load(const path& filename);
+	s32 save(
+		const path& filename
+	);
+	s32 load(
+		const path& filename
+	);
 
 	s32 debugState;
 	s32 gravityState;
@@ -229,16 +233,25 @@ struct Q3Player : public IAnimationEndCallBack {
 		memset(Anim, 0, sizeof(TimeFire) * 4);
 	}
 
-	virtual void OnAnimationEnd(IAnimatedMeshSceneNode* node);
+	virtual void OnAnimationEnd(
+		IAnimatedMeshSceneNode* node
+	);
 
-	void create(IrrlichtDevice* device,
+	void create(
+		IrrlichtDevice* device,
 		IQ3LevelMesh* mesh,
 		ISceneNode* mapNode,
-		IMetaTriangleSelector* meta);
+		IMetaTriangleSelector* meta
+	);
 	void shutdown();
-	void setAnim(const c8* name);
+	void setAnim(
+		const c8* name
+	);
 	void respawn();
-	void setpos(const vector3df& pos, const vector3df& rotation);
+	void setpos(
+		const vector3df& pos,
+		const vector3df& rotation
+	);
 
 	ISceneNodeAnimatorCollisionResponse* cam() {
 		return camCollisionResponse(Device);
@@ -485,16 +498,26 @@ struct GUI {
 */
 class CQuake3EventHandler : public IEventReceiver {
 public:
-	CQuake3EventHandler(GameData* gameData);
+	CQuake3EventHandler(
+		GameData* gameData
+	);
 	virtual ~CQuake3EventHandler();
 
 	void Animate();
 	void Render();
 
-	void AddArchive(const path& archiveName);
-	void LoadMap(const stringw& mapName, s32 collision);
+	void AddArchive(
+		const path& archiveName
+	);
+	void LoadMap(
+		const stringw& mapName,
+		s32 collision
+	);
 	void CreatePlayers();
-	void AddSky(u32 dome, const c8* texture);
+	void AddSky(
+		u32 dome,
+		const c8* texture
+	);
 	Q3Player* GetPlayer(
 		u32 index
 	) {
@@ -502,9 +525,13 @@ public:
 	}
 
 	void CreateGUI();
-	void SetGUIActive(s32 command);
+	void SetGUIActive(
+		s32 command
+	);
 
-	bool OnEvent(const SEvent& eve);
+	bool OnEvent(
+		const SEvent& eve
+	);
 
 private:
 	GameData* Game;
@@ -529,11 +556,18 @@ private:
 		vector3df outVector;
 	};
 	array<SParticleImpact> Impacts;
-	void useItem(Q3Player* player);
-	void createParticleImpacts(u32 now);
+	void useItem(
+		Q3Player* player
+	);
+	void createParticleImpacts(
+		u32 now
+	);
 
 	void createTextures();
-	void addSceneTreeItem(ISceneNode* parent, IGUITreeViewNode* nodeParent);
+	void addSceneTreeItem(
+		ISceneNode* parent,
+		IGUITreeViewNode* nodeParent
+	);
 
 	GUI gui;
 	void dropMap();

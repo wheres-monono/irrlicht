@@ -106,8 +106,11 @@ public:
 	\param name: Name for displaying profile data.
 	\param groupName: Each id belongs into a group - this helps on displaying profile
 	data. */
-	inline void
-	add(s32 id, const core::stringw& name, const core::stringw& groupName);
+	inline void add(
+		s32 id,
+		const core::stringw& name,
+		const core::stringw& groupName
+	);
 
 	//! Add an automatically generated for the given name and group which can be used
 	//! for profiling with start/stop.
@@ -117,7 +120,10 @@ public:
 	data.
 	\return Automatic id's start at INT_MAX and count down for each new id. If the
 	name already has an id then that id will be returned. */
-	inline s32 add(const core::stringw& name, const core::stringw& groupName);
+	inline s32 add(
+		const core::stringw& name,
+		const core::stringw& groupName
+	);
 
 	//! Return the number of profile data blocks. There is one for each id.
 	u32 getProfileDataCount() const { return ProfileDatas.size(); }
@@ -126,7 +132,10 @@ public:
 	/** \param result Receives the resulting data index when one was found.
 	\param name String with name to search for
 	\return true when found, false when not found */
-	inline bool findDataIndex(u32& result, const core::stringw& name) const;
+	inline bool findDataIndex(
+		u32& result,
+		const core::stringw& name
+	) const;
 
 	//! Get the profile data
 	/** \param index A value between 0 and getProfileDataCount()-1.	Indices can change
@@ -140,7 +149,9 @@ public:
 	//! Get the profile data
 	/** \param id Same value as used in ::add
 	\return Profile data for the given id or 0 when it does not exist.	*/
-	inline const SProfileData* getProfileDataById(u32 id);
+	inline const SProfileData* getProfileDataById(
+		u32 id
+	);
 
 	//! Get the number of profile groups. Will be at least 1.
 	/** NOTE: The first groups is always L"overview" which is an overview for all
@@ -160,14 +171,19 @@ public:
 	/** \param result Receives the resulting group index when one was found.
 	    \param name String with name to search for
 	    \return true when found, false when not found */
-	inline bool findGroupIndex(u32& result, const core::stringw& name) const;
+	inline bool findGroupIndex(
+		u32& result,
+		const core::stringw& name
+	) const;
 
 	//! Start profile-timing for the given id
 	/** This increases an internal run-counter for the given id. It will profile as
 	long as that counter is > 0. NOTE: you have to add the id first with one of the
 	::add functions
 	*/
-	inline void start(s32 id);
+	inline void start(
+		s32 id
+	);
 
 	//! Stop profile-timing for the given id
 	/** This increases an internal run-counter for the given id. If it reaches 0 the
@@ -175,16 +191,24 @@ public:
 	   calls. If stop is called more often than start then the additional stop calls
 	   will be ignored (counter never goes below 0)
 	*/
-	inline void stop(s32 id);
+	inline void stop(
+		s32 id
+	);
 
 	//! Reset profile data for the given id
-	inline void resetDataById(s32 id);
+	inline void resetDataById(
+		s32 id
+	);
 
 	//! Reset profile data for the given index
-	inline void resetDataByIndex(u32 index);
+	inline void resetDataByIndex(
+		u32 index
+	);
 
 	//! Reset profile data for a whole group
-	inline void resetGroup(u32 index);
+	inline void resetGroup(
+		u32 index
+	);
 
 	//! Reset all profile data
 	/** NOTE: This is not deleting id's or groups, just resetting all timers to 0. */
@@ -195,19 +219,25 @@ public:
 	\param includeOverview When true a group-overview is attached first
 	\param suppressUncalled When true elements which got never called are not printed
       */
-	virtual void printAll(core::stringw& result,
+	virtual void printAll(
+		core::stringw& result,
 		bool includeOverview = false,
-		bool suppressUncalled = true) const = 0;
+		bool suppressUncalled = true
+	) const = 0;
 
 	//! Write the profile data of one group into a string
 	/** \param result Receives the result string.
 	\param groupIndex_	*/
-	virtual void printGroup(core::stringw& result,
+	virtual void printGroup(
+		core::stringw& result,
 		u32 groupIndex,
-		bool suppressUncalled) const = 0;
+		bool suppressUncalled
+	) const = 0;
 
 protected:
-	inline u32 addGroup(const core::stringw& name);
+	inline u32 addGroup(
+		const core::stringw& name
+	);
 
 	// I would prefer using os::Timer, but os.h is not in the public interface so far.
 	// Timer must be initialized by the implementation.

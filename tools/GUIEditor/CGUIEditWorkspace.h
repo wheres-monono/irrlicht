@@ -32,18 +32,24 @@ enum EGUIEDIT_CUSTOM_EVENTS {
 class CGUIEditWorkspace : public IGUIElement {
 public:
 	//! constructor
-	CGUIEditWorkspace(IGUIEnvironment* environment,
+	CGUIEditWorkspace(
+		IGUIEnvironment* environment,
 		s32 id = -1,
-		IGUIElement* parent = 0);
+		IGUIElement* parent = 0
+	);
 
 	//! destructor
 	~CGUIEditWorkspace();
 
 	//! called if an event happened.
-	virtual bool OnEvent(const SEvent& event);
+	virtual bool OnEvent(
+		const SEvent& event
+	);
 
 	//! Removes a child.
-	virtual void removeChild(IGUIElement* child);
+	virtual void removeChild(
+		IGUIElement* child
+	);
 
 	//! draws the element and its children
 	virtual void draw();
@@ -56,20 +62,32 @@ public:
 	In the rare case that these are already in use and you wish to use menus
 	while the editor is present you can set a new offset here.
 	*/
-	virtual void setMenuCommandIDStart(s32 id);
+	virtual void setMenuCommandIDStart(
+		s32 id
+	);
 
 	//! grid drawing...
-	virtual void setDrawGrid(bool drawGrid);
-	virtual void setGridSize(const core::dimension2di& gridSize);
-	virtual void setUseGrid(bool useGrid);
+	virtual void setDrawGrid(
+		bool drawGrid
+	);
+	virtual void setGridSize(
+		const core::dimension2di& gridSize
+	);
+	virtual void setUseGrid(
+		bool useGrid
+	);
 
 	//! returns the first editable element under the mouse
-	virtual IGUIElement* getEditableElementFromPoint(IGUIElement* start,
+	virtual IGUIElement* getEditableElementFromPoint(
+		IGUIElement* start,
 		const core::position2di& point,
-		s32 index = 0);
+		s32 index = 0
+	);
 
 	//! selecting elements
-	virtual void setSelectedElement(IGUIElement* sel);
+	virtual void setSelectedElement(
+		IGUIElement* sel
+	);
 	virtual void selectNextSibling();
 	virtual void selectPreviousSibling();
 
@@ -86,10 +104,14 @@ public:
 		return GUIEditElementTypeNames[EGUIEDIT_GUIEDIT];
 	}
 
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0);
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0);
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	);
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	);
 
 private:
 	enum EGUIEDIT_MODE {
@@ -133,7 +155,9 @@ private:
 		EGUIEDMC_COUNT
 	};
 
-	EGUIEDIT_MODE getModeFromPos(core::position2di p);
+	EGUIEDIT_MODE getModeFromPos(
+		core::position2di p
+	);
 
 	EGUIEDIT_MODE CurrentMode;
 	EGUIEDIT_MODE MouseOverMode;

@@ -22,14 +22,16 @@ class ICameraSceneNode;
 class CTextSceneNode : public ITextSceneNode {
 public:
 	//! constructor
-	CTextSceneNode(ISceneNode* parent,
+	CTextSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		gui::IGUIFont* font,
 		scene::ISceneCollisionManager* coll,
 		const core::vector3df& position = core::vector3df(0, 0, 0),
 		const wchar_t* text = 0,
-		video::SColor color = video::SColor(100, 0, 0, 0));
+		video::SColor color = video::SColor(100, 0, 0, 0)
+	);
 
 	//! destructor
 	virtual ~CTextSceneNode();
@@ -43,19 +45,25 @@ public:
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
 	//! sets the text string
-	virtual void setText(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setText(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! get the text string
 	virtual const wchar_t* getText() const _IRR_OVERRIDE_;
 
 	//! sets the color of the text
-	virtual void setTextColor(video::SColor color) _IRR_OVERRIDE_;
+	virtual void setTextColor(
+		video::SColor color
+	) _IRR_OVERRIDE_;
 
 	//! get the color of the text
 	virtual video::SColor getTextColor() const _IRR_OVERRIDE_;
 
 	//! set the font used to draw the text
-	virtual void setFont(gui::IGUIFont* font) _IRR_OVERRIDE_;
+	virtual void setFont(
+		gui::IGUIFont* font
+	) _IRR_OVERRIDE_;
 
 	//! Get the font used to draw the text
 	virtual gui::IGUIFont* getFont() const _IRR_OVERRIDE_;
@@ -73,7 +81,8 @@ private:
 
 class CBillboardTextSceneNode : public IBillboardTextSceneNode {
 public:
-	CBillboardTextSceneNode(ISceneNode* parent,
+	CBillboardTextSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		gui::IGUIFont* font,
@@ -81,13 +90,16 @@ public:
 		const core::vector3df& position,
 		const core::dimension2d<f32>& size,
 		video::SColor colorTop,
-		video::SColor shade_bottom);
+		video::SColor shade_bottom
+	);
 
 	//! destructor
 	virtual ~CBillboardTextSceneNode();
 
 	//! sets the vertex positions etc
-	virtual void OnAnimate(u32 timeMs) _IRR_OVERRIDE_;
+	virtual void OnAnimate(
+		u32 timeMs
+	) _IRR_OVERRIDE_;
 
 	//! registers the node into the transparent pass
 	virtual void OnRegisterSceneNode() _IRR_OVERRIDE_;
@@ -99,7 +111,9 @@ public:
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
 	//! sets the text string
-	virtual void setText(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setText(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! get the text string
 	virtual const wchar_t* getText() const _IRR_OVERRIDE_;
@@ -108,12 +122,16 @@ public:
 	virtual gui::IGUIFont* getFont() const _IRR_OVERRIDE_;
 
 	//! sets the size of the billboard
-	virtual void setSize(const core::dimension2d<f32>& size) _IRR_OVERRIDE_;
+	virtual void setSize(
+		const core::dimension2d<f32>& size
+	) _IRR_OVERRIDE_;
 
 	//! gets the size of the billboard
 	virtual const core::dimension2d<f32>& getSize() const _IRR_OVERRIDE_;
 
-	virtual video::SMaterial& getMaterial(u32 i) _IRR_OVERRIDE_;
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) _IRR_OVERRIDE_;
 
 	//! returns amount of materials used by this scene node.
 	virtual u32 getMaterialCount() const _IRR_OVERRIDE_;
@@ -125,19 +143,25 @@ public:
 
 	//! Set the color of all vertices of the billboard
 	//! \param overallColor: the color to set
-	virtual void setColor(const video::SColor& overallColor) _IRR_OVERRIDE_;
+	virtual void setColor(
+		const video::SColor& overallColor
+	) _IRR_OVERRIDE_;
 
 	//! Set the color of the top and bottom vertices of the billboard
 	//! \param topColor: the color to set the top vertices
 	//! \param bottomColor: the color to set the bottom vertices
-	virtual void setColor(const video::SColor& topColor,
-		const video::SColor& bottomColor) _IRR_OVERRIDE_;
+	virtual void setColor(
+		const video::SColor& topColor,
+		const video::SColor& bottomColor
+	) _IRR_OVERRIDE_;
 
 	//! Gets the color of the top and bottom vertices of the billboard
 	//! \param topColor: stores the color of the top vertices
 	//! \param bottomColor: stores the color of the bottom vertices
-	virtual void getColor(video::SColor& topColor,
-		video::SColor& bottomColor) const _IRR_OVERRIDE_;
+	virtual void getColor(
+		video::SColor& topColor,
+		video::SColor& bottomColor
+	) const _IRR_OVERRIDE_;
 
 	virtual void setSize(
 		f32 height,
@@ -162,7 +186,9 @@ public:
 	) _IRR_OVERRIDE_;
 
 protected:
-	void updateMesh(const irr::scene::ICameraSceneNode* camera);
+	void updateMesh(
+		const irr::scene::ICameraSceneNode* camera
+	);
 
 private:
 	core::stringw Text;

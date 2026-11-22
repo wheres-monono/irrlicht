@@ -21,11 +21,15 @@ public:
 	fileNameIsValid is false.
 	\param fileNameIsValid Specifies whether the filename is valid in the current
 	situation. */
-	virtual const quake3::IShader* getShader(const c8* filename,
-		bool fileNameIsValid = true) = 0;
+	virtual const quake3::IShader* getShader(
+		const c8* filename,
+		bool fileNameIsValid = true
+	) = 0;
 
 	//! returns a already loaded Shader
-	virtual const quake3::IShader* getShader(u32 index) const = 0;
+	virtual const quake3::IShader* getShader(
+		u32 index
+	) const = 0;
 
 	//! get's an interface to the entities
 	virtual quake3::tQ3EntityList& getEntityList() = 0;
@@ -34,10 +38,14 @@ public:
 	/** \param num The number from the model key of the entity.
 
 	Use this interface if you parse the entities yourself.*/
-	virtual IMesh* getBrushEntityMesh(s32 num) const = 0;
+	virtual IMesh* getBrushEntityMesh(
+		s32 num
+	) const = 0;
 
 	//! returns the requested brush entity
-	virtual IMesh* getBrushEntityMesh(quake3::IEntity& ent) const = 0;
+	virtual IMesh* getBrushEntityMesh(
+		quake3::IEntity& ent
+	) const = 0;
 };
 
 } // end namespace scene

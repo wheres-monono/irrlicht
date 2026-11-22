@@ -92,8 +92,9 @@ public:
 
 	//! Which lighting model should be used in the technique (FX) section when
 	//! exporting effects (materials)
-	virtual E_COLLADA_TECHNIQUE_FX
-	getTechniqueFx(const video::SMaterial& material) const = 0;
+	virtual E_COLLADA_TECHNIQUE_FX getTechniqueFx(
+		const video::SMaterial& material
+	) const = 0;
 
 	//! Which texture index should be used when writing the texture of the given
 	//! sampler color.
@@ -101,8 +102,10 @@ public:
 	   exported Note: for ECCS_TRANSPARENT by default the alpha channel is used, if
 	   you want to use RGB you have to set also the ECOF_RGB_ZERO flag in
 	   getTransparentFx.  */
-	virtual s32 getTextureIdx(const video::SMaterial& material,
-		E_COLLADA_COLOR_SAMPLER cs) const = 0;
+	virtual s32 getTextureIdx(
+		const video::SMaterial& material,
+		E_COLLADA_COLOR_SAMPLER cs
+	) const = 0;
 
 	//! Return which color from Irrlicht should be used for the color requested by
 	//! collada
@@ -111,48 +114,63 @@ public:
 		By default we try to return best fits when possible. For example
 	   ECCS_DIFFUSE is mapped to ECIC_DIFFUSE. When ECIC_CUSTOM is returned then the
 	   result of getCustomColor will be used. */
-	virtual E_COLLADA_IRR_COLOR getColorMapping(const video::SMaterial& material,
-		E_COLLADA_COLOR_SAMPLER cs) const = 0;
+	virtual E_COLLADA_IRR_COLOR getColorMapping(
+		const video::SMaterial& material,
+		E_COLLADA_COLOR_SAMPLER cs
+	) const = 0;
 
 	//! Return custom colors for certain color types requested by collada.
 	/** Only used when getColorMapping returns ECIC_CUSTOM for the same parameters. */
-	virtual video::SColor getCustomColor(const video::SMaterial& material,
-		E_COLLADA_COLOR_SAMPLER cs) const = 0;
+	virtual video::SColor getCustomColor(
+		const video::SMaterial& material,
+		E_COLLADA_COLOR_SAMPLER cs
+	) const = 0;
 
 	//! Return the transparence color interpretation.
 	/** Not this is only about ECCS_TRANSPARENT and does not affect getTransparency.
 	 */
-	virtual E_COLLADA_TRANSPARENT_FX
-	getTransparentFx(const video::SMaterial& material) const = 0;
+	virtual E_COLLADA_TRANSPARENT_FX getTransparentFx(
+		const video::SMaterial& material
+	) const = 0;
 
 	//! Transparency value for that material.
 	/** This value is additional to transparent settings, if both are set they will be
 	multiplicated.
 	\return 1.0 for fully transparent, 0.0 for not transparent and not written at all
 	when < 0.f */
-	virtual f32 getTransparency(const video::SMaterial& material) const = 0;
+	virtual f32 getTransparency(
+		const video::SMaterial& material
+	) const = 0;
 
 	//! Reflectivity value for that material
 	/** The amount of perfect mirror reflection to be added to the reflected light
 	\return 0.0 - 1.0 for reflectivity and element is not written at all when < 0.f */
-	virtual f32 getReflectivity(const video::SMaterial& material) const = 0;
+	virtual f32 getReflectivity(
+		const video::SMaterial& material
+	) const = 0;
 
 	//! Return index of refraction for that material
 	/** By default we don't write that.
 	\return a value greater equal 0.f to write \<index_of_refraction\> when it is
 	lesser than 0 nothing will be written */
-	virtual f32 getIndexOfRefraction(const video::SMaterial& material) const = 0;
+	virtual f32 getIndexOfRefraction(
+		const video::SMaterial& material
+	) const = 0;
 
 	//! Should node be used in scene export? (only needed for scene-writing, ignored
 	//! in mesh-writing) By default all visible nodes are exported.
-	virtual bool isExportable(const irr::scene::ISceneNode* node) const = 0;
+	virtual bool isExportable(
+		const irr::scene::ISceneNode* node
+	) const = 0;
 
 	//! Return the mesh for the given node. If it has no mesh or shouldn't export it's
 	//! mesh you can return 0 in which case only the transformation matrix of the node
 	//! will be used.
 	// TODO: Function is not const because there is no const getMesh() function for
 	// several Irrlicht nodes.
-	virtual IMesh* getMesh(irr::scene::ISceneNode* node) = 0;
+	virtual IMesh* getMesh(
+		irr::scene::ISceneNode* node
+	) = 0;
 
 	//! Return if the node has it's own material overwriting the mesh-materials
 	/** Usually true except for mesh-nodes which have isReadOnlyMaterials set.
@@ -161,7 +179,9 @@ public:
 	with own materials.
 	\return true => The node's own material is used, false => ignore node material and
 	use the one from the mesh */
-	virtual bool useNodeMaterial(const scene::ISceneNode* node) const = 0;
+	virtual bool useNodeMaterial(
+		const scene::ISceneNode* node
+	) const = 0;
 };
 
 //! Callback interface to use custom names on collada writing.
@@ -183,8 +203,10 @@ public:
 	\param instance When E_COLLADA_GEOMETRY_WRITING is not ECGI_PER_MESH then
 	several instances of the same mesh can be written and this counts them.
 	*/
-	virtual irr::core::stringc nameForMesh(const scene::IMesh* mesh,
-		int instance) = 0;
+	virtual irr::core::stringc nameForMesh(
+		const scene::IMesh* mesh,
+		int instance
+	) = 0;
 
 	//! Return a unique name for the given node
 	/** Note that names really must be unique here per node-pointer, so
@@ -193,7 +215,9 @@ public:
 	the xs:NCName standard to be valid, you can run them through
 	IColladaMeshWriter::toNCName to ensure that.
 	*/
-	virtual irr::core::stringc nameForNode(const scene::ISceneNode* node) = 0;
+	virtual irr::core::stringc nameForNode(
+		const scene::ISceneNode* node
+	) = 0;
 
 	//! Return a name for the material
 	/** There is one material created in the writer for each unique name.
@@ -206,10 +230,12 @@ public:
 	Names must follow the xs:NCName standard to be valid, you can run them
 	through IColladaMeshWriter::toNCName to ensure that.
 	*/
-	virtual irr::core::stringc nameForMaterial(const video::SMaterial& material,
+	virtual irr::core::stringc nameForMaterial(
+		const video::SMaterial& material,
 		int materialId,
 		const scene::IMesh* mesh,
-		const scene::ISceneNode* node) = 0;
+		const scene::ISceneNode* node
+	) = 0;
 };
 
 //! Interface for writing meshes
@@ -249,8 +275,11 @@ public:
 
 	//! writes a scene starting with the given node
 	//\param writeRoot: 0 = no, 1=yes unless root is scenemanager, 2=yes
-	virtual bool
-	writeScene(io::IWriteFile* file, scene::ISceneNode* root, int writeRoot = 1) = 0;
+	virtual bool writeScene(
+		io::IWriteFile* file,
+		scene::ISceneNode* root,
+		int writeRoot = 1
+	) = 0;
 
 	//! Set if texture information should be written
 	virtual void setWriteTextures(
@@ -401,8 +430,10 @@ public:
 	//! and add the prefix.
 	/** A tool function to help when using a custom name generator to generative valid
 	 * names for collada names and id's. */
-	virtual irr::core::stringc toNCName(const irr::core::stringc& oldString,
-		const irr::core::stringc& prefix = irr::core::stringc("_NC_")) const = 0;
+	virtual irr::core::stringc toNCName(
+		const irr::core::stringc& oldString,
+		const irr::core::stringc& prefix = irr::core::stringc("_NC_")
+	) const = 0;
 
 	//! After export you can find out which name had been used for writing the
 	//! geometry for this node.
@@ -411,7 +442,9 @@ public:
 	\return Either a pointer to the name or NULL */
 	// TODO: Function is not const because there is no const getMesh() function for
 	// several Irrlicht nodes.
-	virtual const irr::core::stringc* findGeometryNameForNode(ISceneNode* node) = 0;
+	virtual const irr::core::stringc* findGeometryNameForNode(
+		ISceneNode* node
+	) = 0;
 
 	//! Change param name used for UV's.
 	/** Param names for UV's have a name. By default it's "U" and "V".

@@ -20,7 +20,8 @@ namespace scene
 class CParticleRingEmitter : public IParticleRingEmitter {
 public:
 	//! constructor
-	CParticleRingEmitter(const core::vector3df& center,
+	CParticleRingEmitter(
+		const core::vector3df& center,
 		f32 radius,
 		f32 ringThickness,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
@@ -32,12 +33,16 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f));
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	);
 
 	//! Prepares an array with new particles to emitt into the system
 	//! and returns how much new particles there are.
-	virtual s32
-	emitt(u32 now, u32 timeSinceLastCall, SParticle*& outArray) _IRR_OVERRIDE_;
+	virtual s32 emitt(
+		u32 now,
+		u32 timeSinceLastCall,
+		SParticle*& outArray
+	) _IRR_OVERRIDE_;
 
 	//! Set direction the emitter emits particles
 	virtual void setDirection(
@@ -184,12 +189,16 @@ public:
 	virtual f32 getRingThickness() const _IRR_OVERRIDE_ { return RingThickness; }
 
 	//! Writes attributes of the object.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the object.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_;
 
 private:
 	core::array<SParticle> Particles;

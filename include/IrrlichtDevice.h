@@ -87,7 +87,10 @@ public:
 	\param timeMs: Time to sleep for in milliseconds.
 	\param pauseTimer: If true, pauses the device timer while sleeping
 	*/
-	virtual void sleep(u32 timeMs, bool pauseTimer = false) = 0;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer = false
+	) = 0;
 
 	//! Provides access to the video driver for drawing 3d and 2d geometry.
 	/** \return Pointer the video driver. */
@@ -146,7 +149,9 @@ public:
 	/** \param r Pointer to the new IRandomizer object. This object is
 	grab()'ed by the engine and will be released upon the next setRandomizer
 	call or upon device destruction. */
-	virtual void setRandomizer(IRandomizer* r) = 0;
+	virtual void setRandomizer(
+		IRandomizer* r
+	) = 0;
 
 	//! Creates a new default randomizer.
 	/** The default randomizer provides the random sequence known from previous
@@ -156,7 +161,9 @@ public:
 
 	//! Sets the caption of the window.
 	/** \param text: New text of the window caption. */
-	virtual void setWindowCaption(const wchar_t* text) = 0;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) = 0;
 
 	//! Returns if the window is active.
 	/** If the window is inactive,
@@ -208,7 +215,9 @@ public:
 	along the chain of event receivers. The path that an event takes through the
 	system depends on its type. See irr::EEVENT_TYPE for details.
 	\param receiver New receiver to be used. */
-	virtual void setEventReceiver(IEventReceiver* receiver) = 0;
+	virtual void setEventReceiver(
+		IEventReceiver* receiver
+	) = 0;
 
 	//! Provides access to the current event receiver.
 	/** \return Pointer to the current event receiver. Returns 0 if there is none. */
@@ -220,20 +229,25 @@ public:
 	input, you can use this to post key or mouse input events to
 	the engine. Internally, this method only delegates the events
 	further to the scene manager and the GUI environment. */
-	virtual bool postEventFromUser(const SEvent& event) = 0;
+	virtual bool postEventFromUser(
+		const SEvent& event
+	) = 0;
 
 	//! Sets the input receiving scene manager.
 	/** If set to null, the main scene manager (returned by
 	GetSceneManager()) will receive the input
 	\param sceneManager New scene manager to be used. */
-	virtual void
-	setInputReceivingSceneManager(scene::ISceneManager* sceneManager) = 0;
+	virtual void setInputReceivingSceneManager(
+		scene::ISceneManager* sceneManager
+	) = 0;
 
 	//! Sets if the window should be resizable in windowed mode.
 	/** The default is false. This method only works in windowed
 	mode.
 	\param resize Flag whether the window should be resizable. */
-	virtual void setResizable(bool resize = false) = 0;
+	virtual void setResizable(
+		bool resize = false
+	) = 0;
 
 	//! Resize the render window.
 	/**	This will only work in windowed mode and is not yet supported on all
@@ -241,7 +255,9 @@ public:
 	decorations are added to that. You get the current window size with
 	IVideoDriver::getScreenSize() (might be unified in future)
 	*/
-	virtual void setWindowSize(const irr::core::dimension2d<u32>& size) = 0;
+	virtual void setWindowSize(
+		const irr::core::dimension2d<u32>& size
+	) = 0;
 
 	//! Minimizes the window if possible.
 	virtual void minimizeWindow() = 0;
@@ -266,18 +282,27 @@ public:
 	_IRR_COMPILE_WITH_JOYSTICK_EVENTS_ is defined, false if joysticks are not
 	supported or support is compiled out.
 	*/
-	virtual bool activateJoysticks(core::array<SJoystickInfo>& joystickInfo) = 0;
+	virtual bool activateJoysticks(
+		core::array<SJoystickInfo>& joystickInfo
+	) = 0;
 
 	//! Set the current Gamma Value for the Display
-	virtual bool setGammaRamp(f32 red,
+	virtual bool setGammaRamp(
+		f32 red,
 		f32 green,
 		f32 blue,
 		f32 relativebrightness,
-		f32 relativecontrast) = 0;
+		f32 relativecontrast
+	) = 0;
 
 	//! Get the current Gamma Value for the Display
-	virtual bool
-	getGammaRamp(f32& red, f32& green, f32& blue, f32& brightness, f32& contrast) = 0;
+	virtual bool getGammaRamp(
+		f32& red,
+		f32& green,
+		f32& blue,
+		f32& brightness,
+		f32& contrast
+	) = 0;
 
 	//! Set the maximal elapsed time between 2 clicks to generate doubleclicks for the
 	//! mouse. It also affects tripleclick behavior.
@@ -285,7 +310,9 @@ public:
 	\param timeMs maximal time in milliseconds for two consecutive clicks to be
 	recognized as double click
 	*/
-	virtual void setDoubleClickTime(u32 timeMs) = 0;
+	virtual void setDoubleClickTime(
+		u32 timeMs
+	) = 0;
 
 	//! Get the maximal elapsed time between 2 clicks to generate double- and
 	//! tripleclicks for the mouse.

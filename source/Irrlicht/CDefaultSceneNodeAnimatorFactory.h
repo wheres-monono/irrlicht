@@ -21,7 +21,10 @@ class ISceneManager;
 //! Interface making it possible to dynamicly create scene nodes animators
 class CDefaultSceneNodeAnimatorFactory : public ISceneNodeAnimatorFactory {
 public:
-	CDefaultSceneNodeAnimatorFactory(ISceneManager* mgr, gui::ICursorControl* crs);
+	CDefaultSceneNodeAnimatorFactory(
+		ISceneManager* mgr,
+		gui::ICursorControl* crs
+	);
 
 	virtual ~CDefaultSceneNodeAnimatorFactory();
 
@@ -31,9 +34,10 @@ public:
 	\return Returns pointer to the new scene node animator or null if not successful.
 	You need to drop this pointer after calling this, see IReferenceCounted::drop()
 	for details. */
-	virtual ISceneNodeAnimator*
-	createSceneNodeAnimator(ESCENE_NODE_ANIMATOR_TYPE type,
-		ISceneNode* target) _IRR_OVERRIDE_;
+	virtual ISceneNodeAnimator* createSceneNodeAnimator(
+		ESCENE_NODE_ANIMATOR_TYPE type,
+		ISceneNode* target
+	) _IRR_OVERRIDE_;
 
 	//! creates a scene node animator based on its type name
 	/** \param typeName: Type of the scene node animator to add.
@@ -41,8 +45,10 @@ public:
 	\return Returns pointer to the new scene node animator or null if not successful.
 	You need to drop this pointer after calling this, see IReferenceCounted::drop()
 	for details. */
-	virtual ISceneNodeAnimator* createSceneNodeAnimator(const char* typeName,
-		ISceneNode* target) _IRR_OVERRIDE_;
+	virtual ISceneNodeAnimator* createSceneNodeAnimator(
+		const char* typeName,
+		ISceneNode* target
+	) _IRR_OVERRIDE_;
 
 	//! returns amount of scene node animator types this factory is able to create
 	virtual u32 getCreatableSceneNodeAnimatorTypeCount() const _IRR_OVERRIDE_;
@@ -50,14 +56,16 @@ public:
 	//! returns type of a creatable scene node animator type
 	/** \param idx: Index of scene node animator type in this factory. Must be a value
 	between 0 and getCreatableSceneNodeTypeCount() */
-	virtual ESCENE_NODE_ANIMATOR_TYPE
-	getCreateableSceneNodeAnimatorType(u32 idx) const _IRR_OVERRIDE_;
+	virtual ESCENE_NODE_ANIMATOR_TYPE getCreateableSceneNodeAnimatorType(
+		u32 idx
+	) const _IRR_OVERRIDE_;
 
 	//! returns type name of a creatable scene node animator type
 	/** \param idx: Index of scene node animator type in this factory. Must be a value
 	between 0 and getCreatableSceneNodeAnimatorTypeCount() */
-	virtual const c8*
-	getCreateableSceneNodeAnimatorTypeName(u32 idx) const _IRR_OVERRIDE_;
+	virtual const c8* getCreateableSceneNodeAnimatorTypeName(
+		u32 idx
+	) const _IRR_OVERRIDE_;
 
 	//! returns type name of a creatable scene node animator type
 	/** \param type: Type of scene node animator.
@@ -68,7 +76,9 @@ public:
 	) const _IRR_OVERRIDE_;
 
 private:
-	ESCENE_NODE_ANIMATOR_TYPE getTypeFromName(const c8* name) const;
+	ESCENE_NODE_ANIMATOR_TYPE getTypeFromName(
+		const c8* name
+	) const;
 
 	ISceneManager* Manager;
 	gui::ICursorControl* CursorControl;

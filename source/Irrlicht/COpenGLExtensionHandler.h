@@ -704,12 +704,16 @@ public:
 	COpenGLExtensionHandler();
 
 	// deferred initialization
-	void initExtensions(bool stencilBuffer);
+	void initExtensions(
+		bool stencilBuffer
+	);
 
 	const COpenGLCoreFeature& getFeature() const;
 
 	//! queries the features of the driver, returns true if feature is available
-	bool queryFeature(E_VIDEO_DRIVER_FEATURE feature) const;
+	bool queryFeature(
+		E_VIDEO_DRIVER_FEATURE feature
+	) const;
 
 	//! queries the features of the driver, returns true if feature is available
 	bool queryOpenGLFeature(
@@ -719,7 +723,9 @@ public:
 	}
 
 	//! show all features with availability
-	void dump(ELOG_LEVEL logLevel) const;
+	void dump(
+		ELOG_LEVEL logLevel
+	) const;
 
 	void dumpFramebufferFormats() const;
 
@@ -768,24 +774,44 @@ public:
 
 	// public access to the (loaded) extensions.
 	// general functions
-	void irrGlActiveTexture(GLenum texture);
-	void irrGlClientActiveTexture(GLenum texture);
-	void extGlPointParameterf(GLint loc, GLfloat f);
-	void extGlPointParameterfv(GLint loc, const GLfloat* v);
-	void extGlStencilFuncSeparate(GLenum frontfunc,
+	void irrGlActiveTexture(
+		GLenum texture
+	);
+	void irrGlClientActiveTexture(
+		GLenum texture
+	);
+	void extGlPointParameterf(
+		GLint loc,
+		GLfloat f
+	);
+	void extGlPointParameterfv(
+		GLint loc,
+		const GLfloat* v
+	);
+	void extGlStencilFuncSeparate(
+		GLenum frontfunc,
 		GLenum backfunc,
 		GLint ref,
-		GLuint mask);
-	void extGlStencilOpSeparate(GLenum face, GLenum fail, GLenum zfail, GLenum zpass);
-	void irrGlCompressedTexImage2D(GLenum target,
+		GLuint mask
+	);
+	void extGlStencilOpSeparate(
+		GLenum face,
+		GLenum fail,
+		GLenum zfail,
+		GLenum zpass
+	);
+	void irrGlCompressedTexImage2D(
+		GLenum target,
 		GLint level,
 		GLenum internalformat,
 		GLsizei width,
 		GLsizei height,
 		GLint border,
 		GLsizei imageSize,
-		const void* data);
-	void irrGlCompressedTexSubImage2D(GLenum target,
+		const void* data
+	);
+	void irrGlCompressedTexSubImage2D(
+		GLenum target,
 		GLint level,
 		GLint xoffset,
 		GLint yoffset,
@@ -793,201 +819,464 @@ public:
 		GLsizei height,
 		GLenum format,
 		GLsizei imageSize,
-		const void* data);
+		const void* data
+	);
 
 	// shader programming
-	void extGlGenPrograms(GLsizei n, GLuint* programs);
-	void extGlBindProgram(GLenum target, GLuint program);
-	void extGlProgramString(GLenum target,
+	void extGlGenPrograms(
+		GLsizei n,
+		GLuint* programs
+	);
+	void extGlBindProgram(
+		GLenum target,
+		GLuint program
+	);
+	void extGlProgramString(
+		GLenum target,
 		GLenum format,
 		GLsizei len,
-		const GLvoid* string);
-	void
-	extGlLoadProgram(GLenum target, GLuint id, GLsizei len, const GLubyte* string);
-	void extGlDeletePrograms(GLsizei n, const GLuint* programs);
-	void extGlProgramLocalParameter4fv(GLenum, GLuint, const GLfloat*);
-	GLhandleARB extGlCreateShaderObject(GLenum shaderType);
-	GLuint extGlCreateShader(GLenum shaderType);
+		const GLvoid* string
+	);
+	void extGlLoadProgram(
+		GLenum target,
+		GLuint id,
+		GLsizei len,
+		const GLubyte* string
+	);
+	void extGlDeletePrograms(
+		GLsizei n,
+		const GLuint* programs
+	);
+	void extGlProgramLocalParameter4fv(
+		GLenum,
+		GLuint,
+		const GLfloat*
+	);
+	GLhandleARB extGlCreateShaderObject(
+		GLenum shaderType
+	);
+	GLuint extGlCreateShader(
+		GLenum shaderType
+	);
 	// note: Due to the type confusion between shader_objects and OpenGL 2.0
 	// we have to add the ARB extension for proper method definitions in case
 	// that handleARB and uint are the same type
-	void extGlShaderSourceARB(GLhandleARB shader,
+	void extGlShaderSourceARB(
+		GLhandleARB shader,
 		GLsizei numOfStrings,
 		const char** strings,
-		const GLint* lenOfStrings);
-	void extGlShaderSource(GLuint shader,
+		const GLint* lenOfStrings
+	);
+	void extGlShaderSource(
+		GLuint shader,
 		GLsizei numOfStrings,
 		const char** strings,
-		const GLint* lenOfStrings);
+		const GLint* lenOfStrings
+	);
 	// note: Due to the type confusion between shader_objects and OpenGL 2.0
 	// we have to add the ARB extension for proper method definitions in case
 	// that handleARB and uint are the same type
-	void extGlCompileShaderARB(GLhandleARB shader);
-	void extGlCompileShader(GLuint shader);
-	GLhandleARB extGlCreateProgramObject(void);
-	GLuint extGlCreateProgram(void);
-	void extGlAttachObject(GLhandleARB program, GLhandleARB shader);
-	void extGlAttachShader(GLuint program, GLuint shader);
-	void extGlLinkProgramARB(GLhandleARB program);
+	void extGlCompileShaderARB(
+		GLhandleARB shader
+	);
+	void extGlCompileShader(
+		GLuint shader
+	);
+	GLhandleARB extGlCreateProgramObject(
+		void
+	);
+	GLuint extGlCreateProgram(
+		void
+	);
+	void extGlAttachObject(
+		GLhandleARB program,
+		GLhandleARB shader
+	);
+	void extGlAttachShader(
+		GLuint program,
+		GLuint shader
+	);
+	void extGlLinkProgramARB(
+		GLhandleARB program
+	);
 	// note: Due to the type confusion between shader_objects and OpenGL 2.0
 	// we have to add the ARB extension for proper method definitions in case
 	// that handleARB and uint are the same type
-	void extGlLinkProgram(GLuint program);
-	void extGlUseProgramObject(GLhandleARB prog);
-	void irrGlUseProgram(GLuint prog);
-	void extGlDeleteObject(GLhandleARB object);
-	void extGlDeleteProgram(GLuint object);
-	void extGlDeleteShader(GLuint shader);
-	void extGlGetAttachedShaders(GLuint program,
+	void extGlLinkProgram(
+		GLuint program
+	);
+	void extGlUseProgramObject(
+		GLhandleARB prog
+	);
+	void irrGlUseProgram(
+		GLuint prog
+	);
+	void extGlDeleteObject(
+		GLhandleARB object
+	);
+	void extGlDeleteProgram(
+		GLuint object
+	);
+	void extGlDeleteShader(
+		GLuint shader
+	);
+	void extGlGetAttachedShaders(
+		GLuint program,
 		GLsizei maxcount,
 		GLsizei* count,
-		GLuint* shaders);
-	void extGlGetAttachedObjects(GLhandleARB program,
+		GLuint* shaders
+	);
+	void extGlGetAttachedObjects(
+		GLhandleARB program,
 		GLsizei maxcount,
 		GLsizei* count,
-		GLhandleARB* shaders);
-	void extGlGetInfoLog(GLhandleARB object,
+		GLhandleARB* shaders
+	);
+	void extGlGetInfoLog(
+		GLhandleARB object,
 		GLsizei maxLength,
 		GLsizei* length,
-		GLcharARB* infoLog);
-	void extGlGetShaderInfoLog(GLuint shader,
+		GLcharARB* infoLog
+	);
+	void extGlGetShaderInfoLog(
+		GLuint shader,
 		GLsizei maxLength,
 		GLsizei* length,
-		GLchar* infoLog);
-	void extGlGetProgramInfoLog(GLuint program,
+		GLchar* infoLog
+	);
+	void extGlGetProgramInfoLog(
+		GLuint program,
 		GLsizei maxLength,
 		GLsizei* length,
-		GLchar* infoLog);
-	void extGlGetObjectParameteriv(GLhandleARB object, GLenum type, GLint* param);
-	void extGlGetShaderiv(GLuint shader, GLenum type, GLint* param);
-	void extGlGetProgramiv(GLuint program, GLenum type, GLint* param);
-	GLint extGlGetUniformLocationARB(GLhandleARB program, const char* name);
-	GLint extGlGetUniformLocation(GLuint program, const char* name);
-	void extGlUniform1fv(GLint loc, GLsizei count, const GLfloat* v);
-	void extGlUniform2fv(GLint loc, GLsizei count, const GLfloat* v);
-	void extGlUniform3fv(GLint loc, GLsizei count, const GLfloat* v);
-	void extGlUniform4fv(GLint loc, GLsizei count, const GLfloat* v);
-	void extGlUniform1bv(GLint loc, GLsizei count, const bool* v);
-	void extGlUniform2bv(GLint loc, GLsizei count, const bool* v);
-	void extGlUniform3bv(GLint loc, GLsizei count, const bool* v);
-	void extGlUniform4bv(GLint loc, GLsizei count, const bool* v);
-	void extGlUniform1iv(GLint loc, GLsizei count, const GLint* v);
-	void extGlUniform2iv(GLint loc, GLsizei count, const GLint* v);
-	void extGlUniform3iv(GLint loc, GLsizei count, const GLint* v);
-	void extGlUniform4iv(GLint loc, GLsizei count, const GLint* v);
-	void extGlUniformMatrix2fv(GLint loc,
+		GLchar* infoLog
+	);
+	void extGlGetObjectParameteriv(
+		GLhandleARB object,
+		GLenum type,
+		GLint* param
+	);
+	void extGlGetShaderiv(
+		GLuint shader,
+		GLenum type,
+		GLint* param
+	);
+	void extGlGetProgramiv(
+		GLuint program,
+		GLenum type,
+		GLint* param
+	);
+	GLint extGlGetUniformLocationARB(
+		GLhandleARB program,
+		const char* name
+	);
+	GLint extGlGetUniformLocation(
+		GLuint program,
+		const char* name
+	);
+	void extGlUniform1fv(
+		GLint loc,
+		GLsizei count,
+		const GLfloat* v
+	);
+	void extGlUniform2fv(
+		GLint loc,
+		GLsizei count,
+		const GLfloat* v
+	);
+	void extGlUniform3fv(
+		GLint loc,
+		GLsizei count,
+		const GLfloat* v
+	);
+	void extGlUniform4fv(
+		GLint loc,
+		GLsizei count,
+		const GLfloat* v
+	);
+	void extGlUniform1bv(
+		GLint loc,
+		GLsizei count,
+		const bool* v
+	);
+	void extGlUniform2bv(
+		GLint loc,
+		GLsizei count,
+		const bool* v
+	);
+	void extGlUniform3bv(
+		GLint loc,
+		GLsizei count,
+		const bool* v
+	);
+	void extGlUniform4bv(
+		GLint loc,
+		GLsizei count,
+		const bool* v
+	);
+	void extGlUniform1iv(
+		GLint loc,
+		GLsizei count,
+		const GLint* v
+	);
+	void extGlUniform2iv(
+		GLint loc,
+		GLsizei count,
+		const GLint* v
+	);
+	void extGlUniform3iv(
+		GLint loc,
+		GLsizei count,
+		const GLint* v
+	);
+	void extGlUniform4iv(
+		GLint loc,
+		GLsizei count,
+		const GLint* v
+	);
+	void extGlUniformMatrix2fv(
+		GLint loc,
 		GLsizei count,
 		GLboolean transpose,
-		const GLfloat* v);
-	void extGlUniformMatrix3fv(GLint loc,
+		const GLfloat* v
+	);
+	void extGlUniformMatrix3fv(
+		GLint loc,
 		GLsizei count,
 		GLboolean transpose,
-		const GLfloat* v);
-	void extGlUniformMatrix4fv(GLint loc,
+		const GLfloat* v
+	);
+	void extGlUniformMatrix4fv(
+		GLint loc,
 		GLsizei count,
 		GLboolean transpose,
-		const GLfloat* v);
-	void extGlGetActiveUniformARB(GLhandleARB program,
+		const GLfloat* v
+	);
+	void extGlGetActiveUniformARB(
+		GLhandleARB program,
 		GLuint index,
 		GLsizei maxlength,
 		GLsizei* length,
 		GLint* size,
 		GLenum* type,
-		GLcharARB* name);
-	void extGlGetActiveUniform(GLuint program,
+		GLcharARB* name
+	);
+	void extGlGetActiveUniform(
+		GLuint program,
 		GLuint index,
 		GLsizei maxlength,
 		GLsizei* length,
 		GLint* size,
 		GLenum* type,
-		GLchar* name);
+		GLchar* name
+	);
 
 	// framebuffer objects
-	void irrGlBindFramebuffer(GLenum target, GLuint framebuffer);
-	void irrGlDeleteFramebuffers(GLsizei n, const GLuint* framebuffers);
-	void irrGlGenFramebuffers(GLsizei n, GLuint* framebuffers);
-	GLenum irrGlCheckFramebufferStatus(GLenum target);
-	void irrGlFramebufferTexture2D(GLenum target,
+	void irrGlBindFramebuffer(
+		GLenum target,
+		GLuint framebuffer
+	);
+	void irrGlDeleteFramebuffers(
+		GLsizei n,
+		const GLuint* framebuffers
+	);
+	void irrGlGenFramebuffers(
+		GLsizei n,
+		GLuint* framebuffers
+	);
+	GLenum irrGlCheckFramebufferStatus(
+		GLenum target
+	);
+	void irrGlFramebufferTexture2D(
+		GLenum target,
 		GLenum attachment,
 		GLenum textarget,
 		GLuint texture,
-		GLint level);
-	void irrGlBindRenderbuffer(GLenum target, GLuint renderbuffer);
-	void irrGlDeleteRenderbuffers(GLsizei n, const GLuint* renderbuffers);
-	void irrGlGenRenderbuffers(GLsizei n, GLuint* renderbuffers);
-	void irrGlRenderbufferStorage(GLenum target,
+		GLint level
+	);
+	void irrGlBindRenderbuffer(
+		GLenum target,
+		GLuint renderbuffer
+	);
+	void irrGlDeleteRenderbuffers(
+		GLsizei n,
+		const GLuint* renderbuffers
+	);
+	void irrGlGenRenderbuffers(
+		GLsizei n,
+		GLuint* renderbuffers
+	);
+	void irrGlRenderbufferStorage(
+		GLenum target,
 		GLenum internalformat,
 		GLsizei width,
-		GLsizei height);
-	void irrGlFramebufferRenderbuffer(GLenum target,
+		GLsizei height
+	);
+	void irrGlFramebufferRenderbuffer(
+		GLenum target,
 		GLenum attachment,
 		GLenum renderbuffertarget,
-		GLuint renderbuffer);
-	void irrGlGenerateMipmap(GLenum target);
-	void irrGlActiveStencilFace(GLenum face);
-	void irrGlDrawBuffer(GLenum mode);
-	void irrGlDrawBuffers(GLsizei n, const GLenum* bufs);
+		GLuint renderbuffer
+	);
+	void irrGlGenerateMipmap(
+		GLenum target
+	);
+	void irrGlActiveStencilFace(
+		GLenum face
+	);
+	void irrGlDrawBuffer(
+		GLenum mode
+	);
+	void irrGlDrawBuffers(
+		GLsizei n,
+		const GLenum* bufs
+	);
 
 	// vertex buffer object
-	void extGlGenBuffers(GLsizei n, GLuint* buffers);
-	void extGlBindBuffer(GLenum target, GLuint buffer);
-	void extGlBufferData(GLenum target,
+	void extGlGenBuffers(
+		GLsizei n,
+		GLuint* buffers
+	);
+	void extGlBindBuffer(
+		GLenum target,
+		GLuint buffer
+	);
+	void extGlBufferData(
+		GLenum target,
 		GLsizeiptrARB size,
 		const GLvoid* data,
-		GLenum usage);
-	void extGlDeleteBuffers(GLsizei n, const GLuint* buffers);
-	void extGlBufferSubData(GLenum target,
+		GLenum usage
+	);
+	void extGlDeleteBuffers(
+		GLsizei n,
+		const GLuint* buffers
+	);
+	void extGlBufferSubData(
+		GLenum target,
 		GLintptrARB offset,
 		GLsizeiptrARB size,
-		const GLvoid* data);
-	void extGlGetBufferSubData(GLenum target,
+		const GLvoid* data
+	);
+	void extGlGetBufferSubData(
+		GLenum target,
 		GLintptrARB offset,
 		GLsizeiptrARB size,
-		GLvoid* data);
-	void* extGlMapBuffer(GLenum target, GLenum access);
-	GLboolean extGlUnmapBuffer(GLenum target);
-	GLboolean extGlIsBuffer(GLuint buffer);
-	void extGlGetBufferParameteriv(GLenum target, GLenum pname, GLint* params);
-	void extGlGetBufferPointerv(GLenum target, GLenum pname, GLvoid** params);
-	void extGlProvokingVertex(GLenum mode);
-	void extGlProgramParameteri(GLuint program, GLenum pname, GLint value);
+		GLvoid* data
+	);
+	void* extGlMapBuffer(
+		GLenum target,
+		GLenum access
+	);
+	GLboolean extGlUnmapBuffer(
+		GLenum target
+	);
+	GLboolean extGlIsBuffer(
+		GLuint buffer
+	);
+	void extGlGetBufferParameteriv(
+		GLenum target,
+		GLenum pname,
+		GLint* params
+	);
+	void extGlGetBufferPointerv(
+		GLenum target,
+		GLenum pname,
+		GLvoid** params
+	);
+	void extGlProvokingVertex(
+		GLenum mode
+	);
+	void extGlProgramParameteri(
+		GLuint program,
+		GLenum pname,
+		GLint value
+	);
 
 	// occlusion query
-	void extGlGenQueries(GLsizei n, GLuint* ids);
-	void extGlDeleteQueries(GLsizei n, const GLuint* ids);
-	GLboolean extGlIsQuery(GLuint id);
-	void extGlBeginQuery(GLenum target, GLuint id);
-	void extGlEndQuery(GLenum target);
-	void extGlGetQueryiv(GLenum target, GLenum pname, GLint* params);
-	void extGlGetQueryObjectiv(GLuint id, GLenum pname, GLint* params);
-	void extGlGetQueryObjectuiv(GLuint id, GLenum pname, GLuint* params);
+	void extGlGenQueries(
+		GLsizei n,
+		GLuint* ids
+	);
+	void extGlDeleteQueries(
+		GLsizei n,
+		const GLuint* ids
+	);
+	GLboolean extGlIsQuery(
+		GLuint id
+	);
+	void extGlBeginQuery(
+		GLenum target,
+		GLuint id
+	);
+	void extGlEndQuery(
+		GLenum target
+	);
+	void extGlGetQueryiv(
+		GLenum target,
+		GLenum pname,
+		GLint* params
+	);
+	void extGlGetQueryObjectiv(
+		GLuint id,
+		GLenum pname,
+		GLint* params
+	);
+	void extGlGetQueryObjectuiv(
+		GLuint id,
+		GLenum pname,
+		GLuint* params
+	);
 
 	// blend
-	void irrGlBlendFuncSeparate(GLenum sfactorRGB,
+	void irrGlBlendFuncSeparate(
+		GLenum sfactorRGB,
 		GLenum dfactorRGB,
 		GLenum sfactorAlpha,
-		GLenum dfactorAlpha);
-	void irrGlBlendEquation(GLenum mode);
+		GLenum dfactorAlpha
+	);
+	void irrGlBlendEquation(
+		GLenum mode
+	);
 
 	// indexed
-	void irrGlEnableIndexed(GLenum target, GLuint index);
-	void irrGlDisableIndexed(GLenum target, GLuint index);
-	void irrGlColorMaskIndexed(GLuint buf,
+	void irrGlEnableIndexed(
+		GLenum target,
+		GLuint index
+	);
+	void irrGlDisableIndexed(
+		GLenum target,
+		GLuint index
+	);
+	void irrGlColorMaskIndexed(
+		GLuint buf,
 		GLboolean r,
 		GLboolean g,
 		GLboolean b,
-		GLboolean a);
-	void irrGlBlendFuncIndexed(GLuint buf, GLenum src, GLenum dst);
-	void irrGlBlendFuncSeparateIndexed(GLuint buf,
+		GLboolean a
+	);
+	void irrGlBlendFuncIndexed(
+		GLuint buf,
+		GLenum src,
+		GLenum dst
+	);
+	void irrGlBlendFuncSeparateIndexed(
+		GLuint buf,
 		GLenum srcRGB,
 		GLenum dstRGB,
 		GLenum srcAlpha,
-		GLenum dstAlpha);
-	void irrGlBlendEquationIndexed(GLuint buf, GLenum mode);
-	void
-	irrGlBlendEquationSeparateIndexed(GLuint buf, GLenum modeRGB, GLenum modeAlpha);
+		GLenum dstAlpha
+	);
+	void irrGlBlendEquationIndexed(
+		GLuint buf,
+		GLenum mode
+	);
+	void irrGlBlendEquationSeparateIndexed(
+		GLuint buf,
+		GLenum modeRGB,
+		GLenum modeAlpha
+	);
 
-	void extGlTextureSubImage2D(GLuint texture,
+	void extGlTextureSubImage2D(
+		GLuint texture,
 		GLenum target,
 		GLint level,
 		GLint xoffset,
@@ -996,35 +1285,60 @@ public:
 		GLsizei height,
 		GLenum format,
 		GLenum type,
-		const void* pixels);
-	void extGlTextureStorage2D(GLuint texture,
+		const void* pixels
+	);
+	void extGlTextureStorage2D(
+		GLuint texture,
 		GLenum target,
 		GLsizei levels,
 		GLenum internalformat,
 		GLsizei width,
-		GLsizei height);
-	void extGlTextureStorage3D(GLuint texture,
+		GLsizei height
+	);
+	void extGlTextureStorage3D(
+		GLuint texture,
 		GLenum target,
 		GLsizei levels,
 		GLenum internalformat,
 		GLsizei width,
 		GLsizei height,
-		GLsizei depth);
-	void extGlNamedFramebufferTexture(GLuint framebuffer,
+		GLsizei depth
+	);
+	void extGlNamedFramebufferTexture(
+		GLuint framebuffer,
 		GLenum attachment,
 		GLuint texture,
-		GLint level);
-	void extGlTextureParameteri(GLuint texture, GLenum pname, GLint param);
-	void extGlCreateTextures(GLenum target, GLsizei n, GLuint* textures);
-	void extGlCreateFramebuffers(GLsizei n, GLuint* framebuffers);
-	void extGlBindTextures(GLuint first,
+		GLint level
+	);
+	void extGlTextureParameteri(
+		GLuint texture,
+		GLenum pname,
+		GLint param
+	);
+	void extGlCreateTextures(
+		GLenum target,
+		GLsizei n,
+		GLuint* textures
+	);
+	void extGlCreateFramebuffers(
+		GLsizei n,
+		GLuint* framebuffers
+	);
+	void extGlBindTextures(
+		GLuint first,
 		GLsizei count,
 		const GLuint* textures,
-		const GLenum* targets);
-	void extGlGenerateTextureMipmap(GLuint texture, GLenum target);
+		const GLenum* targets
+	);
+	void extGlGenerateTextureMipmap(
+		GLuint texture,
+		GLenum target
+	);
 
 	// generic vsync setting method for several extensions
-	void extGlSwapInterval(int interval);
+	void extGlSwapInterval(
+		int interval
+	);
 
 	// the global feature array
 	bool FeatureAvailable[IRR_OpenGL_Feature_Count];

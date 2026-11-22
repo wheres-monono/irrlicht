@@ -26,13 +26,17 @@ public:
 	virtual f32 getMoveSpeed() const = 0;
 
 	//! Sets the speed of movement in units per millisecond
-	virtual void setMoveSpeed(f32 moveSpeed) = 0;
+	virtual void setMoveSpeed(
+		f32 moveSpeed
+	) = 0;
 
 	//! Returns the rotation speed when using keyboard
 	virtual f32 getRotateSpeedKeyboard() const = 0;
 
 	//! Set the rotation speed when using keyboard
-	virtual void setRotateSpeedKeyboard(f32 rotateSpeed) = 0;
+	virtual void setRotateSpeedKeyboard(
+		f32 rotateSpeed
+	) = 0;
 
 	//! Returns the rotation speed in degrees when using mouse
 	/** The degrees are equivalent to a half screen movement of the mouse,
@@ -41,16 +45,23 @@ public:
 	virtual f32 getRotateSpeed() const = 0;
 
 	//! Set the rotation speed in degrees when using mouse
-	virtual void setRotateSpeed(f32 rotateSpeed) = 0;
+	virtual void setRotateSpeed(
+		f32 rotateSpeed
+	) = 0;
 
 	//! Sets the keyboard mapping for this animator (old style)
 	/** \param map Array of keyboard mappings, see irr::SKeyMap
 	\param count Size of the keyboard map array. */
-	virtual void setKeyMap(SKeyMap* map, u32 count) = 0;
+	virtual void setKeyMap(
+		SKeyMap* map,
+		u32 count
+	) = 0;
 
 	//! Sets the keyboard mapping for this animator
 	//! \param keymap The new keymap array
-	virtual void setKeyMap(const core::array<SKeyMap>& keymap) = 0;
+	virtual void setKeyMap(
+		const core::array<SKeyMap>& keymap
+	) = 0;
 
 	//! Gets the keyboard mapping for this animator
 	virtual const core::array<SKeyMap>& getKeyMap() const = 0;
@@ -59,12 +70,16 @@ public:
 	/** If vertical movement is enabled then the camera may fight with
 	gravity causing camera shake. Disable this if the camera has
 	a collision animator with gravity enabled. */
-	virtual void setVerticalMovement(bool allow) = 0;
+	virtual void setVerticalMovement(
+		bool allow
+	) = 0;
 
 	//! Sets whether the Y axis of the mouse should be inverted.
 	/** If enabled then moving the mouse down will cause
 	the camera to look up. It is disabled by default. */
-	virtual void setInvertMouse(bool invert) = 0;
+	virtual void setInvertMouse(
+		bool invert
+	) = 0;
 };
 } // end namespace scene
 } // end namespace irr

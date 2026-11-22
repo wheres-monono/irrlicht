@@ -26,15 +26,20 @@ public:
 	//! Check if this writer can write a file with the given extension
 	/** \param filename Name of the file to check.
 	\return True if file extension specifies a writable type. */
-	virtual bool isAWriteableFileExtension(const io::path& filename) const = 0;
+	virtual bool isAWriteableFileExtension(
+		const io::path& filename
+	) const = 0;
 
 	//! Write image to file
 	/** \param file File handle to write to.
 	\param image Image to write into file.
 	\param param Writer specific parameter, influencing e.g. quality.
 	\return True if image was successfully written. */
-	virtual bool
-	writeImage(io::IWriteFile* file, IImage* image, u32 param = 0) const = 0;
+	virtual bool writeImage(
+		io::IWriteFile* file,
+		IImage* image,
+		u32 param = 0
+	) const = 0;
 };
 
 } // namespace video

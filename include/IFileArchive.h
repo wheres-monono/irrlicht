@@ -55,13 +55,17 @@ public:
 	\param filename The file to open
 	\return Returns A pointer to the created file on success,
 	or 0 on failure. */
-	virtual IReadFile* createAndOpenFile(const path& filename) = 0;
+	virtual IReadFile* createAndOpenFile(
+		const path& filename
+	) = 0;
 
 	//! Opens a file based on its position in the file list.
 	/** Creates and returns
 	\param index The zero based index of the file.
 	\return Returns a pointer to the created file on success, or 0 on failure. */
-	virtual IReadFile* createAndOpenFile(u32 index) = 0;
+	virtual IReadFile* createAndOpenFile(
+		u32 index
+	) = 0;
 
 	//! Returns the complete file tree
 	/** \return Returns the complete directory tree for the archive,
@@ -93,35 +97,47 @@ public:
 	/** Check based on the file extension (e.g. ".zip")
 	\param filename Name of file to check.
 	\return True if file seems to be loadable. */
-	virtual bool isALoadableFileFormat(const path& filename) const = 0;
+	virtual bool isALoadableFileFormat(
+		const path& filename
+	) const = 0;
 
 	//! Check if the file might be loaded by this class
 	/** This check may look into the file.
 	\param file File handle to check.
 	\return True if file seems to be loadable. */
-	virtual bool isALoadableFileFormat(io::IReadFile* file) const = 0;
+	virtual bool isALoadableFileFormat(
+		io::IReadFile* file
+	) const = 0;
 
 	//! Check to see if the loader can create archives of this type.
 	/** Check based on the archive type.
 	\param fileType The archive type to check.
 	\return True if the archive loader supports this type, false if not */
-	virtual bool isALoadableFileFormat(E_FILE_ARCHIVE_TYPE fileType) const = 0;
+	virtual bool isALoadableFileFormat(
+		E_FILE_ARCHIVE_TYPE fileType
+	) const = 0;
 
 	//! Creates an archive from the filename
 	/** \param filename File to use.
 	\param ignoreCase Searching is performed without regarding the case
 	\param ignorePaths Files are searched for without checking for the directories
 	\return Pointer to newly created archive, or 0 upon error. */
-	virtual IFileArchive*
-	createArchive(const path& filename, bool ignoreCase, bool ignorePaths) const = 0;
+	virtual IFileArchive* createArchive(
+		const path& filename,
+		bool ignoreCase,
+		bool ignorePaths
+	) const = 0;
 
 	//! Creates an archive from the file
 	/** \param file File handle to use.
 	\param ignoreCase Searching is performed without regarding the case
 	\param ignorePaths Files are searched for without checking for the directories
 	\return Pointer to newly created archive, or 0 upon error. */
-	virtual IFileArchive*
-	createArchive(io::IReadFile* file, bool ignoreCase, bool ignorePaths) const = 0;
+	virtual IFileArchive* createArchive(
+		io::IReadFile* file,
+		bool ignoreCase,
+		bool ignorePaths
+	) const = 0;
 };
 
 } // end namespace io

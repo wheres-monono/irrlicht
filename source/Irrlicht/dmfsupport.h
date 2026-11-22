@@ -95,10 +95,10 @@ struct dmfLight {
 This structure contains light position coordinates, diffuse color, specular color and
 maximum radius of light.*/
 struct dmfWaterPlane {
-	u32 waterID;  //!< ID of specified water plane.
-	u32 numFaces; //!< number of faces that make this plain.Owing to the fact that
-		      //!< this is a rectangle you'll have 1 every time.
-	u32 firstFace;			//!< first face of this plain.
+	u32 waterID;   //!< ID of specified water plane.
+	u32 numFaces;  //!< number of faces that make this plain.Owing to the fact that
+		       //!< this is a rectangle you'll have 1 every time.
+	u32 firstFace; //!< first face of this plain.
 	core::dimension2d<u32> tileNum; //!< number of tiles of this water plain.
 	f32 waveHeight;			//!< height of waves.
 	f32 waveSpeed;			//!< waves speed.

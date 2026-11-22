@@ -103,12 +103,14 @@ public:
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer.
 	*/
-	virtual void getTriangles(core::triangle3df* triangles,
+	virtual void getTriangles(
+		core::triangle3df* triangles,
 		s32 arraySize,
 		s32& outTriangleCount,
 		const core::matrix4* transform = 0,
 		bool useNodeTransform = true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0
+	) const = 0;
 
 	//! Gets the triangles for one associated node which may lie within a specific
 	//! bounding box.
@@ -136,13 +138,15 @@ public:
 	array is filled with additional information about the returned triangles.
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer. */
-	virtual void getTriangles(core::triangle3df* triangles,
+	virtual void getTriangles(
+		core::triangle3df* triangles,
 		s32 arraySize,
 		s32& outTriangleCount,
 		const core::aabbox3d<f32>& box,
 		const core::matrix4* transform = 0,
 		bool useNodeTransform = true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0
+	) const = 0;
 
 	//! Gets the triangles for one associated node which have or may have contact with
 	//! a 3d line.
@@ -170,13 +174,15 @@ public:
 	array is filled with additional information about the returned triangles.
 	One element of SCollisionTriangleRange added for each range of triangles which
 	has distinguishable information. For example one range per meshbuffer. */
-	virtual void getTriangles(core::triangle3df* triangles,
+	virtual void getTriangles(
+		core::triangle3df* triangles,
 		s32 arraySize,
 		s32& outTriangleCount,
 		const core::line3d<f32>& line,
 		const core::matrix4* transform = 0,
 		bool useNodeTransform = true,
-		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0) const = 0;
+		irr::core::array<SCollisionTriangleRange>* outTriangleInfo = 0
+	) const = 0;
 
 	//! Get number of TriangleSelectors that are part of this one
 	/** Only useful for MetaTriangleSelector, others return 1
@@ -186,12 +192,16 @@ public:
 	//! Get TriangleSelector based on index based on getSelectorCount
 	/** Only useful for MetaTriangleSelector, others return 'this' or 0
 	 */
-	virtual ITriangleSelector* getSelector(u32 index) = 0;
+	virtual ITriangleSelector* getSelector(
+		u32 index
+	) = 0;
 
 	//! Get TriangleSelector based on index based on getSelectorCount
 	/** Only useful for MetaTriangleSelector, others return 'this' or 0
 	 */
-	virtual const ITriangleSelector* getSelector(u32 index) const = 0;
+	virtual const ITriangleSelector* getSelector(
+		u32 index
+	) const = 0;
 
 	//! Get scene node associated with a given triangle.
 	/**	With CMetaTriangleSelector-selectors it's possible to find out a node
@@ -203,7 +213,9 @@ public:
 	\param triangleIndex: the index of the triangle for which you want to find.
 	\return The scene node associated with that triangle.
 	*/
-	virtual ISceneNode* getSceneNodeForTriangle(u32 triangleIndex) const = 0;
+	virtual ISceneNode* getSceneNodeForTriangle(
+		u32 triangleIndex
+	) const = 0;
 };
 
 } // end namespace scene

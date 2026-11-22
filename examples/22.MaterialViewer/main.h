@@ -6,17 +6,23 @@
 // Helper control to allow setting colors
 class CColorControl : public irr::gui::IGUIElement {
 public:
-	CColorControl(irr::gui::IGUIEnvironment* guiEnv,
+	CColorControl(
+		irr::gui::IGUIEnvironment* guiEnv,
 		const irr::core::position2d<irr::s32>& pos,
 		const wchar_t* text,
 		irr::gui::IGUIElement* parent,
-		irr::s32 id = -1);
+		irr::s32 id = -1
+	);
 
 	// Event receiver
-	virtual bool OnEvent(const irr::SEvent& event);
+	virtual bool OnEvent(
+		const irr::SEvent& event
+	);
 
 	// Set the color values
-	void setColor(const irr::video::SColor& col);
+	void setColor(
+		const irr::video::SColor& col
+	);
 
 	// Get the color values
 	const irr::video::SColor& getColor() const { return Color; }
@@ -29,17 +35,21 @@ public:
 
 protected:
 	// Add a staticbox for a description + an editbox so users can enter numbers
-	irr::gui::IGUIEditBox* addEditForNumbers(irr::gui::IGUIEnvironment* guiEnv,
+	irr::gui::IGUIEditBox* addEditForNumbers(
+		irr::gui::IGUIEnvironment* guiEnv,
 		const irr::core::position2d<irr::s32>& pos,
 		const wchar_t* text,
 		irr::s32 id,
-		irr::gui::IGUIElement* parent);
+		irr::gui::IGUIElement* parent
+	);
 
 	// Get the color value from the editfields
 	irr::video::SColor getColorFromEdits() const;
 
 	// Fill the editfields with the value for the given color
-	void setEditsFromColor(irr::video::SColor col);
+	void setEditsFromColor(
+		irr::video::SColor col
+	);
 
 private:
 	bool DirtyFlag;
@@ -58,26 +68,36 @@ private:
 class CTypicalColorsControl : public irr::gui::IGUIElement {
 public:
 	// Constructor
-	CTypicalColorsControl(irr::gui::IGUIEnvironment* guiEnv,
+	CTypicalColorsControl(
+		irr::gui::IGUIEnvironment* guiEnv,
 		const irr::core::position2d<irr::s32>& pos,
 		bool hasEmissive,
 		irr::gui::IGUIElement* parent,
-		irr::s32 id = -1);
+		irr::s32 id = -1
+	);
 
 	// Destructor
 	virtual ~CTypicalColorsControl();
 
 	// Set the color values to those within the material
-	void setColorsToMaterialColors(const irr::video::SMaterial& material);
+	void setColorsToMaterialColors(
+		const irr::video::SMaterial& material
+	);
 
 	// Update all changed colors in the material
-	void updateMaterialColors(irr::video::SMaterial& material) const;
+	void updateMaterialColors(
+		irr::video::SMaterial& material
+	) const;
 
 	// Set the color values to those from the light data
-	void setColorsToLightDataColors(const irr::video::SLight& lightData);
+	void setColorsToLightDataColors(
+		const irr::video::SLight& lightData
+	);
 
 	// Update all changed colors in the light data
-	void updateLightColors(irr::video::SLight& lightData) const;
+	void updateLightColors(
+		irr::video::SLight& lightData
+	) const;
 
 	// To reset the dirty flags
 	void resetDirty();
@@ -94,24 +114,32 @@ private:
 */
 class CTextureControl : public irr::gui::IGUIElement {
 public:
-	CTextureControl(irr::gui::IGUIEnvironment* guiEnv,
+	CTextureControl(
+		irr::gui::IGUIEnvironment* guiEnv,
 		irr::video::IVideoDriver* driver,
 		const irr::core::position2d<irr::s32>& pos,
 		irr::gui::IGUIElement* parent,
-		irr::s32 id = -1);
+		irr::s32 id = -1
+	);
 
-	virtual bool OnEvent(const irr::SEvent& event);
+	virtual bool OnEvent(
+		const irr::SEvent& event
+	);
 
 	// Workaround for a problem with comboboxes.
 	// We have to get in front when the combobox wants to get in front or
 	// combobox-list might be drawn below other elements.
-	virtual bool bringToFront(irr::gui::IGUIElement* element);
+	virtual bool bringToFront(
+		irr::gui::IGUIElement* element
+	);
 
 	// Return selected texturename (if any, otherwise 0)
 	const wchar_t* getSelectedTextureName() const;
 
 	// Change active selectionbased on the texture name
-	void selectTextureByName(const irr::core::stringw& name);
+	void selectTextureByName(
+		const irr::core::stringw& name
+	);
 
 	// Reset the dirty flag
 	void resetDirty() { DirtyFlag = false; }
@@ -120,7 +148,9 @@ public:
 	bool isDirty() const { return DirtyFlag; };
 
 	// Put the names of all currently loaded textures in a combobox
-	void updateTextures(irr::video::IVideoDriver* driver);
+	void updateTextures(
+		irr::video::IVideoDriver* driver
+	);
 
 private:
 	bool DirtyFlag;
@@ -157,23 +187,31 @@ public:
 		}
 	}
 
-	void init(irr::scene::IMeshSceneNode* node,
+	void init(
+		irr::scene::IMeshSceneNode* node,
 		irr::IrrlichtDevice* device,
 		const irr::core::position2d<irr::s32>& pos,
-		const wchar_t* description);
+		const wchar_t* description
+	);
 
-	void update(irr::scene::IMeshSceneNode* sceneNode,
+	void update(
+		irr::scene::IMeshSceneNode* sceneNode,
 		irr::scene::IMeshSceneNode* sceneNode2T,
-		irr::scene::IMeshSceneNode* sceneNodeTangents);
+		irr::scene::IMeshSceneNode* sceneNodeTangents
+	);
 
 	void updateTextures();
 
-	void selectTextures(const irr::core::stringw& name);
+	void selectTextures(
+		const irr::core::stringw& name
+	);
 
 	bool isLightingEnabled() const;
 
 protected:
-	void updateMaterial(irr::video::SMaterial& material);
+	void updateMaterial(
+		irr::video::SMaterial& material
+	);
 
 	bool Initialized;
 	irr::video::IVideoDriver* Driver;
@@ -200,12 +238,16 @@ public:
 		}
 	}
 
-	void init(irr::scene::ILightSceneNode* node,
+	void init(
+		irr::scene::ILightSceneNode* node,
 		irr::gui::IGUIEnvironment* guiEnv,
 		const irr::core::position2d<irr::s32>& pos,
-		const wchar_t* description);
+		const wchar_t* description
+	);
 
-	void update(irr::scene::ILightSceneNode* node);
+	void update(
+		irr::scene::ILightSceneNode* node
+	);
 
 protected:
 	bool Initialized;
@@ -230,7 +272,10 @@ struct SConfig {
 	Main application class
 */
 class CApp : public irr::IEventReceiver {
-	friend int main(int argc, char* argv[]);
+	friend int main(
+		int argc,
+		char* argv[]
+	);
 
 public:
 	// constructor
@@ -268,12 +313,17 @@ public:
 	bool isRunning() const { return IsRunning; }
 
 	// Event handler
-	virtual bool OnEvent(const irr::SEvent& event);
+	virtual bool OnEvent(
+		const irr::SEvent& event
+	);
 
 protected:
 	// Application initialization
 	// returns true when it was successful initialized, otherwise false.
-	bool init(int argc, char* argv[]);
+	bool init(
+		int argc,
+		char* argv[]
+	);
 
 	// Update one frame
 	bool update();
@@ -282,18 +332,33 @@ protected:
 	void quit();
 
 	// Create some useful textures.
-	void createDefaultTextures(irr::video::IVideoDriver* driver);
+	void createDefaultTextures(
+		irr::video::IVideoDriver* driver
+	);
 
 	// Load a texture and make sure nodes know it when more textures are available.
-	void loadTexture(const irr::io::path& name);
+	void loadTexture(
+		const irr::io::path& name
+	);
 
 	// Rotate a node around the origin (0,0,0)
-	void RotateHorizontal(irr::scene::ISceneNode* node, irr::f32 angle);
-	void RotateAroundAxis(irr::scene::ISceneNode* node,
+	void RotateHorizontal(
+		irr::scene::ISceneNode* node,
+		irr::f32 angle
+	);
+	void RotateAroundAxis(
+		irr::scene::ISceneNode* node,
 		irr::f32 angle,
-		const irr::core::vector3df& axis);
-	void ZoomOut(irr::scene::ISceneNode* node, irr::f32 units);
-	void UpdateRotationAxis(irr::scene::ISceneNode* node, irr::core::vector3df& axis);
+		const irr::core::vector3df& axis
+	);
+	void ZoomOut(
+		irr::scene::ISceneNode* node,
+		irr::f32 units
+	);
+	void UpdateRotationAxis(
+		irr::scene::ISceneNode* node,
+		irr::core::vector3df& axis
+	);
 
 private:
 	SConfig Config;

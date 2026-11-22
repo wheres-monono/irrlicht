@@ -780,15 +780,23 @@ public:
 		Saturation(s),
 		Luminance(l) {}
 
-	void fromRGB(const SColorf& color);
-	void toRGB(SColorf& color) const;
+	void fromRGB(
+		const SColorf& color
+	);
+	void toRGB(
+		SColorf& color
+	) const;
 
 	f32 Hue;
 	f32 Saturation;
 	f32 Luminance;
 
 private:
-	inline f32 toRGB1(f32 rm1, f32 rm2, f32 rh) const;
+	inline f32 toRGB1(
+		f32 rm1,
+		f32 rm2,
+		f32 rh
+	) const;
 };
 
 inline void SColorHSL::fromRGB(

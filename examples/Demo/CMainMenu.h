@@ -22,7 +22,9 @@ public:
 	bool getAntiAliasing() const { return aa; }
 	video::E_DRIVER_TYPE getDriverType() const { return driverType; }
 
-	virtual bool OnEvent(const SEvent& event);
+	virtual bool OnEvent(
+		const SEvent& event
+	);
 
 private:
 	void setTransparency();

@@ -33,11 +33,15 @@ public:
 
 	//! Sets a new mesh to display
 	/** \param mesh Mesh to display. */
-	virtual void setMesh(IMesh* mesh) = 0;
+	virtual void setMesh(
+		IMesh* mesh
+	) = 0;
 
 	//! Get the currently defined mesh for display.
 	/** \return Pointer to mesh which is displayed by this node. */
-	virtual IMesh* getMesh(void) = 0;
+	virtual IMesh* getMesh(
+		void
+	) = 0;
 
 	//! Creates shadow volume scene node as child of this node.
 	/** The shadow can be rendered using the ZPass or the zfail
@@ -57,18 +61,21 @@ public:
 	\return Pointer to the created shadow scene node. This pointer
 	should not be dropped. See IReferenceCounted::drop() for more
 	information. */
-	virtual IShadowVolumeSceneNode*
-	addShadowVolumeSceneNode(const IMesh* shadowMesh = 0,
+	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(
+		const IMesh* shadowMesh = 0,
 		s32 id = -1,
 		bool zfailmethod = true,
-		f32 infinity = 1000.0f) = 0;
+		f32 infinity = 1000.0f
+	) = 0;
 
 	//! Sets if the scene node should not copy the materials of the mesh but use them
 	//! in a read only style.
 	/** In this way it is possible to change the materials of a mesh
 	causing all mesh scene nodes referencing this mesh to change, too.
 	\param readonly Flag if the materials shall be read-only. */
-	virtual void setReadOnlyMaterials(bool readonly) = 0;
+	virtual void setReadOnlyMaterials(
+		bool readonly
+	) = 0;
 
 	//! Check if the scene node should not copy the materials of the mesh but use them
 	//! in a read only style

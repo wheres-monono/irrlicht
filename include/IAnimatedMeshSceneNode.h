@@ -41,7 +41,9 @@ public:
 	/** See IAnimatedMeshSceneNode::setAnimationEndCallback for
 	more information.
 	\param node: Node of which the animation has ended. */
-	virtual void OnAnimationEnd(IAnimatedMeshSceneNode* node) = 0;
+	virtual void OnAnimationEnd(
+		IAnimatedMeshSceneNode* node
+	) = 0;
 };
 
 //! Scene node capable of displaying an animated mesh and its shadow.
@@ -68,7 +70,9 @@ public:
 	\param frame: Number of the frame to let the animation be started from.
 	The frame number must be a valid frame number of the IMesh used by this
 	scene node. Set IAnimatedMesh::getMesh() for details. */
-	virtual void setCurrentFrame(f32 frame) = 0;
+	virtual void setCurrentFrame(
+		f32 frame
+	) = 0;
 
 	//! Sets the frame numbers between the animation is looped.
 	/** The default is 0 to getFrameCount()-1 of the mesh.
@@ -79,11 +83,16 @@ public:
 	\param begin: Start frame number of the loop.
 	\param end: End frame number of the loop.
 	\return True if successful, false if not. */
-	virtual bool setFrameLoop(s32 begin, s32 end) = 0;
+	virtual bool setFrameLoop(
+		s32 begin,
+		s32 end
+	) = 0;
 
 	//! Sets the speed with which the animation is played.
 	/** \param framesPerSecond: Frames per second played. */
-	virtual void setAnimationSpeed(f32 framesPerSecond) = 0;
+	virtual void setAnimationSpeed(
+		f32 framesPerSecond
+	) = 0;
 
 	//! Gets the speed with which the animation is played.
 	/** \return Frames per second played. */
@@ -107,11 +116,12 @@ public:
 	\return Pointer to the created shadow scene node. This pointer
 	should not be dropped. See IReferenceCounted::drop() for more
 	information. */
-	virtual IShadowVolumeSceneNode*
-	addShadowVolumeSceneNode(const IMesh* shadowMesh = 0,
+	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(
+		const IMesh* shadowMesh = 0,
 		s32 id = -1,
 		bool zfailmethod = true,
-		f32 infinity = 1000.0f) = 0;
+		f32 infinity = 1000.0f
+	) = 0;
 
 	//! Get a pointer to a joint in the mesh (if the mesh is a bone based mesh).
 	/** With this method it is possible to attach scene nodes to
@@ -128,10 +138,14 @@ public:
 	\return Pointer to the scene node which represents the joint
 	with the specified name. Returns 0 if the contained mesh is not
 	an skinned mesh or the name of the joint could not be found. */
-	virtual IBoneSceneNode* getJointNode(const c8* jointName) = 0;
+	virtual IBoneSceneNode* getJointNode(
+		const c8* jointName
+	) = 0;
 
 	//! same as getJointNode(const c8* jointName), but based on id
-	virtual IBoneSceneNode* getJointNode(u32 jointID) = 0;
+	virtual IBoneSceneNode* getJointNode(
+		u32 jointID
+	) = 0;
 
 	//! Gets joint count.
 	/** \return Amount of joints in the mesh. */
@@ -145,7 +159,9 @@ public:
 	example EMAT_STAND for the standing animation.
 	\return True if successful, and false if not, for example if
 	the mesh in the scene node is not a md2 mesh. */
-	virtual bool setMD2Animation(EMD2_ANIMATION_TYPE anim) = 0;
+	virtual bool setMD2Animation(
+		EMD2_ANIMATION_TYPE anim
+	) = 0;
 
 	//! Starts a special MD2 animation.
 	/** With this method it is easily possible to start a Run,
@@ -160,7 +176,9 @@ public:
 	\return Returns true if successful, and false if not, for
 	example if the mesh in the scene node is not an md2 mesh, or no
 	animation with this name could be found. */
-	virtual bool setMD2Animation(const c8* animationName) = 0;
+	virtual bool setMD2Animation(
+		const c8* animationName
+	) = 0;
 
 	//! Returns the currently displayed frame number.
 	virtual f32 getFrameNr() const = 0;
@@ -171,7 +189,9 @@ public:
 
 	//! Sets looping mode which is on by default.
 	/** If set to false, animations will not be played looped. */
-	virtual void setLoopMode(bool playAnimationLooped) = 0;
+	virtual void setLoopMode(
+		bool playAnimationLooped
+	) = 0;
 
 	//! returns the current loop mode
 	/** When true the animations are played looped */
@@ -182,53 +202,72 @@ public:
 	/** Set this to 0 to disable the callback again.
 	Please note that this will only be called when in non looped
 	mode, see IAnimatedMeshSceneNode::setLoopMode(). */
-	virtual void setAnimationEndCallback(IAnimationEndCallBack* callback = 0) = 0;
+	virtual void setAnimationEndCallback(
+		IAnimationEndCallBack* callback = 0
+	) = 0;
 
 	//! Sets if the scene node should not copy the materials of the mesh but use them
 	//! in a read only style.
 	/** In this way it is possible to change the materials a mesh
 	causing all mesh scene nodes referencing this mesh to change
 	too. */
-	virtual void setReadOnlyMaterials(bool readonly) = 0;
+	virtual void setReadOnlyMaterials(
+		bool readonly
+	) = 0;
 
 	//! Returns if the scene node should not copy the materials of the mesh but use
 	//! them in a read only style
 	virtual bool isReadOnlyMaterials() const = 0;
 
 	//! Sets a new mesh
-	virtual void setMesh(IAnimatedMesh* mesh) = 0;
+	virtual void setMesh(
+		IAnimatedMesh* mesh
+	) = 0;
 
 	//! Returns the current mesh
-	virtual IAnimatedMesh* getMesh(void) = 0;
+	virtual IAnimatedMesh* getMesh(
+		void
+	) = 0;
 
 	//! Get the absolute transformation for a special MD3 Tag if the mesh is a md3
 	//! mesh, or the absolutetransformation if it's a normal scenenode
-	virtual const SMD3QuaternionTag*
-	getMD3TagTransformation(const core::stringc& tagname) = 0;
+	virtual const SMD3QuaternionTag* getMD3TagTransformation(
+		const core::stringc& tagname
+	) = 0;
 
 	//! Set how the joints should be updated on render
-	virtual void setJointMode(E_JOINT_UPDATE_ON_RENDER mode) = 0;
+	virtual void setJointMode(
+		E_JOINT_UPDATE_ON_RENDER mode
+	) = 0;
 
 	//! Sets the transition time in seconds
 	/** Note: This needs to enable joints, and setJointmode set to
 	EJUOR_CONTROL. You must call animateJoints(), or the mesh will
 	not animate. */
-	virtual void setTransitionTime(f32 Time) = 0;
+	virtual void setTransitionTime(
+		f32 Time
+	) = 0;
 
 	//! animates the joints in the mesh based on the current frame.
 	/** Also takes in to account transitions. */
-	virtual void animateJoints(bool CalculateAbsolutePositions = true) = 0;
+	virtual void animateJoints(
+		bool CalculateAbsolutePositions = true
+	) = 0;
 
 	//! render mesh ignoring its transformation.
 	/** Culling is unaffected. */
-	virtual void setRenderFromIdentity(bool On) = 0;
+	virtual void setRenderFromIdentity(
+		bool On
+	) = 0;
 
 	//! Creates a clone of this scene node and its children.
 	/** \param newParent An optional new parent.
 	\param newManager An optional new scene manager.
 	\return The newly created clone of this node. */
-	virtual ISceneNode* clone(ISceneNode* newParent = 0,
-		ISceneManager* newManager = 0) = 0;
+	virtual ISceneNode* clone(
+		ISceneNode* newParent = 0,
+		ISceneManager* newManager = 0
+	) = 0;
 };
 
 } // end namespace scene

@@ -29,11 +29,15 @@ public:
 	//! Sets another skin independent font.
 	/** If this is set to zero, the button uses the font of the skin.
 	\param font: New font to set. */
-	virtual void setOverrideFont(IGUIFont* font = 0) = 0;
+	virtual void setOverrideFont(
+		IGUIFont* font = 0
+	) = 0;
 
 	//! Gets the override font (if any)
 	/** \return The override font (may be 0) */
-	virtual IGUIFont* getOverrideFont(void) const = 0;
+	virtual IGUIFont* getOverrideFont(
+		void
+	) const = 0;
 
 	//! Get the font which is used right now for drawing
 	/** Currently this is the override font when one is set and the
@@ -48,28 +52,40 @@ public:
 	If you set a color, and you want the text displayed with the color
 	of the skin again, call IGUIStaticText::enableOverrideColor(false);
 	\param color: New color of the text. */
-	virtual void setOverrideColor(video::SColor color) = 0;
+	virtual void setOverrideColor(
+		video::SColor color
+	) = 0;
 
 	//! Gets the override color
 	/** \return: The override color */
-	virtual video::SColor getOverrideColor(void) const = 0;
+	virtual video::SColor getOverrideColor(
+		void
+	) const = 0;
 
 	//! Sets if the static text should use the override color or the color in the gui
 	//! skin.
 	/** \param enable: If set to true, the override color, which can be set
 	with IGUIStaticText::setOverrideColor is used, otherwise the
 	EGDC_BUTTON_TEXT color of the skin. */
-	virtual void enableOverrideColor(bool enable) = 0;
+	virtual void enableOverrideColor(
+		bool enable
+	) = 0;
 
 	//! Checks if an override color is enabled
 	/** \return true if the override color is enabled, false otherwise */
-	virtual bool isOverrideColorEnabled(void) const = 0;
+	virtual bool isOverrideColorEnabled(
+		void
+	) const = 0;
 
 	//! Sets another color for the background.
-	virtual void setBackgroundColor(video::SColor color) = 0;
+	virtual void setBackgroundColor(
+		video::SColor color
+	) = 0;
 
 	//! Sets whether to draw the background
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Checks if background drawing is enabled
 	/** \return true if background drawing is enabled, false otherwise */
@@ -80,7 +96,9 @@ public:
 	virtual video::SColor getBackgroundColor() const = 0;
 
 	//! Sets whether to draw the border
-	virtual void setDrawBorder(bool draw) = 0;
+	virtual void setDrawBorder(
+		bool draw
+	) = 0;
 
 	//! Checks if border drawing is enabled
 	/** \return true if border drawing is enabled, false otherwise */
@@ -91,18 +109,24 @@ public:
 	EGUIA_LOWEERRIGHT for right justified, or EGUIA_CENTER for centered text.
 	\param vertical: EGUIA_UPPERLEFT to align with top edge,
 	EGUIA_LOWEERRIGHT for bottom edge, or EGUIA_CENTER for centered text (default). */
-	virtual void setTextAlignment(EGUI_ALIGNMENT horizontal,
-		EGUI_ALIGNMENT vertical) = 0;
+	virtual void setTextAlignment(
+		EGUI_ALIGNMENT horizontal,
+		EGUI_ALIGNMENT vertical
+	) = 0;
 
 	//! Enables or disables word wrap for using the static text as multiline text
 	//! control.
 	/** \param enable: If set to true, words going over one line are
 	broken on to the next line. */
-	virtual void setWordWrap(bool enable) = 0;
+	virtual void setWordWrap(
+		bool enable
+	) = 0;
 
 	//! Checks if word wrap is enabled
 	/** \return true if word wrap is enabled, false otherwise */
-	virtual bool isWordWrapEnabled(void) const = 0;
+	virtual bool isWordWrapEnabled(
+		void
+	) const = 0;
 
 	//! Returns the height of the text in pixels when it is drawn.
 	/** This is useful for adjusting the layout of gui elements based on the height
@@ -113,10 +137,14 @@ public:
 	//! Returns the width of the current text, in the current font
 	/** If the text is broken, this returns the width of the widest line
 	\return The width of the text, or the widest broken line. */
-	virtual s32 getTextWidth(void) const = 0;
+	virtual s32 getTextWidth(
+		void
+	) const = 0;
 
 	//! Set whether the text in this label should be clipped if it goes outside bounds
-	virtual void setTextRestrainedInside(bool restrainedInside) = 0;
+	virtual void setTextRestrainedInside(
+		bool restrainedInside
+	) = 0;
 
 	//! Checks if the text in this label should be clipped if it goes outside bounds
 	virtual bool isTextRestrainedInside() const = 0;
@@ -127,7 +155,9 @@ public:
 	main difference when RTL is enabled is that the linebreaks for multiline
 	elements are performed starting from the end.
 	*/
-	virtual void setRightToLeft(bool rtl) = 0;
+	virtual void setRightToLeft(
+		bool rtl
+	) = 0;
 
 	//! Checks whether the text in this element should be interpreted as right-to-left
 	virtual bool isRightToLeft() const = 0;

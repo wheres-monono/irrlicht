@@ -220,7 +220,10 @@ public:
 	/** \param buffer: Pointer to buffer where to read bytes will be written to.
 	\param sizeToRead: Amount of bytes to read from the file.
 	\return Returns how much bytes were read. */
-	virtual int read(void* buffer, int sizeToRead) = 0;
+	virtual int read(
+		void* buffer,
+		int sizeToRead
+	) = 0;
 
 	//! Returns size of file in bytes on success or -1L on failure.
 	virtual long getSize() const = 0;
@@ -290,20 +293,26 @@ public:
 	getAttributeCount()-1.
 	\return Name of the attribute, 0 if an attribute with this index does not exist.
       */
-	virtual const char_type* getAttributeName(int idx) const = 0;
+	virtual const char_type* getAttributeName(
+		int idx
+	) const = 0;
 
 	//! Returns the value of an attribute.
 	/** \param idx: Zero based index, should be something between 0 and
 	getAttributeCount()-1.
 	\return Value of the attribute, 0 if an attribute with this index does not exist.
       */
-	virtual const char_type* getAttributeValue(int idx) const = 0;
+	virtual const char_type* getAttributeValue(
+		int idx
+	) const = 0;
 
 	//! Returns the value of an attribute.
 	/** \param name: Name of the attribute.
 	\return Value of the attribute, 0 if an attribute with this name does not exist.
       */
-	virtual const char_type* getAttributeValue(const char_type* name) const = 0;
+	virtual const char_type* getAttributeValue(
+		const char_type* name
+	) const = 0;
 
 	//! Returns the value of an attribute in a safe way.
 	/** Like getAttributeValue(), but does not
@@ -311,15 +320,19 @@ public:
 	\param name: Name of the attribute.
 	\return Value of the attribute, and "" if an attribute with this name does not
 	exist */
-	virtual const char_type* getAttributeValueSafe(const char_type* name) const = 0;
+	virtual const char_type* getAttributeValueSafe(
+		const char_type* name
+	) const = 0;
 
 	//! Returns the value of an attribute as integer.
 	/** \param name Name of the attribute.
 	\param defaultNotFound Value returned when name does not exist
 	\return Value of the attribute as integer or value of defaultNotFound
 	when name was not found or 0 when value could not be interpreted as integer */
-	virtual int getAttributeValueAsInt(const char_type* name,
-		int defaultNotFound = 0) const = 0;
+	virtual int getAttributeValueAsInt(
+		const char_type* name,
+		int defaultNotFound = 0
+	) const = 0;
 
 	//! Returns the value of an attribute as integer.
 	/** \param idx: Zero based index, should be something between 0 and
@@ -327,15 +340,20 @@ public:
 	\param defaultNotFound Value returned when index does not exist.
 	\return Value of the attribute as integer or value of defaultNotFound parameter
 	for invalid index or 0 when value could not be interpreted as integer */
-	virtual int getAttributeValueAsInt(int idx, int defaultNotFound = 0) const = 0;
+	virtual int getAttributeValueAsInt(
+		int idx,
+		int defaultNotFound = 0
+	) const = 0;
 
 	//! Returns the value of an attribute as float.
 	/** \param name: Name of the attribute.
 	\param defaultNotFound Value returned when name does not exist.
 	\return Value of the attribute as float or value of defaultNotFound parameter on
 	failure or 0 when value could not be interpreted as float. */
-	virtual float getAttributeValueAsFloat(const char_type* name,
-		float defaultNotFound = 0.f) const = 0;
+	virtual float getAttributeValueAsFloat(
+		const char_type* name,
+		float defaultNotFound = 0.f
+	) const = 0;
 
 	//! Returns the value of an attribute as float.
 	/** \param idx: Zero based index, should be something between 0 and
@@ -343,8 +361,10 @@ public:
 	\param defaultNotFound Value returned when index does not exist.
 	\return Value of the attribute as float or value of defaultNotFound parameter on
 	failure or 0 when value could not be interpreted as float. */
-	virtual float getAttributeValueAsFloat(int idx,
-		float defaultNotFound = 0.f) const = 0;
+	virtual float getAttributeValueAsFloat(
+		int idx,
+		float defaultNotFound = 0.f
+	) const = 0;
 
 	//! Returns the name of the current node.
 	/** Only valid, if the node type is EXN_ELEMENT.
@@ -403,7 +423,8 @@ public:
 	\param attr4Value: 4th attributes value
 	\param attr5Name: 5th attributes name
 	\param attr5Value: 5th attributes value */
-	virtual void writeElement(const char_type* name,
+	virtual void writeElement(
+		const char_type* name,
 		bool empty = false,
 		const char_type* attr1Name = 0,
 		const char_type* attr1Value = 0,
@@ -414,25 +435,34 @@ public:
 		const char_type* attr4Name = 0,
 		const char_type* attr4Value = 0,
 		const char_type* attr5Name = 0,
-		const char_type* attr5Value = 0) = 0;
+		const char_type* attr5Value = 0
+	) = 0;
 
 	//! Writes an xml element with any number of attributes
-	virtual void writeElement(const char_type* name,
+	virtual void writeElement(
+		const char_type* name,
 		bool empty,
 		core::array<core::string<char_type>>& names,
-		core::array<core::string<char_type>>& values) = 0;
+		core::array<core::string<char_type>>& values
+	) = 0;
 
 	//! Writes a comment into the xml file
-	virtual void writeComment(const char_type* comment) = 0;
+	virtual void writeComment(
+		const char_type* comment
+	) = 0;
 
 	//! Writes the closing tag for an element. Like "</foo>"
-	virtual void writeClosingTag(const char_type* name) = 0;
+	virtual void writeClosingTag(
+		const char_type* name
+	) = 0;
 
 	//! Writes a text into the file.
 	/** All occurrences of special characters such as
 	& (&amp;), < (&lt;), > (&gt;), and " (&quot;) are automatically
 	replaced. */
-	virtual void writeText(const char_type* text) = 0;
+	virtual void writeText(
+		const char_type* text
+	) = 0;
 
 	//! Writes a line break
 	virtual void writeLineBreak() = 0;
@@ -544,7 +574,9 @@ IFileSystem::createXMLReaderUTF8() instead.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(const char* filename);
+IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(
+	const char* filename
+);
 
 //! Creates an instance of an UFT-8 or ASCII character xml parser.
 /** This means that all character data will be returned in 8 bit ASCII or UTF-8. The file
@@ -556,7 +588,9 @@ using fopen("foo.bar", "wb"); The file will not be closed after it has been read
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(FILE* file);
+IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(
+	FILE* file
+);
 
 //! Creates an instance of an UFT-8 or ASCII character xml parser.
 /** This means that all character data will be returned in 8 bit ASCII or UTF-8. The file
@@ -571,8 +605,10 @@ has been read.  Otherwise the caller is responsible for cleaning it up.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(IFileReadCallBack* callback,
-	bool deleteCallback = false);
+IRRLICHT_API IrrXMLReader* IRRCALLCONV createIrrXMLReader(
+	IFileReadCallBack* callback,
+	bool deleteCallback = false
+);
 
 //! Creates an instance of an UFT-16 xml parser.
 /** This means that
@@ -584,7 +620,9 @@ IFileSystem::createXMLReader() instead.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV createIrrXMLReaderUTF16(const char* filename);
+IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV createIrrXMLReaderUTF16(
+	const char* filename
+);
 
 //! Creates an instance of an UFT-16 xml parser.
 /** This means that all character data will be returned in UTF-16. The file to read can
@@ -596,7 +634,9 @@ using fopen("foo.bar", "wb"); The file will not be closed after it has been read
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV createIrrXMLReaderUTF16(FILE* file);
+IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV createIrrXMLReaderUTF16(
+	FILE* file
+);
 
 //! Creates an instance of an UFT-16 xml parser.
 /** This means that all character data will be returned in UTF-16. The file to read can
@@ -611,8 +651,10 @@ has been read.  Otherwise the caller is responsible for cleaning it up.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV
-createIrrXMLReaderUTF16(IFileReadCallBack* callback, bool deleteCallback = false);
+IRRLICHT_API IrrXMLReaderUTF16* IRRCALLCONV createIrrXMLReaderUTF16(
+	IFileReadCallBack* callback,
+	bool deleteCallback = false
+);
 
 //! Creates an instance of an UFT-32 xml parser.
 /** This means that all character data will be returned in UTF-32. The file to read can
@@ -623,7 +665,9 @@ IFileSystem::createXMLReader() instead.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV createIrrXMLReaderUTF32(const char* filename);
+IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV createIrrXMLReaderUTF32(
+	const char* filename
+);
 
 //! Creates an instance of an UFT-32 xml parser.
 /** This means that all character data will be returned in UTF-32. The file to read can
@@ -635,7 +679,9 @@ using fopen("foo.bar", "wb"); The file will not be closed after it has been read
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV createIrrXMLReaderUTF32(FILE* file);
+IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV createIrrXMLReaderUTF32(
+	FILE* file
+);
 
 //! Creates an instance of an UFT-32 xml parser.
 /** This means that
@@ -651,8 +697,10 @@ has been read.  Otherwise the caller is responsible for cleaning it up.
 \return Returns a pointer to the created xml parser. This pointer should be
 deleted using 'delete' after no longer needed. Returns 0 if an error occurred
 and the file could not be opened. */
-IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV
-createIrrXMLReaderUTF32(IFileReadCallBack* callback, bool deleteCallback = false);
+IRRLICHT_API IrrXMLReaderUTF32* IRRCALLCONV createIrrXMLReaderUTF32(
+	IFileReadCallBack* callback,
+	bool deleteCallback = false
+);
 
 #endif // _IRR_COMPILE_WITH_XML_
 

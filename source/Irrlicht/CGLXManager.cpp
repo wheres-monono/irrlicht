@@ -83,10 +83,10 @@ CGLXManager::CGLXManager(
 #endif
 				// #ifdef GL_ARB_framebuffer_sRGB
 				//					GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB,
-				//Params.HandleSRGB, #elif
+				// Params.HandleSRGB, #elif
 				// defined(GL_EXT_framebuffer_sRGB)
 				//					GLX_FRAMEBUFFER_SRGB_CAPABLE_EXT,
-				//Params.HandleSRGB, #endif
+				// Params.HandleSRGB, #endif
 				GLX_STEREO, Params.Stereobuffer ? True : False, None};
 
 			GLXFBConfig* configList = 0;

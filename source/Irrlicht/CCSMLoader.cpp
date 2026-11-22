@@ -67,10 +67,18 @@ struct BinaryFileReader {
 	s32 readLong();
 	f32 readFloat();
 
-	void readString(core::stringc& str);
-	void readVec3f(core::vector3df* v);
-	void readVec2f(core::vector2df* v);
-	void readColorRGB(color_rgb_t* color);
+	void readString(
+		core::stringc& str
+	);
+	void readVec3f(
+		core::vector3df* v
+	);
+	void readVec2f(
+		core::vector2df* v
+	);
+	void readColorRGB(
+		color_rgb_t* color
+	);
 
 	io::IReadFile* file;
 };
@@ -105,7 +113,9 @@ public:
 	~Group() { clear(); }
 
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	s32 getFlags() const { return flags; }
 	s32 getParentGroupID() const { return parentGroup; }
@@ -127,7 +137,9 @@ public:
 	VisGroup() { clear(); }
 	~VisGroup() { clear(); }
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	s32 getFlags() const { return flags; }
 	const core::stringc& getName() const { return name; }
@@ -150,7 +162,9 @@ public:
 	}
 	~LightMap() { clear(); }
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 	s32 getWidth() const { return width; }
 	s32 getHeight() const { return height; }
 	s32* getPixelData() const { return pixelData; }
@@ -174,7 +188,9 @@ public:
 	Vertex() { clear(); }
 	~Vertex() { clear(); }
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	const core::vector3df& getPosition() const { return position; }
 	const core::vector3df& getNormal() const { return normal; }
@@ -196,7 +212,9 @@ public:
 	~Surface() { clear(); }
 
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	s32 getFlags() const { return flags; }
 	const core::stringc& getTextureName() const { return textureName; }
@@ -237,7 +255,10 @@ public:
 	~Mesh() { clear(); }
 
 	void clear();
-	void load(BinaryFileReader* pReader, bool bReadVisGroups);
+	void load(
+		BinaryFileReader* pReader,
+		bool bReadVisGroups
+	);
 
 	s32 getFlags() const { return flags; }
 	s32 getGroupID() const { return groupId; }
@@ -269,7 +290,9 @@ public:
 	~Entity() { clear(); }
 
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 	s32 getVisgroupID() const { return visgroupId; }
 	s32 getGroupID() const { return groupId; }
 	const core::stringc& getProperties() const { return props; }
@@ -288,7 +311,9 @@ public:
 	~CameraData() { clear(); }
 
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	const core::vector3df* getPosition() { return &position; }
 	f32 getPitch() { return pitch; }
@@ -308,7 +333,9 @@ public:
 	CSMFile() { clear(); }
 	~CSMFile() { clear(); }
 	void clear();
-	void load(BinaryFileReader* pReader);
+	void load(
+		BinaryFileReader* pReader
+	);
 
 	const Header* getHeader() const { return &header; }
 

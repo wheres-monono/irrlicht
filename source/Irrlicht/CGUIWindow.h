@@ -19,16 +19,20 @@ class IGUIButton;
 class CGUIWindow : public IGUIWindow {
 public:
 	//! constructor
-	CGUIWindow(IGUIEnvironment* environment,
+	CGUIWindow(
+		IGUIEnvironment* environment,
 		IGUIElement* parent,
 		s32 id,
-		core::rect<s32> rectangle);
+		core::rect<s32> rectangle
+	);
 
 	//! destructor
 	virtual ~CGUIWindow();
 
 	//! called if an event happened.
-	virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+	virtual bool OnEvent(
+		const SEvent& event
+	) _IRR_OVERRIDE_;
 
 	//! update absolute position
 	virtual void updateAbsolutePosition() _IRR_OVERRIDE_;
@@ -49,10 +53,14 @@ public:
 	virtual bool isDraggable() const _IRR_OVERRIDE_;
 
 	//! Sets whether the window is draggable
-	virtual void setDraggable(bool draggable) _IRR_OVERRIDE_;
+	virtual void setDraggable(
+		bool draggable
+	) _IRR_OVERRIDE_;
 
 	//! Set if the window background will be drawn
-	virtual void setDrawBackground(bool draw) _IRR_OVERRIDE_;
+	virtual void setDrawBackground(
+		bool draw
+	) _IRR_OVERRIDE_;
 
 	//! Get if the window background will be drawn
 	virtual bool getDrawBackground() const _IRR_OVERRIDE_;
@@ -60,7 +68,9 @@ public:
 	//! Set if the window titlebar will be drawn
 	//! Note: If the background is not drawn, then the titlebar is automatically also
 	//! not drawn
-	virtual void setDrawTitlebar(bool draw) _IRR_OVERRIDE_;
+	virtual void setDrawTitlebar(
+		bool draw
+	) _IRR_OVERRIDE_;
 
 	//! Get if the window titlebar will be drawn
 	virtual bool getDrawTitlebar() const _IRR_OVERRIDE_;
@@ -70,12 +80,16 @@ public:
 	virtual core::rect<s32> getClientRect() const _IRR_OVERRIDE_;
 
 	//! Writes attributes of the element.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the element
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_;
 
 protected:
 	void updateClientRect();

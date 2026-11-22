@@ -15,7 +15,9 @@ namespace video
 class CDepthBuffer : public IDepthBuffer {
 public:
 	//! constructor
-	CDepthBuffer(const core::dimension2d<u32>& size);
+	CDepthBuffer(
+		const core::dimension2d<u32>& size
+	);
 
 	//! destructor
 	virtual ~CDepthBuffer();
@@ -24,7 +26,9 @@ public:
 	virtual void clear() _IRR_OVERRIDE_;
 
 	//! sets the new size of the zbuffer
-	virtual void setSize(const core::dimension2d<u32>& size) _IRR_OVERRIDE_;
+	virtual void setSize(
+		const core::dimension2d<u32>& size
+	) _IRR_OVERRIDE_;
 
 	//! returns the size of the zbuffer
 	virtual const core::dimension2d<u32>& getSize() const _IRR_OVERRIDE_;
@@ -48,7 +52,9 @@ private:
 class CStencilBuffer : public IStencilBuffer {
 public:
 	//! constructor
-	CStencilBuffer(const core::dimension2d<u32>& size);
+	CStencilBuffer(
+		const core::dimension2d<u32>& size
+	);
 
 	//! destructor
 	virtual ~CStencilBuffer();
@@ -57,7 +63,9 @@ public:
 	virtual void clear() _IRR_OVERRIDE_;
 
 	//! sets the new size of the zbuffer
-	virtual void setSize(const core::dimension2d<u32>& size) _IRR_OVERRIDE_;
+	virtual void setSize(
+		const core::dimension2d<u32>& size
+	) _IRR_OVERRIDE_;
 
 	//! returns the size of the zbuffer
 	virtual const core::dimension2d<u32>& getSize() const _IRR_OVERRIDE_;

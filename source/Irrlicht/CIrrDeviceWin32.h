@@ -32,7 +32,9 @@ class CIrrDeviceWin32 : public CIrrDeviceStub, video::IImagePresenter {
 
 public:
 	//! constructor
-	CIrrDeviceWin32(const SIrrlichtCreationParameters& params);
+	CIrrDeviceWin32(
+		const SIrrlichtCreationParameters& params
+	);
 
 	//! destructor
 	virtual ~CIrrDeviceWin32();
@@ -46,10 +48,15 @@ public:
 	virtual void yield() _IRR_OVERRIDE_;
 
 	//! Pause execution and let other processes to run for a specified amount of time.
-	virtual void sleep(u32 timeMs, bool pauseTimer) _IRR_OVERRIDE_;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer
+	) _IRR_OVERRIDE_;
 
 	//! sets the caption of the window
-	virtual void setWindowCaption(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns if window is active. if not, nothing need to be drawn
 	virtual bool isWindowActive() const _IRR_OVERRIDE_;
@@ -61,9 +68,11 @@ public:
 	virtual bool isWindowMinimized() const _IRR_OVERRIDE_;
 
 	//! presents a surface in the client area
-	virtual bool present(video::IImage* surface,
+	virtual bool present(
+		video::IImage* surface,
 		void* windowId = 0,
-		core::rect<s32>* src = 0) _IRR_OVERRIDE_;
+		core::rect<s32>* src = 0
+	) _IRR_OVERRIDE_;
 
 	//! notifies the device that it should close itself
 	virtual void closeDevice() _IRR_OVERRIDE_;
@@ -77,11 +86,14 @@ public:
 	void OnResized();
 
 	//! Sets if the window should be resizable in windowed mode.
-	virtual void setResizable(bool resize = false) _IRR_OVERRIDE_;
+	virtual void setResizable(
+		bool resize = false
+	) _IRR_OVERRIDE_;
 
 	//! Resize the render window.
-	virtual void
-	setWindowSize(const irr::core::dimension2d<u32>& size) _IRR_OVERRIDE_;
+	virtual void setWindowSize(
+		const irr::core::dimension2d<u32>& size
+	) _IRR_OVERRIDE_;
 
 	//! Minimizes the window.
 	virtual void minimizeWindow() _IRR_OVERRIDE_;
@@ -96,22 +108,27 @@ public:
 	virtual core::position2di getWindowPosition() _IRR_OVERRIDE_;
 
 	//! Activate any joysticks, and generate events for them.
-	virtual bool
-	activateJoysticks(core::array<SJoystickInfo>& joystickInfo) _IRR_OVERRIDE_;
+	virtual bool activateJoysticks(
+		core::array<SJoystickInfo>& joystickInfo
+	) _IRR_OVERRIDE_;
 
 	//! Set the current Gamma Value for the Display
-	virtual bool setGammaRamp(f32 red,
+	virtual bool setGammaRamp(
+		f32 red,
 		f32 green,
 		f32 blue,
 		f32 brightness,
-		f32 contrast) _IRR_OVERRIDE_;
+		f32 contrast
+	) _IRR_OVERRIDE_;
 
 	//! Get the current Gamma Value for the Display
-	virtual bool getGammaRamp(f32& red,
+	virtual bool getGammaRamp(
+		f32& red,
 		f32& green,
 		f32& blue,
 		f32& brightness,
-		f32& contrast) _IRR_OVERRIDE_;
+		f32& contrast
+	) _IRR_OVERRIDE_;
 
 	//! Remove all messages pending in the system message loop
 	virtual void clearSystemMessages() _IRR_OVERRIDE_;
@@ -131,7 +148,9 @@ public:
 	}
 
 	//! Switch to fullscreen
-	bool switchToFullScreen(bool reset = false);
+	bool switchToFullScreen(
+		bool reset = false
+	);
 
 	//! Check for and show last Windows API error to help internal debugging.
 	//! Does call GetLastError and on errors formats the error text and displays it in
@@ -143,18 +162,22 @@ public:
 	static bool isWindowsVistaOrGreater();
 
 	// convert an Irrlicht texture to a windows cursor
-	HCURSOR TextureToCursor(HWND hwnd,
+	HCURSOR TextureToCursor(
+		HWND hwnd,
 		irr::video::ITexture* tex,
 		const core::rect<s32>& sourceRect,
-		const core::position2d<s32>& hotspot);
+		const core::position2d<s32>& hotspot
+	);
 
 	//! Implementation of the win32 cursor control
 	class CCursorControl : public gui::ICursorControl {
 	public:
-		CCursorControl(CIrrDeviceWin32* device,
+		CCursorControl(
+			CIrrDeviceWin32* device,
 			const core::dimension2d<u32>& wsize,
 			HWND hwnd,
-			bool fullscreen);
+			bool fullscreen
+		);
 		~CCursorControl();
 
 		//! Changes the visible state of the mouse cursor.
@@ -345,7 +368,9 @@ public:
 		}
 
 		//! Sets the active cursor icon
-		virtual void setActiveIcon(gui::ECURSOR_ICON iconId) _IRR_OVERRIDE_;
+		virtual void setActiveIcon(
+			gui::ECURSOR_ICON iconId
+		) _IRR_OVERRIDE_;
 
 		//! Gets the currently active icon
 		virtual gui::ECURSOR_ICON getActiveIcon() const _IRR_OVERRIDE_ {
@@ -353,12 +378,15 @@ public:
 		}
 
 		//! Add a custom sprite as cursor icon.
-		virtual gui::ECURSOR_ICON
-		addIcon(const gui::SCursorSprite& icon) _IRR_OVERRIDE_;
+		virtual gui::ECURSOR_ICON addIcon(
+			const gui::SCursorSprite& icon
+		) _IRR_OVERRIDE_;
 
 		//! replace the given cursor icon.
-		virtual void changeIcon(gui::ECURSOR_ICON iconId,
-			const gui::SCursorSprite& icon) _IRR_OVERRIDE_;
+		virtual void changeIcon(
+			gui::ECURSOR_ICON iconId,
+			const gui::SCursorSprite& icon
+		) _IRR_OVERRIDE_;
 
 		//! Return a system-specific size which is supported for cursors. Larger
 		//! icons will fail, smaller icons might work.
@@ -445,7 +473,9 @@ private:
 	//! Process system events
 	void handleSystemMessages();
 
-	void getWindowsVersion(core::stringc& version);
+	void getWindowsVersion(
+		core::stringc& version
+	);
 
 	void resizeIfNecessary();
 

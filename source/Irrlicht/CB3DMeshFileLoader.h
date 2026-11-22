@@ -27,37 +27,61 @@ namespace scene
 class CB3DMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	CB3DMeshFileLoader(scene::ISceneManager* smgr);
+	CB3DMeshFileLoader(
+		scene::ISceneManager* smgr
+	);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 	bool load();
-	bool readChunkNODE(CSkinnedMesh::SJoint* InJoint);
-	bool readChunkMESH(CSkinnedMesh::SJoint* InJoint);
-	bool readChunkVRTS(CSkinnedMesh::SJoint* InJoint);
-	bool readChunkTRIS(scene::SSkinMeshBuffer* MeshBuffer,
+	bool readChunkNODE(
+		CSkinnedMesh::SJoint* InJoint
+	);
+	bool readChunkMESH(
+		CSkinnedMesh::SJoint* InJoint
+	);
+	bool readChunkVRTS(
+		CSkinnedMesh::SJoint* InJoint
+	);
+	bool readChunkTRIS(
+		scene::SSkinMeshBuffer* MeshBuffer,
 		u32 MeshBufferID,
-		s32 Vertices_Start);
-	bool readChunkBONE(CSkinnedMesh::SJoint* InJoint);
-	bool readChunkKEYS(CSkinnedMesh::SJoint* InJoint);
+		s32 Vertices_Start
+	);
+	bool readChunkBONE(
+		CSkinnedMesh::SJoint* InJoint
+	);
+	bool readChunkKEYS(
+		CSkinnedMesh::SJoint* InJoint
+	);
 	bool readChunkANIM();
 	bool readChunkTEXS();
 	bool readChunkBRUS();
 
-	void loadTextures(SB3dMaterial& material) const;
+	void loadTextures(
+		SB3dMaterial& material
+	) const;
 
-	void readString(core::stringc& newstring);
-	void readFloats(f32* vec, u32 count);
+	void readString(
+		core::stringc& newstring
+	);
+	void readFloats(
+		f32* vec,
+		u32 count
+	);
 
 	core::array<SB3dChunk> B3dStack;
 

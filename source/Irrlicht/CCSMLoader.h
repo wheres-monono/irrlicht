@@ -55,21 +55,31 @@ class ISceneManager;
 
 class CCSMLoader : public scene::IMeshLoader {
 public:
-	CCSMLoader(ISceneManager* manager, io::IFileSystem* fs);
+	CCSMLoader(
+		ISceneManager* manager,
+		io::IFileSystem* fs
+	);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".bsp")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
-	scene::IMesh* createCSMMesh(io::IReadFile* file);
+	scene::IMesh* createCSMMesh(
+		io::IReadFile* file
+	);
 
-	scene::IMesh* createIrrlichtMesh(const CSMFile* csmFile,
-		const io::path& lmprefix);
+	scene::IMesh* createIrrlichtMesh(
+		const CSMFile* csmFile,
+		const io::path& lmprefix
+	);
 
 	io::IFileSystem* FileSystem;
 	scene::ISceneManager* SceneManager;

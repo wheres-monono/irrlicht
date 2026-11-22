@@ -47,17 +47,21 @@ public:
 	rectangle.
 	\param clip: Optional pointer to a rectangle against which the text will be
 	clipped. If the pointer is null, no clipping will be done. */
-	virtual void draw(const core::stringw& text,
+	virtual void draw(
+		const core::stringw& text,
 		const core::rect<s32>& position,
 		video::SColor color,
 		bool hcenter = false,
 		bool vcenter = false,
-		const core::rect<s32>* clip = 0) = 0;
+		const core::rect<s32>* clip = 0
+	) = 0;
 
 	//! Calculates the width and height of a given string of text.
 	/** \return Returns width and height of the area covered by the text if
 	it would be drawn. */
-	virtual core::dimension2d<u32> getDimension(const wchar_t* text) const = 0;
+	virtual core::dimension2d<u32> getDimension(
+		const wchar_t* text
+	) const = 0;
 
 	//! Calculates the index of the character in the text which is on a specific
 	//! position.
@@ -66,16 +70,23 @@ public:
 	returned.
 	\return Returns zero based index of the character in the text, and -1 if no no
 	character is on this position. (=the text is too short). */
-	virtual s32 getCharacterFromPos(const wchar_t* text, s32 pixel_x) const = 0;
+	virtual s32 getCharacterFromPos(
+		const wchar_t* text,
+		s32 pixel_x
+	) const = 0;
 
 	//! Returns the type of this font
 	virtual EGUI_FONT_TYPE getType() const { return EGFT_CUSTOM; }
 
 	//! Sets global kerning width for the font.
-	virtual void setKerningWidth(s32 kerning) = 0;
+	virtual void setKerningWidth(
+		s32 kerning
+	) = 0;
 
 	//! Sets global kerning height for the font.
-	virtual void setKerningHeight(s32 kerning) = 0;
+	virtual void setKerningHeight(
+		s32 kerning
+	) = 0;
 
 	//! Gets kerning values (distance between letters) for the font. If no parameters
 	//! are provided,
@@ -89,8 +100,10 @@ public:
 	which supports kerning pairs a string such as 'Wo' may have the 'o'
 	tucked neatly under the 'W'.
 	*/
-	virtual s32 getKerningWidth(const wchar_t* thisLetter = 0,
-		const wchar_t* previousLetter = 0) const = 0;
+	virtual s32 getKerningWidth(
+		const wchar_t* thisLetter = 0,
+		const wchar_t* previousLetter = 0
+	) const = 0;
 
 	//! Returns the distance between letters
 	virtual s32 getKerningHeight() const = 0;
@@ -100,7 +113,9 @@ public:
 	most fonts.
 	\param s String of symbols which are not send down to the videodriver
 	*/
-	virtual void setInvisibleCharacters(const wchar_t* s) = 0;
+	virtual void setInvisibleCharacters(
+		const wchar_t* s
+	) = 0;
 };
 
 } // end namespace gui

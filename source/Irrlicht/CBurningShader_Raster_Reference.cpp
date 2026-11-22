@@ -450,8 +450,8 @@ enum BD3DZBUFFERTYPE {
 //! Defines the supported compare functions.
 enum BD3DCMPFUNC {
 	BD3DCMP_NEVER = 1, // Always fail the test.
-	BD3DCMP_LESS,  // Accept the new pixel if its value is less than the value of the
-		       // current pixel.
+	BD3DCMP_LESS, // Accept the new pixel if its value is less than the value of the
+		      // current pixel.
 	BD3DCMP_EQUAL, // Accept the new pixel if its value equals the value of the
 		       // current pixel.
 	BD3DCMP_LESSEQUAL, // Accept the new pixel if its value is less than or equal to
@@ -462,7 +462,7 @@ enum BD3DCMPFUNC {
 			  // the current pixel.
 	BD3DCMP_GREATEREQUAL, // Accept the new pixel if its value is greater than or
 			      // equal to the value of the current pixel.
-	BD3DCMP_ALWAYS	      // Always pass the test.
+	BD3DCMP_ALWAYS // Always pass the test.
 };
 
 enum BD3DMATERIALCOLORSOURCE {
@@ -518,7 +518,10 @@ struct SShaderParam {
 	u32 TextureUnits;
 
 	u32 RenderState[BD3DRS_MAX_TYPE];
-	void SetRenderState(BD3DRENDERSTATETYPE state, u32 value);
+	void SetRenderState(
+		BD3DRENDERSTATETYPE state,
+		u32 value
+	);
 };
 
 void SShaderParam::SetRenderState(
@@ -531,14 +534,20 @@ void SShaderParam::SetRenderState(
 class CBurningShader_Raster_Reference : public IBurningShader {
 public:
 	//! constructor
-	CBurningShader_Raster_Reference(CBurningVideoDriver* driver);
+	CBurningShader_Raster_Reference(
+		CBurningVideoDriver* driver
+	);
 
 	//! draws an indexed triangle list
-	virtual void drawTriangle(const s4DVertex* a,
+	virtual void drawTriangle(
+		const s4DVertex* a,
 		const s4DVertex* b,
-		const s4DVertex* c) _IRR_OVERRIDE_;
+		const s4DVertex* c
+	) _IRR_OVERRIDE_;
 
-	virtual void setMaterial(const SBurningShaderMaterial& material) _IRR_OVERRIDE_;
+	virtual void setMaterial(
+		const SBurningShaderMaterial& material
+	) _IRR_OVERRIDE_;
 
 private:
 	void scanline();

@@ -23,10 +23,13 @@ namespace irr
 {
 class CFontTool : public irr::IReferenceCounted {
 public:
-	CFontTool(irr::IrrlichtDevice* device);
+	CFontTool(
+		irr::IrrlichtDevice* device
+	);
 	~CFontTool();
 
-	virtual bool makeBitmapFont(u32 fontIndex,
+	virtual bool makeBitmapFont(
+		u32 fontIndex,
 		u32 charsetIndex,
 		s32 fontSize,
 		u32 texturewidth,
@@ -34,11 +37,17 @@ public:
 		bool bold,
 		bool italic,
 		bool aa,
-		bool alpha);
+		bool alpha
+	);
 
-	virtual bool saveBitmapFont(const c8* filename, const c8* format);
+	virtual bool saveBitmapFont(
+		const c8* filename,
+		const c8* format
+	);
 
-	virtual void selectCharSet(u32 currentCharSet);
+	virtual void selectCharSet(
+		u32 currentCharSet
+	);
 
 	struct SFontArea {
 		SFontArea() :

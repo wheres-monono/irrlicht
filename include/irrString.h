@@ -34,9 +34,14 @@ outside the string class for explicit use.
 
 // forward declarations
 template <typename T, typename TAlloc = irrAllocator<T>> class string;
-static size_t
-multibyteToWString(string<wchar_t>& destination, const char* source, u32 sourceSize);
-inline s32 isdigit(s32 c);
+static size_t multibyteToWString(
+	string<wchar_t>& destination,
+	const char* source,
+	u32 sourceSize
+);
+inline s32 isdigit(
+	s32 c
+);
 
 enum eLocaleID { IRR_LOCALE_ANSI = 0, IRR_LOCALE_GERMAN = 1 };
 
@@ -78,13 +83,21 @@ static inline u32 locale_upper(
 /** The resulting string is always NULL-terminated and well-formed.
 \param len The size of the output buffer in bytes.
 */
-IRRLICHT_API void utf8ToWchar(const char* in, wchar_t* out, const u64 len);
+IRRLICHT_API void utf8ToWchar(
+	const char* in,
+	wchar_t* out,
+	const u64 len
+);
 
 //! Convert this wchar string to utf-8.
 /** The resulting string is always NULL-terminated and well-formed.
 \param len The size of the output buffer in bytes.
 */
-IRRLICHT_API void wcharToUtf8(const wchar_t* in, char* out, const u64 len);
+IRRLICHT_API void wcharToUtf8(
+	const wchar_t* in,
+	char* out,
+	const u64 len
+);
 
 template <typename T, typename TAlloc> class string {
 public:
@@ -1487,9 +1500,11 @@ public:
 		return ret.size() - oldSize;
 	}
 
-	friend size_t multibyteToWString(string<wchar_t>& destination,
+	friend size_t multibyteToWString(
+		string<wchar_t>& destination,
 		const char* source,
-		u32 sourceSize);
+		u32 sourceSize
+	);
 
 private:
 	//! Reallocate the array, make it bigger or smaller

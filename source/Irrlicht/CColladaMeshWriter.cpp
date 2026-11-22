@@ -1545,7 +1545,7 @@ void CColladaMeshWriter::writeMaterialEffect(
 			Writer->writeLineBreak();
 
 			//			<wrap_p>WRAP</wrap_p>	// TODO: Should
-			//only be written in Collada 1.5
+			// only be written in Collada 1.5
 			Writer->writeElement("wrap_p", false);
 			Writer->writeText(
 				toString((video::E_TEXTURE_CLAMP)layer.TextureWrapW)

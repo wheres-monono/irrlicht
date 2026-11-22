@@ -58,9 +58,11 @@ namespace irr
 namespace video
 {
 #ifdef _IRR_COMPILE_WITH_OPENGL_
-IVideoDriver* createOpenGLDriver(const irr::SIrrlichtCreationParameters& params,
+IVideoDriver* createOpenGLDriver(
+	const irr::SIrrlichtCreationParameters& params,
 	io::IFileSystem* io,
-	IContextManager* contextManager);
+	IContextManager* contextManager
+);
 #endif
 } // namespace video
 } // end namespace irr
@@ -381,7 +383,7 @@ void IrrPrintXGrabError(
 ) {
 	if (grabResult == GrabSuccess) {
 		//		os::Printer::log(grabCommand, ": GrabSuccess",
-		//ELL_INFORMATION);
+		// ELL_INFORMATION);
 		return;
 	}
 
@@ -2061,7 +2063,7 @@ Bool PredicateIsEventType(
 ) {
 	if (event && event->type == *(int*)arg) {
 		//		os::Printer::log("remove event:",
-		//core::stringc((int)arg).c_str(), ELL_INFORMATION);
+		// core::stringc((int)arg).c_str(), ELL_INFORMATION);
 		return True;
 	}
 	return False;

@@ -17,7 +17,9 @@ namespace scene
 class IParticleBoxEmitter : public IParticleEmitter {
 public:
 	//! Set the box shape
-	virtual void setBox(const core::aabbox3df& box) = 0;
+	virtual void setBox(
+		const core::aabbox3df& box
+	) = 0;
 
 	//! Get the box shape set
 	virtual const core::aabbox3df& getBox() const = 0;

@@ -16,10 +16,14 @@ namespace scene
 class IParticleRotationAffector : public IParticleAffector {
 public:
 	//! Set the point that particles will rotate around
-	virtual void setPivotPoint(const core::vector3df& point) = 0;
+	virtual void setPivotPoint(
+		const core::vector3df& point
+	) = 0;
 
 	//! Set the speed in degrees per second in all 3 dimensions
-	virtual void setSpeed(const core::vector3df& speed) = 0;
+	virtual void setSpeed(
+		const core::vector3df& speed
+	) = 0;
 
 	//! Get the point that particles are attracted to
 	virtual const core::vector3df& getPivotPoint() const = 0;

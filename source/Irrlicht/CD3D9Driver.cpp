@@ -2372,7 +2372,7 @@ void CD3D9Driver::setBasicRenderStates(
 		(lastmaterial.BackfaceCulling != material.BackfaceCulling)) {
 		//		if (material.FrontfaceCulling && material.BackfaceCulling)
 		//			pID3DDevice->SetRenderState(D3DRS_CULLMODE,
-		//D3DCULL_CW|D3DCULL_CCW); 		else
+		// D3DCULL_CW|D3DCULL_CCW); 		else
 		if (material.FrontfaceCulling) {
 			pID3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 		} else if (material.BackfaceCulling) {

@@ -137,6 +137,7 @@ BreakBeforeTernaryOperators: true
 BreakBinaryOperations: Never
 BreakConstructorInitializers: AfterColon
 BreakFunctionDefinitionParameters: true
+BreakFunctionDeclarationParameters: true
 BreakInheritanceList: BeforeColon
 BreakStringLiterals: true
 BreakTemplateDeclarations: MultiLine

@@ -17,9 +17,11 @@ namespace gui
 class CGUIEditWindow : public IGUIWindow {
 public:
 	//! constructor
-	CGUIEditWindow(IGUIEnvironment* environment,
+	CGUIEditWindow(
+		IGUIEnvironment* environment,
 		core::rect<s32> rectangle,
-		IGUIElement* parent);
+		IGUIElement* parent
+	);
 
 	//! destructor
 	~CGUIEditWindow();
@@ -27,16 +29,22 @@ public:
 	//! this part draws the window
 	virtual void draw();
 	//! handles events
-	virtual bool OnEvent(const SEvent& event);
+	virtual bool OnEvent(
+		const SEvent& event
+	);
 
 	//! change selection
-	virtual void setSelectedElement(IGUIElement* sel);
+	virtual void setSelectedElement(
+		IGUIElement* sel
+	);
 
 	//! get draggable
 	virtual bool isDraggable() const;
 
 	//! get draggable
-	virtual void setDraggable(bool draggable);
+	virtual void setDraggable(
+		bool draggable
+	);
 
 	// not used
 	virtual core::rect<s32> getClientRect() const;
@@ -65,8 +73,14 @@ public:
 	void updateTree();
 
 private:
-	void addChildrenToTree(IGUIElement* parentElement, IGUITreeViewNode* treenode);
-	IGUITreeViewNode* getTreeNode(IGUIElement* element, IGUITreeViewNode* searchnode);
+	void addChildrenToTree(
+		IGUIElement* parentElement,
+		IGUITreeViewNode* treenode
+	);
+	IGUITreeViewNode* getTreeNode(
+		IGUIElement* element,
+		IGUITreeViewNode* searchnode
+	);
 	// for dragging the window
 	bool Dragging;
 	bool IsDraggable;

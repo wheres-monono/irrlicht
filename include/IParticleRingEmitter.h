@@ -16,13 +16,19 @@ namespace scene
 class IParticleRingEmitter : public IParticleEmitter {
 public:
 	//! Set the center of the ring
-	virtual void setCenter(const core::vector3df& center) = 0;
+	virtual void setCenter(
+		const core::vector3df& center
+	) = 0;
 
 	//! Set the radius of the ring
-	virtual void setRadius(f32 radius) = 0;
+	virtual void setRadius(
+		f32 radius
+	) = 0;
 
 	//! Set the thickness of the ring
-	virtual void setRingThickness(f32 ringThickness) = 0;
+	virtual void setRingThickness(
+		f32 ringThickness
+	) = 0;
 
 	//! Get the center of the ring
 	virtual const core::vector3df& getCenter() const = 0;

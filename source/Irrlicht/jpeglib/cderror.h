@@ -94,35 +94,31 @@ typedef enum {
 					"Image dimensions (%ux%u) too large for RLE") JMESSAGE(JERR_RLE_EMPTY,
 					"Empty RLE file") JMESSAGE(JERR_RLE_EOF,
 					"Premature EOF in RLE header") JMESSAGE(JERR_RLE_MEM,
-					"Insufficient memory for RLE header")
-					JMESSAGE(JERR_RLE_NOT, "Not an RLE file") JMESSAGE(
-						JERR_RLE_TOOMANYCHANNELS,
-						"Cannot handle %d output channels for RLE"
-					) JMESSAGE(JERR_RLE_UNSUPPORTED,
-						"Cannot handle this RLE setup") JMESSAGE(JTRC_RLE,
-						"%ux%u full-color RLE file") JMESSAGE(JTRC_RLE_FULLMAP,
-						"%ux%u full-color RLE file with map of "
-						"length %d") JMESSAGE(JTRC_RLE_GRAY,
-						"%ux%u grayscale RLE file") JMESSAGE(JTRC_RLE_MAPGRAY,
-						"%ux%u grayscale RLE file with map of "
-						"length %d") JMESSAGE(JTRC_RLE_MAPPED,
-						"%ux%u colormapped RLE file with map of "
-						"length %d")
+					"Insufficient memory for RLE header") JMESSAGE(JERR_RLE_NOT,
+					"Not an RLE file") JMESSAGE(JERR_RLE_TOOMANYCHANNELS,
+					"Cannot handle %d output channels for RLE") JMESSAGE(JERR_RLE_UNSUPPORTED,
+					"Cannot handle this RLE setup") JMESSAGE(JTRC_RLE,
+					"%ux%u full-color RLE file") JMESSAGE(JTRC_RLE_FULLMAP,
+					"%ux%u full-color RLE file with map of "
+					"length %d") JMESSAGE(JTRC_RLE_GRAY,
+					"%ux%u grayscale RLE file") JMESSAGE(JTRC_RLE_MAPGRAY,
+					"%ux%u grayscale RLE file with map of "
+					"length %d") JMESSAGE(JTRC_RLE_MAPPED,
+					"%ux%u colormapped RLE file with map of "
+					"length %d")
 #endif /* RLE_SUPPORTED */
 
 #ifdef TARGA_SUPPORTED
-						JMESSAGE(
-							JERR_TGA_BADCMAP,
-							"Unsupported Targa colormap "
-							"format"
-						) JMESSAGE(JERR_TGA_BADPARMS,
-							"Invalid or unsupported Targa "
-							"file") JMESSAGE(JERR_TGA_COLORSPACE,
-							"Targa output must be grayscale "
-							"or RGB") JMESSAGE(JTRC_TGA,
-							"%ux%u RGB Targa image") JMESSAGE(JTRC_TGA_GRAY,
-							"%ux%u grayscale Targa image") JMESSAGE(JTRC_TGA_MAPPED,
-							"%ux%u colormapped Targa image")
+					JMESSAGE(JERR_TGA_BADCMAP,
+						"Unsupported Targa colormap "
+						"format") JMESSAGE(JERR_TGA_BADPARMS,
+						"Invalid or unsupported Targa "
+						"file") JMESSAGE(JERR_TGA_COLORSPACE,
+						"Targa output must be grayscale "
+						"or RGB") JMESSAGE(JTRC_TGA,
+						"%ux%u RGB Targa image") JMESSAGE(JTRC_TGA_GRAY,
+						"%ux%u grayscale Targa image") JMESSAGE(JTRC_TGA_MAPPED,
+						"%ux%u colormapped Targa image")
 #else
 JMESSAGE(
 	JERR_TGA_NOTCOMP,
@@ -130,43 +126,41 @@ JMESSAGE(
 )
 #endif /* TARGA_SUPPORTED */
 
-							JMESSAGE(
-								JERR_BAD_CMAP_FILE,
-								"Color map file is "
-								"invalid or of "
-								"unsupported format"
-							) JMESSAGE(JERR_TOO_MANY_COLORS,
-								"Output file format "
-								"cannot handle %d "
-								"colormap entries") JMESSAGE(JERR_UNGETC_FAILED,
-								"ungetc failed")
+						JMESSAGE(
+							JERR_BAD_CMAP_FILE,
+							"Color map file is "
+							"invalid or of "
+							"unsupported format"
+						) JMESSAGE(JERR_TOO_MANY_COLORS,
+							"Output file format "
+							"cannot handle %d "
+							"colormap entries") JMESSAGE(JERR_UNGETC_FAILED,
+							"ungetc failed")
 #ifdef TARGA_SUPPORTED
-								JMESSAGE(
-									JERR_UNKNOWN_FORMAT,
-									"Unrecognized "
-									"input file "
-									"format --- "
-									"perhaps you "
-									"need -targa"
-								)
+							JMESSAGE(JERR_UNKNOWN_FORMAT,
+								"Unrecognized "
+								"input file "
+								"format --- "
+								"perhaps you "
+								"need -targa")
 #else
 JMESSAGE(
 	JERR_UNKNOWN_FORMAT,
 	"Unrecognized input file format"
 )
 #endif
-									JMESSAGE(
-										JERR_UNSUPPORTED_FORMAT,
-										"Unsuppor"
-										"ted "
-										"output "
-										"file "
-										"format"
-									)
+								JMESSAGE(
+									JERR_UNSUPPORTED_FORMAT,
+									"Unsuppor"
+									"ted "
+									"output "
+									"file "
+									"format"
+								)
 
 #ifdef JMAKE_ENUM_LIST
 
-										JMSG_LASTADDONCODE
+									JMSG_LASTADDONCODE
 } ADDON_MESSAGE_CODE;
 
 #undef JMAKE_ENUM_LIST

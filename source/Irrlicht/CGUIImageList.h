@@ -15,7 +15,9 @@ namespace gui
 class CGUIImageList : public IGUIImageList {
 public:
 	//! constructor
-	CGUIImageList(video::IVideoDriver* Driver);
+	CGUIImageList(
+		video::IVideoDriver* Driver
+	);
 
 	//! destructor
 	virtual ~CGUIImageList();
@@ -27,18 +29,22 @@ public:
 	//! used
 	//! \return
 	//! true if the image list was created
-	bool createImageList(video::ITexture* texture,
+	bool createImageList(
+		video::ITexture* texture,
 		core::dimension2d<s32> imageSize,
-		bool useAlphaChannel);
+		bool useAlphaChannel
+	);
 
 	//! Draws an image and clips it to the specified rectangle if wanted
 	//! \param index: Index of the image
 	//! \param destPos: Position of the image to draw
 	//! \param clip: Optional pointer to a rectangle against which the text will be
 	//! clipped. If the pointer is null, no clipping will be done.
-	virtual void draw(s32 index,
+	virtual void draw(
+		s32 index,
 		const core::position2d<s32>& destPos,
-		const core::rect<s32>* clip = 0) _IRR_OVERRIDE_;
+		const core::rect<s32>* clip = 0
+	) _IRR_OVERRIDE_;
 
 	//! Returns the count of Images in the list.
 	//! \return Returns the count of Images in the list.

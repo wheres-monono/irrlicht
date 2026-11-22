@@ -39,7 +39,11 @@ public:
 	/** \param now Current time. (Same as ITimer::getTime() would return)
 	\param particlearray Array of particles.
 	\param count Amount of particles in array. */
-	virtual void affect(u32 now, SParticle* particlearray, u32 count) = 0;
+	virtual void affect(
+		u32 now,
+		SParticle* particlearray,
+		u32 count
+	) = 0;
 
 	//! Sets whether or not the affector is currently enabled.
 	virtual void setEnabled(

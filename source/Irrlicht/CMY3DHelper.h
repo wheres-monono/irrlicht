@@ -181,20 +181,39 @@ namespace core
 
 //-----------------RLE stuff-----------------------------------------
 
-int rle_encode(unsigned char* in_buf,
-	int in_buf_size,
-	unsigned char* out_buf,
-	int out_buf_size);
-unsigned long
-process_comp(unsigned char* buf, int buf_size, unsigned char* out_buf, int out_buf_size);
-void process_uncomp(unsigned char, unsigned char* out_buf, int out_buf_size);
-void flush_outbuf(unsigned char* out_buf, int out_buf_size);
-unsigned long get_byte(unsigned char* ch,
+int rle_encode(
 	unsigned char* in_buf,
 	int in_buf_size,
 	unsigned char* out_buf,
-	int out_buf_size);
-void put_byte(unsigned char ch, unsigned char* out_buf, int out_buf_size);
+	int out_buf_size
+);
+unsigned long process_comp(
+	unsigned char* buf,
+	int buf_size,
+	unsigned char* out_buf,
+	int out_buf_size
+);
+void process_uncomp(
+	unsigned char,
+	unsigned char* out_buf,
+	int out_buf_size
+);
+void flush_outbuf(
+	unsigned char* out_buf,
+	int out_buf_size
+);
+unsigned long get_byte(
+	unsigned char* ch,
+	unsigned char* in_buf,
+	int in_buf_size,
+	unsigned char* out_buf,
+	int out_buf_size
+);
+void put_byte(
+	unsigned char ch,
+	unsigned char* out_buf,
+	int out_buf_size
+);
 //-----------------------------------------------------------
 const unsigned long LIMIT = 1;	      // was #define LIMIT     1
 const unsigned long NON_MATCH = 2;    // was: #define NON_MATCH 2

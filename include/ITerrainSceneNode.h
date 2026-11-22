@@ -68,8 +68,10 @@ public:
 
 	//! Get the bounding box of a patch
 	/** \return The bounding box of the chosen patch. */
-	virtual const core::aabbox3d<f32>& getBoundingBox(s32 patchX,
-		s32 patchZ) const = 0;
+	virtual const core::aabbox3d<f32>& getBoundingBox(
+		s32 patchX,
+		s32 patchZ
+	) const = 0;
 
 	//! Get the number of indices currently in the meshbuffer
 	/** \return The index count. */
@@ -85,7 +87,10 @@ public:
 	//! Gets the meshbuffer data based on a specified level of detail.
 	/** \param mb A reference to an IDynamicMeshBuffer object
 	\param LOD The level of detail you want the indices from. */
-	virtual void getMeshBufferForLOD(IDynamicMeshBuffer& mb, s32 LOD = 0) const = 0;
+	virtual void getMeshBufferForLOD(
+		IDynamicMeshBuffer& mb,
+		s32 LOD = 0
+	) const = 0;
 
 	//! Gets the indices for a specified patch at a specified Level of Detail.
 	/** \param indices A reference to an array of u32 indices.
@@ -96,16 +101,20 @@ public:
 	meaning it's not shown, then it will retrieve the triangles at
 	the highest LOD (0).
 	\return Number of indices put into the buffer. */
-	virtual s32 getIndicesForPatch(core::array<u32>& indices,
+	virtual s32 getIndicesForPatch(
+		core::array<u32>& indices,
 		s32 patchX,
 		s32 patchZ,
-		s32 LOD = 0) = 0;
+		s32 LOD = 0
+	) = 0;
 
 	//! Populates an array with the CurrentLOD of each patch.
 	/** \param LODs A reference to a core::array<s32> to hold the
 	values
 	\return Number of elements in the array */
-	virtual s32 getCurrentLODOfPatches(core::array<s32>& LODs) const = 0;
+	virtual s32 getCurrentLODOfPatches(
+		core::array<s32>& LODs
+	) const = 0;
 
 	//! Manually sets the LOD of a patch
 	/** NOTE: Any values set here are overwritten again in the automatic
@@ -113,29 +122,42 @@ public:
 	\param patchX Patch x coordinate.
 	\param patchZ Patch z coordinate.
 	\param LOD The level of detail to set the patch to. */
-	virtual void setLODOfPatch(s32 patchX, s32 patchZ, s32 LOD = 0) = 0;
+	virtual void setLODOfPatch(
+		s32 patchX,
+		s32 patchZ,
+		s32 LOD = 0
+	) = 0;
 
 	//! Get center of terrain.
 	virtual const core::vector3df& getTerrainCenter() const = 0;
 
 	//! Get height of a point of the terrain.
-	virtual f32 getHeight(f32 x, f32 y) const = 0;
+	virtual f32 getHeight(
+		f32 x,
+		f32 y
+	) const = 0;
 
 	//! Sets the movement camera threshold.
 	/** It is used to determine when to recalculate
 	indices for the scene node. The default value is 10.0f. */
-	virtual void setCameraMovementDelta(f32 delta) = 0;
+	virtual void setCameraMovementDelta(
+		f32 delta
+	) = 0;
 
 	//! Sets the rotation camera threshold.
 	/** It is used to determine when to recalculate
 	indices for the scene node. The default value is 1.0f. */
-	virtual void setCameraRotationDelta(f32 delta) = 0;
+	virtual void setCameraRotationDelta(
+		f32 delta
+	) = 0;
 
 	//! Sets whether or not the node should dynamically update its associated selector
 	//! when the geomipmap data changes.
 	/** \param bVal: Boolean value representing whether or not to update selector
 	 * dynamically. */
-	virtual void setDynamicSelectorUpdate(bool bVal) = 0;
+	virtual void setDynamicSelectorUpdate(
+		bool bVal
+	) = 0;
 
 	//! Override the default generation of distance thresholds.
 	/** For determining the LOD a patch is rendered at. If any LOD
@@ -144,7 +166,10 @@ public:
 	then apply a scale to the scene node, it is your responsibility
 	to update the new distances to work best with your new terrain
 	size. */
-	virtual bool overrideLODDistance(s32 LOD, f64 newDistance) = 0;
+	virtual bool overrideLODDistance(
+		s32 LOD,
+		f64 newDistance
+	) = 0;
 
 	//! Scales the base texture, similar to makePlanarTextureMapping.
 	/** \param scale The scaling amount. Values above 1.0
@@ -156,7 +181,10 @@ public:
 	second texture coordinate set to the same values as in the
 	first set. If this is another value than zero, it will scale
 	the second texture coordinate set by this value. */
-	virtual void scaleTexture(f32 scale = 1.0f, f32 scale2 = 0.0f) = 0;
+	virtual void scaleTexture(
+		f32 scale = 1.0f,
+		f32 scale2 = 0.0f
+	) = 0;
 
 	//! Initializes the terrain data.  Loads the vertices from the heightMapFile.
 	/** The file must contain a loadable image of the heightmap. The heightmap
@@ -164,9 +192,11 @@ public:
 	\param file The file to read the image from. File is not rewinded.
 	\param vertexColor Color of all vertices.
 	\param smoothFactor Number of smoothing passes. */
-	virtual bool loadHeightMap(io::IReadFile* file,
+	virtual bool loadHeightMap(
+		io::IReadFile* file,
 		video::SColor vertexColor = video::SColor(255, 255, 255, 255),
-		s32 smoothFactor = 0) = 0;
+		s32 smoothFactor = 0
+	) = 0;
 
 	//! Initializes the terrain data.  Loads the vertices from the heightMapFile.
 	/** The data is interpreted as (signed) integers of the given bit size or
@@ -180,19 +210,23 @@ public:
 	for autocalculating from the filesize.
 	\param vertexColor Color of all vertices.
 	\param smoothFactor Number of smoothing passes. */
-	virtual bool loadHeightMapRAW(io::IReadFile* file,
+	virtual bool loadHeightMapRAW(
+		io::IReadFile* file,
 		s32 bitsPerPixel = 16,
 		bool signedData = false,
 		bool floatVals = false,
 		s32 width = 0,
 		video::SColor vertexColor = video::SColor(255, 255, 255, 255),
-		s32 smoothFactor = 0) = 0;
+		s32 smoothFactor = 0
+	) = 0;
 
 	//! Force node to use a fixed LOD level at the borders of the terrain.
 	/** This can be useful when several TerrainSceneNodes are connected.
 	\param borderLOD When >= 0 all patches at the 4 borders will use the
 	given LOD. When < 0 borders are just regular patches (that's default).	*/
-	virtual void setFixedBorderLOD(irr::s32 borderLOD = 0) = 0;
+	virtual void setFixedBorderLOD(
+		irr::s32 borderLOD = 0
+	) = 0;
 };
 
 } // end namespace scene

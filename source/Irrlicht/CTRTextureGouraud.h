@@ -31,26 +31,36 @@ namespace video
 class CTRTextureGouraud : public ITriangleRenderer {
 public:
 	//! constructor
-	CTRTextureGouraud(IZBuffer* zbuffer);
+	CTRTextureGouraud(
+		IZBuffer* zbuffer
+	);
 
 	//! destructor
 	virtual ~CTRTextureGouraud();
 
 	//! sets a render target
-	virtual void setRenderTarget(video::IImage* surface,
-		const core::rect<s32>& viewPort) _IRR_OVERRIDE_;
+	virtual void setRenderTarget(
+		video::IImage* surface,
+		const core::rect<s32>& viewPort
+	) _IRR_OVERRIDE_;
 
 	//! draws an indexed triangle list
-	virtual void drawIndexedTriangleList(S2DVertex* vertices,
+	virtual void drawIndexedTriangleList(
+		S2DVertex* vertices,
 		s32 vertexCount,
 		const u16* indexList,
-		s32 triangleCount) _IRR_OVERRIDE_;
+		s32 triangleCount
+	) _IRR_OVERRIDE_;
 
 	//! en or disables the backface culling
-	virtual void setBackfaceCulling(bool enabled = true) _IRR_OVERRIDE_;
+	virtual void setBackfaceCulling(
+		bool enabled = true
+	) _IRR_OVERRIDE_;
 
 	//! sets the Texture
-	virtual void setTexture(video::IImage* texture) _IRR_OVERRIDE_;
+	virtual void setTexture(
+		video::IImage* texture
+	) _IRR_OVERRIDE_;
 
 protected:
 	//! vertauscht zwei vertizen

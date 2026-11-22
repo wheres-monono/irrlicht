@@ -29,7 +29,9 @@ public:
 		Width(width),
 		Height(height) {}
 
-	dimension2d(const vector2d<T>& other); // Defined in vector2d.h
+	dimension2d(
+		const vector2d<T>& other
+	); // Defined in vector2d.h
 
 	//! Use this constructor only where you are sure that the conversion is valid.
 	template <class U>
@@ -63,7 +65,9 @@ public:
 		return !(*this == other);
 	}
 
-	bool operator==(const vector2d<T>& other) const; // Defined in vector2d.h
+	bool operator==(
+		const vector2d<T>& other
+	) const; // Defined in vector2d.h
 
 	bool operator!=(
 		const vector2d<T>& other

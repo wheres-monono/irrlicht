@@ -19,32 +19,49 @@ class ISceneManager;
 //! class to write meshes, implementing a STL writer
 class CSTLMeshWriter : public IMeshWriter {
 public:
-	CSTLMeshWriter(scene::ISceneManager* smgr);
+	CSTLMeshWriter(
+		scene::ISceneManager* smgr
+	);
 	virtual ~CSTLMeshWriter();
 
 	//! Returns the type of the mesh writer
 	virtual EMESH_WRITER_TYPE getType() const _IRR_OVERRIDE_;
 
 	//! writes a mesh
-	virtual bool writeMesh(io::IWriteFile* file,
+	virtual bool writeMesh(
+		io::IWriteFile* file,
 		scene::IMesh* mesh,
-		s32 flags = EMWF_NONE) _IRR_OVERRIDE_;
+		s32 flags = EMWF_NONE
+	) _IRR_OVERRIDE_;
 
 protected:
 	// write binary format
-	bool writeMeshBinary(io::IWriteFile* file, scene::IMesh* mesh, s32 flags);
+	bool writeMeshBinary(
+		io::IWriteFile* file,
+		scene::IMesh* mesh,
+		s32 flags
+	);
 
 	// write text format
-	bool writeMeshASCII(io::IWriteFile* file, scene::IMesh* mesh, s32 flags);
+	bool writeMeshASCII(
+		io::IWriteFile* file,
+		scene::IMesh* mesh,
+		s32 flags
+	);
 
 	// create vector output with line end into string
-	void getVectorAsStringLine(const core::vector3df& v, core::stringc& s) const;
+	void getVectorAsStringLine(
+		const core::vector3df& v,
+		core::stringc& s
+	) const;
 
 	// write face information to file
-	void writeFace(io::IWriteFile* file,
+	void writeFace(
+		io::IWriteFile* file,
 		const core::vector3df& v1,
 		const core::vector3df& v2,
-		const core::vector3df& v3);
+		const core::vector3df& v3
+	);
 
 	scene::ISceneManager* SceneManager;
 };

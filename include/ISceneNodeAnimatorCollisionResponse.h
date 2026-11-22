@@ -33,7 +33,9 @@ public:
 	\retval false if the collision was not handled in the animator. The animator's
 	target node will be moved to the collision position.
 	*/
-	virtual bool onCollision(const ISceneNodeAnimatorCollisionResponse& animator) = 0;
+	virtual bool onCollision(
+		const ISceneNodeAnimatorCollisionResponse& animator
+	) = 0;
 };
 
 //! Special scene node animator for doing automatic collision detection and response.
@@ -72,7 +74,9 @@ public:
 	core::vector3df radius = box.MaxEdge - box.getCenter();
 	\endcode
 	\param radius: New radius of the ellipsoid. */
-	virtual void setEllipsoidRadius(const core::vector3df& radius) = 0;
+	virtual void setEllipsoidRadius(
+		const core::vector3df& radius
+	) = 0;
 
 	//! Returns the radius of the ellipsoid for collision detection and response.
 	/** \return Radius of the ellipsoid. */
@@ -84,7 +88,9 @@ public:
 	gravity, make increase the length of the vector. You can
 	disable gravity by setting it to core::vector3df(0,0,0);
 	\param gravity: New gravity vector. */
-	virtual void setGravity(const core::vector3df& gravity) = 0;
+	virtual void setGravity(
+		const core::vector3df& gravity
+	) = 0;
 
 	//! Get current vector of gravity.
 	//! \return Gravity vector. */
@@ -93,10 +99,14 @@ public:
 	//! 'Jump' the animator, by adding a jump speed opposite to its gravity
 	/** \param jumpSpeed The initial speed of the jump; the velocity will be opposite
 	to this animator's gravity vector. */
-	virtual void jump(f32 jumpSpeed) = 0;
+	virtual void jump(
+		f32 jumpSpeed
+	) = 0;
 
 	//! Should the Target react on collision ( default = true )
-	virtual void setAnimateTarget(bool enable) = 0;
+	virtual void setAnimateTarget(
+		bool enable
+	) = 0;
 	virtual bool getAnimateTarget() const = 0;
 
 	//! Set translation of the collision ellipsoid.
@@ -106,7 +116,9 @@ public:
 	want, you may specify a translation for the ellipsoid.
 	\param translation: Translation of the ellipsoid relative
 	to the position of the scene node. */
-	virtual void setEllipsoidTranslation(const core::vector3df& translation) = 0;
+	virtual void setEllipsoidTranslation(
+		const core::vector3df& translation
+	) = 0;
 
 	//! Get the translation of the ellipsoid for collision detection.
 	/** See
@@ -120,7 +132,9 @@ public:
 	//! scene node may collide.
 	/** \param newWorld: New triangle selector containing triangles
 	to let the scene node collide with. */
-	virtual void setWorld(ITriangleSelector* newWorld) = 0;
+	virtual void setWorld(
+		ITriangleSelector* newWorld
+	) = 0;
 
 	//! Get the current triangle selector containing all triangles for collision
 	//! detection.
@@ -130,11 +144,15 @@ public:
 	/** \param node The new target node. Setting this will force the animator to
 	   update its last target position for the node, allowing setPosition() to
 	   teleport the node through collision geometry. */
-	virtual void setTargetNode(ISceneNode* node) = 0;
+	virtual void setTargetNode(
+		ISceneNode* node
+	) = 0;
 
 	//! Gets the single node that this animator is acting on.
 	/** \return The node that this animator is acting on. */
-	virtual ISceneNode* getTargetNode(void) const = 0;
+	virtual ISceneNode* getTargetNode(
+		void
+	) const = 0;
 
 	//! Returns true if a collision occurred during the last animateNode()
 	virtual bool collisionOccurred() const = 0;
@@ -151,16 +169,22 @@ public:
 	If you have a collision callback registered, and it consumes the collision, then
 	the node will ignore the collision and will not stop at this position. Instead, it
 	will move fully to the position that caused the collision to occur. */
-	virtual const core::vector3df& getCollisionResultPosition(void) const = 0;
+	virtual const core::vector3df& getCollisionResultPosition(
+		void
+	) const = 0;
 
 	//! Returns the node that was collided with.
-	virtual ISceneNode* getCollisionNode(void) const = 0;
+	virtual ISceneNode* getCollisionNode(
+		void
+	) const = 0;
 
 	//! Sets a callback interface which will be called if a collision occurs.
 	/** \param callback: collision callback handler that will be called when a
 	collision occurs. Set this to 0 to disable the callback.
 	*/
-	virtual void setCollisionCallback(ICollisionCallback* callback) = 0;
+	virtual void setCollisionCallback(
+		ICollisionCallback* callback
+	) = 0;
 };
 
 } // end namespace scene

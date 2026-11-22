@@ -27,21 +27,27 @@ namespace scene
 class COgreMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	COgreMeshFileLoader(io::IFileSystem* fs, video::IVideoDriver* driver);
+	COgreMeshFileLoader(
+		io::IFileSystem* fs,
+		video::IVideoDriver* driver
+	);
 
 	//! destructor
 	virtual ~COgreMeshFileLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 // byte-align structures
@@ -147,7 +153,10 @@ private:
 
 	struct OgreTextureAlias {
 		OgreTextureAlias() {};
-		OgreTextureAlias(const core::stringc& a, const core::stringc& b) :
+		OgreTextureAlias(
+			const core::stringc& a,
+			const core::stringc& b
+		) :
 			Texture(a),
 			Alias(b) {};
 		core::stringc Texture;
@@ -209,44 +218,122 @@ private:
 		core::array<OgreAnimation> Animations;
 	};
 
-	bool readChunk(io::IReadFile* file);
-	bool readObjectChunk(io::IReadFile* file, ChunkData& parent, OgreMesh& mesh);
-	bool readGeometry(io::IReadFile* file, ChunkData& parent, OgreGeometry& geometry);
-	bool readVertexDeclaration(io::IReadFile* file,
+	bool readChunk(
+		io::IReadFile* file
+	);
+	bool readObjectChunk(
+		io::IReadFile* file,
 		ChunkData& parent,
-		OgreGeometry& geometry);
-	bool
-	readVertexBuffer(io::IReadFile* file, ChunkData& parent, OgreGeometry& geometry);
-	bool readSubMesh(io::IReadFile* file, ChunkData& parent, OgreSubMesh& subMesh);
+		OgreMesh& mesh
+	);
+	bool readGeometry(
+		io::IReadFile* file,
+		ChunkData& parent,
+		OgreGeometry& geometry
+	);
+	bool readVertexDeclaration(
+		io::IReadFile* file,
+		ChunkData& parent,
+		OgreGeometry& geometry
+	);
+	bool readVertexBuffer(
+		io::IReadFile* file,
+		ChunkData& parent,
+		OgreGeometry& geometry
+	);
+	bool readSubMesh(
+		io::IReadFile* file,
+		ChunkData& parent,
+		OgreSubMesh& subMesh
+	);
 
-	void readChunkData(io::IReadFile* file, ChunkData& data);
-	void readString(io::IReadFile* file, ChunkData& data, core::stringc& out);
-	void readBool(io::IReadFile* file, ChunkData& data, bool& out);
-	void readInt(io::IReadFile* file, ChunkData& data, s32* out, u32 num = 1);
-	void readShort(io::IReadFile* file, ChunkData& data, u16* out, u32 num = 1);
-	void readFloat(io::IReadFile* file, ChunkData& data, f32* out, u32 num = 1);
-	void readVector(io::IReadFile* file, ChunkData& data, core::vector3df& out);
-	void readQuaternion(io::IReadFile* file, ChunkData& data, core::quaternion& out);
+	void readChunkData(
+		io::IReadFile* file,
+		ChunkData& data
+	);
+	void readString(
+		io::IReadFile* file,
+		ChunkData& data,
+		core::stringc& out
+	);
+	void readBool(
+		io::IReadFile* file,
+		ChunkData& data,
+		bool& out
+	);
+	void readInt(
+		io::IReadFile* file,
+		ChunkData& data,
+		s32* out,
+		u32 num = 1
+	);
+	void readShort(
+		io::IReadFile* file,
+		ChunkData& data,
+		u16* out,
+		u32 num = 1
+	);
+	void readFloat(
+		io::IReadFile* file,
+		ChunkData& data,
+		f32* out,
+		u32 num = 1
+	);
+	void readVector(
+		io::IReadFile* file,
+		ChunkData& data,
+		core::vector3df& out
+	);
+	void readQuaternion(
+		io::IReadFile* file,
+		ChunkData& data,
+		core::quaternion& out
+	);
 
-	void composeMeshBufferMaterial(scene::IMeshBuffer* mb,
-		const core::stringc& materialName);
-	scene::SMeshBuffer* composeMeshBuffer(const core::array<s32>& indices,
-		const OgreGeometry& geom);
-	scene::SMeshBufferLightMap*
-	composeMeshBufferLightMap(const core::array<s32>& indices,
-		const OgreGeometry& geom);
-	scene::IMeshBuffer* composeMeshBufferSkinned(scene::CSkinnedMesh& mesh,
+	void composeMeshBufferMaterial(
+		scene::IMeshBuffer* mb,
+		const core::stringc& materialName
+	);
+	scene::SMeshBuffer* composeMeshBuffer(
 		const core::array<s32>& indices,
-		const OgreGeometry& geom);
-	void composeObject(void);
-	bool readColor(io::IReadFile* meshFile, video::SColor& col);
-	void getMaterialToken(io::IReadFile* file,
+		const OgreGeometry& geom
+	);
+	scene::SMeshBufferLightMap* composeMeshBufferLightMap(
+		const core::array<s32>& indices,
+		const OgreGeometry& geom
+	);
+	scene::IMeshBuffer* composeMeshBufferSkinned(
+		scene::CSkinnedMesh& mesh,
+		const core::array<s32>& indices,
+		const OgreGeometry& geom
+	);
+	void composeObject(
+		void
+	);
+	bool readColor(
+		io::IReadFile* meshFile,
+		video::SColor& col
+	);
+	void getMaterialToken(
+		io::IReadFile* file,
 		core::stringc& token,
-		bool noNewLine = false);
-	void readTechnique(io::IReadFile* meshFile, OgreMaterial& mat);
-	void readPass(io::IReadFile* file, OgreTechnique& technique);
-	void loadMaterials(io::IReadFile* file);
-	bool loadSkeleton(io::IReadFile* meshFile, const core::stringc& name);
+		bool noNewLine = false
+	);
+	void readTechnique(
+		io::IReadFile* meshFile,
+		OgreMaterial& mat
+	);
+	void readPass(
+		io::IReadFile* file,
+		OgreTechnique& technique
+	);
+	void loadMaterials(
+		io::IReadFile* file
+	);
+	bool loadSkeleton(
+		io::IReadFile* meshFile,
+		const core::stringc& name
+	);
 	void clearMeshes();
 
 	io::IFileSystem* FileSystem;

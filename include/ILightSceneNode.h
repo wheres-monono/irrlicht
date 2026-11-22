@@ -32,7 +32,9 @@ public:
 
 	//! Sets the light data associated with this ILightSceneNode
 	/** \param light The new light data. */
-	virtual void setLightData(const video::SLight& light) = 0;
+	virtual void setLightData(
+		const video::SLight& light
+	) = 0;
 
 	//! Gets the light data associated with this ILightSceneNode
 	/** \return The light data. */
@@ -46,7 +48,9 @@ public:
 	/** All children of this node won't be visible either, when set
 	to true.
 	\param isVisible If the node shall be visible. */
-	virtual void setVisible(bool isVisible) = 0;
+	virtual void setVisible(
+		bool isVisible
+	) = 0;
 
 	//! Sets the light's radius of influence.
 	/** Outside this radius the light won't lighten geometry and cast no
@@ -54,7 +58,9 @@ public:
 	it to (0,1/radius,0). If you want to override this behavior, set the
 	attenuation after the radius.
 	\param radius The new radius. */
-	virtual void setRadius(f32 radius) = 0;
+	virtual void setRadius(
+		f32 radius
+	) = 0;
 
 	//! Gets the light's radius of influence.
 	/** \return The current radius. */
@@ -62,7 +68,9 @@ public:
 
 	//! Sets the light type.
 	/** \param type The new type. */
-	virtual void setLightType(video::E_LIGHT_TYPE type) = 0;
+	virtual void setLightType(
+		video::E_LIGHT_TYPE type
+	) = 0;
 
 	//! Gets the light type.
 	/** \return The current light type. */
@@ -73,7 +81,9 @@ public:
 	will still need shadow scene nodes attached. But one can enable or
 	disable distinct lights for shadow casting for performance reasons.
 	\param shadow True if this light shall cast shadows. */
-	virtual void enableCastShadow(bool shadow = true) = 0;
+	virtual void enableCastShadow(
+		bool shadow = true
+	) = 0;
 
 	//! Check whether this light casts shadows.
 	/** \return True if light would cast shadows, else false. */

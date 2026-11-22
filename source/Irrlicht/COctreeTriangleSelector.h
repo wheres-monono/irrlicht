@@ -18,15 +18,19 @@ class ISceneNode;
 class COctreeTriangleSelector : public CTriangleSelector {
 public:
 	//! Constructs a selector based on a mesh
-	COctreeTriangleSelector(const IMesh* mesh,
+	COctreeTriangleSelector(
+		const IMesh* mesh,
 		ISceneNode* node,
-		s32 minimalPolysPerNode);
+		s32 minimalPolysPerNode
+	);
 
 	//! Constructs a selector based on a meshbuffer
-	COctreeTriangleSelector(const IMeshBuffer* meshBuffer,
+	COctreeTriangleSelector(
+		const IMeshBuffer* meshBuffer,
 		irr::u32 materialIndex,
 		ISceneNode* node,
-		s32 minimalPolysPerNode);
+		s32 minimalPolysPerNode
+	);
 
 	virtual ~COctreeTriangleSelector();
 
@@ -71,21 +75,29 @@ private:
 		core::aabbox3d<f32> Box;
 	};
 
-	void constructOctree(SOctreeNode* node);
-	void deleteEmptyNodes(SOctreeNode* node);
-	void getTrianglesFromOctree(SOctreeNode* node,
+	void constructOctree(
+		SOctreeNode* node
+	);
+	void deleteEmptyNodes(
+		SOctreeNode* node
+	);
+	void getTrianglesFromOctree(
+		SOctreeNode* node,
 		s32& trianglesWritten,
 		s32 maximumSize,
 		const core::aabbox3d<f32>& box,
 		const core::matrix4* transform,
-		core::triangle3df* triangles) const;
+		core::triangle3df* triangles
+	) const;
 
-	void getTrianglesFromOctree(SOctreeNode* node,
+	void getTrianglesFromOctree(
+		SOctreeNode* node,
 		s32& trianglesWritten,
 		s32 maximumSize,
 		const core::line3d<f32>& line,
 		const core::matrix4* transform,
-		core::triangle3df* triangles) const;
+		core::triangle3df* triangles
+	) const;
 
 	SOctreeNode* Root;
 	s32 NodeCount;

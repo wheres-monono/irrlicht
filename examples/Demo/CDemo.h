@@ -19,8 +19,8 @@ using namespace irr;
 
 #ifdef USE_IRRKLANG
 #include <irrKlang.h> // problem here? go to http://www.ambiera.com/irrklang and download
-		      // the irrKlang library or undefine USE_IRRKLANG at the beginning
-		      // of this file.
+	  // the irrKlang library or undefine USE_IRRKLANG at the beginning
+	  // of this file.
 #ifdef _MSC_VER
 #pragma comment(lib, "irrKlang.lib")
 #endif
@@ -34,19 +34,23 @@ const int CAMERA_COUNT = 7;
 
 class CDemo : public IEventReceiver {
 public:
-	CDemo(bool fullscreen,
+	CDemo(
+		bool fullscreen,
 		bool music,
 		bool shadows,
 		bool additive,
 		bool vsync,
 		bool aa,
-		video::E_DRIVER_TYPE driver);
+		video::E_DRIVER_TYPE driver
+	);
 
 	~CDemo();
 
 	void run();
 
-	virtual bool OnEvent(const SEvent& event);
+	virtual bool OnEvent(
+		const SEvent& event
+	);
 
 private:
 	void createLoadingScreen();
@@ -73,7 +77,9 @@ private:
 
 #ifdef USE_SDL_MIXER
 	void startSound();
-	void playSound(Mix_Chunk*);
+	void playSound(
+		Mix_Chunk*
+	);
 	void pollSound();
 	Mix_Music* stream;
 	Mix_Chunk* ballSound;

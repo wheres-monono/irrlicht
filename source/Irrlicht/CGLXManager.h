@@ -28,16 +28,20 @@ namespace video
 class CGLXManager : public IContextManager {
 public:
 	//! Constructor.
-	CGLXManager(const SIrrlichtCreationParameters& params,
+	CGLXManager(
+		const SIrrlichtCreationParameters& params,
 		const SExposedVideoData& videodata,
-		int screennr);
+		int screennr
+	);
 
 	//! Destructor
 	~CGLXManager();
 
 	// Initialize
-	virtual bool initialize(const SIrrlichtCreationParameters& params,
-		const SExposedVideoData& data) _IRR_OVERRIDE_;
+	virtual bool initialize(
+		const SIrrlichtCreationParameters& params,
+		const SExposedVideoData& data
+	) _IRR_OVERRIDE_;
 
 	// Terminate
 	virtual void terminate() _IRR_OVERRIDE_;
@@ -58,8 +62,10 @@ public:
 	virtual const SExposedVideoData& getContext() const _IRR_OVERRIDE_;
 
 	//! Change render context, disable old and activate new defined by videoData
-	virtual bool activateContext(const SExposedVideoData& videoData,
-		bool restorePrimaryOnZero) _IRR_OVERRIDE_;
+	virtual bool activateContext(
+		const SExposedVideoData& videoData,
+		bool restorePrimaryOnZero
+	) _IRR_OVERRIDE_;
 
 	// Swap buffers.
 	virtual bool swapBuffers() _IRR_OVERRIDE_;

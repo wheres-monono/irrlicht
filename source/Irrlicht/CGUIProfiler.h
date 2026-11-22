@@ -24,32 +24,44 @@ class IGUITable;
 class CGUIProfiler : public IGUIProfiler {
 public:
 	//! constructor
-	CGUIProfiler(IGUIEnvironment* environment,
+	CGUIProfiler(
+		IGUIEnvironment* environment,
 		IGUIElement* parent,
 		s32 id,
 		core::rect<s32> rectangle,
-		IProfiler* profiler);
+		IProfiler* profiler
+	);
 
 	//! Show first page of profile data
-	virtual void firstPage(bool includeOverview) _IRR_OVERRIDE_;
+	virtual void firstPage(
+		bool includeOverview
+	) _IRR_OVERRIDE_;
 
 	//! Show next page of profile data
-	virtual void nextPage(bool includeOverview) _IRR_OVERRIDE_;
+	virtual void nextPage(
+		bool includeOverview
+	) _IRR_OVERRIDE_;
 
 	//! Show previous page of profile data
-	virtual void previousPage(bool includeOverview) _IRR_OVERRIDE_;
+	virtual void previousPage(
+		bool includeOverview
+	) _IRR_OVERRIDE_;
 
 	//! Try to show as many group-pages together as possible instead of showing at
 	//! most one group per page.
 	/** \param groupsTogether When true show several groups on one page, when false
 	 * show max. one group per page. Default is false. */
-	virtual void setShowGroupsTogether(bool groupsTogether) _IRR_OVERRIDE_;
+	virtual void setShowGroupsTogether(
+		bool groupsTogether
+	) _IRR_OVERRIDE_;
 
 	//! Can several groups be displayed per page?
 	virtual bool getShowGroupsTogether() const _IRR_OVERRIDE_;
 
 	//! Sets another skin independent font.
-	virtual void setOverrideFont(IGUIFont* font) _IRR_OVERRIDE_;
+	virtual void setOverrideFont(
+		IGUIFont* font
+	) _IRR_OVERRIDE_;
 
 	//! Gets the override font (if any)
 	virtual IGUIFont* getOverrideFont() const _IRR_OVERRIDE_;
@@ -58,23 +70,29 @@ public:
 	virtual IGUIFont* getActiveFont() const _IRR_OVERRIDE_;
 
 	//! Sets whether to draw the background. By default disabled,
-	virtual void setDrawBackground(bool draw) _IRR_OVERRIDE_;
+	virtual void setDrawBackground(
+		bool draw
+	) _IRR_OVERRIDE_;
 
 	//! Checks if background drawing is enabled
 	/** \return true if background drawing is enabled, false otherwise */
 	virtual bool isDrawBackgroundEnabled() const _IRR_OVERRIDE_;
 
 	//! Allows to freeze updates which makes it easier to read the numbers
-	virtual void setFrozen(bool freeze) _IRR_OVERRIDE_;
+	virtual void setFrozen(
+		bool freeze
+	) _IRR_OVERRIDE_;
 
 	//! Are updates currently frozen
 	virtual bool getFrozen() const _IRR_OVERRIDE_;
 
 	//! Filters prevents data that doesn't achieve the conditions from being displayed
-	virtual void setFilters(irr::u32 minCalls,
+	virtual void setFilters(
+		irr::u32 minCalls,
 		irr::u32 minTimeSum,
 		irr::f32 minTimeAverage,
-		irr::u32 minTimeMax) _IRR_OVERRIDE_;
+		irr::u32 minTimeMax
+	) _IRR_OVERRIDE_;
 
 	virtual IGUIElement* getElementFromPoint(
 		const core::position2d<s32>& point
@@ -87,11 +105,17 @@ public:
 
 protected:
 	void updateDisplay();
-	void fillRow(u32 rowIndex,
+	void fillRow(
+		u32 rowIndex,
 		const SProfileData& data,
 		bool overviewTitle,
-		bool groupTitle);
-	u32 addDataToTable(u32 rowIndex, u32 dataIndex, u32 groupIndex);
+		bool groupTitle
+	);
+	u32 addDataToTable(
+		u32 rowIndex,
+		u32 dataIndex,
+		u32 groupIndex
+	);
 	void rebuildColumns();
 
 	IProfiler* Profiler;

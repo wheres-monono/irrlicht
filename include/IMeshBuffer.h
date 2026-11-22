@@ -87,28 +87,42 @@ public:
 	//! Set axis aligned bounding box
 	/** \param box User defined axis aligned bounding box to use
 	for this buffer. */
-	virtual void setBoundingBox(const core::aabbox3df& box) = 0;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) = 0;
 
 	//! Recalculates the bounding box. Should be called if the mesh changed.
 	virtual void recalculateBoundingBox() = 0;
 
 	//! returns position of vertex i
-	virtual const core::vector3df& getPosition(u32 i) const = 0;
+	virtual const core::vector3df& getPosition(
+		u32 i
+	) const = 0;
 
 	//! returns position of vertex i
-	virtual core::vector3df& getPosition(u32 i) = 0;
+	virtual core::vector3df& getPosition(
+		u32 i
+	) = 0;
 
 	//! returns normal of vertex i
-	virtual const core::vector3df& getNormal(u32 i) const = 0;
+	virtual const core::vector3df& getNormal(
+		u32 i
+	) const = 0;
 
 	//! returns normal of vertex i
-	virtual core::vector3df& getNormal(u32 i) = 0;
+	virtual core::vector3df& getNormal(
+		u32 i
+	) = 0;
 
 	//! returns texture coord of vertex i
-	virtual const core::vector2df& getTCoords(u32 i) const = 0;
+	virtual const core::vector2df& getTCoords(
+		u32 i
+	) const = 0;
 
 	//! returns texture coord of vertex i
-	virtual core::vector2df& getTCoords(u32 i) = 0;
+	virtual core::vector2df& getTCoords(
+		u32 i
+	) = 0;
 
 	//! Append the vertices and indices to the current buffer
 	/** Only works for compatible vertex types.
@@ -116,15 +130,19 @@ public:
 	\param numVertices Number of vertices in the array.
 	\param indices Pointer to index array.
 	\param numIndices Number of indices in array. */
-	virtual void append(const void* const vertices,
+	virtual void append(
+		const void* const vertices,
 		u32 numVertices,
 		const u16* const indices,
-		u32 numIndices) = 0;
+		u32 numIndices
+	) = 0;
 
 	//! Append the meshbuffer to the current buffer
 	/** Only works for compatible vertex types
 	\param other Buffer to append to this one. */
-	virtual void append(const IMeshBuffer* const other) = 0;
+	virtual void append(
+		const IMeshBuffer* const other
+	) = 0;
 
 	//! get the current hardware mapping hint
 	virtual E_HARDWARE_MAPPING getHardwareMappingHint_Vertex() const = 0;
@@ -133,11 +151,15 @@ public:
 	virtual E_HARDWARE_MAPPING getHardwareMappingHint_Index() const = 0;
 
 	//! set the hardware mapping hint, for driver
-	virtual void setHardwareMappingHint(E_HARDWARE_MAPPING newMappingHint,
-		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) = 0;
+	virtual void setHardwareMappingHint(
+		E_HARDWARE_MAPPING newMappingHint,
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) = 0;
 
 	//! flags the meshbuffer as changed, reloads hardware buffers
-	virtual void setDirty(E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) = 0;
+	virtual void setDirty(
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) = 0;
 
 	//! Get the currently used ID for identification of changes.
 	/** This shouldn't be used for anything outside the VideoDriver. */
@@ -152,7 +174,9 @@ public:
 	But meshbuffer manipulation functions might expect type EPT_TRIANGLES
 	to work correctly. Also mesh writers will generally fail (badly!) with other
 	types than EPT_TRIANGLES. */
-	virtual void setPrimitiveType(E_PRIMITIVE_TYPE type) = 0;
+	virtual void setPrimitiveType(
+		E_PRIMITIVE_TYPE type
+	) = 0;
 
 	//! Get the kind of primitive geometry which is used by the meshbuffer
 	virtual E_PRIMITIVE_TYPE getPrimitiveType() const = 0;

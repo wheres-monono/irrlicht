@@ -61,27 +61,35 @@ class ISceneNode;
 class COCTLoader : public IMeshLoader {
 public:
 	//! constructor
-	COCTLoader(ISceneManager* smgr, io::IFileSystem* fs);
+	COCTLoader(
+		ISceneManager* smgr,
+		io::IFileSystem* fs
+	);
 
 	//! destructor
 	virtual ~COCTLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
-	void OCTLoadLights(io::IReadFile* file,
+	void OCTLoadLights(
+		io::IReadFile* file,
 		ISceneNode* parent = 0,
 		f32 radius = 500.0f,
 		f32 intensityScale = 0.0000001f * 2.5,
-		bool rewind = true);
+		bool rewind = true
+	);
 
 private:
 	struct octHeader {

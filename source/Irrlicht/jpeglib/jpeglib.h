@@ -542,7 +542,9 @@ struct jpeg_decompress_struct {
 	 * (thus, 0 at completion of the progression).
 	 * This pointer is NULL when reading a non-progressive file.
 	 */
-	int (*coef_bits)[DCTSIZE2]; /* -1 or current Al value for each coef */
+	int (
+		*coef_bits
+	)[DCTSIZE2]; /* -1 or current Al value for each coef */
 
 	/* Internal JPEG parameters --- the application usually need not look at
 	 * these fields.  Note that the decompressor output side may not use
@@ -686,16 +688,36 @@ struct jpeg_decompress_struct {
 
 struct jpeg_error_mgr {
 	/* Error exit handler: does not return to caller */
-	JMETHOD(noreturn_t, error_exit, (j_common_ptr cinfo));
+	JMETHOD(
+		noreturn_t,
+		error_exit,
+		(j_common_ptr cinfo)
+	);
 	/* Conditionally emit a trace or warning message */
-	JMETHOD(void, emit_message, (j_common_ptr cinfo, int msg_level));
+	JMETHOD(
+		void,
+		emit_message,
+		(j_common_ptr cinfo, int msg_level)
+	);
 	/* Routine that actually outputs a trace or error message */
-	JMETHOD(void, output_message, (j_common_ptr cinfo));
+	JMETHOD(
+		void,
+		output_message,
+		(j_common_ptr cinfo)
+	);
 	/* Format a message string for the most recent JPEG error or message */
-	JMETHOD(void, format_message, (j_common_ptr cinfo, char* buffer));
+	JMETHOD(
+		void,
+		format_message,
+		(j_common_ptr cinfo, char* buffer)
+	);
 #define JMSG_LENGTH_MAX 200 /* recommended size of format_message buffer */
 	/* Reset error state variables at start of a new image */
-	JMETHOD(void, reset_error_mgr, (j_common_ptr cinfo));
+	JMETHOD(
+		void,
+		reset_error_mgr,
+		(j_common_ptr cinfo)
+	);
 
 	/* The message ID code and any parameters are saved here.
 	 * A message can have one string parameter or up to 8 int parameters.
@@ -742,7 +764,11 @@ struct jpeg_error_mgr {
 /* Progress monitor object */
 
 struct jpeg_progress_mgr {
-	JMETHOD(void, progress_monitor, (j_common_ptr cinfo));
+	JMETHOD(
+		void,
+		progress_monitor,
+		(j_common_ptr cinfo)
+	);
 
 	long pass_counter;    /* work units completed in this pass */
 	long pass_limit;      /* total number of work units in this pass */
@@ -756,9 +782,21 @@ struct jpeg_destination_mgr {
 	JOCTET* next_output_byte; /* => next byte to write in buffer */
 	size_t free_in_buffer;	  /* # of byte spaces remaining in buffer */
 
-	JMETHOD(void, init_destination, (j_compress_ptr cinfo));
-	JMETHOD(boolean, empty_output_buffer, (j_compress_ptr cinfo));
-	JMETHOD(void, term_destination, (j_compress_ptr cinfo));
+	JMETHOD(
+		void,
+		init_destination,
+		(j_compress_ptr cinfo)
+	);
+	JMETHOD(
+		boolean,
+		empty_output_buffer,
+		(j_compress_ptr cinfo)
+	);
+	JMETHOD(
+		void,
+		term_destination,
+		(j_compress_ptr cinfo)
+	);
 };
 
 /* Data source object for decompression */
@@ -767,11 +805,31 @@ struct jpeg_source_mgr {
 	const JOCTET* next_input_byte; /* => next byte to read from buffer */
 	size_t bytes_in_buffer;	       /* # of bytes remaining in buffer */
 
-	JMETHOD(void, init_source, (j_decompress_ptr cinfo));
-	JMETHOD(boolean, fill_input_buffer, (j_decompress_ptr cinfo));
-	JMETHOD(void, skip_input_data, (j_decompress_ptr cinfo, long num_bytes));
-	JMETHOD(boolean, resync_to_restart, (j_decompress_ptr cinfo, int desired));
-	JMETHOD(void, term_source, (j_decompress_ptr cinfo));
+	JMETHOD(
+		void,
+		init_source,
+		(j_decompress_ptr cinfo)
+	);
+	JMETHOD(
+		boolean,
+		fill_input_buffer,
+		(j_decompress_ptr cinfo)
+	);
+	JMETHOD(
+		void,
+		skip_input_data,
+		(j_decompress_ptr cinfo, long num_bytes)
+	);
+	JMETHOD(
+		boolean,
+		resync_to_restart,
+		(j_decompress_ptr cinfo, int desired)
+	);
+	JMETHOD(
+		void,
+		term_source,
+		(j_decompress_ptr cinfo)
+	);
 };
 
 /* Memory manager object.
@@ -794,57 +852,85 @@ typedef struct jvirt_barray_control* jvirt_barray_ptr;
 
 struct jpeg_memory_mgr {
 	/* Method pointers */
-	JMETHOD(void*,
+	JMETHOD(
+		void*,
 		alloc_small,
-		(j_common_ptr cinfo, int pool_id, size_t sizeofobject));
-	JMETHOD(void FAR*,
+		(j_common_ptr cinfo, int pool_id, size_t sizeofobject)
+	);
+	JMETHOD(
+		void FAR*,
 		alloc_large,
-		(j_common_ptr cinfo, int pool_id, size_t sizeofobject));
-	JMETHOD(JSAMPARRAY,
+		(j_common_ptr cinfo, int pool_id, size_t sizeofobject)
+	);
+	JMETHOD(
+		JSAMPARRAY,
 		alloc_sarray,
 		(j_common_ptr cinfo,
 			int pool_id,
 			JDIMENSION samplesperrow,
-			JDIMENSION numrows));
-	JMETHOD(JBLOCKARRAY,
+			JDIMENSION numrows)
+	);
+	JMETHOD(
+		JBLOCKARRAY,
 		alloc_barray,
 		(j_common_ptr cinfo,
 			int pool_id,
 			JDIMENSION blocksperrow,
-			JDIMENSION numrows));
-	JMETHOD(jvirt_sarray_ptr,
+			JDIMENSION numrows)
+	);
+	JMETHOD(
+		jvirt_sarray_ptr,
 		request_virt_sarray,
 		(j_common_ptr cinfo,
 			int pool_id,
 			boolean pre_zero,
 			JDIMENSION samplesperrow,
 			JDIMENSION numrows,
-			JDIMENSION maxaccess));
-	JMETHOD(jvirt_barray_ptr,
+			JDIMENSION maxaccess)
+	);
+	JMETHOD(
+		jvirt_barray_ptr,
 		request_virt_barray,
 		(j_common_ptr cinfo,
 			int pool_id,
 			boolean pre_zero,
 			JDIMENSION blocksperrow,
 			JDIMENSION numrows,
-			JDIMENSION maxaccess));
-	JMETHOD(void, realize_virt_arrays, (j_common_ptr cinfo));
-	JMETHOD(JSAMPARRAY,
+			JDIMENSION maxaccess)
+	);
+	JMETHOD(
+		void,
+		realize_virt_arrays,
+		(j_common_ptr cinfo)
+	);
+	JMETHOD(
+		JSAMPARRAY,
 		access_virt_sarray,
 		(j_common_ptr cinfo,
 			jvirt_sarray_ptr ptr,
 			JDIMENSION start_row,
 			JDIMENSION num_rows,
-			boolean writable));
-	JMETHOD(JBLOCKARRAY,
+			boolean writable)
+	);
+	JMETHOD(
+		JBLOCKARRAY,
 		access_virt_barray,
 		(j_common_ptr cinfo,
 			jvirt_barray_ptr ptr,
 			JDIMENSION start_row,
 			JDIMENSION num_rows,
-			boolean writable));
-	JMETHOD(void, free_pool, (j_common_ptr cinfo, int pool_id));
-	JMETHOD(void, self_destruct, (j_common_ptr cinfo));
+			boolean writable)
+	);
+	JMETHOD(
+		void,
+		free_pool,
+		(j_common_ptr cinfo, int pool_id)
+	);
+	JMETHOD(
+		void,
+		self_destruct,
+		(j_common_ptr cinfo)
+	);
 
 	/* Limit on memory allocation for this JPEG object.  (Note that this is
 	 * merely advisory, not a guaranteed maximum; it only affects the space
@@ -860,7 +946,11 @@ struct jpeg_memory_mgr {
 /* Routine signature for application-supplied marker processing methods.
  * Need not pass marker code since it is stored in cinfo->unread_marker.
  */
-typedef JMETHOD(boolean, jpeg_marker_parser_method, (j_decompress_ptr cinfo));
+typedef JMETHOD(
+	boolean,
+	jpeg_marker_parser_method,
+	(j_decompress_ptr cinfo)
+);
 
 /* Declarations for routines called by application.
  * The JPP macro hides prototype parameters from compilers that can't cope.

@@ -57,11 +57,26 @@ typedef struct {
 	sha1_32t wbuf[16];
 } sha1_ctx;
 
-void sha1_compile(sha1_ctx ctx[1]);
+void sha1_compile(
+	sha1_ctx ctx[1]
+);
 
-void sha1_begin(sha1_ctx ctx[1]);
-void sha1_hash(const unsigned char data[], unsigned long len, sha1_ctx ctx[1]);
-void sha1_end(unsigned char hval[], sha1_ctx ctx[1]);
-void sha1(unsigned char hval[], const unsigned char data[], unsigned long len);
+void sha1_begin(
+	sha1_ctx ctx[1]
+);
+void sha1_hash(
+	const unsigned char data[],
+	unsigned long len,
+	sha1_ctx ctx[1]
+);
+void sha1_end(
+	unsigned char hval[],
+	sha1_ctx ctx[1]
+);
+void sha1(
+	unsigned char hval[],
+	const unsigned char data[],
+	unsigned long len
+);
 
 #endif

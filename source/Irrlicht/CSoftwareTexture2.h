@@ -29,7 +29,11 @@ public:
 		IS_RENDERTARGET = 2,
 		NP2_SIZE = 4,
 	};
-	CSoftwareTexture2(IImage* surface, const io::path& name, u32 flags);
+	CSoftwareTexture2(
+		IImage* surface,
+		const io::path& name,
+		u32 flags
+	);
 
 	//! destructor
 	virtual ~CSoftwareTexture2();
@@ -67,7 +71,10 @@ public:
 	//! returns texture surface
 	virtual CImage* getTexture() const { return MipMap[MipMapLOD]; }
 
-	virtual void regenerateMipMapLevels(void* data = 0, u32 layer = 0) _IRR_OVERRIDE_;
+	virtual void regenerateMipMapLevels(
+		void* data = 0,
+		u32 layer = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	f32 OrigImageDataSizeInPixels;
@@ -84,12 +91,16 @@ interface for a Video Driver dependent render target.
 */
 class CSoftwareRenderTarget2 : public IRenderTarget {
 public:
-	CSoftwareRenderTarget2(CBurningVideoDriver* driver);
+	CSoftwareRenderTarget2(
+		CBurningVideoDriver* driver
+	);
 	virtual ~CSoftwareRenderTarget2();
 
-	virtual void setTexture(const core::array<ITexture*>& texture,
+	virtual void setTexture(
+		const core::array<ITexture*>& texture,
 		ITexture* depthStencil,
-		const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
+		const core::array<E_CUBE_SURFACE>& cubeSurfaces
+	) _IRR_OVERRIDE_;
 
 	ITexture* getTexture() const;
 

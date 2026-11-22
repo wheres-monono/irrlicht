@@ -17,8 +17,10 @@ class IContextManager : public virtual IReferenceCounted {
 public:
 	//! Initialize manager with device creation parameters and device window (passed
 	//! as exposed video data)
-	virtual bool initialize(const SIrrlichtCreationParameters& params,
-		const SExposedVideoData& data) = 0;
+	virtual bool initialize(
+		const SIrrlichtCreationParameters& params,
+		const SExposedVideoData& data
+	) = 0;
 
 	//! Terminate manager, any cleanup that is left over. Manager needs a new
 	//! initialize to be usable again
@@ -41,7 +43,7 @@ public:
 
 	//! Change render context, disable old and activate new defined by videoData
 	//\param restorePrimaryOnZero When true: restore original driver context when
-	//videoData is set to 0 values.
+	// videoData is set to 0 values.
 	//                            When false: resets the context when videoData is set
 	//                            to 0 values.
 	/** This is mostly used internally by IVideoDriver::beginScene().
@@ -50,8 +52,10 @@ public:
 	   activateContext(irr::video::SExposedVideoData()); New thread takes over context
 	   with: activateContext(videoDriver->getExposedVideoData()); Note that only 1
 	   thread at a time may access an OpenGL context.	*/
-	virtual bool activateContext(const SExposedVideoData& videoData,
-		bool restorePrimaryOnZero = false) = 0;
+	virtual bool activateContext(
+		const SExposedVideoData& videoData,
+		bool restorePrimaryOnZero = false
+	) = 0;
 
 	//! Swap buffers.
 	virtual bool swapBuffers() = 0;

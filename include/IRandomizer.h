@@ -15,7 +15,9 @@ class IRandomizer : public virtual IReferenceCounted {
 public:
 	//! resets the randomizer
 	/** \param value Initialization value (seed) */
-	virtual void reset(s32 value = 0x0f0f0f0f) = 0;
+	virtual void reset(
+		s32 value = 0x0f0f0f0f
+	) = 0;
 
 	//! generates a pseudo random number in the range 0..randMax()
 	virtual s32 rand() const = 0;

@@ -43,17 +43,24 @@ public:
 	/** \param fps Frames per second to play the animation with. If the amount is 0,
 	it is not animated. The actual speed is set in the scene node the mesh is
 	instantiated in.*/
-	virtual void setAnimationSpeed(f32 fps) _IRR_OVERRIDE_;
+	virtual void setAnimationSpeed(
+		f32 fps
+	) _IRR_OVERRIDE_;
 
 	//! returns the animated mesh based on a detail level (which is ignored)
-	virtual IMesh* getMesh(s32 frame,
+	virtual IMesh* getMesh(
+		s32 frame,
 		s32 detailLevel = 255,
 		s32 startFrameLoop = -1,
-		s32 endFrameLoop = -1) _IRR_OVERRIDE_;
+		s32 endFrameLoop = -1
+	) _IRR_OVERRIDE_;
 
 	//! Animates this mesh's joints based on frame input
 	//! blend: {0-old position, 1-New position}
-	virtual void animateMesh(f32 frame, f32 blend) _IRR_OVERRIDE_;
+	virtual void animateMesh(
+		f32 frame,
+		f32 blend
+	) _IRR_OVERRIDE_;
 
 	//! Preforms a software skin on this mesh based of joint positions
 	virtual void skinMesh() _IRR_OVERRIDE_;
@@ -62,31 +69,42 @@ public:
 	virtual u32 getMeshBufferCount() const _IRR_OVERRIDE_;
 
 	//! returns pointer to a mesh buffer
-	virtual IMeshBuffer* getMeshBuffer(u32 nr) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		u32 nr
+	) const _IRR_OVERRIDE_;
 
 	//! Returns pointer to a mesh buffer which fits a material
 	/** \param material: material to search for
 	\return Returns the pointer to the mesh buffer or
 	NULL if there is no such mesh buffer. */
-	virtual IMeshBuffer*
-	getMeshBuffer(const video::SMaterial& material) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		const video::SMaterial& material
+	) const _IRR_OVERRIDE_;
 
 	//! returns an axis aligned bounding box
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
 	//! set user axis aligned bounding box
-	virtual void setBoundingBox(const core::aabbox3df& box) _IRR_OVERRIDE_;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) _IRR_OVERRIDE_;
 
 	//! sets a flag of all contained materials to a new value
-	virtual void setMaterialFlag(video::E_MATERIAL_FLAG flag,
-		bool newvalue) _IRR_OVERRIDE_;
+	virtual void setMaterialFlag(
+		video::E_MATERIAL_FLAG flag,
+		bool newvalue
+	) _IRR_OVERRIDE_;
 
 	//! set the hardware mapping hint, for driver
-	virtual void setHardwareMappingHint(E_HARDWARE_MAPPING newMappingHint,
-		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setHardwareMappingHint(
+		E_HARDWARE_MAPPING newMappingHint,
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 	//! flags the meshbuffer as changed, reloads hardware buffers
-	virtual void setDirty(E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setDirty(
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 	//! Returns the type of the animated mesh.
 	virtual E_ANIMATED_MESH_TYPE getMeshType() const _IRR_OVERRIDE_;
@@ -95,21 +113,31 @@ public:
 	virtual u32 getJointCount() const _IRR_OVERRIDE_;
 
 	//! Gets the name of a joint.
-	virtual const c8* getJointName(u32 number) const _IRR_OVERRIDE_;
+	virtual const c8* getJointName(
+		u32 number
+	) const _IRR_OVERRIDE_;
 
 	//! Gets a joint number from its name
-	virtual s32 getJointNumber(const c8* name) const _IRR_OVERRIDE_;
+	virtual s32 getJointNumber(
+		const c8* name
+	) const _IRR_OVERRIDE_;
 
 	//! uses animation from another mesh
-	virtual bool useAnimationFrom(const ISkinnedMesh* mesh) _IRR_OVERRIDE_;
+	virtual bool useAnimationFrom(
+		const ISkinnedMesh* mesh
+	) _IRR_OVERRIDE_;
 
 	//! Update Normals when Animating
 	//! False= Don't (default)
 	//! True = Update normals, slower
-	virtual void updateNormalsWhenAnimating(bool on) _IRR_OVERRIDE_;
+	virtual void updateNormalsWhenAnimating(
+		bool on
+	) _IRR_OVERRIDE_;
 
 	//! Sets Interpolation Mode
-	virtual void setInterpolationMode(E_INTERPOLATION_MODE mode) _IRR_OVERRIDE_;
+	virtual void setInterpolationMode(
+		E_INTERPOLATION_MODE mode
+	) _IRR_OVERRIDE_;
 
 	//! Convertes the mesh to contain tangent information
 	virtual void convertMeshToTangents() _IRR_OVERRIDE_;
@@ -118,7 +146,9 @@ public:
 	virtual bool isStatic() _IRR_OVERRIDE_;
 
 	//! (This feature is not implemented in irrlicht yet)
-	virtual bool setHardwareSkinning(bool on) _IRR_OVERRIDE_;
+	virtual bool setHardwareSkinning(
+		bool on
+	) _IRR_OVERRIDE_;
 
 	// Interface for the mesh loaders (finalize should lock these functions, and they
 	// should have some prefix like loader_ these functions will use the needed
@@ -140,26 +170,41 @@ public:
 	virtual SSkinMeshBuffer* addMeshBuffer() _IRR_OVERRIDE_;
 
 	//! Adds a new joint to the mesh, access it as last one
-	virtual SJoint* addJoint(SJoint* parent = 0) _IRR_OVERRIDE_;
+	virtual SJoint* addJoint(
+		SJoint* parent = 0
+	) _IRR_OVERRIDE_;
 
 	//! Adds a new position key to the mesh, access it as last one
-	virtual SPositionKey* addPositionKey(SJoint* joint) _IRR_OVERRIDE_;
+	virtual SPositionKey* addPositionKey(
+		SJoint* joint
+	) _IRR_OVERRIDE_;
 	//! Adds a new rotation key to the mesh, access it as last one
-	virtual SRotationKey* addRotationKey(SJoint* joint) _IRR_OVERRIDE_;
+	virtual SRotationKey* addRotationKey(
+		SJoint* joint
+	) _IRR_OVERRIDE_;
 	//! Adds a new scale key to the mesh, access it as last one
-	virtual SScaleKey* addScaleKey(SJoint* joint) _IRR_OVERRIDE_;
+	virtual SScaleKey* addScaleKey(
+		SJoint* joint
+	) _IRR_OVERRIDE_;
 
 	//! Adds a new weight to the mesh, access it as last one
-	virtual SWeight* addWeight(SJoint* joint) _IRR_OVERRIDE_;
+	virtual SWeight* addWeight(
+		SJoint* joint
+	) _IRR_OVERRIDE_;
 
-	virtual void updateBoundingBox(void);
+	virtual void updateBoundingBox(
+		void
+	);
 
 	//! Recovers the joints from the mesh
-	void recoverJointsFromMesh(core::array<IBoneSceneNode*>& jointChildSceneNodes);
+	void recoverJointsFromMesh(
+		core::array<IBoneSceneNode*>& jointChildSceneNodes
+	);
 
 	//! Tranfers the joint data to the mesh
-	void
-	transferJointsToMesh(const core::array<IBoneSceneNode*>& jointChildSceneNodes);
+	void transferJointsToMesh(
+		const core::array<IBoneSceneNode*>& jointChildSceneNodes
+	);
 
 	//! Tranfers the joint hints to the mesh
 	void transferOnlyJointsHintsToMesh(
@@ -167,9 +212,11 @@ public:
 	);
 
 	//! Creates an array of joints from this mesh as children of node
-	void addJoints(core::array<IBoneSceneNode*>& jointChildSceneNodes,
+	void addJoints(
+		core::array<IBoneSceneNode*>& jointChildSceneNodes,
 		IAnimatedMeshSceneNode* node,
-		ISceneManager* smgr);
+		ISceneManager* smgr
+	);
 
 private:
 	void checkForAnimation();
@@ -178,22 +225,34 @@ private:
 
 	void buildAllLocalAnimatedMatrices();
 
-	void buildAllGlobalAnimatedMatrices(SJoint* Joint = 0, SJoint* ParentJoint = 0);
+	void buildAllGlobalAnimatedMatrices(
+		SJoint* Joint = 0,
+		SJoint* ParentJoint = 0
+	);
 
-	void getFrameData(f32 frame,
+	void getFrameData(
+		f32 frame,
 		SJoint* Node,
 		core::vector3df& position,
 		s32& positionHint,
 		core::vector3df& scale,
 		s32& scaleHint,
 		core::quaternion& rotation,
-		s32& rotationHint);
+		s32& rotationHint
+	);
 
-	void calculateGlobalMatrices(SJoint* Joint, SJoint* ParentJoint);
+	void calculateGlobalMatrices(
+		SJoint* Joint,
+		SJoint* ParentJoint
+	);
 
-	void skinJoint(SJoint* Joint, SJoint* ParentJoint);
+	void skinJoint(
+		SJoint* Joint,
+		SJoint* ParentJoint
+	);
 
-	void calculateTangents(core::vector3df& normal,
+	void calculateTangents(
+		core::vector3df& normal,
 		core::vector3df& tangent,
 		core::vector3df& binormal,
 		const core::vector3df& vt1,
@@ -201,7 +260,8 @@ private:
 		const core::vector3df& vt3,
 		const core::vector2df& tc1,
 		const core::vector2df& tc2,
-		const core::vector2df& tc3);
+		const core::vector2df& tc3
+	);
 
 	core::array<SSkinMeshBuffer*>*
 		SkinningBuffers; // Meshbuffer to skin, default is to skin localBuffers

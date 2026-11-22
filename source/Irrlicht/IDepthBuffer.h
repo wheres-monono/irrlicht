@@ -22,7 +22,9 @@ public:
 	virtual void clear() = 0;
 
 	//! sets the new size of the zbuffer
-	virtual void setSize(const core::dimension2d<u32>& size) = 0;
+	virtual void setSize(
+		const core::dimension2d<u32>& size
+	) = 0;
 
 	//! returns the size of the zbuffer
 	virtual const core::dimension2d<u32>& getSize() const = 0;
@@ -38,7 +40,9 @@ public:
 };
 
 //! creates a ZBuffer
-IDepthBuffer* createDepthBuffer(const core::dimension2d<u32>& size);
+IDepthBuffer* createDepthBuffer(
+	const core::dimension2d<u32>& size
+);
 
 class IStencilBuffer : public virtual IReferenceCounted {
 public:
@@ -49,7 +53,9 @@ public:
 	virtual void clear() = 0;
 
 	//! sets the new size of the zbuffer
-	virtual void setSize(const core::dimension2d<u32>& size) = 0;
+	virtual void setSize(
+		const core::dimension2d<u32>& size
+	) = 0;
 
 	//! returns the size of the zbuffer
 	virtual const core::dimension2d<u32>& getSize() const = 0;
@@ -65,7 +71,9 @@ public:
 };
 
 //! creates a Stencil Buffer
-IStencilBuffer* createStencilBuffer(const core::dimension2d<u32>& size);
+IStencilBuffer* createStencilBuffer(
+	const core::dimension2d<u32>& size
+);
 
 } // end namespace video
 } // end namespace irr

@@ -79,7 +79,7 @@ struct SMD3Header {
 	s32 frameStart;	 // starting position of frame-structur
 	s32 tagStart;	 // starting position of tag-structures
 	s32 tagEnd;	 // ending position of tag-structures/starting position of
-		    // mesh-structures
+			 // mesh-structures
 	s32 fileSize;
 } PACK_STRUCT;
 
@@ -273,11 +273,18 @@ struct SMD3Mesh : public IReferenceCounted {
 class IAnimatedMeshMD3 : public IAnimatedMesh {
 public:
 	//! tune how many frames you want to render in between.
-	virtual void setInterpolationShift(u32 shift, u32 loopMode) = 0;
+	virtual void setInterpolationShift(
+		u32 shift,
+		u32 loopMode
+	) = 0;
 
 	//! get the tag list of the mesh.
-	virtual SMD3QuaternionTagList*
-	getTagList(s32 frame, s32 detailLevel, s32 startFrameLoop, s32 endFrameLoop) = 0;
+	virtual SMD3QuaternionTagList* getTagList(
+		s32 frame,
+		s32 detailLevel,
+		s32 startFrameLoop,
+		s32 endFrameLoop
+	) = 0;
 
 	//! get the original md3 mesh.
 	virtual SMD3Mesh* getOriginalMesh() = 0;

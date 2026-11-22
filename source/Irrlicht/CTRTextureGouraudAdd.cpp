@@ -15,13 +15,17 @@ namespace video
 class CTRTextureGouraudAdd : public CTRTextureGouraud {
 public:
 	//! constructor
-	CTRTextureGouraudAdd(IZBuffer* zbuffer);
+	CTRTextureGouraudAdd(
+		IZBuffer* zbuffer
+	);
 
 	//! draws an indexed triangle list
-	virtual void drawIndexedTriangleList(S2DVertex* vertices,
+	virtual void drawIndexedTriangleList(
+		S2DVertex* vertices,
 		s32 vertexCount,
 		const u16* indexList,
-		s32 triangleCount) _IRR_OVERRIDE_;
+		s32 triangleCount
+	) _IRR_OVERRIDE_;
 
 protected:
 };

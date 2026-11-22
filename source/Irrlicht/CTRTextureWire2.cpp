@@ -73,17 +73,30 @@ namespace video
 class CTRTextureWire2 : public IBurningShader {
 public:
 	//! constructor
-	CTRTextureWire2(CBurningVideoDriver* driver);
+	CTRTextureWire2(
+		CBurningVideoDriver* driver
+	);
 
 	//! draws an indexed triangle list
-	virtual void drawTriangle(const s4DVertex* a,
+	virtual void drawTriangle(
+		const s4DVertex* a,
 		const s4DVertex* b,
-		const s4DVertex* c) _IRR_OVERRIDE_;
-	virtual void drawLine(const s4DVertex* a, const s4DVertex* b) _IRR_OVERRIDE_;
+		const s4DVertex* c
+	) _IRR_OVERRIDE_;
+	virtual void drawLine(
+		const s4DVertex* a,
+		const s4DVertex* b
+	) _IRR_OVERRIDE_;
 
 private:
-	void renderAlphaLine(const s4DVertex* a, const s4DVertex* b) const;
-	void renderLine(const s4DVertex* a, const s4DVertex* b) const;
+	void renderAlphaLine(
+		const s4DVertex* a,
+		const s4DVertex* b
+	) const;
+	void renderLine(
+		const s4DVertex* a,
+		const s4DVertex* b
+	) const;
 };
 
 //! constructor

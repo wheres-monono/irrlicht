@@ -71,7 +71,8 @@ public:
 	occurred, e.g. if a shader program could not be compiled or a compile
 	target is not reachable. The error strings are then printed to the
 	error log and can be caught with a custom event receiver. */
-	virtual s32 addHighLevelShaderMaterial(const c8* vertexShaderProgram,
+	virtual s32 addHighLevelShaderMaterial(
+		const c8* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		const c8* pixelShaderProgram,
@@ -85,7 +86,8 @@ public:
 		u32 verticesOut = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 
 	//! convenience function for use without geometry shaders
 	s32 addHighLevelShaderMaterial(
@@ -186,8 +188,8 @@ public:
 	occurred, e.g. if a shader program could not be compiled or a compile
 	target is not reachable. The error strings are then printed to the
 	error log and can be caught with a custom event receiver. */
-	virtual s32
-	addHighLevelShaderMaterialFromFiles(const io::path& vertexShaderProgramFileName,
+	virtual s32 addHighLevelShaderMaterialFromFiles(
+		const io::path& vertexShaderProgramFileName,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		const io::path& pixelShaderProgramFileName,
@@ -201,7 +203,8 @@ public:
 		u32 verticesOut = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 
 	//! convenience function for use without geometry shaders
 	s32 addHighLevelShaderMaterialFromFiles(
@@ -300,8 +303,8 @@ public:
 	error occurred, e.g. if a shader program could not be compiled or a
 	compile target is not reachable. The error strings are then printed to
 	the error log and can be caught with a custom event receiver. */
-	virtual s32
-	addHighLevelShaderMaterialFromFiles(io::IReadFile* vertexShaderProgram,
+	virtual s32 addHighLevelShaderMaterialFromFiles(
+		io::IReadFile* vertexShaderProgram,
 		const c8* vertexShaderEntryPointName,
 		E_VERTEX_SHADER_TYPE vsCompileTarget,
 		io::IReadFile* pixelShaderProgram,
@@ -315,7 +318,8 @@ public:
 		u32 verticesOut = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 
 	//! convenience function for use without geometry shaders
 	s32 addHighLevelShaderMaterialFromFiles(
@@ -370,11 +374,13 @@ public:
 	error occurred. -1 is returned for example if a vertex or pixel shader
 	program could not be compiled, the error strings are then printed out
 	into the error log, and can be caught with a custom event receiver. */
-	virtual s32 addShaderMaterial(const c8* vertexShaderProgram = 0,
+	virtual s32 addShaderMaterial(
+		const c8* vertexShaderProgram = 0,
 		const c8* pixelShaderProgram = 0,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 
 	//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
 	/** \param vertexShaderProgram Text file containing the source of the
@@ -394,11 +400,13 @@ public:
 	error occurred. -1 is returned for example if a vertex or pixel shader
 	program could not be compiled, the error strings are then printed out
 	into the error log, and can be caught with a custom event receiver. */
-	virtual s32 addShaderMaterialFromFiles(io::IReadFile* vertexShaderProgram,
+	virtual s32 addShaderMaterialFromFiles(
+		io::IReadFile* vertexShaderProgram,
 		io::IReadFile* pixelShaderProgram,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 
 	//! Like IGPUProgrammingServices::addShaderMaterial(), but loads from files.
 	/** \param vertexShaderProgramFileName Text file name containing the
@@ -419,12 +427,13 @@ public:
 	error occurred. -1 is returned for example if a vertex or pixel shader
 	program could not be compiled, the error strings are then printed out
 	into the error log, and can be caught with a custom event receiver. */
-	virtual s32
-	addShaderMaterialFromFiles(const io::path& vertexShaderProgramFileName,
+	virtual s32 addShaderMaterialFromFiles(
+		const io::path& vertexShaderProgramFileName,
 		const io::path& pixelShaderProgramFileName,
 		IShaderConstantSetCallBack* callback = 0,
 		E_MATERIAL_TYPE baseMaterial = video::EMT_SOLID,
-		s32 userData = 0) = 0;
+		s32 userData = 0
+	) = 0;
 };
 
 } // end namespace video

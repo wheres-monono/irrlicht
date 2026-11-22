@@ -24,9 +24,11 @@ public:
 	//! \param destPos: Position of the image to draw
 	//! \param clip: Optional pointer to a rectangle against which the text will be
 	//! clipped. If the pointer is null, no clipping will be done.
-	virtual void draw(s32 index,
+	virtual void draw(
+		s32 index,
 		const core::position2d<s32>& destPos,
-		const core::rect<s32>* clip = 0) = 0;
+		const core::rect<s32>* clip = 0
+	) = 0;
 
 	//! Returns the count of Images in the list.
 	//! \return Returns the count of Images in the list.

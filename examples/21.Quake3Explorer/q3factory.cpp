@@ -417,7 +417,7 @@ void Q3ModelFactory(
 				if (itemElement->special & SPECIAL_SFX_BOUNCE) {
 					// anim = smgr->createFlyStraightAnimator (
 					//	p, p + vector3df ( 0.f, 60.f, 0.f ), 1000,
-					//true, true );
+					// true, true );
 					anim = smgr->createFlyCircleAnimator(
 						p + vector3df(0.f, 20.f, 0.f), 20.f,
 						0.005f, vector3df(1.f, 0.f, 0.f),

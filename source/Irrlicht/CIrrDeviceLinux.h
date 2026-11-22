@@ -47,7 +47,9 @@ namespace irr
 class CIrrDeviceLinux : public CIrrDeviceStub, public video::IImagePresenter {
 public:
 	//! constructor
-	CIrrDeviceLinux(const SIrrlichtCreationParameters& param);
+	CIrrDeviceLinux(
+		const SIrrlichtCreationParameters& param
+	);
 
 	//! destructor
 	virtual ~CIrrDeviceLinux();
@@ -61,10 +63,15 @@ public:
 	virtual void yield() _IRR_OVERRIDE_;
 
 	//! Pause execution and let other processes to run for a specified amount of time.
-	virtual void sleep(u32 timeMs, bool pauseTimer) _IRR_OVERRIDE_;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer
+	) _IRR_OVERRIDE_;
 
 	//! sets the caption of the window
-	virtual void setWindowCaption(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns if window is active. if not, nothing need to be drawn
 	virtual bool isWindowActive() const _IRR_OVERRIDE_;
@@ -79,9 +86,11 @@ public:
 	virtual video::ECOLOR_FORMAT getColorFormat() const _IRR_OVERRIDE_;
 
 	//! presents a surface in the client area
-	virtual bool present(video::IImage* surface,
+	virtual bool present(
+		video::IImage* surface,
 		void* windowId = 0,
-		core::rect<s32>* src = 0) _IRR_OVERRIDE_;
+		core::rect<s32>* src = 0
+	) _IRR_OVERRIDE_;
 
 	//! notifies the device that it should close itself
 	virtual void closeDevice() _IRR_OVERRIDE_;
@@ -91,11 +100,14 @@ public:
 	virtual video::IVideoModeList* getVideoModeList() _IRR_OVERRIDE_;
 
 	//! Sets if the window should be resizable in windowed mode.
-	virtual void setResizable(bool resize = false) _IRR_OVERRIDE_;
+	virtual void setResizable(
+		bool resize = false
+	) _IRR_OVERRIDE_;
 
 	//! Resize the render window.
-	virtual void
-	setWindowSize(const irr::core::dimension2d<u32>& size) _IRR_OVERRIDE_;
+	virtual void setWindowSize(
+		const irr::core::dimension2d<u32>& size
+	) _IRR_OVERRIDE_;
 
 	//! Minimizes the window.
 	virtual void minimizeWindow() _IRR_OVERRIDE_;
@@ -110,22 +122,27 @@ public:
 	virtual core::position2di getWindowPosition() _IRR_OVERRIDE_;
 
 	//! Activate any joysticks, and generate events for them.
-	virtual bool
-	activateJoysticks(core::array<SJoystickInfo>& joystickInfo) _IRR_OVERRIDE_;
+	virtual bool activateJoysticks(
+		core::array<SJoystickInfo>& joystickInfo
+	) _IRR_OVERRIDE_;
 
 	//! Set the current Gamma Value for the Display
-	virtual bool setGammaRamp(f32 red,
+	virtual bool setGammaRamp(
+		f32 red,
 		f32 green,
 		f32 blue,
 		f32 brightness,
-		f32 contrast) _IRR_OVERRIDE_;
+		f32 contrast
+	) _IRR_OVERRIDE_;
 
 	//! Get the current Gamma Value for the Display
-	virtual bool getGammaRamp(f32& red,
+	virtual bool getGammaRamp(
+		f32& red,
 		f32& green,
 		f32& blue,
 		f32& brightness,
-		f32& contrast) _IRR_OVERRIDE_;
+		f32& contrast
+	) _IRR_OVERRIDE_;
 
 	//! gets text from the clipboard
 	//! \return Returns 0 if no string is in there.
@@ -134,7 +151,9 @@ public:
 	//! copies text to the clipboard
 	//! This sets the clipboard selection and _not_ the primary selection which you
 	//! have on X on the middle mouse button.
-	virtual void copyToClipboard(const c8* text) const;
+	virtual void copyToClipboard(
+		const c8* text
+	) const;
 
 	//! Remove all messages pending in the system message loop
 	virtual void clearSystemMessages() _IRR_OVERRIDE_;
@@ -144,16 +163,22 @@ public:
 
 #ifdef _IRR_COMPILE_WITH_X11_
 	// convert an Irrlicht texture to a X11 cursor
-	Cursor TextureToCursor(irr::video::ITexture* tex,
+	Cursor TextureToCursor(
+		irr::video::ITexture* tex,
 		const core::rect<s32>& sourceRect,
-		const core::position2d<s32>& hotspot);
-	Cursor TextureToMonochromeCursor(irr::video::ITexture* tex,
+		const core::position2d<s32>& hotspot
+	);
+	Cursor TextureToMonochromeCursor(
+		irr::video::ITexture* tex,
 		const core::rect<s32>& sourceRect,
-		const core::position2d<s32>& hotspot);
+		const core::position2d<s32>& hotspot
+	);
 #ifdef _IRR_LINUX_XCURSOR_
-	Cursor TextureToARGBCursor(irr::video::ITexture* tex,
+	Cursor TextureToARGBCursor(
+		irr::video::ITexture* tex,
 		const core::rect<s32>& sourceRect,
-		const core::position2d<s32>& hotspot);
+		const core::position2d<s32>& hotspot
+	);
 #endif
 #endif
 
@@ -169,18 +194,25 @@ private:
 
 	void initXAtoms();
 
-	bool switchToFullscreen(bool reset = false);
+	bool switchToFullscreen(
+		bool reset = false
+	);
 
 #ifdef _IRR_COMPILE_WITH_X11_
 	bool createInputContext();
 	void destroyInputContext();
-	EKEY_CODE getKeyCode(XEvent& event);
+	EKEY_CODE getKeyCode(
+		XEvent& event
+	);
 #endif
 
 	//! Implementation of the linux cursor control
 	class CCursorControl : public gui::ICursorControl {
 	public:
-		CCursorControl(CIrrDeviceLinux* dev, bool null);
+		CCursorControl(
+			CIrrDeviceLinux* dev,
+			bool null
+		);
 
 		~CCursorControl();
 
@@ -303,7 +335,9 @@ private:
 		}
 
 		//! Sets the active cursor icon
-		virtual void setActiveIcon(gui::ECURSOR_ICON iconId) _IRR_OVERRIDE_;
+		virtual void setActiveIcon(
+			gui::ECURSOR_ICON iconId
+		) _IRR_OVERRIDE_;
 
 		//! Gets the currently active icon
 		virtual gui::ECURSOR_ICON getActiveIcon() const _IRR_OVERRIDE_ {
@@ -311,12 +345,15 @@ private:
 		}
 
 		//! Add a custom sprite as cursor icon.
-		virtual gui::ECURSOR_ICON
-		addIcon(const gui::SCursorSprite& icon) _IRR_OVERRIDE_;
+		virtual gui::ECURSOR_ICON addIcon(
+			const gui::SCursorSprite& icon
+		) _IRR_OVERRIDE_;
 
 		//! replace the given cursor icon.
-		virtual void changeIcon(gui::ECURSOR_ICON iconId,
-			const gui::SCursorSprite& icon) _IRR_OVERRIDE_;
+		virtual void changeIcon(
+			gui::ECURSOR_ICON iconId,
+			const gui::SCursorSprite& icon
+		) _IRR_OVERRIDE_;
 
 		//! Return a system-specific size which is supported for cursors. Larger
 		//! icons will fail, smaller icons might work.

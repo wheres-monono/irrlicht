@@ -23,26 +23,42 @@ namespace video
 class COpenGLCacheHandler
 	: public COpenGLCoreCacheHandler<COpenGLDriver, COpenGLTexture> {
 public:
-	COpenGLCacheHandler(COpenGLDriver* driver);
+	COpenGLCacheHandler(
+		COpenGLDriver* driver
+	);
 	virtual ~COpenGLCacheHandler();
 
 	// Alpha calls.
 
-	void setAlphaFunc(GLenum mode, GLclampf ref);
+	void setAlphaFunc(
+		GLenum mode,
+		GLclampf ref
+	);
 
-	void setAlphaTest(bool enable);
+	void setAlphaTest(
+		bool enable
+	);
 
 	// Client state calls.
 
-	void setClientState(bool vertex, bool normal, bool color, bool texCoord0);
+	void setClientState(
+		bool vertex,
+		bool normal,
+		bool color,
+		bool texCoord0
+	);
 
 	// Matrix calls.
 
-	void setMatrixMode(GLenum mode);
+	void setMatrixMode(
+		GLenum mode
+	);
 
 	// Texture calls.
 
-	void setClientActiveTexture(GLenum texture);
+	void setClientActiveTexture(
+		GLenum texture
+	);
 
 protected:
 	GLenum AlphaMode;

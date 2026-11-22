@@ -71,7 +71,11 @@ public:
 
 	//! Constructor
 	/** \param path The path of this file archive */
-	CFileList(const io::path& path, bool ignoreCase, bool ignorePaths);
+	CFileList(
+		const io::path& path,
+		bool ignoreCase,
+		bool ignorePaths
+	);
 
 	//! Destructor
 	virtual ~CFileList();
@@ -82,11 +86,13 @@ public:
 	\param offset The offset where the file is stored in an archive
 	\param size The size of the file in bytes.
 	\param id The ID of the file in the archive which owns it */
-	virtual u32 addItem(const io::path& fullPath,
+	virtual u32 addItem(
+		const io::path& fullPath,
 		u32 offset,
 		u32 size,
 		bool isDirectory,
-		u32 id = 0) _IRR_OVERRIDE_;
+		u32 id = 0
+	) _IRR_OVERRIDE_;
 
 	//! Sorts the file list. You should call this after adding any items to the file
 	//! list
@@ -96,26 +102,40 @@ public:
 	virtual u32 getFileCount() const _IRR_OVERRIDE_;
 
 	//! Gets the name of a file in the list, based on an index.
-	virtual const io::path& getFileName(u32 index) const _IRR_OVERRIDE_;
+	virtual const io::path& getFileName(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Gets the full name of a file in the list, path included, based on an index.
-	virtual const io::path& getFullFileName(u32 index) const _IRR_OVERRIDE_;
+	virtual const io::path& getFullFileName(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Returns the ID of a file in the file list, based on an index.
-	virtual u32 getID(u32 index) const _IRR_OVERRIDE_;
+	virtual u32 getID(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Returns true if the file is a directory
-	virtual bool isDirectory(u32 index) const _IRR_OVERRIDE_;
+	virtual bool isDirectory(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Returns the size of a file
-	virtual u32 getFileSize(u32 index) const _IRR_OVERRIDE_;
+	virtual u32 getFileSize(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Returns the offset of a file
-	virtual u32 getFileOffset(u32 index) const _IRR_OVERRIDE_;
+	virtual u32 getFileOffset(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! Searches for a file or folder within the list, returns the index
-	virtual s32 findFile(const io::path& filename,
-		bool isFolder) const _IRR_OVERRIDE_;
+	virtual s32 findFile(
+		const io::path& filename,
+		bool isFolder
+	) const _IRR_OVERRIDE_;
 
 	//! Returns the base path of the file list
 	virtual const io::path& getPath() const _IRR_OVERRIDE_;

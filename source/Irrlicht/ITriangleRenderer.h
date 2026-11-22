@@ -33,32 +33,58 @@ enum ETriangleRenderer {
 class ITriangleRenderer : public virtual IReferenceCounted {
 public:
 	//! sets a render target
-	virtual void setRenderTarget(video::IImage* surface,
-		const core::rect<s32>& viewPort) = 0;
+	virtual void setRenderTarget(
+		video::IImage* surface,
+		const core::rect<s32>& viewPort
+	) = 0;
 
 	//! en or disables the backface culling
-	virtual void setBackfaceCulling(bool enabled = true) = 0;
+	virtual void setBackfaceCulling(
+		bool enabled = true
+	) = 0;
 
 	//! sets the Texture
-	virtual void setTexture(video::IImage* texture) = 0;
+	virtual void setTexture(
+		video::IImage* texture
+	) = 0;
 
 	//! draws an indexed triangle list
-	virtual void drawIndexedTriangleList(S2DVertex* vertices,
+	virtual void drawIndexedTriangleList(
+		S2DVertex* vertices,
 		s32 vertexCount,
 		const u16* indexList,
-		s32 triangleCount) = 0;
+		s32 triangleCount
+	) = 0;
 };
 
-ITriangleRenderer* createTriangleRendererTextureGouraud(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererTextureGouraudWire(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererGouraud(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererGouraudWire(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererTextureFlat(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererTextureFlatWire(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererFlat(IZBuffer* zbuffer);
-ITriangleRenderer* createTriangleRendererFlatWire(IZBuffer* zbuffer);
+ITriangleRenderer* createTriangleRendererTextureGouraud(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererTextureGouraudWire(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererGouraud(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererGouraudWire(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererTextureFlat(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererTextureFlatWire(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererFlat(
+	IZBuffer* zbuffer
+);
+ITriangleRenderer* createTriangleRendererFlatWire(
+	IZBuffer* zbuffer
+);
 ITriangleRenderer* createTriangleRendererTextureGouraudNoZ();
-ITriangleRenderer* createTriangleRendererTextureGouraudAdd(IZBuffer* zbuffer);
+ITriangleRenderer* createTriangleRendererTextureGouraudAdd(
+	IZBuffer* zbuffer
+);
 
 } // end namespace video
 } // end namespace irr

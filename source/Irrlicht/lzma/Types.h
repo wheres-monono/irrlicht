@@ -142,9 +142,21 @@ typedef struct {
 } ISeqInStream;
 
 /* it can return SZ_ERROR_INPUT_EOF */
-SRes SeqInStream_Read(ISeqInStream* stream, void* buf, size_t size);
-SRes SeqInStream_Read2(ISeqInStream* stream, void* buf, size_t size, SRes errorType);
-SRes SeqInStream_ReadByte(ISeqInStream* stream, Byte* buf);
+SRes SeqInStream_Read(
+	ISeqInStream* stream,
+	void* buf,
+	size_t size
+);
+SRes SeqInStream_Read2(
+	ISeqInStream* stream,
+	void* buf,
+	size_t size,
+	SRes errorType
+);
+SRes SeqInStream_ReadByte(
+	ISeqInStream* stream,
+	Byte* buf
+);
 
 typedef struct {
 	size_t (*Write)(void* p, const void* buf, size_t size);
@@ -172,12 +184,28 @@ typedef struct {
 	SRes (*Seek)(void* p, Int64* pos, ESzSeek origin);
 } ILookInStream;
 
-SRes LookInStream_LookRead(ILookInStream* stream, void* buf, size_t* size);
-SRes LookInStream_SeekTo(ILookInStream* stream, UInt64 offset);
+SRes LookInStream_LookRead(
+	ILookInStream* stream,
+	void* buf,
+	size_t* size
+);
+SRes LookInStream_SeekTo(
+	ILookInStream* stream,
+	UInt64 offset
+);
 
 /* reads via ILookInStream::Read */
-SRes LookInStream_Read2(ILookInStream* stream, void* buf, size_t size, SRes errorType);
-SRes LookInStream_Read(ILookInStream* stream, void* buf, size_t size);
+SRes LookInStream_Read2(
+	ILookInStream* stream,
+	void* buf,
+	size_t size,
+	SRes errorType
+);
+SRes LookInStream_Read(
+	ILookInStream* stream,
+	void* buf,
+	size_t size
+);
 
 #define LookToRead_BUF_SIZE (1 << 14)
 
@@ -189,22 +217,31 @@ typedef struct {
 	Byte buf[LookToRead_BUF_SIZE];
 } CLookToRead;
 
-void LookToRead_CreateVTable(CLookToRead* p, int lookahead);
-void LookToRead_Init(CLookToRead* p);
+void LookToRead_CreateVTable(
+	CLookToRead* p,
+	int lookahead
+);
+void LookToRead_Init(
+	CLookToRead* p
+);
 
 typedef struct {
 	ISeqInStream s;
 	ILookInStream* realStream;
 } CSecToLook;
 
-void SecToLook_CreateVTable(CSecToLook* p);
+void SecToLook_CreateVTable(
+	CSecToLook* p
+);
 
 typedef struct {
 	ISeqInStream s;
 	ILookInStream* realStream;
 } CSecToRead;
 
-void SecToRead_CreateVTable(CSecToRead* p);
+void SecToRead_CreateVTable(
+	CSecToRead* p
+);
 
 typedef struct {
 	SRes (*Progress)(void* p, UInt64 inSize, UInt64 outSize);

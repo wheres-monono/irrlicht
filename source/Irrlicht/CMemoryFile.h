@@ -21,19 +21,27 @@ namespace io
 class CMemoryReadFile : public IMemoryReadFile {
 public:
 	//! Constructor
-	CMemoryReadFile(const void* memory,
+	CMemoryReadFile(
+		const void* memory,
 		long len,
 		const io::path& fileName,
-		bool deleteMemoryWhenDropped);
+		bool deleteMemoryWhenDropped
+	);
 
 	//! Destructor
 	virtual ~CMemoryReadFile();
 
 	//! returns how much was read
-	virtual size_t read(void* buffer, size_t sizeToRead) _IRR_OVERRIDE_;
+	virtual size_t read(
+		void* buffer,
+		size_t sizeToRead
+	) _IRR_OVERRIDE_;
 
 	//! changes position in file, returns true if successful
-	virtual bool seek(long finalPos, bool relativeMovement = false) _IRR_OVERRIDE_;
+	virtual bool seek(
+		long finalPos,
+		bool relativeMovement = false
+	) _IRR_OVERRIDE_;
 
 	//! returns size of file
 	virtual long getSize() const _IRR_OVERRIDE_;
@@ -66,19 +74,27 @@ private:
 class CMemoryWriteFile : public IWriteFile {
 public:
 	//! Constructor
-	CMemoryWriteFile(void* memory,
+	CMemoryWriteFile(
+		void* memory,
 		long len,
 		const io::path& fileName,
-		bool deleteMemoryWhenDropped);
+		bool deleteMemoryWhenDropped
+	);
 
 	//! Destructor
 	virtual ~CMemoryWriteFile();
 
 	//! returns how much was written
-	virtual size_t write(const void* buffer, size_t sizeToWrite) _IRR_OVERRIDE_;
+	virtual size_t write(
+		const void* buffer,
+		size_t sizeToWrite
+	) _IRR_OVERRIDE_;
 
 	//! changes position in file, returns true if successful
-	virtual bool seek(long finalPos, bool relativeMovement = false) _IRR_OVERRIDE_;
+	virtual bool seek(
+		long finalPos,
+		bool relativeMovement = false
+	) _IRR_OVERRIDE_;
 
 	//! returns where in the file we are.
 	virtual long getPos() const _IRR_OVERRIDE_;

@@ -22,7 +22,10 @@ class CGUITreeViewNode : public IGUITreeViewNode {
 
 public:
 	//! constructor
-	CGUITreeViewNode(CGUITreeView* owner, CGUITreeViewNode* parent);
+	CGUITreeViewNode(
+		CGUITreeView* owner,
+		CGUITreeViewNode* parent
+	);
 
 	//! destructor
 	~CGUITreeViewNode();
@@ -37,13 +40,17 @@ public:
 	virtual const wchar_t* getText() const _IRR_OVERRIDE_ { return Text.c_str(); }
 
 	//! sets the text of the node
-	virtual void setText(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setText(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns the icon text of the node
 	virtual const wchar_t* getIcon() const _IRR_OVERRIDE_ { return Icon.c_str(); }
 
 	//! sets the icon text of the node
-	virtual void setIcon(const wchar_t* icon) _IRR_OVERRIDE_;
+	virtual void setIcon(
+		const wchar_t* icon
+	) _IRR_OVERRIDE_;
 
 	//! returns the image index of the node
 	virtual u32 getImageIndex() const _IRR_OVERRIDE_ { return ImageIndex; }
@@ -112,12 +119,14 @@ public:
 	//! \param data2 user data2 (IReferenceCounted*) of the new node
 	//! \return
 	//! returns the new node
-	virtual IGUITreeViewNode* addChildBack(const wchar_t* text,
+	virtual IGUITreeViewNode* addChildBack(
+		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) _IRR_OVERRIDE_;
+		IReferenceCounted* data2 = 0
+	) _IRR_OVERRIDE_;
 
 	//! Adds a new node before the first child node.
 	//! \param text text of the new node
@@ -129,12 +138,14 @@ public:
 	//! \param data2 user data2 (IReferenceCounted*) of the new node
 	//! \return
 	//! returns the new node
-	virtual IGUITreeViewNode* addChildFront(const wchar_t* text,
+	virtual IGUITreeViewNode* addChildFront(
+		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) _IRR_OVERRIDE_;
+		IReferenceCounted* data2 = 0
+	) _IRR_OVERRIDE_;
 
 	//! Adds a new node behind the other node.
 	//! The other node has also te be a child node from this node.
@@ -147,13 +158,15 @@ public:
 	//! \param data2 user data2 (IReferenceCounted*) of the new node
 	//! \return
 	//! returns the new node or 0 if other is no child node from this
-	virtual IGUITreeViewNode* insertChildAfter(IGUITreeViewNode* other,
+	virtual IGUITreeViewNode* insertChildAfter(
+		IGUITreeViewNode* other,
 		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) _IRR_OVERRIDE_;
+		IReferenceCounted* data2 = 0
+	) _IRR_OVERRIDE_;
 
 	//! Adds a new node before the other node.
 	//! The other node has also te be a child node from this node.
@@ -166,13 +179,15 @@ public:
 	//! \param data2 user data2 (IReferenceCounted*) of the new node
 	//! \return
 	//! returns the new node or 0 if other is no child node from this
-	virtual IGUITreeViewNode* insertChildBefore(IGUITreeViewNode* other,
+	virtual IGUITreeViewNode* insertChildBefore(
+		IGUITreeViewNode* other,
 		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) _IRR_OVERRIDE_;
+		IReferenceCounted* data2 = 0
+	) _IRR_OVERRIDE_;
 
 	//! Return the first child note from this node.
 	virtual IGUITreeViewNode* getFirstChild() const _IRR_OVERRIDE_;
@@ -191,25 +206,35 @@ public:
 	virtual IGUITreeViewNode* getNextVisible() const _IRR_OVERRIDE_;
 
 	//! Deletes a child node.
-	virtual bool deleteChild(IGUITreeViewNode* child) _IRR_OVERRIDE_;
+	virtual bool deleteChild(
+		IGUITreeViewNode* child
+	) _IRR_OVERRIDE_;
 
 	//! Moves a child node one position up.
-	virtual bool moveChildUp(IGUITreeViewNode* child) _IRR_OVERRIDE_;
+	virtual bool moveChildUp(
+		IGUITreeViewNode* child
+	) _IRR_OVERRIDE_;
 
 	//! Moves a child node one position down.
-	virtual bool moveChildDown(IGUITreeViewNode* child) _IRR_OVERRIDE_;
+	virtual bool moveChildDown(
+		IGUITreeViewNode* child
+	) _IRR_OVERRIDE_;
 
 	//! Returns true if the node is expanded (children are visible).
 	virtual bool getExpanded() const _IRR_OVERRIDE_ { return Expanded; }
 
 	//! Sets if the node is expanded.
-	virtual void setExpanded(bool expanded) _IRR_OVERRIDE_;
+	virtual void setExpanded(
+		bool expanded
+	) _IRR_OVERRIDE_;
 
 	//! Returns true if the node is currently selected.
 	virtual bool getSelected() const _IRR_OVERRIDE_;
 
 	//! Sets this node as selected.
-	virtual void setSelected(bool selected) _IRR_OVERRIDE_;
+	virtual void setSelected(
+		bool selected
+	) _IRR_OVERRIDE_;
 
 	//! Returns true if this node is the root node.
 	virtual bool isRoot() const _IRR_OVERRIDE_;
@@ -239,14 +264,16 @@ class CGUITreeView : public IGUITreeView {
 
 public:
 	//! constructor
-	CGUITreeView(IGUIEnvironment* environment,
+	CGUITreeView(
+		IGUIEnvironment* environment,
 		IGUIElement* parent,
 		s32 id,
 		core::rect<s32> rectangle,
 		bool clip = true,
 		bool drawBack = false,
 		bool scrollBarVertical = true,
-		bool scrollBarHorizontal = true);
+		bool scrollBarHorizontal = true
+	);
 
 	//! destructor
 	virtual ~CGUITreeView();
@@ -268,7 +295,9 @@ public:
 	}
 
 	//! called if an event happened.
-	virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+	virtual bool OnEvent(
+		const SEvent& event
+	) _IRR_OVERRIDE_;
 
 	//! draws the element and its children
 	virtual void draw() _IRR_OVERRIDE_;
@@ -278,15 +307,21 @@ public:
 	//! every list item. An icon is a string, displayed with the icon font. When using
 	//! the build-in-font of the Irrlicht engine as icon font, the icon strings
 	//! defined in GUIIcons.h can be used.
-	virtual void setIconFont(IGUIFont* font) _IRR_OVERRIDE_;
+	virtual void setIconFont(
+		IGUIFont* font
+	) _IRR_OVERRIDE_;
 
 	//! Sets a skin independent font.
 	/** \param font: New font to set or 0 to use the skin-font. */
-	virtual void setOverrideFont(IGUIFont* font = 0) _IRR_OVERRIDE_;
+	virtual void setOverrideFont(
+		IGUIFont* font = 0
+	) _IRR_OVERRIDE_;
 
 	//! Gets the override font (if any)
 	/** \return The override font (may be 0) */
-	virtual IGUIFont* getOverrideFont(void) const _IRR_OVERRIDE_;
+	virtual IGUIFont* getOverrideFont(
+		void
+	) const _IRR_OVERRIDE_;
 
 	//! Get the font which is used for drawing
 	/** This is the override font when one is set and the
@@ -295,7 +330,9 @@ public:
 
 	//! Sets the image list which should be used for the image and selected image of
 	//! every node. The default is 0 (no images).
-	virtual void setImageList(IGUIImageList* imageList) _IRR_OVERRIDE_;
+	virtual void setImageList(
+		IGUIImageList* imageList
+	) _IRR_OVERRIDE_;
 
 	//! Returns the image list which is used for the nodes.
 	virtual IGUIImageList* getImageList() const _IRR_OVERRIDE_ { return ImageList; }
@@ -326,10 +363,16 @@ private:
 	void recalculateItemHeight();
 
 	//! Resize scrollbars when their size in the skin has changed
-	void updateScrollBarSize(s32 size);
+	void updateScrollBarSize(
+		s32 size
+	);
 
 	//! executes an mouse action (like selectNew of CGUIListBox)
-	void mouseAction(s32 xpos, s32 ypos, bool onlyHover = false);
+	void mouseAction(
+		s32 xpos,
+		s32 ypos,
+		bool onlyHover = false
+	);
 
 	CGUITreeViewNode* Root;
 	IGUITreeViewNode* Selected;

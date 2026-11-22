@@ -185,10 +185,12 @@ public:
 	\return Returns a pointer to the pixel data. The format of the pixel can
 	be determined by using getColorFormat(). 0 is returned, if
 	the texture cannot be locked. */
-	virtual void* lock(E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
+	virtual void* lock(
+		E_TEXTURE_LOCK_MODE mode = ETLM_READ_WRITE,
 		u32 mipmapLevel = 0,
 		u32 layer = 0,
-		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT) = 0;
+		E_TEXTURE_LOCK_FLAGS lockFlags = ETLF_FLIP_Y_UP_RTT
+	) = 0;
 
 	//! Unlock function. Must be called after a lock() to the texture.
 	/** One should avoid to call unlock more than once before another lock.
@@ -204,7 +206,10 @@ public:
 	level. At least one pixel will be always kept.
 	\param layer It informs a texture about layer which needs
 	mipmaps regeneration. */
-	virtual void regenerateMipMapLevels(void* data = 0, u32 layer = 0) = 0;
+	virtual void regenerateMipMapLevels(
+		void* data = 0,
+		u32 layer = 0
+	) = 0;
 
 	//! Get original size of the texture.
 	/** The texture is usually scaled, if it was created with an unoptimal

@@ -15,7 +15,11 @@ namespace scene
 class CDummyTransformationSceneNode : public IDummyTransformationSceneNode {
 public:
 	//! constructor
-	CDummyTransformationSceneNode(ISceneNode* parent, ISceneManager* mgr, s32 id);
+	CDummyTransformationSceneNode(
+		ISceneNode* parent,
+		ISceneManager* mgr,
+		s32 id
+	);
 
 	//! returns the axis aligned bounding box of this node
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
@@ -37,18 +41,26 @@ public:
 	}
 
 	//! Creates a clone of this scene node and its children.
-	virtual ISceneNode* clone(ISceneNode* newParent = 0,
-		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
+	virtual ISceneNode* clone(
+		ISceneNode* newParent = 0,
+		ISceneManager* newManager = 0
+	) _IRR_OVERRIDE_;
 
 private:
 	// TODO: We can add least add some warnings to find troubles faster until we have
 	// fixed bug id 2318691.
 	virtual const core::vector3df& getScale() const _IRR_OVERRIDE_;
-	virtual void setScale(const core::vector3df& scale) _IRR_OVERRIDE_;
+	virtual void setScale(
+		const core::vector3df& scale
+	) _IRR_OVERRIDE_;
 	virtual const core::vector3df& getRotation() const _IRR_OVERRIDE_;
-	virtual void setRotation(const core::vector3df& rotation) _IRR_OVERRIDE_;
+	virtual void setRotation(
+		const core::vector3df& rotation
+	) _IRR_OVERRIDE_;
 	virtual const core::vector3df& getPosition() const _IRR_OVERRIDE_;
-	virtual void setPosition(const core::vector3df& newpos) _IRR_OVERRIDE_;
+	virtual void setPosition(
+		const core::vector3df& newpos
+	) _IRR_OVERRIDE_;
 
 	core::matrix4 RelativeTransformationMatrix;
 	core::aabbox3d<f32> Box;

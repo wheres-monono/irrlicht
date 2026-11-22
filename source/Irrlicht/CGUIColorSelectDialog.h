@@ -22,16 +22,20 @@ namespace gui
 class CGUIColorSelectDialog : public IGUIColorSelectDialog {
 public:
 	//! constructor
-	CGUIColorSelectDialog(const wchar_t* title,
+	CGUIColorSelectDialog(
+		const wchar_t* title,
 		IGUIEnvironment* environment,
 		IGUIElement* parent,
-		s32 id);
+		s32 id
+	);
 
 	//! destructor
 	virtual ~CGUIColorSelectDialog();
 
 	//! called if an event happened.
-	virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+	virtual bool OnEvent(
+		const SEvent& event
+	) _IRR_OVERRIDE_;
 
 	//! draws the element and its children
 	virtual void draw() _IRR_OVERRIDE_;
@@ -60,9 +64,11 @@ private:
 	};
 	SColorCircle ColorRing;
 
-	void buildColorRing(const core::dimension2d<u32>& dim,
+	void buildColorRing(
+		const core::dimension2d<u32>& dim,
 		s32 supersample,
-		const video::SColor& borderColor);
+		const video::SColor& borderColor
+	);
 };
 
 } // end namespace gui

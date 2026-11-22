@@ -46,42 +46,55 @@ namespace scene
 class CDMFLoader : public IMeshLoader {
 public:
 	/** constructor*/
-	CDMFLoader(ISceneManager* smgr, io::IFileSystem* filesys);
+	CDMFLoader(
+		ISceneManager* smgr,
+		io::IFileSystem* filesys
+	);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	/** creates/loads an animated mesh from the file.
 	\return Pointer to the created mesh. Returns 0 if loading failed.
 	If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	See IReferenceCounted::drop() for more information.*/
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 	/** loads dynamic lights present in this scene.
 	Note that loaded lights from DeleD must have the suffix \b dynamic_ and must be \b
 	pointlight. Irrlicht correctly loads specular color, diffuse color , position and
 	distance of object affected by light.
 	\return number of lights loaded or 0 if loading failed.*/
-	int loadLights(const c8* filename,
+	int loadLights(
+		const c8* filename,
 		ISceneManager* smgr,
 		ISceneNode* parent = 0,
-		s32 base_id = 1000);
+		s32 base_id = 1000
+	);
 
 	/** loads water plains present in this scene.
 	Note that loaded water plains from DeleD must have the suffix \b water_ and must
 	be \b rectangle (with just 1 rectangular face). Irrlicht correctly loads position
 	and rotation of water plain as well as texture layers.
 	\return number of water plains loaded or 0 if loading failed.*/
-	int loadWaterPlains(const c8* filename,
+	int loadWaterPlains(
+		const c8* filename,
 		ISceneManager* smgr,
 		ISceneNode* parent = 0,
 		s32 base_id = 2000,
-		bool mode = true);
+		bool mode = true
+	);
 
 private:
-	void addMaterialPath(core::stringc& filename, const core::stringc& matPath);
+	void addMaterialPath(
+		core::stringc& filename,
+		const core::stringc& matPath
+	);
 
 	ISceneManager* SceneMgr;
 	io::IFileSystem* FileSystem;

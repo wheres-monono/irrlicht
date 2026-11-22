@@ -40,8 +40,13 @@ public:
 
 	//! Sets the color to fade out to or to fade in from.
 	/** \param color: Color to where it is faded out od from it is faded in. */
-	virtual void setColor(video::SColor color) = 0;
-	virtual void setColor(video::SColor source, video::SColor dest) = 0;
+	virtual void setColor(
+		video::SColor color
+	) = 0;
+	virtual void setColor(
+		video::SColor source,
+		video::SColor dest
+	) = 0;
 
 	//! Starts the fade in process.
 	/** In the beginning the whole rect is drawn by the set color
@@ -49,14 +54,18 @@ public:
 	color has faded out.
 	\param time: Time specifying how long it should need to fade in,
 	in milliseconds. */
-	virtual void fadeIn(u32 time) = 0;
+	virtual void fadeIn(
+		u32 time
+	) = 0;
 
 	//! Starts the fade out process.
 	/** In the beginning everything is visible, and at the end of
 	the time only the set color (black by the fault) will be drawn.
 	\param time: Time specifying how long it should need to fade out,
 	in milliseconds. */
-	virtual void fadeOut(u32 time) = 0;
+	virtual void fadeOut(
+		u32 time
+	) = 0;
 
 	//! Returns if the fade in or out process is done.
 	virtual bool isReady() const = 0;

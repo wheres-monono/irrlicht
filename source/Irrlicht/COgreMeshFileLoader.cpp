@@ -900,8 +900,8 @@ void COgreMeshFileLoader::composeObject(
 			// getMatrix_transposed instead of getMatrix for downward
 			// compatibility.
 			//								   Not
-			//tested so far if this was correct or wrong before quaternion
-			//fix!
+			// tested so far if this was correct or wrong before quaternion
+			// fix!
 			Skeleton.Bones[i].Orientation.getMatrix_transposed(
 				joint->LocalMatrix
 			);

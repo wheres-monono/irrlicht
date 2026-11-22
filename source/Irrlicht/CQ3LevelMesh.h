@@ -22,16 +22,20 @@ namespace scene
 class CQ3LevelMesh : public IQ3LevelMesh {
 public:
 	//! constructor
-	CQ3LevelMesh(io::IFileSystem* fs,
+	CQ3LevelMesh(
+		io::IFileSystem* fs,
 		scene::ISceneManager* smgr,
-		const quake3::Q3LevelLoadParameter& loadParam);
+		const quake3::Q3LevelLoadParameter& loadParam
+	);
 
 	//! destructor
 	virtual ~CQ3LevelMesh();
 
 	//! loads a level from a .bsp-File. Also tries to load all
 	//! needed textures. Returns true if successful.
-	bool loadFile(io::IReadFile* file);
+	bool loadFile(
+		io::IReadFile* file
+	);
 
 	//! returns the amount of frames in milliseconds. If the amount
 	//! is 1, it is a static (=non animated) mesh.
@@ -55,40 +59,56 @@ public:
 	//! returns the animated mesh based on a detail level. 0 is the
 	//! lowest, 255 the highest detail. Note, that some Meshes will
 	//! ignore the detail level.
-	virtual IMesh* getMesh(s32 frameInMs,
+	virtual IMesh* getMesh(
+		s32 frameInMs,
 		s32 detailLevel = 255,
 		s32 startFrameLoop = -1,
-		s32 endFrameLoop = -1) _IRR_OVERRIDE_;
+		s32 endFrameLoop = -1
+	) _IRR_OVERRIDE_;
 
 	//! Returns an axis aligned bounding box of the mesh.
 	//! \return A bounding box of this mesh is returned.
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
-	virtual void setBoundingBox(const core::aabbox3df& box) _IRR_OVERRIDE_;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) _IRR_OVERRIDE_;
 
 	//! Returns the type of the animated mesh.
 	virtual E_ANIMATED_MESH_TYPE getMeshType() const _IRR_OVERRIDE_;
 
 	//! loads the shader definition
-	void getShader(io::IReadFile* file);
+	void getShader(
+		io::IReadFile* file
+	);
 
 	//! loads the shader definition
-	virtual const quake3::IShader* getShader(const c8* filename,
-		bool fileNameIsValid = true) _IRR_OVERRIDE_;
+	virtual const quake3::IShader* getShader(
+		const c8* filename,
+		bool fileNameIsValid = true
+	) _IRR_OVERRIDE_;
 
 	//! returns a already loaded Shader
-	virtual const quake3::IShader* getShader(u32 index) const _IRR_OVERRIDE_;
+	virtual const quake3::IShader* getShader(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 	//! loads a configuration file
-	void getConfiguration(io::IReadFile* file);
+	void getConfiguration(
+		io::IReadFile* file
+	);
 	//! get's an interface to the entities
 	virtual quake3::tQ3EntityList& getEntityList() _IRR_OVERRIDE_;
 
 	//! returns the requested brush entity
-	virtual IMesh* getBrushEntityMesh(s32 num) const _IRR_OVERRIDE_;
+	virtual IMesh* getBrushEntityMesh(
+		s32 num
+	) const _IRR_OVERRIDE_;
 
 	//! returns the requested brush entity
-	virtual IMesh* getBrushEntityMesh(quake3::IEntity& ent) const _IRR_OVERRIDE_;
+	virtual IMesh* getBrushEntityMesh(
+		quake3::IEntity& ent
+	) const _IRR_OVERRIDE_;
 
 	// Link to held meshes? ...
 
@@ -137,7 +157,9 @@ private:
 	void constructMesh();
 	void solveTJunction();
 	void loadTextures();
-	scene::SMesh** buildMesh(s32 num);
+	scene::SMesh** buildMesh(
+		s32 num
+	);
 
 	struct STexShader {
 		video::ITexture* Texture;
@@ -289,37 +311,85 @@ private:
 		u8 direction[2];   // The direction of the light: [phi,theta]
 	};
 
-	void loadTextures(tBSPLump* l, io::IReadFile* file);  // Load the textures
-	void loadLightmaps(tBSPLump* l, io::IReadFile* file); // Load the lightmaps
-	void loadVerts(tBSPLump* l, io::IReadFile* file);     // Load the vertices
-	void loadFaces(tBSPLump* l, io::IReadFile* file);     // Load the faces
-	void loadPlanes(tBSPLump* l, io::IReadFile* file); // Load the Planes of the BSP
-	void loadNodes(tBSPLump* l, io::IReadFile* file);  // load the Nodes of the BSP
-	void loadLeafs(tBSPLump* l, io::IReadFile* file);  // load the Leafs of the BSP
-	void loadLeafFaces(tBSPLump* l,
-		io::IReadFile* file); // load the Faces of the Leafs of the BSP
-	void loadVisData(tBSPLump* l,
-		io::IReadFile* file); // load the visibility data of the clusters
-	void loadEntities(tBSPLump* l, io::IReadFile* file);  // load the entities
-	void loadModels(tBSPLump* l, io::IReadFile* file);    // load the models
-	void loadMeshVerts(tBSPLump* l, io::IReadFile* file); // load the mesh vertices
-	void loadBrushes(tBSPLump* l, io::IReadFile* file); // load the brushes of the BSP
-	void loadBrushSides(tBSPLump* l,
-		io::IReadFile* file); // load the brushsides of the BSP
-	void loadLeafBrushes(tBSPLump* l,
-		io::IReadFile* file);			 // load the brushes of the leaf
-	void loadFogs(tBSPLump* l, io::IReadFile* file); // load the shaders
+	void loadTextures(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // Load the textures
+	void loadLightmaps(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // Load the lightmaps
+	void loadVerts(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // Load the vertices
+	void loadFaces(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // Load the faces
+	void loadPlanes(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // Load the Planes of the BSP
+	void loadNodes(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the Nodes of the BSP
+	void loadLeafs(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the Leafs of the BSP
+	void loadLeafFaces(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the Faces of the Leafs of the BSP
+	void loadVisData(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the visibility data of the clusters
+	void loadEntities(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the entities
+	void loadModels(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the models
+	void loadMeshVerts(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the mesh vertices
+	void loadBrushes(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the brushes of the BSP
+	void loadBrushSides(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the brushsides of the BSP
+	void loadLeafBrushes(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the brushes of the leaf
+	void loadFogs(
+		tBSPLump* l,
+		io::IReadFile* file
+	); // load the shaders
 
 	// bi-quadratic bezier patches
-	void createCurvedSurface_bezier(SMeshBufferLightMap* meshBuffer,
+	void createCurvedSurface_bezier(
+		SMeshBufferLightMap* meshBuffer,
 		s32 faceIndex,
 		s32 patchTesselation,
-		s32 storevertexcolor);
+		s32 storevertexcolor
+	);
 
-	void createCurvedSurface_nosubdivision(SMeshBufferLightMap* meshBuffer,
+	void createCurvedSurface_nosubdivision(
+		SMeshBufferLightMap* meshBuffer,
 		s32 faceIndex,
 		s32 patchTesselation,
-		s32 storevertexcolor);
+		s32 storevertexcolor
+	);
 
 	struct S3DVertex2TCoords_64 {
 		core::vector3d<f64> Pos;
@@ -328,7 +398,9 @@ private:
 		core::vector2d<f64> TCoords;
 		core::vector2d<f64> TCoords2;
 
-		void copy(video::S3DVertex2TCoords& dest) const;
+		void copy(
+			video::S3DVertex2TCoords& dest
+		) const;
 
 		S3DVertex2TCoords_64() {}
 		S3DVertex2TCoords_64(
@@ -361,17 +433,24 @@ private:
 		}
 	};
 
-	inline void copy(video::S3DVertex2TCoords* dest,
+	inline void copy(
+		video::S3DVertex2TCoords* dest,
 		const tBSPVertex* source,
-		s32 vertexcolor) const;
-	void
-	copy(S3DVertex2TCoords_64* dest, const tBSPVertex* source, s32 vertexcolor) const;
+		s32 vertexcolor
+	) const;
+	void copy(
+		S3DVertex2TCoords_64* dest,
+		const tBSPVertex* source,
+		s32 vertexcolor
+	) const;
 
 	struct SBezier {
 		SMeshBufferLightMap* Patch;
 		S3DVertex2TCoords_64 control[9];
 
-		void tesselate(s32 level);
+		void tesselate(
+			s32 level
+		);
 
 	private:
 		core::array<S3DVertex2TCoords_64> column[3];
@@ -449,14 +528,30 @@ private:
 
 	typedef void (CQ3LevelMesh::*tParserCallback)(quake3::SVarGroupList*& groupList,
 		eToken token);
-	void parser_parse(const void* data, u32 size, tParserCallback callback);
+	void parser_parse(
+		const void* data,
+		u32 size,
+		tParserCallback callback
+	);
 	void parser_nextToken();
 
-	void dumpVarGroup(const quake3::SVarGroup* group, s32 stack) const;
+	void dumpVarGroup(
+		const quake3::SVarGroup* group,
+		s32 stack
+	) const;
 
-	void scriptcallback_entity(quake3::SVarGroupList*& grouplist, eToken token);
-	void scriptcallback_shader(quake3::SVarGroupList*& grouplist, eToken token);
-	void scriptcallback_config(quake3::SVarGroupList*& grouplist, eToken token);
+	void scriptcallback_entity(
+		quake3::SVarGroupList*& grouplist,
+		eToken token
+	);
+	void scriptcallback_shader(
+		quake3::SVarGroupList*& grouplist,
+		eToken token
+	);
+	void scriptcallback_config(
+		quake3::SVarGroupList*& grouplist,
+		eToken token
+	);
 
 	core::array<quake3::IShader> Shader;
 	core::array<quake3::IShader> Entity; // quake3::tQ3EntityList Entity;
@@ -466,8 +561,14 @@ private:
 	void ReleaseShader();
 	void ReleaseEntity();
 
-	s32 setShaderMaterial(video::SMaterial& material, const tBSPFace* face) const;
-	s32 setShaderFogMaterial(video::SMaterial& material, const tBSPFace* face) const;
+	s32 setShaderMaterial(
+		video::SMaterial& material,
+		const tBSPFace* face
+	) const;
+	s32 setShaderFogMaterial(
+		video::SMaterial& material,
+		const tBSPFace* face
+	) const;
 
 	struct SToBuffer {
 		s32 takeVertexColor;
@@ -475,7 +576,10 @@ private:
 	};
 
 	void cleanMeshes();
-	void cleanMesh(SMesh* m, const bool texture0important = false);
+	void cleanMesh(
+		SMesh* m,
+		const bool texture0important = false
+	);
 	void cleanLoader();
 	void calcBoundingBoxes();
 	c8 buf[128];

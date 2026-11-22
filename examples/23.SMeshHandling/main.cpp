@@ -26,7 +26,11 @@ using namespace io;
 using namespace gui;
 
 /* This is the type of the functions which work out the colour. */
-typedef SColor colour_func(f32 x, f32 y, f32 z);
+typedef SColor colour_func(
+	f32 x,
+	f32 y,
+	f32 z
+);
 
 /* Here comes a set of functions which can be used for coloring the nodes while
 creating the mesh. */
@@ -63,7 +67,11 @@ SColor white(
 /* The type of the functions which generate the heightmap. x and y
 range between -0.5 and 0.5, and s is the scale of the heightmap. */
 
-typedef f32 generate_func(s16 x, s16 y, f32 s);
+typedef f32 generate_func(
+	s16 x,
+	s16 y,
+	f32 s
+);
 
 // An interesting sample function :-)
 f32 eggbox(

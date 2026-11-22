@@ -221,7 +221,8 @@ public:
 		if (m) {
 			m->setName(getId());
 			//				m->setMaterialFlag(video::EMF_BACK_FACE_CULLING,
-			//false); 				m->setDebugDataVisible(scene::EDS_FULL);
+			// false);
+			// m->setDebugDataVisible(scene::EDS_FULL);
 		}
 		return m;
 	}
@@ -3046,7 +3047,7 @@ void CColladaFileLoader::readParameter(
 					f32 f[2];
 					readFloatsInsideElement(reader, f, 2);
 					//						Parameters.addVector2d(name.c_str(),
-					//core::vector2df(f[0],f[1]));
+					// core::vector2df(f[0],f[1]));
 				} else if (float3NodeName == reader->getNodeName()) {
 					f32 f[3];
 					readFloatsInsideElement(reader, f, 3);

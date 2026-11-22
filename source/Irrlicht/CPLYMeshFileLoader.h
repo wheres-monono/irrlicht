@@ -28,18 +28,23 @@ enum E_PLY_PROPERTY_TYPE {
 class CPLYMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	CPLYMeshFileLoader(scene::ISceneManager* smgr);
+	CPLYMeshFileLoader(
+		scene::ISceneManager* smgr
+	);
 
 	//! Destructor
 	virtual ~CPLYMeshFileLoader();
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".ply")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 	struct SPLYProperty {
@@ -110,15 +115,33 @@ private:
 	c8* getNextLine();
 	c8* getNextWord();
 	void fillBuffer();
-	E_PLY_PROPERTY_TYPE getPropertyType(const c8* typeString) const;
+	E_PLY_PROPERTY_TYPE getPropertyType(
+		const c8* typeString
+	) const;
 
-	bool readVertex(const SPLYElement& Element, scene::CDynamicMeshBuffer* mb);
-	bool readFace(const SPLYElement& Element, scene::CDynamicMeshBuffer* mb);
-	void skipElement(const SPLYElement& Element);
-	void skipProperty(const SPLYProperty& Property);
-	f32 getFloat(E_PLY_PROPERTY_TYPE t);
-	u32 getInt(E_PLY_PROPERTY_TYPE t);
-	void moveForward(u32 bytes);
+	bool readVertex(
+		const SPLYElement& Element,
+		scene::CDynamicMeshBuffer* mb
+	);
+	bool readFace(
+		const SPLYElement& Element,
+		scene::CDynamicMeshBuffer* mb
+	);
+	void skipElement(
+		const SPLYElement& Element
+	);
+	void skipProperty(
+		const SPLYProperty& Property
+	);
+	f32 getFloat(
+		E_PLY_PROPERTY_TYPE t
+	);
+	u32 getInt(
+		E_PLY_PROPERTY_TYPE t
+	);
+	void moveForward(
+		u32 bytes
+	);
 
 	core::array<SPLYElement*> ElementList;
 

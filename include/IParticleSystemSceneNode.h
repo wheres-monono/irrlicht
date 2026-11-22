@@ -89,7 +89,9 @@ public:
 	/** If they are, the particles are affected by the movement of the
 	particle system scene node too, otherwise they completely ignore it.
 	Default is true. */
-	virtual void setParticlesAreGlobal(bool global = true) = 0;
+	virtual void setParticlesAreGlobal(
+		bool global = true
+	) = 0;
 
 	//! Bitflags to change the particle behavior
 	/**
@@ -112,7 +114,9 @@ public:
 	/** This should only be called when you want to render the node outside
 	the scenegraph, as the node will care about this otherwise
 	automatically. */
-	virtual void doParticleSystem(u32 time) = 0;
+	virtual void doParticleSystem(
+		u32 time
+	) = 0;
 
 	//! Gets the particle emitter, which creates the particles.
 	/** \return The particle emitter. Can be 0 if none is set. */
@@ -125,7 +129,9 @@ public:
 	\param emitter: Sets the particle emitter. You can set this to 0 for
 	removing the current emitter and stopping the particle system emitting
 	new particles. */
-	virtual void setEmitter(IParticleEmitter* emitter) = 0;
+	virtual void setEmitter(
+		IParticleEmitter* emitter
+	) = 0;
 
 	//! Adds new particle effector to the particle system.
 	/** A particle affector modifies the particles. For example, the FadeOut
@@ -139,7 +145,9 @@ public:
 	Please note that an affector is not necessary for the particle system to
 	work.
 	\param affector: New affector. */
-	virtual void addAffector(IParticleAffector* affector) = 0;
+	virtual void addAffector(
+		IParticleAffector* affector
+	) = 0;
 
 	//! Get a list of all particle affectors.
 	/** \return The list of particle affectors attached to this node. */
@@ -344,7 +352,8 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleMeshEmitter* createMeshEmitter(scene::IMesh* mesh,
+	virtual IParticleMeshEmitter* createMeshEmitter(
+		scene::IMesh* mesh,
 		bool useNormalDirection = true,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		f32 normalDirectionModifier = 100.0f,
@@ -358,8 +367,8 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) = 0;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a point particle emitter.
 	/** \param direction: Direction and speed of particle emission.
@@ -431,7 +440,8 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleRingEmitter* createRingEmitter(const core::vector3df& center,
+	virtual IParticleRingEmitter* createRingEmitter(
+		const core::vector3df& center,
 		f32 radius,
 		f32 ringThickness,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
@@ -443,8 +453,8 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) = 0;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a sphere particle emitter.
 	/** \param center: Center of sphere
@@ -474,7 +484,8 @@ public:
 	as new emitter of this particle system, just call setEmitter(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleSphereEmitter* createSphereEmitter(const core::vector3df& center,
+	virtual IParticleSphereEmitter* createSphereEmitter(
+		const core::vector3df& center,
 		f32 radius,
 		const core::vector3df& direction = core::vector3df(0.0f, 0.03f, 0.0f),
 		u32 minParticlesPerSecond = 5,
@@ -485,8 +496,8 @@ public:
 		u32 lifeTimeMax = 4000,
 		s32 maxAngleDegrees = 0,
 		const core::dimension2df& minStartSize = core::dimension2df(5.0f, 5.0f),
-		const core::dimension2df& maxStartSize = core::dimension2df(5.0f,
-			5.0f)) = 0;
+		const core::dimension2df& maxStartSize = core::dimension2df(5.0f, 5.0f)
+	) = 0;
 
 	//! Creates a point attraction affector.
 	/** This affector modifies the positions of the particles and attracts
@@ -506,13 +517,14 @@ public:
 	as new affector of this particle system, just call addAffector(). Note
 	that you'll have to drop() the returned pointer, after you don't need
 	it any more, see IReferenceCounted::drop() for more information. */
-	virtual IParticleAttractionAffector*
-	createAttractionAffector(const core::vector3df& point,
+	virtual IParticleAttractionAffector* createAttractionAffector(
+		const core::vector3df& point,
 		f32 speed = 1.0f,
 		bool attract = true,
 		bool affectX = true,
 		bool affectY = true,
-		bool affectZ = true) = 0;
+		bool affectZ = true
+	) = 0;
 
 	//! Creates a scale particle affector.
 	/** This affector scales the particle to the a multiple of its size defined

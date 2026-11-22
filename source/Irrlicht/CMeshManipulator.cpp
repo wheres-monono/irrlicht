@@ -1223,7 +1223,7 @@ void CMeshManipulator::heightmapOptimizeMesh(
 			if (vert[i].Pos == vert[far1].Pos ||
 				vert[far1].Pos == vert[far2].Pos) {
 				//				puts("skipping degenerate
-				//tri");
+				// tri");
 				continue;
 			}
 
@@ -1311,8 +1311,8 @@ void CMeshManipulator::heightmapOptimizeMesh(
 
 					if (edges[g].polycount != 2) {
 						//						printf("%u:
-						//polycount not 2 (%u)\n", 							g,
-						//edges[g].polycount);
+						// polycount not 2 (%u)\n",
+						// g, edges[g].polycount);
 						goto testnext;
 					}
 
@@ -1320,7 +1320,7 @@ void CMeshManipulator::heightmapOptimizeMesh(
 					if (!edges[g].normal[0].equals(edges[g].normal[1],
 						    tolerance)) {
 						//						puts("Normals
-						//don't match");
+						// don't match");
 						goto testnext;
 					}
 
@@ -1377,7 +1377,8 @@ void CMeshManipulator::heightmapOptimizeMesh(
 				// OK, moving to welding position
 				vert[i] = vert[edges[e].far];
 				//				printf("Contracted vert %u
-				//to %u\n", 					i, edges[e].far);
+				// to %u\n", 					i,
+				// edges[e].far);
 			}
 		}
 

@@ -34,20 +34,29 @@ namespace scene
 
 class CLMTSMeshFileLoader : public IMeshLoader {
 public:
-	CLMTSMeshFileLoader(io::IFileSystem* fs,
+	CLMTSMeshFileLoader(
+		io::IFileSystem* fs,
 		video::IVideoDriver* driver,
-		io::IAttributes* parameters);
+		io::IAttributes* parameters
+	);
 
 	virtual ~CLMTSMeshFileLoader();
 
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
-	void constructMesh(SMesh* mesh);
-	void loadTextures(SMesh* mesh);
+	void constructMesh(
+		SMesh* mesh
+	);
+	void loadTextures(
+		SMesh* mesh
+	);
 	void cleanup();
 
 // byte-align structures

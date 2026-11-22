@@ -16,10 +16,14 @@ namespace scene
 class IParticleSphereEmitter : public IParticleEmitter {
 public:
 	//! Set the center of the sphere for particle emissions
-	virtual void setCenter(const core::vector3df& center) = 0;
+	virtual void setCenter(
+		const core::vector3df& center
+	) = 0;
 
 	//! Set the radius of the sphere for particle emissions
-	virtual void setRadius(f32 radius) = 0;
+	virtual void setRadius(
+		f32 radius
+	) = 0;
 
 	//! Get the center of the sphere for particle emissions
 	virtual const core::vector3df& getCenter() const = 0;

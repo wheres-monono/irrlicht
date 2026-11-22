@@ -603,8 +603,8 @@ bool CLWOMeshFileLoader::readChunks() {
 #endif
 				readDiscVertexMapping(size);
 				//			case
-				//charsToUIntD('V','M','P','A'): 			case
-				//charsToUIntD('E','N','V','L'):
+				// charsToUIntD('V','M','P','A'): case
+				// charsToUIntD('E','N','V','L'):
 				break;
 			case charsToUIntD('C', 'L', 'I', 'P'):
 				{

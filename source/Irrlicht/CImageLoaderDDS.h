@@ -199,14 +199,19 @@ class CImageLoaderDDS : public IImageLoader {
 public:
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".tga")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! returns true if the file maybe is able to be loaded by this class
-	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileFormat(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
 	//! creates a surface from the file
-	virtual IImage* loadImage(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual IImage* loadImage(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 };
 
 } // end namespace video

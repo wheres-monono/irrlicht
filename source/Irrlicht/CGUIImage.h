@@ -18,31 +18,41 @@ namespace gui
 class CGUIImage : public IGUIImage {
 public:
 	//! constructor
-	CGUIImage(IGUIEnvironment* environment,
+	CGUIImage(
+		IGUIEnvironment* environment,
 		IGUIElement* parent,
 		s32 id,
-		core::rect<s32> rectangle);
+		core::rect<s32> rectangle
+	);
 
 	//! destructor
 	virtual ~CGUIImage();
 
 	//! sets an image
-	virtual void setImage(video::ITexture* image) _IRR_OVERRIDE_;
+	virtual void setImage(
+		video::ITexture* image
+	) _IRR_OVERRIDE_;
 
 	//! Gets the image texture
 	virtual video::ITexture* getImage() const _IRR_OVERRIDE_;
 
 	//! sets the color of the image
-	virtual void setColor(video::SColor color) _IRR_OVERRIDE_;
+	virtual void setColor(
+		video::SColor color
+	) _IRR_OVERRIDE_;
 
 	//! sets if the image should scale to fit the element
-	virtual void setScaleImage(bool scale) _IRR_OVERRIDE_;
+	virtual void setScaleImage(
+		bool scale
+	) _IRR_OVERRIDE_;
 
 	//! draws the element and its children
 	virtual void draw() _IRR_OVERRIDE_;
 
 	//! sets if the image should use its alpha channel to draw itself
-	virtual void setUseAlphaChannel(bool use) _IRR_OVERRIDE_;
+	virtual void setUseAlphaChannel(
+		bool use
+	) _IRR_OVERRIDE_;
 
 	//! Gets the color of the image
 	virtual video::SColor getColor() const _IRR_OVERRIDE_;
@@ -54,13 +64,17 @@ public:
 	virtual bool isAlphaChannelUsed() const _IRR_OVERRIDE_;
 
 	//! Sets the source rectangle of the image. By default the full image is used.
-	virtual void setSourceRect(const core::rect<s32>& sourceRect) _IRR_OVERRIDE_;
+	virtual void setSourceRect(
+		const core::rect<s32>& sourceRect
+	) _IRR_OVERRIDE_;
 
 	//! Returns the customized source rectangle of the image to be used.
 	virtual core::rect<s32> getSourceRect() const _IRR_OVERRIDE_;
 
 	//! Restrict drawing-area.
-	virtual void setDrawBounds(const core::rect<f32>& drawBoundUVs) _IRR_OVERRIDE_;
+	virtual void setDrawBounds(
+		const core::rect<f32>& drawBoundUVs
+	) _IRR_OVERRIDE_;
 
 	//! Get drawing-area restrictions.
 	virtual core::rect<f32> getDrawBounds() const _IRR_OVERRIDE_;
@@ -79,12 +93,16 @@ public:
 	}
 
 	//! Writes attributes of the element.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the element
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_;
 
 protected:
 	void checkBounds(

@@ -18,10 +18,12 @@ class COctreeSceneNode;
 class COctreeSceneNode : public IOctreeSceneNode {
 public:
 	//! constructor
-	COctreeSceneNode(ISceneNode* parent,
+	COctreeSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
-		s32 minimalPolysPerNode = 512);
+		s32 minimalPolysPerNode = 512
+	);
 
 	//! destructor
 	virtual ~COctreeSceneNode();
@@ -35,38 +37,52 @@ public:
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 
 	//! creates the tree
-	bool createTree(IMesh* mesh);
+	bool createTree(
+		IMesh* mesh
+	);
 
 	//! returns the material based on the zero based index i. To get the amount
 	//! of materials used by this scene node, use getMaterialCount().
 	//! This function is needed for inserting the node into the scene hierarchy on a
 	//! optimal position for minimizing renderstate changes, but can also be used
 	//! to directly modify the material of a scene node.
-	virtual video::SMaterial& getMaterial(u32 i) _IRR_OVERRIDE_;
+	virtual video::SMaterial& getMaterial(
+		u32 i
+	) _IRR_OVERRIDE_;
 
 	//! returns amount of materials used by this scene node.
 	virtual u32 getMaterialCount() const _IRR_OVERRIDE_;
 
 	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	) _IRR_OVERRIDE_;
 
 	//! Returns type of the scene node
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ { return ESNT_OCTREE; }
 
 	//! Sets a new mesh to display
-	virtual void setMesh(IMesh* mesh) _IRR_OVERRIDE_;
+	virtual void setMesh(
+		IMesh* mesh
+	) _IRR_OVERRIDE_;
 
 	//! Get the currently defined mesh for display.
-	virtual IMesh* getMesh(void) _IRR_OVERRIDE_;
+	virtual IMesh* getMesh(
+		void
+	) _IRR_OVERRIDE_;
 
 	//! Sets if the scene node should not copy the materials of the mesh but use them
 	//! in a read only style.
-	virtual void setReadOnlyMaterials(bool readonly) _IRR_OVERRIDE_;
+	virtual void setReadOnlyMaterials(
+		bool readonly
+	) _IRR_OVERRIDE_;
 
 	//! Check if the scene node should not copy the materials of the mesh but use them
 	//! in a read only style
@@ -74,26 +90,34 @@ public:
 
 	//! Creates shadow volume scene node as child of this node
 	//! and returns a pointer to it.
-	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(const IMesh* shadowMesh,
+	virtual IShadowVolumeSceneNode* addShadowVolumeSceneNode(
+		const IMesh* shadowMesh,
 		s32 id,
 		bool zfailmethod = true,
-		f32 infinity = 10000.0f) _IRR_OVERRIDE_;
+		f32 infinity = 10000.0f
+	) _IRR_OVERRIDE_;
 
 	//! Removes a child from this scene node.
 	//! Implemented here, to be able to remove the shadow properly, if there is one,
 	//! or to remove attached children.
-	virtual bool removeChild(ISceneNode* child) _IRR_OVERRIDE_;
+	virtual bool removeChild(
+		ISceneNode* child
+	) _IRR_OVERRIDE_;
 
 	//! Set if/how vertex buffer object are used for the meshbuffers
 	/** NOTE: When there is already a mesh in the node this will rebuild
 	the octree. */
-	virtual void setUseVBO(EOCTREENODE_VBO useVBO) _IRR_OVERRIDE_;
+	virtual void setUseVBO(
+		EOCTREENODE_VBO useVBO
+	) _IRR_OVERRIDE_;
 
 	//! Get if/how vertex buffer object are used for the meshbuffers
 	virtual EOCTREENODE_VBO getUseVBO() const _IRR_OVERRIDE_;
 
 	//! Set the kind of tests polygons do for visibility against the camera
-	virtual void setPolygonChecks(EOCTREE_POLYGON_CHECKS checks) _IRR_OVERRIDE_;
+	virtual void setPolygonChecks(
+		EOCTREE_POLYGON_CHECKS checks
+	) _IRR_OVERRIDE_;
 
 	//! Get the kind of tests polygons do for visibility against the camera
 	virtual EOCTREE_POLYGON_CHECKS getPolygonChecks() const _IRR_OVERRIDE_;

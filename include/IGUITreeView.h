@@ -37,37 +37,49 @@ public:
 	virtual const wchar_t* getText() const = 0;
 
 	//! sets the text of the node
-	virtual void setText(const wchar_t* text) = 0;
+	virtual void setText(
+		const wchar_t* text
+	) = 0;
 
 	//! returns the icon text of the node
 	virtual const wchar_t* getIcon() const = 0;
 
 	//! sets the icon text of the node
-	virtual void setIcon(const wchar_t* icon) = 0;
+	virtual void setIcon(
+		const wchar_t* icon
+	) = 0;
 
 	//! returns the image index of the node
 	virtual u32 getImageIndex() const = 0;
 
 	//! sets the image index of the node
-	virtual void setImageIndex(u32 imageIndex) = 0;
+	virtual void setImageIndex(
+		u32 imageIndex
+	) = 0;
 
 	//! returns the image index of the node
 	virtual u32 getSelectedImageIndex() const = 0;
 
 	//! sets the image index of the node
-	virtual void setSelectedImageIndex(u32 imageIndex) = 0;
+	virtual void setSelectedImageIndex(
+		u32 imageIndex
+	) = 0;
 
 	//! returns the user data (void*) of this node
 	virtual void* getData() const = 0;
 
 	//! sets the user data (void*) of this node
-	virtual void setData(void* data) = 0;
+	virtual void setData(
+		void* data
+	) = 0;
 
 	//! returns the user data2 (IReferenceCounted) of this node
 	virtual IReferenceCounted* getData2() const = 0;
 
 	//! sets the user data2 (IReferenceCounted) of this node
-	virtual void setData2(IReferenceCounted* data) = 0;
+	virtual void setData2(
+		IReferenceCounted* data
+	) = 0;
 
 	//! returns the child item count
 	virtual u32 getChildCount() const = 0;
@@ -98,12 +110,14 @@ public:
 	\param data2 user data2 (IReferenceCounted*) of the new node
 	\return The new node
 	*/
-	virtual IGUITreeViewNode* addChildBack(const wchar_t* text,
+	virtual IGUITreeViewNode* addChildBack(
+		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) = 0;
+		IReferenceCounted* data2 = 0
+	) = 0;
 
 	//! Adds a new node before the first child node.
 	/** \param text text of the new node
@@ -115,12 +129,14 @@ public:
 	\param data2 user data2 (IReferenceCounted*) of the new node
 	\return The new node
 	*/
-	virtual IGUITreeViewNode* addChildFront(const wchar_t* text,
+	virtual IGUITreeViewNode* addChildFront(
+		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) = 0;
+		IReferenceCounted* data2 = 0
+	) = 0;
 
 	//! Adds a new node behind the other node.
 	/** The other node has also to be a child node from this node.
@@ -134,13 +150,15 @@ public:
 	\param data2 user data2 (IReferenceCounted*) of the new node
 	\return The new node or 0 if other is no child node from this
 	*/
-	virtual IGUITreeViewNode* insertChildAfter(IGUITreeViewNode* other,
+	virtual IGUITreeViewNode* insertChildAfter(
+		IGUITreeViewNode* other,
 		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) = 0;
+		IReferenceCounted* data2 = 0
+	) = 0;
 
 	//! Adds a new node before the other node.
 	/** The other node has also to be a child node from this node.
@@ -154,13 +172,15 @@ public:
 	\param data2 user data2 (IReferenceCounted*) of the new node
 	\return The new node or 0 if other is no child node from this
 	*/
-	virtual IGUITreeViewNode* insertChildBefore(IGUITreeViewNode* other,
+	virtual IGUITreeViewNode* insertChildBefore(
+		IGUITreeViewNode* other,
 		const wchar_t* text,
 		const wchar_t* icon = 0,
 		s32 imageIndex = -1,
 		s32 selectedImageIndex = -1,
 		void* data = 0,
-		IReferenceCounted* data2 = 0) = 0;
+		IReferenceCounted* data2 = 0
+	) = 0;
 
 	//! Return the first child node from this node.
 	/** \return The first child node or 0 if this node has no children. */
@@ -190,29 +210,39 @@ public:
 
 	//! Deletes a child node.
 	/** \return Returns true if the node was found as a child and is deleted. */
-	virtual bool deleteChild(IGUITreeViewNode* child) = 0;
+	virtual bool deleteChild(
+		IGUITreeViewNode* child
+	) = 0;
 
 	//! Moves a child node one position up.
 	/** \return True if the node was found as a child node and was not already the
 	 * first child. */
-	virtual bool moveChildUp(IGUITreeViewNode* child) = 0;
+	virtual bool moveChildUp(
+		IGUITreeViewNode* child
+	) = 0;
 
 	//! Moves a child node one position down.
 	/** \return True if the node was found as a child node and was not already the
 	 * last child. */
-	virtual bool moveChildDown(IGUITreeViewNode* child) = 0;
+	virtual bool moveChildDown(
+		IGUITreeViewNode* child
+	) = 0;
 
 	//! Returns true if the node is expanded (children are visible).
 	virtual bool getExpanded() const = 0;
 
 	//! Sets if the node is expanded.
-	virtual void setExpanded(bool expanded) = 0;
+	virtual void setExpanded(
+		bool expanded
+	) = 0;
 
 	//! Returns true if the node is currently selected.
 	virtual bool getSelected() const = 0;
 
 	//! Sets this node as selected.
-	virtual void setSelected(bool selected) = 0;
+	virtual void setSelected(
+		bool selected
+	) = 0;
 
 	//! Returns true if this node is the root node.
 	virtual bool isRoot() const = 0;
@@ -251,7 +281,9 @@ public:
 
 	//! sets if the tree lines are visible
 	/** \param visible true for visible, false for invisible */
-	virtual void setLinesVisible(bool visible) = 0;
+	virtual void setLinesVisible(
+		bool visible
+	) = 0;
 
 	//! Sets the font which should be used as icon font.
 	/** This font is set to the Irrlicht engine built-in-font by
@@ -260,15 +292,21 @@ public:
 	the build-in-font of the Irrlicht engine as icon font, the icon
 	strings defined in GUIIcons.h can be used.
 	*/
-	virtual void setIconFont(IGUIFont* font) = 0;
+	virtual void setIconFont(
+		IGUIFont* font
+	) = 0;
 
 	//! Sets a skin independent font.
 	/** \param font: New font to set or 0 to use the skin-font. */
-	virtual void setOverrideFont(IGUIFont* font = 0) = 0;
+	virtual void setOverrideFont(
+		IGUIFont* font = 0
+	) = 0;
 
 	//! Gets the override font (if any)
 	/** \return The override font (may be 0) */
-	virtual IGUIFont* getOverrideFont(void) const = 0;
+	virtual IGUIFont* getOverrideFont(
+		void
+	) const = 0;
 
 	//! Get the font which is used for drawing
 	/** This is the override font when one is set and the
@@ -278,13 +316,17 @@ public:
 	//! Sets the image list which should be used for the image and selected image of
 	//! every node.
 	/** The default is 0 (no images). */
-	virtual void setImageList(IGUIImageList* imageList) = 0;
+	virtual void setImageList(
+		IGUIImageList* imageList
+	) = 0;
 
 	//! Returns the image list which is used for the nodes.
 	virtual IGUIImageList* getImageList() const = 0;
 
 	//! Sets if the image is left of the icon. Default is true.
-	virtual void setImageLeftOfIcon(bool bLeftOf) = 0;
+	virtual void setImageLeftOfIcon(
+		bool bLeftOf
+	) = 0;
 
 	//! Returns if the Image is left of the icon. Default is true.
 	virtual bool getImageLeftOfIcon() const = 0;

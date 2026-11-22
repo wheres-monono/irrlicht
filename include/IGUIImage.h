@@ -28,7 +28,9 @@ public:
 		IGUIElement(EGUIET_IMAGE, environment, parent, id, rectangle) {}
 
 	//! Sets an image texture
-	virtual void setImage(video::ITexture* image) = 0;
+	virtual void setImage(
+		video::ITexture* image
+	) = 0;
 
 	//! Gets the image texture
 	virtual video::ITexture* getImage() const = 0;
@@ -36,13 +38,19 @@ public:
 	//! Sets the color of the image
 	/** \param color Color with which the image is drawn. If the color
 	equals Color(255,255,255,255) it is ignored. */
-	virtual void setColor(video::SColor color) = 0;
+	virtual void setColor(
+		video::SColor color
+	) = 0;
 
 	//! Sets if the image should scale to fit the element
-	virtual void setScaleImage(bool scale) = 0;
+	virtual void setScaleImage(
+		bool scale
+	) = 0;
 
 	//! Sets if the image should use its alpha channel to draw itself
-	virtual void setUseAlphaChannel(bool use) = 0;
+	virtual void setUseAlphaChannel(
+		bool use
+	) = 0;
 
 	//! Gets the color of the image
 	virtual video::SColor getColor() const = 0;
@@ -56,7 +64,9 @@ public:
 	//! Sets the source rectangle of the image. By default the full image is used.
 	/** \param sourceRect coordinates inside the image or an area with size 0 for
 	 * using the full image (default). */
-	virtual void setSourceRect(const core::rect<s32>& sourceRect) = 0;
+	virtual void setSourceRect(
+		const core::rect<s32>& sourceRect
+	) = 0;
 
 	//! Returns the customized source rectangle of the image to be used.
 	/** By default an empty rectangle of width and height 0 is returned which means
@@ -84,7 +94,9 @@ public:
 	//! Sets whether to draw a background color (EGDC_3D_DARK_SHADOW) when no texture
 	//! is set
 	/** By default it's enabled */
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Checks if a background is drawn when no texture is set
 	/** \return true if background drawing is enabled, false otherwise */

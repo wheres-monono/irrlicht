@@ -18,10 +18,14 @@ namespace io
 {
 
 //! creates an IXMLReader
-IXMLWriter* createIXMLWriter(IWriteFile* file);
+IXMLWriter* createIXMLWriter(
+	IWriteFile* file
+);
 
 //! creates an IXMLReader
-IXMLWriterUTF8* createIXMLWriterUTF8(IWriteFile* file);
+IXMLWriterUTF8* createIXMLWriterUTF8(
+	IWriteFile* file
+);
 
 // Stuff needed by implementations for all character types
 // TODO: With some more work it could maybe become a pure template based thing like
@@ -65,7 +69,9 @@ protected:
 class CXMLWriter : public IXMLWriter, public CXMLWriterCommon<wchar_t> {
 public:
 	//! Constructor
-	CXMLWriter(IWriteFile* file);
+	CXMLWriter(
+		IWriteFile* file
+	);
 
 	//! Destructor
 	virtual ~CXMLWriter() {}
@@ -74,7 +80,8 @@ public:
 	virtual void writeXMLHeader() _IRR_OVERRIDE_;
 
 	//! Writes an xml element with maximal 5 attributes
-	virtual void writeElement(const wchar_t* name,
+	virtual void writeElement(
+		const wchar_t* name,
 		bool empty = false,
 		const wchar_t* attr1Name = 0,
 		const wchar_t* attr1Value = 0,
@@ -85,36 +92,50 @@ public:
 		const wchar_t* attr4Name = 0,
 		const wchar_t* attr4Value = 0,
 		const wchar_t* attr5Name = 0,
-		const wchar_t* attr5Value = 0) _IRR_OVERRIDE_;
+		const wchar_t* attr5Value = 0
+	) _IRR_OVERRIDE_;
 
 	//! Writes an xml element with any number of attributes
-	virtual void writeElement(const wchar_t* name,
+	virtual void writeElement(
+		const wchar_t* name,
 		bool empty,
 		core::array<core::stringw>& names,
-		core::array<core::stringw>& values) _IRR_OVERRIDE_;
+		core::array<core::stringw>& values
+	) _IRR_OVERRIDE_;
 
 	//! Writes a comment into the xml file
-	virtual void writeComment(const wchar_t* comment) _IRR_OVERRIDE_;
+	virtual void writeComment(
+		const wchar_t* comment
+	) _IRR_OVERRIDE_;
 
 	//! Writes the closing tag for an element. Like </foo>
-	virtual void writeClosingTag(const wchar_t* name) _IRR_OVERRIDE_;
+	virtual void writeClosingTag(
+		const wchar_t* name
+	) _IRR_OVERRIDE_;
 
 	//! Writes a text into the file. All occurrences of special characters like
 	//! & (&amp;), < (&lt;), > (&gt;), and " (&quot;) are automatically replaced.
-	virtual void writeText(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void writeText(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! Writes a line break
 	virtual void writeLineBreak() _IRR_OVERRIDE_;
 
 private:
-	void writeAttribute(const wchar_t* att, const wchar_t* name);
+	void writeAttribute(
+		const wchar_t* att,
+		const wchar_t* name
+	);
 };
 
 //! Implementation providing methods for making it easier to write XML files.
 class CXMLWriterUTF8 : public IXMLWriterUTF8, public CXMLWriterCommon<c8> {
 public:
 	//! Constructor
-	CXMLWriterUTF8(IWriteFile* file);
+	CXMLWriterUTF8(
+		IWriteFile* file
+	);
 
 	//! Destructor
 	virtual ~CXMLWriterUTF8() {}
@@ -123,7 +144,8 @@ public:
 	virtual void writeXMLHeader() _IRR_OVERRIDE_;
 
 	//! Writes an xml element with maximal 5 attributes
-	virtual void writeElement(const c8* name,
+	virtual void writeElement(
+		const c8* name,
 		bool empty = false,
 		const c8* attr1Name = 0,
 		const c8* attr1Value = 0,
@@ -134,29 +156,41 @@ public:
 		const c8* attr4Name = 0,
 		const c8* attr4Value = 0,
 		const c8* attr5Name = 0,
-		const c8* attr5Value = 0) _IRR_OVERRIDE_;
+		const c8* attr5Value = 0
+	) _IRR_OVERRIDE_;
 
 	//! Writes an xml element with any number of attributes
-	virtual void writeElement(const c8* name,
+	virtual void writeElement(
+		const c8* name,
 		bool empty,
 		core::array<core::stringc>& names,
-		core::array<core::stringc>& values) _IRR_OVERRIDE_;
+		core::array<core::stringc>& values
+	) _IRR_OVERRIDE_;
 
 	//! Writes a comment into the xml file
-	virtual void writeComment(const c8* comment) _IRR_OVERRIDE_;
+	virtual void writeComment(
+		const c8* comment
+	) _IRR_OVERRIDE_;
 
 	//! Writes the closing tag for an element. Like </foo>
-	virtual void writeClosingTag(const c8* name) _IRR_OVERRIDE_;
+	virtual void writeClosingTag(
+		const c8* name
+	) _IRR_OVERRIDE_;
 
 	//! Writes a text into the file. All occurrences of special characters like
 	//! & (&amp;), < (&lt;), > (&gt;), and " (&quot;) are automatically replaced.
-	virtual void writeText(const c8* text) _IRR_OVERRIDE_;
+	virtual void writeText(
+		const c8* text
+	) _IRR_OVERRIDE_;
 
 	//! Writes a line break
 	virtual void writeLineBreak() _IRR_OVERRIDE_;
 
 private:
-	void writeAttribute(const c8* att, const c8* name);
+	void writeAttribute(
+		const c8* att,
+		const c8* name
+	);
 };
 
 } // namespace io

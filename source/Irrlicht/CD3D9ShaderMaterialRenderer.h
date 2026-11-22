@@ -29,27 +29,33 @@ class IMaterialRenderer;
 class CD3D9ShaderMaterialRenderer : public IMaterialRenderer {
 public:
 	//! Public constructor
-	CD3D9ShaderMaterialRenderer(IDirect3DDevice9* d3ddev,
+	CD3D9ShaderMaterialRenderer(
+		IDirect3DDevice9* d3ddev,
 		video::IVideoDriver* driver,
 		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
 		const c8* pixelShaderProgram,
 		IShaderConstantSetCallBack* callback,
 		IMaterialRenderer* baseMaterial,
-		s32 userData);
+		s32 userData
+	);
 
 	//! Destructor
 	~CD3D9ShaderMaterialRenderer();
 
-	virtual void OnSetMaterial(const video::SMaterial& material,
+	virtual void OnSetMaterial(
+		const video::SMaterial& material,
 		const video::SMaterial& lastMaterial,
 		bool resetAllRenderstates,
-		video::IMaterialRendererServices* services) _IRR_OVERRIDE_;
+		video::IMaterialRendererServices* services
+	) _IRR_OVERRIDE_;
 
 	virtual void OnUnsetMaterial() _IRR_OVERRIDE_;
 
-	virtual bool OnRender(IMaterialRendererServices* service,
-		E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
+	virtual bool OnRender(
+		IMaterialRendererServices* service,
+		E_VERTEX_TYPE vtxtype
+	) _IRR_OVERRIDE_;
 
 	//! Returns if the material is transparent.
 	virtual bool isTransparent() const _IRR_OVERRIDE_;
@@ -63,34 +69,47 @@ public:
 protected:
 	//! constructor only for use by derived classes who want to
 	//! create a fall back material for example.
-	CD3D9ShaderMaterialRenderer(IDirect3DDevice9* d3ddev,
+	CD3D9ShaderMaterialRenderer(
+		IDirect3DDevice9* d3ddev,
 		video::IVideoDriver* driver,
 		IShaderConstantSetCallBack* callback,
 		IMaterialRenderer* baseMaterial,
-		s32 userData = 0);
+		s32 userData = 0
+	);
 
-	void init(s32& outMaterialTypeNr,
+	void init(
+		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
-		const c8* pixelShaderProgram);
-	bool createPixelShader(const c8* pxsh);
-	bool createVertexShader(const char* vtxsh);
+		const c8* pixelShaderProgram
+	);
+	bool createPixelShader(
+		const c8* pxsh
+	);
+	bool createVertexShader(
+		const char* vtxsh
+	);
 
-	HRESULT stubD3DXAssembleShader(LPCSTR pSrcData,
+	HRESULT stubD3DXAssembleShader(
+		LPCSTR pSrcData,
 		UINT SrcDataLen,
 		CONST D3DXMACRO* pDefines,
 		LPD3DXINCLUDE pInclude,
 		DWORD Flags,
 		LPD3DXBUFFER* ppShader,
-		LPD3DXBUFFER* ppErrorMsgs);
+		LPD3DXBUFFER* ppErrorMsgs
+	);
 
-	HRESULT stubD3DXAssembleShaderFromFile(LPCSTR pSrcFile,
+	HRESULT stubD3DXAssembleShaderFromFile(
+		LPCSTR pSrcFile,
 		CONST D3DXMACRO* pDefines,
 		LPD3DXINCLUDE pInclude,
 		DWORD Flags,
 		LPD3DXBUFFER* ppShader,
-		LPD3DXBUFFER* ppErrorMsgs);
+		LPD3DXBUFFER* ppErrorMsgs
+	);
 
-	HRESULT stubD3DXCompileShader(LPCSTR pSrcData,
+	HRESULT stubD3DXCompileShader(
+		LPCSTR pSrcData,
 		UINT SrcDataLen,
 		CONST D3DXMACRO* pDefines,
 		LPD3DXINCLUDE pInclude,
@@ -99,9 +118,11 @@ protected:
 		DWORD Flags,
 		LPD3DXBUFFER* ppShader,
 		LPD3DXBUFFER* ppErrorMsgs,
-		LPD3DXCONSTANTTABLE* ppConstantTable);
+		LPD3DXCONSTANTTABLE* ppConstantTable
+	);
 
-	HRESULT stubD3DXCompileShaderFromFile(LPCSTR pSrcFile,
+	HRESULT stubD3DXCompileShaderFromFile(
+		LPCSTR pSrcFile,
 		CONST D3DXMACRO* pDefines,
 		LPD3DXINCLUDE pInclude,
 		LPCSTR pFunctionName,
@@ -109,7 +130,8 @@ protected:
 		DWORD Flags,
 		LPD3DXBUFFER* ppShader,
 		LPD3DXBUFFER* ppErrorMsgs,
-		LPD3DXCONSTANTTABLE* ppConstantTable);
+		LPD3DXCONSTANTTABLE* ppConstantTable
+	);
 
 	IDirect3DDevice9* pID3DDevice;
 	video::IVideoDriver* Driver;

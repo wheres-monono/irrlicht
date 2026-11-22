@@ -28,20 +28,26 @@ public:
 		IGUIElement(EGUIET_CHECK_BOX, environment, parent, id, rectangle) {}
 
 	//! Set if box is checked.
-	virtual void setChecked(bool checked) = 0;
+	virtual void setChecked(
+		bool checked
+	) = 0;
 
 	//! Returns true if box is checked.
 	virtual bool isChecked() const = 0;
 
 	//! Sets whether to draw the background
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Checks if background drawing is enabled
 	/** \return true if background drawing is enabled, false otherwise */
 	virtual bool isDrawBackgroundEnabled() const = 0;
 
 	//! Sets whether to draw the border
-	virtual void setDrawBorder(bool draw) = 0;
+	virtual void setDrawBorder(
+		bool draw
+	) = 0;
 
 	//! Checks if border drawing is enabled
 	/** \return true if border drawing is enabled, false otherwise */

@@ -28,28 +28,38 @@ public:
 	virtual f32 getMoveSpeed() const = 0;
 
 	//! Sets the speed of movement
-	virtual void setMoveSpeed(f32 moveSpeed) = 0;
+	virtual void setMoveSpeed(
+		f32 moveSpeed
+	) = 0;
 
 	//! Returns the rotation speed
 	virtual f32 getRotateSpeed() const = 0;
 
 	//! Set the rotation speed
-	virtual void setRotateSpeed(f32 rotateSpeed) = 0;
+	virtual void setRotateSpeed(
+		f32 rotateSpeed
+	) = 0;
 
 	//! Returns the zoom speed
 	virtual f32 getZoomSpeed() const = 0;
 
 	//! Set the zoom speed
-	virtual void setZoomSpeed(f32 zoomSpeed) = 0;
+	virtual void setZoomSpeed(
+		f32 zoomSpeed
+	) = 0;
 
 	//! Returns the current distance, i.e. orbit radius
 	virtual f32 getDistance() const = 0;
 
 	//! Set the distance
-	virtual void setDistance(f32 distance) = 0;
+	virtual void setDistance(
+		f32 distance
+	) = 0;
 
 	//! Set the minimal distance to the camera target for zoom
-	virtual void setTargetMinDistance(f32 minDistance) = 0;
+	virtual void setTargetMinDistance(
+		f32 minDistance
+	) = 0;
 
 	//! Returns the minimal distance to the camera target for zoom
 	virtual f32 getTargetMinDistance() const = 0;

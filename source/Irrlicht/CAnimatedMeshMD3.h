@@ -28,18 +28,25 @@ public:
 	virtual ~CAnimatedMeshMD3();
 
 	//! loads a quake3 md3 file
-	bool loadModelFile(u32 modelIndex,
+	bool loadModelFile(
+		u32 modelIndex,
 		io::IReadFile* file,
 		io::IFileSystem* fs,
-		video::IVideoDriver* driver);
+		video::IVideoDriver* driver
+	);
 
 	// IAnimatedMeshMD3
-	virtual void setInterpolationShift(u32 shift, u32 loopMode) _IRR_OVERRIDE_;
+	virtual void setInterpolationShift(
+		u32 shift,
+		u32 loopMode
+	) _IRR_OVERRIDE_;
 	virtual SMD3Mesh* getOriginalMesh() _IRR_OVERRIDE_;
-	virtual SMD3QuaternionTagList* getTagList(s32 frame,
+	virtual SMD3QuaternionTagList* getTagList(
+		s32 frame,
 		s32 detailLevel,
 		s32 startFrameLoop,
-		s32 endFrameLoop) _IRR_OVERRIDE_;
+		s32 endFrameLoop
+	) _IRR_OVERRIDE_;
 
 	// IAnimatedMesh
 	virtual u32 getFrameCount() const _IRR_OVERRIDE_;
@@ -59,10 +66,12 @@ public:
 		FramesPerSecond = fps;
 	}
 
-	virtual IMesh* getMesh(s32 frame,
+	virtual IMesh* getMesh(
+		s32 frame,
 		s32 detailLevel,
 		s32 startFrameLoop,
-		s32 endFrameLoop) _IRR_OVERRIDE_;
+		s32 endFrameLoop
+	) _IRR_OVERRIDE_;
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 	virtual E_ANIMATED_MESH_TYPE getMeshType() const _IRR_OVERRIDE_;
 
@@ -70,28 +79,41 @@ public:
 	virtual u32 getMeshBufferCount() const _IRR_OVERRIDE_;
 
 	//! returns pointer to a mesh buffer
-	virtual IMeshBuffer* getMeshBuffer(u32 nr) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		u32 nr
+	) const _IRR_OVERRIDE_;
 
 	//! Returns pointer to a mesh buffer which fits a material
-	virtual IMeshBuffer*
-	getMeshBuffer(const video::SMaterial& material) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		const video::SMaterial& material
+	) const _IRR_OVERRIDE_;
 
-	virtual void setMaterialFlag(video::E_MATERIAL_FLAG flag,
-		bool newvalue) _IRR_OVERRIDE_;
+	virtual void setMaterialFlag(
+		video::E_MATERIAL_FLAG flag,
+		bool newvalue
+	) _IRR_OVERRIDE_;
 
 	//! set user axis aligned bounding box
-	virtual void setBoundingBox(const core::aabbox3df& box) _IRR_OVERRIDE_;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) _IRR_OVERRIDE_;
 
 	//! set the hardware mapping hint, for driver
-	virtual void setHardwareMappingHint(E_HARDWARE_MAPPING newMappingHint,
-		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setHardwareMappingHint(
+		E_HARDWARE_MAPPING newMappingHint,
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 	//! flags the meshbuffer as changed, reloads hardware buffers
-	virtual void setDirty(E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setDirty(
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 private:
 	//! animates one frame
-	inline void Animate(u32 frame);
+	inline void Animate(
+		u32 frame
+	);
 
 	video::SMaterial Material;
 
@@ -128,17 +150,25 @@ private:
 	SMesh* MeshIPol;
 	SMD3QuaternionTagList TagListIPol;
 
-	IMeshBuffer* createMeshBuffer(const SMD3MeshBuffer* source,
+	IMeshBuffer* createMeshBuffer(
+		const SMD3MeshBuffer* source,
 		io::IFileSystem* fs,
-		video::IVideoDriver* driver);
+		video::IVideoDriver* driver
+	);
 
-	void buildVertexArray(u32 frameA,
+	void buildVertexArray(
+		u32 frameA,
 		u32 frameB,
 		f32 interpolate,
 		const SMD3MeshBuffer* source,
-		SMeshBufferLightMap* dest);
+		SMeshBufferLightMap* dest
+	);
 
-	void buildTagArray(u32 frameA, u32 frameB, f32 interpolate);
+	void buildTagArray(
+		u32 frameA,
+		u32 frameB,
+		f32 interpolate
+	);
 	f32 FramesPerSecond;
 };
 

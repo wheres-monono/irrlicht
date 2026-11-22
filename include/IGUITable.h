@@ -89,10 +89,15 @@ public:
 
 	//! Adds a column
 	/** If columnIndex is outside the current range, do push new column at the end */
-	virtual void addColumn(const wchar_t* caption, s32 columnIndex = -1) = 0;
+	virtual void addColumn(
+		const wchar_t* caption,
+		s32 columnIndex = -1
+	) = 0;
 
 	//! remove a column from the table
-	virtual void removeColumn(u32 columnIndex) = 0;
+	virtual void removeColumn(
+		u32 columnIndex
+	) = 0;
 
 	//! Returns the number of columns in the table control
 	virtual s32 getColumnCount() const = 0;
@@ -102,7 +107,10 @@ public:
 	non active.
 	\param doOrder: Do also the ordering which depending on mode for active column
 	\return True when the column could be set active (aka - it did exist). */
-	virtual bool setActiveColumn(s32 idx, bool doOrder = false) = 0;
+	virtual bool setActiveColumn(
+		s32 idx,
+		bool doOrder = false
+	) = 0;
 
 	//! Returns which header is currently active
 	virtual s32 getActiveColumn() const = 0;
@@ -111,13 +119,20 @@ public:
 	virtual EGUI_ORDERING_MODE getActiveColumnOrdering() const = 0;
 
 	//! Set the width of a column
-	virtual void setColumnWidth(u32 columnIndex, u32 width) = 0;
+	virtual void setColumnWidth(
+		u32 columnIndex,
+		u32 width
+	) = 0;
 
 	//! Get the width of a column
-	virtual u32 getColumnWidth(u32 columnIndex) const = 0;
+	virtual u32 getColumnWidth(
+		u32 columnIndex
+	) const = 0;
 
 	//! columns can be resized by drag 'n drop
-	virtual void setResizableColumns(bool resizable) = 0;
+	virtual void setResizableColumns(
+		bool resizable
+	) = 0;
 
 	//! can columns be resized by drag 'n drop?
 	virtual bool hasResizableColumns() const = 0;
@@ -126,13 +141,18 @@ public:
 	//! header is clicked.
 	/** \param columnIndex The index of the column header.
 	\param mode: One of the modes defined in EGUI_COLUMN_ORDERING */
-	virtual void setColumnOrdering(u32 columnIndex, EGUI_COLUMN_ORDERING mode) = 0;
+	virtual void setColumnOrdering(
+		u32 columnIndex,
+		EGUI_COLUMN_ORDERING mode
+	) = 0;
 
 	//! Returns which row is currently selected
 	virtual s32 getSelected() const = 0;
 
 	//! set which row is currently selected
-	virtual void setSelected(s32 index) = 0;
+	virtual void setSelected(
+		s32 index
+	) = 0;
 
 	//! Get amount of rows in the tabcontrol
 	virtual s32 getRowCount() const = 0;
@@ -145,16 +165,23 @@ public:
 	if you create a row that's not at the end, there might be
 	performance issues.
 	\return index of inserted row. */
-	virtual u32 addRow(u32 rowIndex) = 0;
+	virtual u32 addRow(
+		u32 rowIndex
+	) = 0;
 
 	//! Remove a row from the table
-	virtual void removeRow(u32 rowIndex) = 0;
+	virtual void removeRow(
+		u32 rowIndex
+	) = 0;
 
 	//! clears the table rows, but keeps the columns intact
 	virtual void clearRows() = 0;
 
 	//! Swap two row positions.
-	virtual void swapRows(u32 rowIndexA, u32 rowIndexB) = 0;
+	virtual void swapRows(
+		u32 rowIndexA,
+		u32 rowIndexB
+	) = 0;
 
 	//! This tells the table to start ordering all the rows.
 	/** You need to explicitly tell the table to re order the rows
@@ -163,36 +190,59 @@ public:
 	cost of ordering when adding a lot of rows.
 	\param columnIndex: When set to -1 the active column is used.
 	\param mode Ordering mode of the rows. */
-	virtual void orderRows(s32 columnIndex = -1,
-		EGUI_ORDERING_MODE mode = EGOM_NONE) = 0;
+	virtual void orderRows(
+		s32 columnIndex = -1,
+		EGUI_ORDERING_MODE mode = EGOM_NONE
+	) = 0;
 
 	//! Set the text of a cell
-	virtual void
-	setCellText(u32 rowIndex, u32 columnIndex, const core::stringw& text) = 0;
+	virtual void setCellText(
+		u32 rowIndex,
+		u32 columnIndex,
+		const core::stringw& text
+	) = 0;
 
 	//! Set the text of a cell, and set a color of this cell.
-	virtual void setCellText(u32 rowIndex,
+	virtual void setCellText(
+		u32 rowIndex,
 		u32 columnIndex,
 		const core::stringw& text,
-		video::SColor color) = 0;
+		video::SColor color
+	) = 0;
 
 	//! Set the data of a cell
-	virtual void setCellData(u32 rowIndex, u32 columnIndex, void* data) = 0;
+	virtual void setCellData(
+		u32 rowIndex,
+		u32 columnIndex,
+		void* data
+	) = 0;
 
 	//! Set the color of a cell text
-	virtual void setCellColor(u32 rowIndex, u32 columnIndex, video::SColor color) = 0;
+	virtual void setCellColor(
+		u32 rowIndex,
+		u32 columnIndex,
+		video::SColor color
+	) = 0;
 
 	//! Get the text of a cell
-	virtual const wchar_t* getCellText(u32 rowIndex, u32 columnIndex) const = 0;
+	virtual const wchar_t* getCellText(
+		u32 rowIndex,
+		u32 columnIndex
+	) const = 0;
 
 	//! Get the data of a cell
-	virtual void* getCellData(u32 rowIndex, u32 columnIndex) const = 0;
+	virtual void* getCellData(
+		u32 rowIndex,
+		u32 columnIndex
+	) const = 0;
 
 	//! clears the table, deletes all items in the table
 	virtual void clear() = 0;
 
 	//! Set flags, as defined in ::EGUI_TABLE_DRAW_FLAGS, which influence the layout
-	virtual void setDrawFlags(s32 flags) = 0;
+	virtual void setDrawFlags(
+		s32 flags
+	) = 0;
 
 	//! Get the flags, as defined in ::EGUI_TABLE_DRAW_FLAGS, which influence the
 	//! layout
@@ -201,11 +251,15 @@ public:
 	//! Sets another skin independent font.
 	/** If this is set to zero, the button uses the font of the skin.
 	\param font: New font to set. */
-	virtual void setOverrideFont(IGUIFont* font = 0) = 0;
+	virtual void setOverrideFont(
+		IGUIFont* font = 0
+	) = 0;
 
 	//! Gets the override font (if any)
 	/** \return The override font (may be 0) */
-	virtual IGUIFont* getOverrideFont(void) const = 0;
+	virtual IGUIFont* getOverrideFont(
+		void
+	) const = 0;
 
 	//! Get the font which is used right now for drawing
 	/** Currently this is the override font when one is set and the
@@ -222,7 +276,9 @@ public:
 	virtual IGUIScrollBar* getHorizontalScrollBar() const = 0;
 
 	//! Sets whether to draw the background.
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Checks if background drawing is enabled
 	/** \return true if background drawing is enabled, false otherwise */

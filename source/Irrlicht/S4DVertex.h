@@ -111,7 +111,9 @@ struct sCompressedVec4 {
 		       core::floor32(color.b * 255.f);
 	}
 
-	void setVec4(const sVec4& v);
+	void setVec4(
+		const sVec4& v
+	);
 
 	// f = a * t + b * ( 1 - t )
 	void interpolate(
@@ -132,7 +134,7 @@ struct sVec4 {
 			f32 a, r, g, b;
 		};
 		//		struct { sVec2 xy, zw; };	// sorry, this does not
-		//compile with gcc
+		// compile with gcc
 	};
 
 	sVec4() {}

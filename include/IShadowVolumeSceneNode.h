@@ -27,7 +27,9 @@ public:
 	//! Sets the mesh from which the shadow volume should be generated.
 	/** To optimize shadow rendering, use a simpler mesh for shadows.
 	 */
-	virtual void setShadowMesh(const IMesh* mesh) = 0;
+	virtual void setShadowMesh(
+		const IMesh* mesh
+	) = 0;
 
 	//! Updates the shadow volumes for current light positions.
 	virtual void updateShadowVolumes() = 0;

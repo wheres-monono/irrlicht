@@ -45,10 +45,14 @@ public:
 	virtual bool isDraggable() const = 0;
 
 	//! Sets whether the window can be dragged by the mouse
-	virtual void setDraggable(bool draggable) = 0;
+	virtual void setDraggable(
+		bool draggable
+	) = 0;
 
 	//! Set if the window background will be drawn
-	virtual void setDrawBackground(bool draw) = 0;
+	virtual void setDrawBackground(
+		bool draw
+	) = 0;
 
 	//! Get if the window background will be drawn
 	virtual bool getDrawBackground() const = 0;
@@ -56,7 +60,9 @@ public:
 	//! Set if the window titlebar will be drawn
 	//! Note: If the background is not drawn, then the titlebar is automatically also
 	//! not drawn
-	virtual void setDrawTitlebar(bool draw) = 0;
+	virtual void setDrawTitlebar(
+		bool draw
+	) = 0;
 
 	//! Get if the window titlebar will be drawn
 	virtual bool getDrawTitlebar() const = 0;

@@ -37,15 +37,22 @@ struct SPVRHeader {
 
 class CImageLoaderPVR : public IImageLoader {
 public:
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
-	virtual bool isALoadableFileFormat(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileFormat(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
-	virtual IImage* loadImage(io::IReadFile* file) const _IRR_OVERRIDE_;
+	virtual IImage* loadImage(
+		io::IReadFile* file
+	) const _IRR_OVERRIDE_;
 
-	virtual core::array<IImage*> loadImages(io::IReadFile* file,
-		E_TEXTURE_TYPE* type) const _IRR_OVERRIDE_;
+	virtual core::array<IImage*> loadImages(
+		io::IReadFile* file,
+		E_TEXTURE_TYPE* type
+	) const _IRR_OVERRIDE_;
 };
 
 } // namespace video

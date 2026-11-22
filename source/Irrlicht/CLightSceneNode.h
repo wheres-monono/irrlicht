@@ -17,12 +17,14 @@ namespace scene
 class CLightSceneNode : public ILightSceneNode {
 public:
 	//! constructor
-	CLightSceneNode(ISceneNode* parent,
+	CLightSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		const core::vector3df& position,
 		video::SColorf color,
-		f32 range);
+		f32 range
+	);
 
 	//! pre render event
 	virtual void OnRegisterSceneNode() _IRR_OVERRIDE_;
@@ -31,7 +33,9 @@ public:
 	virtual void render() _IRR_OVERRIDE_;
 
 	//! set node light data from light info
-	virtual void setLightData(const video::SLight& light) _IRR_OVERRIDE_;
+	virtual void setLightData(
+		const video::SLight& light
+	) _IRR_OVERRIDE_;
 
 	//! \return Returns the light data.
 	virtual const video::SLight& getLightData() const _IRR_OVERRIDE_;
@@ -43,7 +47,9 @@ public:
 	/** All children of this node won't be visible either, when set
 	to true.
 	\param isVisible If the node shall be visible. */
-	virtual void setVisible(bool isVisible) _IRR_OVERRIDE_;
+	virtual void setVisible(
+		bool isVisible
+	) _IRR_OVERRIDE_;
 
 	//! returns the axis aligned bounding box of this node
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
@@ -52,16 +58,22 @@ public:
 	virtual ESCENE_NODE_TYPE getType() const _IRR_OVERRIDE_ { return ESNT_LIGHT; }
 
 	//! Writes attributes of the scene node.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options = 0) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options = 0
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the scene node.
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options = 0) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options = 0
+	) _IRR_OVERRIDE_;
 
 	//! Creates a clone of this scene node and its children.
-	virtual ISceneNode* clone(ISceneNode* newParent = 0,
-		ISceneManager* newManager = 0) _IRR_OVERRIDE_;
+	virtual ISceneNode* clone(
+		ISceneNode* newParent = 0,
+		ISceneManager* newManager = 0
+	) _IRR_OVERRIDE_;
 
 	//! Sets the light's radius of influence.
 	/** Outside this radius the light won't lighten geometry and cast no
@@ -69,7 +81,9 @@ public:
 	it to (0,1/radius,0). If you want to override this behavior, set the
 	attenuation after the radius.
 	\param radius The new radius. */
-	virtual void setRadius(f32 radius) _IRR_OVERRIDE_;
+	virtual void setRadius(
+		f32 radius
+	) _IRR_OVERRIDE_;
 
 	//! Gets the light's radius of influence.
 	/** \return The current radius. */
@@ -77,7 +91,9 @@ public:
 
 	//! Sets the light type.
 	/** \param type The new type. */
-	virtual void setLightType(video::E_LIGHT_TYPE type) _IRR_OVERRIDE_;
+	virtual void setLightType(
+		video::E_LIGHT_TYPE type
+	) _IRR_OVERRIDE_;
 
 	//! Gets the light type.
 	/** \return The current light type. */
@@ -88,7 +104,9 @@ public:
 	will still need shadow scene nodes attached. But one can enable or
 	disable distinct lights for shadow casting for performance reasons.
 	\param shadow True if this light shall cast shadows. */
-	virtual void enableCastShadow(bool shadow = true) _IRR_OVERRIDE_;
+	virtual void enableCastShadow(
+		bool shadow = true
+	) _IRR_OVERRIDE_;
 
 	//! Check whether this light casts shadows.
 	/** \return True if light would cast shadows, else false. */

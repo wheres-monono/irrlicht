@@ -26,7 +26,8 @@ class IMaterialRenderer;
 class CD3D9HLSLMaterialRenderer : public CD3D9ShaderMaterialRenderer {
 public:
 	//! Public constructor
-	CD3D9HLSLMaterialRenderer(IDirect3DDevice9* d3ddev,
+	CD3D9HLSLMaterialRenderer(
+		IDirect3DDevice9* d3ddev,
 		video::IVideoDriver* driver,
 		s32& outMaterialTypeNr,
 		const c8* vertexShaderProgram,
@@ -37,12 +38,16 @@ public:
 		E_PIXEL_SHADER_TYPE psCompileTarget,
 		IShaderConstantSetCallBack* callback,
 		IMaterialRenderer* baseMaterial,
-		s32 userData);
+		s32 userData
+	);
 
 	//! Destructor
 	~CD3D9HLSLMaterialRenderer();
 
-	virtual s32 getVariableID(bool vertexShader, const c8* name);
+	virtual s32 getVariableID(
+		bool vertexShader,
+		const c8* name
+	);
 
 	//! sets a variable in the shader.
 	//! \param vertexShader: True if this should be set in the vertex shader, false if
@@ -50,26 +55,42 @@ public:
 	//! \param index: Index of the variable
 	//! \param floats: Pointer to array of floats
 	//! \param count: Amount of floats in array.
-	virtual bool
-	setVariable(bool vertexShader, s32 index, const f32* floats, int count);
+	virtual bool setVariable(
+		bool vertexShader,
+		s32 index,
+		const f32* floats,
+		int count
+	);
 
 	//! Int interface for the above.
-	virtual bool
-	setVariable(bool vertexShader, s32 index, const s32* ints, int count);
+	virtual bool setVariable(
+		bool vertexShader,
+		s32 index,
+		const s32* ints,
+		int count
+	);
 
-	bool OnRender(IMaterialRendererServices* service,
-		E_VERTEX_TYPE vtxtype) _IRR_OVERRIDE_;
+	bool OnRender(
+		IMaterialRendererServices* service,
+		E_VERTEX_TYPE vtxtype
+	) _IRR_OVERRIDE_;
 
 protected:
-	bool createHLSLVertexShader(const char* vertexShaderProgram,
+	bool createHLSLVertexShader(
+		const char* vertexShaderProgram,
 		const char* shaderEntryPointName,
-		const char* shaderTargetName);
+		const char* shaderTargetName
+	);
 
-	bool createHLSLPixelShader(const char* pixelShaderProgram,
+	bool createHLSLPixelShader(
+		const char* pixelShaderProgram,
 		const char* shaderEntryPointName,
-		const char* shaderTargetName);
+		const char* shaderTargetName
+	);
 
-	void printHLSLVariables(LPD3DXCONSTANTTABLE table);
+	void printHLSLVariables(
+		LPD3DXCONSTANTTABLE table
+	);
 
 	LPD3DXCONSTANTTABLE VSConstantsTable;
 	LPD3DXCONSTANTTABLE PSConstantsTable;

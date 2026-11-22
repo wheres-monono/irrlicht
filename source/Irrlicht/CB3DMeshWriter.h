@@ -26,23 +26,40 @@ public:
 	virtual EMESH_WRITER_TYPE getType() const _IRR_OVERRIDE_;
 
 	//! writes a mesh
-	virtual bool writeMesh(io::IWriteFile* file,
+	virtual bool writeMesh(
+		io::IWriteFile* file,
 		scene::IMesh* mesh,
-		s32 flags = EMWF_NONE) _IRR_OVERRIDE_;
+		s32 flags = EMWF_NONE
+	) _IRR_OVERRIDE_;
 
 private:
 	u32 Size;
 
-	void writeJointChunk(io::IWriteFile* file,
+	void writeJointChunk(
+		io::IWriteFile* file,
 		ISkinnedMesh* mesh,
-		ISkinnedMesh::SJoint* joint);
-	u32 getJointChunkSize(const ISkinnedMesh* mesh, ISkinnedMesh::SJoint* joint);
-	core::array<ISkinnedMesh::SJoint*> getRootJoints(const ISkinnedMesh* mesh);
+		ISkinnedMesh::SJoint* joint
+	);
+	u32 getJointChunkSize(
+		const ISkinnedMesh* mesh,
+		ISkinnedMesh::SJoint* joint
+	);
+	core::array<ISkinnedMesh::SJoint*> getRootJoints(
+		const ISkinnedMesh* mesh
+	);
 
-	u32 getUVlayerCount(IMesh* mesh);
-	ISkinnedMesh* getSkinned(IMesh* mesh);
+	u32 getUVlayerCount(
+		IMesh* mesh
+	);
+	ISkinnedMesh* getSkinned(
+		IMesh* mesh
+	);
 
-	void write(io::IWriteFile* file, const void* ptr, const u32 bytes);
+	void write(
+		io::IWriteFile* file,
+		const void* ptr,
+		const u32 bytes
+	);
 };
 
 } // namespace scene

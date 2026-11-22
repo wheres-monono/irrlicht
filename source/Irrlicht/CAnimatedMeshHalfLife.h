@@ -330,10 +330,21 @@ struct STextureAtlas {
 	virtual ~STextureAtlas() { release(); }
 
 	void release();
-	void addSource(const c8* name, video::IImage* image);
-	void create(u32 pixelborder, video::E_TEXTURE_CLAMP texmode);
-	void getScale(core::vector2df& scale);
-	void getTranslation(const c8* name, core::vector2di& pos);
+	void addSource(
+		const c8* name,
+		video::IImage* image
+	);
+	void create(
+		u32 pixelborder,
+		video::E_TEXTURE_CLAMP texmode
+	);
+	void getScale(
+		core::vector2df& scale
+	);
+	void getTranslation(
+		const c8* name,
+		core::vector2di& pos
+	);
 
 	struct TextureAtlasEntry {
 		io::path name;
@@ -453,40 +464,58 @@ public:
 	virtual ~CAnimatedMeshHalfLife();
 
 	//! loads a Halflife mdl file
-	bool loadModelFile(io::IReadFile* file, ISceneManager* smgr);
+	bool loadModelFile(
+		io::IReadFile* file,
+		ISceneManager* smgr
+	);
 
 	// IAnimatedMesh
 	virtual u32 getFrameCount() const _IRR_OVERRIDE_;
-	virtual IMesh* getMesh(s32 frame,
+	virtual IMesh* getMesh(
+		s32 frame,
 		s32 detailLevel,
 		s32 startFrameLoop,
-		s32 endFrameLoop) _IRR_OVERRIDE_;
+		s32 endFrameLoop
+	) _IRR_OVERRIDE_;
 	virtual const core::aabbox3d<f32>& getBoundingBox() const _IRR_OVERRIDE_;
 	virtual E_ANIMATED_MESH_TYPE getMeshType() const _IRR_OVERRIDE_;
-	void renderModel(u32 param,
+	void renderModel(
+		u32 param,
 		video::IVideoDriver* driver,
-		const core::matrix4& absoluteTransformation);
+		const core::matrix4& absoluteTransformation
+	);
 
 	//! returns amount of mesh buffers.
 	virtual u32 getMeshBufferCount() const _IRR_OVERRIDE_;
 	//! returns pointer to a mesh buffer
-	virtual IMeshBuffer* getMeshBuffer(u32 nr) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		u32 nr
+	) const _IRR_OVERRIDE_;
 	//! Returns pointer to a mesh buffer which fits a material
-	virtual IMeshBuffer*
-	getMeshBuffer(const video::SMaterial& material) const _IRR_OVERRIDE_;
+	virtual IMeshBuffer* getMeshBuffer(
+		const video::SMaterial& material
+	) const _IRR_OVERRIDE_;
 
-	virtual void setMaterialFlag(video::E_MATERIAL_FLAG flag,
-		bool newvalue) _IRR_OVERRIDE_;
+	virtual void setMaterialFlag(
+		video::E_MATERIAL_FLAG flag,
+		bool newvalue
+	) _IRR_OVERRIDE_;
 
 	//! set the hardware mapping hint, for driver
-	virtual void setHardwareMappingHint(E_HARDWARE_MAPPING newMappingHint,
-		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setHardwareMappingHint(
+		E_HARDWARE_MAPPING newMappingHint,
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 	//! flags the meshbuffer as changed, reloads hardware buffers
-	virtual void setDirty(E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX) _IRR_OVERRIDE_;
+	virtual void setDirty(
+		E_BUFFER_TYPE buffer = EBT_VERTEX_AND_INDEX
+	) _IRR_OVERRIDE_;
 
 	//! set user axis aligned bounding box
-	virtual void setBoundingBox(const core::aabbox3df& box) _IRR_OVERRIDE_;
+	virtual void setBoundingBox(
+		const core::aabbox3df& box
+	) _IRR_OVERRIDE_;
 
 	//! Gets the default animation speed of the animated mesh.
 	/** \return Amount of frames per second. If the amount is 0, it is a static, non
@@ -529,8 +558,13 @@ private:
 	SHalflifeHeader* AnimationHeader[32]; // sequences named model01.mdl, model02.mdl
 
 	void initData();
-	SHalflifeHeader* loadModel(io::IReadFile* file, const io::path& filename);
-	bool postLoadModel(const io::path& filename);
+	SHalflifeHeader* loadModel(
+		io::IReadFile* file,
+		const io::path& filename
+	);
+	bool postLoadModel(
+		const io::path& filename
+	);
 
 	u32 SequenceIndex; // sequence index
 	f32 CurrentFrame;  // Current Frame
@@ -541,38 +575,61 @@ private:
 	u8 Blending[2];		  // animation blending
 
 	vec4_hl BoneAdj;
-	f32 SetController(s32 controllerIndex, f32 value);
+	f32 SetController(
+		s32 controllerIndex,
+		f32 value
+	);
 
 	u32 SkinGroupSelection; // skin group selection
-	u32 SetSkin(u32 value);
+	u32 SetSkin(
+		u32 value
+	);
 
 	void initModel();
-	void dumpModelInfo(u32 level) const;
+	void dumpModelInfo(
+		u32 level
+	) const;
 
-	void ExtractBbox(s32 sequence, core::aabbox3df& box) const;
+	void ExtractBbox(
+		s32 sequence,
+		core::aabbox3df& box
+	) const;
 
 	void setUpBones();
-	SHalflifeAnimOffset* getAnim(SHalflifeSequence* seq);
-	void
-	slerpBones(vec4_hl q1[], vec3_hl pos1[], vec4_hl q2[], vec3_hl pos2[], f32 s);
-	void calcRotations(vec3_hl* pos,
+	SHalflifeAnimOffset* getAnim(
+		SHalflifeSequence* seq
+	);
+	void slerpBones(
+		vec4_hl q1[],
+		vec3_hl pos1[],
+		vec4_hl q2[],
+		vec3_hl pos2[],
+		f32 s
+	);
+	void calcRotations(
+		vec3_hl* pos,
 		vec4_hl* q,
 		SHalflifeSequence* seq,
 		SHalflifeAnimOffset* anim,
-		f32 f);
+		f32 f
+	);
 
 	void calcBoneAdj();
-	void calcBoneQuaternion(const s32 frame,
+	void calcBoneQuaternion(
+		const s32 frame,
 		const SHalflifeBone* bone,
 		SHalflifeAnimOffset* anim,
 		const u32 j,
 		f32& angle1,
-		f32& angle2) const;
-	void calcBonePosition(const s32 frame,
+		f32& angle2
+	) const;
+	void calcBonePosition(
+		const s32 frame,
 		f32 s,
 		const SHalflifeBone* bone,
 		SHalflifeAnimOffset* anim,
-		f32* pos) const;
+		f32* pos
+	) const;
 
 	void buildVertices();
 
@@ -590,19 +647,24 @@ private:
 class CHalflifeMDLMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	CHalflifeMDLMeshFileLoader(scene::ISceneManager* smgr);
+	CHalflifeMDLMeshFileLoader(
+		scene::ISceneManager* smgr
+	);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	/** based on the file extension (e.g. ".bsp") */
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	/** \return Pointer to the created mesh. Returns 0 if loading failed.
 	If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	See IReferenceCounted::drop() for more information.
 	*/
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 private:
 	scene::ISceneManager* SceneManager;

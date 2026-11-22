@@ -40,7 +40,7 @@ static bool testLightTypes(
 	light1->setRadius(100.f);
 	light1->getLightData().DiffuseColor.set(0, 1, 1);
 	//	smgr->addCubeSceneNode(10, light1)->setMaterialFlag(video::EMF_LIGHTING,
-	//false);
+	// false);
 	scene::ILightSceneNode* light2 =
 		smgr->addLightSceneNode(0, core::vector3df(100, 30, 100));
 	light2->setRotation(core::vector3df(90, 0, 0));
@@ -50,7 +50,7 @@ static bool testLightTypes(
 	light2->getLightData().InnerCone = 10.f;
 	light2->getLightData().OuterCone = 30.f;
 	//	smgr->addCubeSceneNode(10, light2)->setMaterialFlag(video::EMF_LIGHTING,
-	//false);
+	// false);
 	scene::ILightSceneNode* light3 = smgr->addLightSceneNode();
 	light3->setRotation(core::vector3df(15, 0, 0));
 	light3->setLightType(video::ELT_DIRECTIONAL);

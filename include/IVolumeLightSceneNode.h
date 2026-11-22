@@ -18,12 +18,14 @@ class IMeshBuffer;
 class IVolumeLightSceneNode : public ISceneNode {
 public:
 	//! constructor
-	IVolumeLightSceneNode(ISceneNode* parent,
+	IVolumeLightSceneNode(
+		ISceneNode* parent,
 		ISceneManager* mgr,
 		s32 id,
 		const core::vector3df& position,
 		const core::vector3df& rotation,
-		const core::vector3df& scale) :
+		const core::vector3df& scale
+	) :
 		ISceneNode(parent, mgr, id, position, rotation, scale) {};
 
 	//! Returns type of the scene node
@@ -32,10 +34,14 @@ public:
 	}
 
 	//! Sets the number of segments across the U axis
-	virtual void setSubDivideU(const u32 inU) = 0;
+	virtual void setSubDivideU(
+		const u32 inU
+	) = 0;
 
 	//! Sets the number of segments across the V axis
-	virtual void setSubDivideV(const u32 inV) = 0;
+	virtual void setSubDivideV(
+		const u32 inV
+	) = 0;
 
 	//! Returns the number of segments across the U axis
 	virtual u32 getSubDivideU() const = 0;
@@ -44,10 +50,14 @@ public:
 	virtual u32 getSubDivideV() const = 0;
 
 	//! Sets the color of the base of the light
-	virtual void setFootColor(const video::SColor inColor) = 0;
+	virtual void setFootColor(
+		const video::SColor inColor
+	) = 0;
 
 	//! Sets the color of the tip of the light
-	virtual void setTailColor(const video::SColor inColor) = 0;
+	virtual void setTailColor(
+		const video::SColor inColor
+	) = 0;
 
 	//! Returns the color of the base of the light
 	virtual video::SColor getFootColor() const = 0;

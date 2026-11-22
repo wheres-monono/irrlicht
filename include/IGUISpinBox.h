@@ -46,7 +46,9 @@ public:
 
 	//! set the current value of the spinbox
 	/** \param val: value to be set in the spinbox */
-	virtual void setValue(f32 val) = 0;
+	virtual void setValue(
+		f32 val
+	) = 0;
 
 	//! Get the current value of the spinbox
 	virtual f32 getValue() const = 0;
@@ -54,7 +56,10 @@ public:
 	//! set the range of values which can be used in the spinbox
 	/** \param min: minimum value
 	\param max: maximum value */
-	virtual void setRange(f32 min, f32 max) = 0;
+	virtual void setRange(
+		f32 min,
+		f32 max
+	) = 0;
 
 	//! get the minimum value which can be used in the spinbox
 	virtual f32 getMin() const = 0;
@@ -65,12 +70,16 @@ public:
 	//! Step size by which values are changed when pressing the spinbuttons
 	/** The step size also determines the number of decimal places to display
 	\param step: stepsize used for value changes when pressing spinbuttons */
-	virtual void setStepSize(f32 step = 1.f) = 0;
+	virtual void setStepSize(
+		f32 step = 1.f
+	) = 0;
 
 	//! Sets the number of decimal places to display.
 	//! Note that this also rounds the range to the same number of decimal places.
 	/** \param places: The number of decimal places to display, use -1 to reset */
-	virtual void setDecimalPlaces(s32 places) = 0;
+	virtual void setDecimalPlaces(
+		s32 places
+	) = 0;
 
 	//! get the current step size
 	virtual f32 getStepSize() const = 0;
@@ -78,7 +87,9 @@ public:
 	//! Sets when the spinbox has to validate entered text.
 	/** \param validateOn Can be any combination of EGUI_SPINBOX_VALIDATION bit flags
 	 */
-	virtual void setValidateOn(u32 validateOn) = 0;
+	virtual void setValidateOn(
+		u32 validateOn
+	) = 0;
 
 	//! Gets when the spinbox has to validate entered text.
 	/** \return A combination of EGUI_SPINBOX_VALIDATION bit flags */

@@ -18,7 +18,9 @@ namespace scene
 namespace quake3
 {
 
-static core::stringc irrEmptyStringc("");
+static core::stringc irrEmptyStringc(
+	""
+);
 
 //! Hold the different Mesh Types used for getMesh
 enum eQ3MeshIndex {

@@ -20,15 +20,23 @@ namespace io
 */
 class CReadFile : public IReadFile {
 public:
-	CReadFile(const io::path& fileName);
+	CReadFile(
+		const io::path& fileName
+	);
 
 	virtual ~CReadFile();
 
 	//! returns how much was read
-	virtual size_t read(void* buffer, size_t sizeToRead) _IRR_OVERRIDE_;
+	virtual size_t read(
+		void* buffer,
+		size_t sizeToRead
+	) _IRR_OVERRIDE_;
 
 	//! changes position in file, returns true if successful
-	virtual bool seek(long finalPos, bool relativeMovement = false) _IRR_OVERRIDE_;
+	virtual bool seek(
+		long finalPos,
+		bool relativeMovement = false
+	) _IRR_OVERRIDE_;
 
 	//! returns size of file
 	virtual long getSize() const _IRR_OVERRIDE_;
@@ -46,7 +54,9 @@ public:
 	virtual EREAD_FILE_TYPE getType() const _IRR_OVERRIDE_ { return ERFT_READ_FILE; }
 
 	//! create read file on disk.
-	static IReadFile* createReadFile(const io::path& fileName);
+	static IReadFile* createReadFile(
+		const io::path& fileName
+	);
 
 private:
 	//! opens the file

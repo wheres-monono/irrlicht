@@ -28,13 +28,19 @@ to him.
 class CTerrainTriangleSelector : public ITriangleSelector {
 public:
 	//! Constructs a selector based on an ITerrainSceneNode
-	CTerrainTriangleSelector(ITerrainSceneNode* node, s32 LOD);
+	CTerrainTriangleSelector(
+		ITerrainSceneNode* node,
+		s32 LOD
+	);
 
 	//! Destructor
 	virtual ~CTerrainTriangleSelector();
 
 	//! Clears and sets triangle data
-	virtual void setTriangleData(ITerrainSceneNode* node, s32 LOD);
+	virtual void setTriangleData(
+		ITerrainSceneNode* node,
+		s32 LOD
+	);
 
 	//! Gets all triangles.
 	void getTriangles(
@@ -72,17 +78,22 @@ public:
 	virtual s32 getTriangleCount() const _IRR_OVERRIDE_;
 
 	//! Return the scene node associated with a given triangle.
-	virtual ISceneNode*
-	getSceneNodeForTriangle(u32 triangleIndex) const _IRR_OVERRIDE_;
+	virtual ISceneNode* getSceneNodeForTriangle(
+		u32 triangleIndex
+	) const _IRR_OVERRIDE_;
 
 	// Get the number of TriangleSelectors that are part of this one
 	virtual u32 getSelectorCount() const _IRR_OVERRIDE_;
 
 	// Get the TriangleSelector based on index based on getSelectorCount
-	virtual ITriangleSelector* getSelector(u32 index) _IRR_OVERRIDE_;
+	virtual ITriangleSelector* getSelector(
+		u32 index
+	) _IRR_OVERRIDE_;
 
 	// Get the TriangleSelector based on index based on getSelectorCount
-	virtual const ITriangleSelector* getSelector(u32 index) const _IRR_OVERRIDE_;
+	virtual const ITriangleSelector* getSelector(
+		u32 index
+	) const _IRR_OVERRIDE_;
 
 private:
 	friend class CTerrainSceneNode;

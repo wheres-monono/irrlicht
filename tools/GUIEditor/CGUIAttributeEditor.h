@@ -17,9 +17,11 @@ class CGUIAttribute;
 class CGUIAttributeEditor : public CGUIPanel {
 public:
 	//! constructor
-	CGUIAttributeEditor(IGUIEnvironment* environment,
+	CGUIAttributeEditor(
+		IGUIEnvironment* environment,
 		s32 id,
-		IGUIElement* parent = 0);
+		IGUIElement* parent = 0
+	);
 
 	//! destructor
 	~CGUIAttributeEditor();

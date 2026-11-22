@@ -89,7 +89,9 @@ bool CArchiveLoaderWAD::isALoadableFileFormat(
 	return fileType == EFAT_WAD;
 }
 
-void createDir(const c8* full);
+void createDir(
+	const c8* full
+);
 
 /*!
 	WAD Reader

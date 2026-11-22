@@ -25,16 +25,22 @@ class CD3D9Driver;
 
 class CD3D9RenderTarget : public IRenderTarget {
 public:
-	CD3D9RenderTarget(CD3D9Driver* driver);
+	CD3D9RenderTarget(
+		CD3D9Driver* driver
+	);
 	virtual ~CD3D9RenderTarget();
 
-	virtual void setTexture(const core::array<ITexture*>& texture,
+	virtual void setTexture(
+		const core::array<ITexture*>& texture,
 		ITexture* depthStencil,
-		const core::array<E_CUBE_SURFACE>& cubeSurfaces) _IRR_OVERRIDE_;
+		const core::array<E_CUBE_SURFACE>& cubeSurfaces
+	) _IRR_OVERRIDE_;
 
 	const core::dimension2d<u32>& getSize() const;
 
-	IDirect3DSurface9* getSurface(u32 id) const;
+	IDirect3DSurface9* getSurface(
+		u32 id
+	) const;
 
 	u32 getSurfaceCount() const;
 

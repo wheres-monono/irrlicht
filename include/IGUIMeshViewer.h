@@ -36,13 +36,17 @@ public:
 		IGUIElement(EGUIET_MESH_VIEWER, environment, parent, id, rectangle) {}
 
 	//! Sets the mesh to be shown
-	virtual void setMesh(scene::IAnimatedMesh* mesh) = 0;
+	virtual void setMesh(
+		scene::IAnimatedMesh* mesh
+	) = 0;
 
 	//! Gets the displayed mesh
 	virtual scene::IAnimatedMesh* getMesh() const = 0;
 
 	//! Sets the material
-	virtual void setMaterial(const video::SMaterial& material) = 0;
+	virtual void setMaterial(
+		const video::SMaterial& material
+	) = 0;
 
 	//! Gets the material
 	virtual const video::SMaterial& getMaterial() const = 0;

@@ -18,16 +18,26 @@ namespace gui
 class CGUIModalScreen : public IGUIElement {
 public:
 	//! constructor
-	CGUIModalScreen(IGUIEnvironment* environment, IGUIElement* parent, s32 id);
+	CGUIModalScreen(
+		IGUIEnvironment* environment,
+		IGUIElement* parent,
+		s32 id
+	);
 
 	//! called if an event happened.
-	virtual bool OnEvent(const SEvent& event) _IRR_OVERRIDE_;
+	virtual bool OnEvent(
+		const SEvent& event
+	) _IRR_OVERRIDE_;
 
 	//! Removes a child.
-	virtual void removeChild(IGUIElement* child) _IRR_OVERRIDE_;
+	virtual void removeChild(
+		IGUIElement* child
+	) _IRR_OVERRIDE_;
 
 	//! Adds a child
-	virtual void addChild(IGUIElement* child) _IRR_OVERRIDE_;
+	virtual void addChild(
+		IGUIElement* child
+	) _IRR_OVERRIDE_;
 
 	//! draws the element and its children
 	virtual void draw() _IRR_OVERRIDE_;
@@ -42,19 +52,26 @@ public:
 	virtual bool isVisible() const _IRR_OVERRIDE_;
 
 	//! Modals are infinite so every point is inside
-	virtual bool
-	isPointInside(const core::position2d<s32>& point) const _IRR_OVERRIDE_;
+	virtual bool isPointInside(
+		const core::position2d<s32>& point
+	) const _IRR_OVERRIDE_;
 
 	//! Writes attributes of the element.
-	virtual void serializeAttributes(io::IAttributes* out,
-		io::SAttributeReadWriteOptions* options) const _IRR_OVERRIDE_;
+	virtual void serializeAttributes(
+		io::IAttributes* out,
+		io::SAttributeReadWriteOptions* options
+	) const _IRR_OVERRIDE_;
 
 	//! Reads attributes of the element
-	virtual void deserializeAttributes(io::IAttributes* in,
-		io::SAttributeReadWriteOptions* options) _IRR_OVERRIDE_;
+	virtual void deserializeAttributes(
+		io::IAttributes* in,
+		io::SAttributeReadWriteOptions* options
+	) _IRR_OVERRIDE_;
 
 protected:
-	virtual bool canTakeFocus(IGUIElement* target) const;
+	virtual bool canTakeFocus(
+		IGUIElement* target
+	) const;
 
 private:
 	u32 MouseDownTime;

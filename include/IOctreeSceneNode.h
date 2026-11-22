@@ -68,13 +68,17 @@ public:
 	//! Set if/how vertex buffer object are used for the meshbuffers
 	/** NOTE: When there is already a mesh in the node this will rebuild
 	the octree. */
-	virtual void setUseVBO(EOCTREENODE_VBO useVBO) = 0;
+	virtual void setUseVBO(
+		EOCTREENODE_VBO useVBO
+	) = 0;
 
 	//! Get if/how vertex buffer object are used for the meshbuffers
 	virtual EOCTREENODE_VBO getUseVBO() const = 0;
 
 	//! Set the kind of tests polygons do for visibility against the camera
-	virtual void setPolygonChecks(EOCTREE_POLYGON_CHECKS checks) = 0;
+	virtual void setPolygonChecks(
+		EOCTREE_POLYGON_CHECKS checks
+	) = 0;
 
 	//! Get the kind of tests polygons do for visibility against the camera
 	virtual EOCTREE_POLYGON_CHECKS getPolygonChecks() const = 0;

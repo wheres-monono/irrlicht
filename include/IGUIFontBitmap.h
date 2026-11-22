@@ -23,7 +23,9 @@ public:
 	virtual IGUISpriteBank* getSpriteBank() const = 0;
 
 	//! returns the sprite number from a given character
-	virtual u32 getSpriteNoFromChar(const wchar_t* c) const = 0;
+	virtual u32 getSpriteNoFromChar(
+		const wchar_t* c
+	) const = 0;
 
 	//! Gets kerning values (distance between letters) for the font. If no parameters
 	//! are provided,
@@ -36,8 +38,10 @@ public:
 	kerning value of previousLetter to the left side kerning value of thisLetter, then
 	add the global value.
 	*/
-	virtual s32 getKerningWidth(const wchar_t* thisLetter = 0,
-		const wchar_t* previousLetter = 0) const = 0;
+	virtual s32 getKerningWidth(
+		const wchar_t* thisLetter = 0,
+		const wchar_t* previousLetter = 0
+	) const = 0;
 };
 
 } // end namespace gui

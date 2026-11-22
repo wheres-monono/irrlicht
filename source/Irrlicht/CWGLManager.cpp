@@ -404,7 +404,7 @@ bool CWGLManager::generateContext() {
 		const int iAttribs[] = {WGL_CONTEXT_MAJOR_VERSION_ARB, 1,
 			WGL_CONTEXT_MINOR_VERSION_ARB, 1,
 			//			WGL_CONTEXT_FLAGS_ARB,
-			//WGL_CONTEXT_DEBUG_BIT_ARB,	// enable to get a debug context
+			// WGL_CONTEXT_DEBUG_BIT_ARB,	// enable to get a debug context
 			//(depends on driver if that does anything)
 			0};
 		hrc = wglCreateContextAttribs_ARB(HDc, 0, iAttribs);

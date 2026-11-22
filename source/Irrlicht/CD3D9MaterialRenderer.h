@@ -166,7 +166,7 @@ public:
 
 		//		if (material.MaterialType != lastMaterial.MaterialType ||
 		//			material.MaterialTypeParam !=
-		//lastMaterial.MaterialTypeParam || 			resetAllRenderstates)
+		// lastMaterial.MaterialTypeParam || resetAllRenderstates)
 		{
 			E_BLEND_FACTOR srcRGBFact, dstRGBFact, srcAlphaFact, dstAlphaFact;
 			E_MODULATE_FUNC modulate;

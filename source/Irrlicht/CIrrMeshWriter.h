@@ -23,27 +23,42 @@ class IMeshBuffer;
 merged out to the Irrlicht Engine */
 class CIrrMeshWriter : public IMeshWriter {
 public:
-	CIrrMeshWriter(video::IVideoDriver* driver, io::IFileSystem* fs);
+	CIrrMeshWriter(
+		video::IVideoDriver* driver,
+		io::IFileSystem* fs
+	);
 	virtual ~CIrrMeshWriter();
 
 	//! Returns the type of the mesh writer
 	virtual EMESH_WRITER_TYPE getType() const _IRR_OVERRIDE_;
 
 	//! writes a mesh
-	virtual bool writeMesh(io::IWriteFile* file,
+	virtual bool writeMesh(
+		io::IWriteFile* file,
 		scene::IMesh* mesh,
-		s32 flags = EMWF_NONE) _IRR_OVERRIDE_;
+		s32 flags = EMWF_NONE
+	) _IRR_OVERRIDE_;
 
 protected:
-	void writeBoundingBox(const core::aabbox3df& box);
+	void writeBoundingBox(
+		const core::aabbox3df& box
+	);
 
-	void writeMeshBuffer(const scene::IMeshBuffer* buffer);
+	void writeMeshBuffer(
+		const scene::IMeshBuffer* buffer
+	);
 
-	void writeMaterial(const video::SMaterial& material);
+	void writeMaterial(
+		const video::SMaterial& material
+	);
 
-	core::stringw getVectorAsStringLine(const core::vector3df& v) const;
+	core::stringw getVectorAsStringLine(
+		const core::vector3df& v
+	) const;
 
-	core::stringw getVectorAsStringLine(const core::vector2df& v) const;
+	core::stringw getVectorAsStringLine(
+		const core::vector2df& v
+	) const;
 
 	// member variables:
 

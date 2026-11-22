@@ -24,18 +24,24 @@ class IMeshManipulator;
 class CXMeshFileLoader : public IMeshLoader {
 public:
 	//! Constructor
-	CXMeshFileLoader(scene::ISceneManager* smgr, io::IFileSystem* fs);
+	CXMeshFileLoader(
+		scene::ISceneManager* smgr,
+		io::IFileSystem* fs
+	);
 
 	//! returns true if the file maybe is able to be loaded by this class
 	//! based on the file extension (e.g. ".cob")
-	virtual bool
-	isALoadableFileExtension(const io::path& filename) const _IRR_OVERRIDE_;
+	virtual bool isALoadableFileExtension(
+		const io::path& filename
+	) const _IRR_OVERRIDE_;
 
 	//! creates/loads an animated mesh from the file.
 	//! \return Pointer to the created mesh. Returns 0 if loading failed.
 	//! If you no longer need the mesh, you should call IAnimatedMesh::drop().
 	//! See IReferenceCounted::drop() for more information.
-	virtual IAnimatedMesh* createMesh(io::IReadFile* file) _IRR_OVERRIDE_;
+	virtual IAnimatedMesh* createMesh(
+		io::IReadFile* file
+	) _IRR_OVERRIDE_;
 
 	struct SXTemplateMaterial {
 		core::stringc Name;	   // template name from Xfile
@@ -87,9 +93,13 @@ public:
 	};
 
 private:
-	bool load(io::IReadFile* file);
+	bool load(
+		io::IReadFile* file
+	);
 
-	bool readFileIntoMemory(io::IReadFile* file);
+	bool readFileIntoMemory(
+		io::IReadFile* file
+	);
 
 	bool parseFile();
 
@@ -97,25 +107,45 @@ private:
 
 	bool parseDataObjectTemplate();
 
-	bool parseDataObjectFrame(CSkinnedMesh::SJoint* parent);
+	bool parseDataObjectFrame(
+		CSkinnedMesh::SJoint* parent
+	);
 
-	bool parseDataObjectTransformationMatrix(core::matrix4& mat);
+	bool parseDataObjectTransformationMatrix(
+		core::matrix4& mat
+	);
 
-	bool parseDataObjectMesh(SXMesh& mesh);
+	bool parseDataObjectMesh(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectSkinWeights(SXMesh& mesh);
+	bool parseDataObjectSkinWeights(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectSkinMeshHeader(SXMesh& mesh);
+	bool parseDataObjectSkinMeshHeader(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectMeshNormals(SXMesh& mesh);
+	bool parseDataObjectMeshNormals(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectMeshTextureCoords(SXMesh& mesh);
+	bool parseDataObjectMeshTextureCoords(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectMeshVertexColors(SXMesh& mesh);
+	bool parseDataObjectMeshVertexColors(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectMeshMaterialList(SXMesh& mesh);
+	bool parseDataObjectMeshMaterialList(
+		SXMesh& mesh
+	);
 
-	bool parseDataObjectMaterial(video::SMaterial& material);
+	bool parseDataObjectMaterial(
+		video::SMaterial& material
+	);
 
 	bool parseDataObjectAnimationSet();
 
@@ -123,9 +153,13 @@ private:
 
 	bool parseDataObjectAnimation();
 
-	bool parseDataObjectAnimationKey(ISkinnedMesh::SJoint* joint);
+	bool parseDataObjectAnimationKey(
+		ISkinnedMesh::SJoint* joint
+	);
 
-	bool parseDataObjectTextureFilename(core::stringc& texturename);
+	bool parseDataObjectTextureFilename(
+		core::stringc& texturename
+	);
 
 	bool parseUnknownDataObject();
 
@@ -142,7 +176,9 @@ private:
 	//! reads header of dataobject including the opening brace.
 	//! returns false if error happened, and writes name of object
 	//! if there is one
-	bool readHeadOfDataObject(core::stringc* outname = 0);
+	bool readHeadOfDataObject(
+		core::stringc* outname = 0
+	);
 
 	//! checks for closing curly brace, returns false if not there
 	bool checkForClosingBrace();
@@ -154,7 +190,9 @@ private:
 	bool checkForTwoFollowingSemicolons();
 
 	//! reads a x file style string
-	bool getNextTokenAsString(core::stringc& out);
+	bool getNextTokenAsString(
+		core::stringc& out
+	);
 
 	void readUntilEndOfLine();
 
@@ -162,11 +200,21 @@ private:
 	u32 readBinDWord();
 	u32 readInt();
 	f32 readFloat();
-	bool readVector2(core::vector2df& vec);
-	bool readVector3(core::vector3df& vec);
-	bool readMatrix(core::matrix4& mat);
-	bool readRGB(video::SColor& color);
-	bool readRGBA(video::SColor& color);
+	bool readVector2(
+		core::vector2df& vec
+	);
+	bool readVector3(
+		core::vector3df& vec
+	);
+	bool readMatrix(
+		core::matrix4& mat
+	);
+	bool readRGB(
+		video::SColor& color
+	);
+	bool readRGBA(
+		video::SColor& color
+	);
 
 	ISceneManager* SceneManager;
 	io::IFileSystem* FileSystem;

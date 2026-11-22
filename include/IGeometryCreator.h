@@ -44,12 +44,14 @@ public:
 	each dimension.
 	\return Generated mesh.
 	*/
-	virtual IMesh* createHillPlaneMesh(const core::dimension2d<f32>& tileSize,
+	virtual IMesh* createHillPlaneMesh(
+		const core::dimension2d<f32>& tileSize,
 		const core::dimension2d<u32>& tileCount,
 		video::SMaterial* material,
 		f32 hillHeight,
 		const core::dimension2d<f32>& countHills,
-		const core::dimension2d<f32>& textureRepeatCount) const = 0;
+		const core::dimension2d<f32>& textureRepeatCount
+	) const = 0;
 
 	//! Create a simple rectangular textured plane mesh.
 	/**
@@ -78,8 +80,11 @@ public:
 	\param columns How many columns to place
 	\return Generated mesh.
 	*/
-	virtual IMesh*
-	createGeoplaneMesh(f32 radius = 5.f, u32 rows = 16, u32 columns = 16) const = 0;
+	virtual IMesh* createGeoplaneMesh(
+		f32 radius = 5.f,
+		u32 rows = 16,
+		u32 columns = 16
+	) const = 0;
 
 	//! Create a terrain mesh from an image representing a heightfield.
 	/**
@@ -97,13 +102,15 @@ public:
 	\param debugBorders (to be documented)
 	\return Generated mesh.
 	*/
-	virtual IMesh* createTerrainMesh(video::IImage* texture,
+	virtual IMesh* createTerrainMesh(
+		video::IImage* texture,
 		video::IImage* heightmap,
 		const core::dimension2d<f32>& stretchSize,
 		f32 maxHeight,
 		video::IVideoDriver* driver,
 		const core::dimension2d<u32>& defaultVertexBlockSize,
-		bool debugBorders = false) const = 0;
+		bool debugBorders = false
+	) const = 0;
 
 	//! Create an arrow mesh, composed of a cylinder and a cone.
 	/**
@@ -119,14 +126,16 @@ public:
 	\param colorCone color of the cone
 	\return Generated mesh.
 	*/
-	virtual IMesh* createArrowMesh(const u32 tesselationCylinder = 4,
+	virtual IMesh* createArrowMesh(
+		const u32 tesselationCylinder = 4,
 		const u32 tesselationCone = 8,
 		const f32 height = 1.f,
 		const f32 cylinderHeight = 0.6f,
 		const f32 widthCylinder = 0.05f,
 		const f32 widthCone = 0.3f,
 		const video::SColor colorCylinder = 0xFFFFFFFF,
-		const video::SColor colorCone = 0xFFFFFFFF) const = 0;
+		const video::SColor colorCone = 0xFFFFFFFF
+	) const = 0;
 
 	//! Create a sphere mesh.
 	/**
@@ -135,9 +144,11 @@ public:
 	\param polyCountY Number of quads used for the vertical tiling
 	\return Generated mesh.
 	*/
-	virtual IMesh* createSphereMesh(f32 radius = 5.f,
+	virtual IMesh* createSphereMesh(
+		f32 radius = 5.f,
 		u32 polyCountX = 16,
-		u32 polyCountY = 16) const = 0;
+		u32 polyCountY = 16
+	) const = 0;
 
 	//! Create a cylinder mesh.
 	/**
@@ -150,12 +161,14 @@ public:
 	\param oblique (to be documented)
 	\return Generated mesh.
 	*/
-	virtual IMesh* createCylinderMesh(f32 radius,
+	virtual IMesh* createCylinderMesh(
+		f32 radius,
 		f32 length,
 		u32 tesselation,
 		const video::SColor& color = video::SColor(0xffffffff),
 		bool closeTop = true,
-		f32 oblique = 0.f) const = 0;
+		f32 oblique = 0.f
+	) const = 0;
 
 	//! Create a cone mesh.
 	/**
@@ -167,12 +180,14 @@ public:
 	\param oblique (to be documented)
 	\return Generated mesh.
 	*/
-	virtual IMesh* createConeMesh(f32 radius,
+	virtual IMesh* createConeMesh(
+		f32 radius,
 		f32 length,
 		u32 tesselation,
 		const video::SColor& colorTop = video::SColor(0xffffffff),
 		const video::SColor& colorBottom = video::SColor(0xffffffff),
-		f32 oblique = 0.f) const = 0;
+		f32 oblique = 0.f
+	) const = 0;
 
 	//! Create a volume light mesh.
 	/**

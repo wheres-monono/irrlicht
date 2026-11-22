@@ -58,48 +58,62 @@ struct SItemElement {
 };
 
 //! Get's an entity based on it's key
-const SItemElement* getItemElement(const stringc& key);
+const SItemElement* getItemElement(
+	const stringc& key
+);
 
 /*!
 	Quake3 Model Factory.
 	Takes the mesh buffers and creates scenenodes for their associated shaders
 */
-void Q3ShaderFactory(Q3LevelLoadParameter& loadParam,
+void Q3ShaderFactory(
+	Q3LevelLoadParameter& loadParam,
 	IrrlichtDevice* device,
 	IQ3LevelMesh* mesh,
 	eQ3MeshIndex meshIndex,
 	ISceneNode* parent,
 	IMetaTriangleSelector* meta,
-	bool showShaderName);
+	bool showShaderName
+);
 
 /*!
 	Creates Model based on the entity list
 */
-void Q3ModelFactory(Q3LevelLoadParameter& loadParam,
+void Q3ModelFactory(
+	Q3LevelLoadParameter& loadParam,
 	IrrlichtDevice* device,
 	IQ3LevelMesh* masterMesh,
 	ISceneNode* parent,
-	bool showShaderName);
+	bool showShaderName
+);
 
 /*!
 	so we need a good starting Position in the level.
 	we can ask the Quake3 Loader for all entities with class_name
    "info_player_deathmatch"
 */
-s32 Q3StartPosition(IQ3LevelMesh* mesh,
+s32 Q3StartPosition(
+	IQ3LevelMesh* mesh,
 	ICameraSceneNode* camera,
 	s32 startposIndex,
-	const vector3df& translation);
+	const vector3df& translation
+);
 /*!
 	gets a accumulated force on a given surface
 */
-vector3df getGravity(const c8* surface);
+vector3df getGravity(
+	const c8* surface
+);
 
 /*
 	Dynamically load the Irrlicht Library
 */
-funcptr_createDevice load_createDevice(const c8* filename);
-funcptr_createDeviceEx load_createDeviceEx(const c8* filename);
+funcptr_createDevice load_createDevice(
+	const c8* filename
+);
+funcptr_createDeviceEx load_createDeviceEx(
+	const c8* filename
+);
 
 //! Macro for save Dropping an Element
 #define dropElement(x)                                                                   \
@@ -111,7 +125,9 @@ funcptr_createDeviceEx load_createDeviceEx(const c8* filename);
 /*
 	get the current collision respone camera animator
 */
-ISceneNodeAnimatorCollisionResponse* camCollisionResponse(IrrlichtDevice* device);
+ISceneNodeAnimatorCollisionResponse* camCollisionResponse(
+	IrrlichtDevice* device
+);
 
 //! internal Animation
 enum eTimeFireFlag {
@@ -124,7 +140,15 @@ struct TimeFire {
 	u32 delta;
 };
 
-void setTimeFire(TimeFire* t, u32 delta, u32 flags = 0);
-void checkTimeFire(TimeFire* t, u32 listSize, u32 now);
+void setTimeFire(
+	TimeFire* t,
+	u32 delta,
+	u32 flags = 0
+);
+void checkTimeFire(
+	TimeFire* t,
+	u32 listSize,
+	u32 now
+);
 
 #endif // __QUAKE3_FACTORY__H_INCLUDED__

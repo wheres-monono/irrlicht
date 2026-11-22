@@ -33,8 +33,10 @@ public:
 	\return Returns pointer to the new scene node animator or null if not successful.
 	You need to drop this pointer after calling this, see IReferenceCounted::drop()
 	for details. */
-	virtual ISceneNodeAnimator*
-	createSceneNodeAnimator(ESCENE_NODE_ANIMATOR_TYPE type, ISceneNode* target) = 0;
+	virtual ISceneNodeAnimator* createSceneNodeAnimator(
+		ESCENE_NODE_ANIMATOR_TYPE type,
+		ISceneNode* target
+	) = 0;
 
 	//! creates a scene node animator based on its type name
 	/** \param typeName: Type of the scene node animator to add.
@@ -42,8 +44,10 @@ public:
 	\return Returns pointer to the new scene node animator or null if not successful.
 	You need to drop this pointer after calling this, see IReferenceCounted::drop()
 	for details. */
-	virtual ISceneNodeAnimator* createSceneNodeAnimator(const c8* typeName,
-		ISceneNode* target) = 0;
+	virtual ISceneNodeAnimator* createSceneNodeAnimator(
+		const c8* typeName,
+		ISceneNode* target
+	) = 0;
 
 	//! returns amount of scene node animator types this factory is able to create
 	virtual u32 getCreatableSceneNodeAnimatorTypeCount() const = 0;
@@ -51,20 +55,24 @@ public:
 	//! returns type of a creatable scene node animator type
 	/** \param idx: Index of scene node animator type in this factory. Must be a value
 	between 0 and getCreatableSceneNodeTypeCount() */
-	virtual ESCENE_NODE_ANIMATOR_TYPE
-	getCreateableSceneNodeAnimatorType(u32 idx) const = 0;
+	virtual ESCENE_NODE_ANIMATOR_TYPE getCreateableSceneNodeAnimatorType(
+		u32 idx
+	) const = 0;
 
 	//! returns type name of a creatable scene node animator type
 	/** \param idx: Index of scene node animator type in this factory. Must be a value
 	between 0 and getCreatableSceneNodeAnimatorTypeCount() */
-	virtual const c8* getCreateableSceneNodeAnimatorTypeName(u32 idx) const = 0;
+	virtual const c8* getCreateableSceneNodeAnimatorTypeName(
+		u32 idx
+	) const = 0;
 
 	//! returns type name of a creatable scene node animator type
 	/** \param type: Type of scene node animator.
 	\return: Returns name of scene node animator type if this factory can create the
 	type, otherwise 0. */
-	virtual const c8*
-	getCreateableSceneNodeAnimatorTypeName(ESCENE_NODE_ANIMATOR_TYPE type) const = 0;
+	virtual const c8* getCreateableSceneNodeAnimatorTypeName(
+		ESCENE_NODE_ANIMATOR_TYPE type
+	) const = 0;
 };
 
 } // end namespace scene

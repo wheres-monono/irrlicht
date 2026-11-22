@@ -299,9 +299,12 @@ public:
 	map<stringw, dimension2du>
 		ResolutionOptions; // available options for resolution config
 private:
-	SettingManager(const SettingManager& other); // defined but not implemented
-	SettingManager&
-	operator=(const SettingManager& other); // defined but not implemented
+	SettingManager(
+		const SettingManager& other
+	); // defined but not implemented
+	SettingManager& operator=(
+		const SettingManager& other
+	); // defined but not implemented
 
 	map<stringw, stringw> SettingMap; // current config
 

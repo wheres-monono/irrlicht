@@ -21,7 +21,10 @@ public:
 	/** \param buffer Pointer to buffer where read bytes are written to.
 	\param sizeToRead Amount of bytes to read from the file.
 	\return How many bytes were read. */
-	virtual size_t read(void* buffer, size_t sizeToRead) = 0;
+	virtual size_t read(
+		void* buffer,
+		size_t sizeToRead
+	) = 0;
 
 	//! Changes position in file
 	/** \param finalPos Destination position in the file.
@@ -29,7 +32,10 @@ public:
 	changed relative to current position. Otherwise the position is changed
 	from beginning of file.
 	\return True if successful, otherwise false. */
-	virtual bool seek(long finalPos, bool relativeMovement = false) = 0;
+	virtual bool seek(
+		long finalPos,
+		bool relativeMovement = false
+	) = 0;
 
 	//! Get size of file.
 	/** \return Size of the file in bytes. */
@@ -48,10 +54,12 @@ public:
 };
 
 //! Internal function, please do not use.
-IReadFile* createLimitReadFile(const io::path& fileName,
+IReadFile* createLimitReadFile(
+	const io::path& fileName,
 	IReadFile* alreadyOpenedFile,
 	long pos,
-	long areaSize);
+	long areaSize
+);
 
 } // end namespace io
 } // end namespace irr

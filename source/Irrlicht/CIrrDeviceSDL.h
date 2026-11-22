@@ -25,7 +25,9 @@ namespace irr
 class CIrrDeviceSDL : public CIrrDeviceStub, video::IImagePresenter {
 public:
 	//! constructor
-	CIrrDeviceSDL(const SIrrlichtCreationParameters& param);
+	CIrrDeviceSDL(
+		const SIrrlichtCreationParameters& param
+	);
 
 	//! destructor
 	virtual ~CIrrDeviceSDL();
@@ -37,10 +39,15 @@ public:
 	virtual void yield() _IRR_OVERRIDE_;
 
 	//! pause execution for a specified time
-	virtual void sleep(u32 timeMs, bool pauseTimer) _IRR_OVERRIDE_;
+	virtual void sleep(
+		u32 timeMs,
+		bool pauseTimer
+	) _IRR_OVERRIDE_;
 
 	//! sets the caption of the window
-	virtual void setWindowCaption(const wchar_t* text) _IRR_OVERRIDE_;
+	virtual void setWindowCaption(
+		const wchar_t* text
+	) _IRR_OVERRIDE_;
 
 	//! returns if window is active. if not, nothing need to be drawn
 	virtual bool isWindowActive() const _IRR_OVERRIDE_;
@@ -55,9 +62,11 @@ public:
 	video::ECOLOR_FORMAT getColorFormat() const _IRR_OVERRIDE_;
 
 	//! presents a surface in the client area
-	virtual bool present(video::IImage* surface,
+	virtual bool present(
+		video::IImage* surface,
 		void* windowId = 0,
-		core::rect<s32>* src = 0) _IRR_OVERRIDE_;
+		core::rect<s32>* src = 0
+	) _IRR_OVERRIDE_;
 
 	//! notifies the device that it should close itself
 	virtual void closeDevice() _IRR_OVERRIDE_;
@@ -66,7 +75,9 @@ public:
 	virtual video::IVideoModeList* getVideoModeList() _IRR_OVERRIDE_;
 
 	//! Sets if the window should be resizable in windowed mode.
-	virtual void setResizable(bool resize = false) _IRR_OVERRIDE_;
+	virtual void setResizable(
+		bool resize = false
+	) _IRR_OVERRIDE_;
 
 	//! Minimizes the window.
 	virtual void minimizeWindow() _IRR_OVERRIDE_;
@@ -81,22 +92,27 @@ public:
 	virtual core::position2di getWindowPosition() _IRR_OVERRIDE_;
 
 	//! Activate any joysticks, and generate events for them.
-	virtual bool
-	activateJoysticks(core::array<SJoystickInfo>& joystickInfo) _IRR_OVERRIDE_;
+	virtual bool activateJoysticks(
+		core::array<SJoystickInfo>& joystickInfo
+	) _IRR_OVERRIDE_;
 
 	//! Set the current Gamma Value for the Display
-	virtual bool setGammaRamp(f32 red,
+	virtual bool setGammaRamp(
+		f32 red,
 		f32 green,
 		f32 blue,
 		f32 brightness,
-		f32 contrast) _IRR_OVERRIDE_;
+		f32 contrast
+	) _IRR_OVERRIDE_;
 
 	//! Get the current Gamma Value for the Display
-	virtual bool getGammaRamp(f32& red,
+	virtual bool getGammaRamp(
+		f32& red,
 		f32& green,
 		f32& blue,
 		f32& brightness,
-		f32& contrast) _IRR_OVERRIDE_;
+		f32& contrast
+	) _IRR_OVERRIDE_;
 
 	//! Get the device type
 	virtual E_DEVICE_TYPE getType() const _IRR_OVERRIDE_ { return EIDT_SDL; }

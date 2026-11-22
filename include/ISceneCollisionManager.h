@@ -62,9 +62,11 @@ public:
 	\param ray: Line with which collisions are tested.
 	\param selector: TriangleSelector to be used for the collision check.
 	\return true if a collision was detected and false if not.	*/
-	virtual bool getCollisionPoint(SCollisionHit& hitResult,
+	virtual bool getCollisionPoint(
+		SCollisionHit& hitResult,
 		const core::line3d<f32>& ray,
-		ITriangleSelector* selector) = 0;
+		ITriangleSelector* selector
+	) = 0;
 
 	//! Finds the nearest collision point of a line and lots of triangles, if there is
 	//! one.
@@ -121,7 +123,8 @@ public:
 	\param slidingSpeed: DOCUMENTATION NEEDED.
 	\param gravityDirectionAndSpeed: Direction and force of gravity.
 	\return New position of the ellipsoid. */
-	virtual core::vector3df getCollisionResultPosition(ITriangleSelector* selector,
+	virtual core::vector3df getCollisionResultPosition(
+		ITriangleSelector* selector,
 		const core::vector3df& ellipsoidPosition,
 		const core::vector3df& ellipsoidRadius,
 		const core::vector3df& ellipsoidDirectionAndSpeed,
@@ -132,7 +135,8 @@ public:
 		f32 slidingSpeed = 0.0005f,
 		const core::vector3df& gravityDirectionAndSpeed = core::vector3df(0.0f,
 			0.0f,
-			0.0f)) = 0;
+			0.0f)
+	) = 0;
 
 	//! Returns a 3d ray which would go through the 2d screen coordinates.
 	/** \param pos: Screen coordinates in pixels.
@@ -141,9 +145,10 @@ public:
 	\return Ray starting from the position of the camera and ending
 	at a length of the far value of the camera at a position which
 	would be behind the 2d screen coordinates. */
-	virtual core::line3d<f32>
-	getRayFromScreenCoordinates(const core::position2d<s32>& pos,
-		const ICameraSceneNode* camera = 0) = 0;
+	virtual core::line3d<f32> getRayFromScreenCoordinates(
+		const core::position2d<s32>& pos,
+		const ICameraSceneNode* camera = 0
+	) = 0;
 
 	//! Calculates 2d screen position from a 3d position.
 	/** \param pos: 3D position in world space to be transformed
@@ -160,10 +165,11 @@ public:
 	most cases you can ignore this fact, because if you use this
 	method for drawing a decorator over a 3d object, it will be
 	clipped by the screen borders. */
-	virtual core::position2d<s32>
-	getScreenCoordinatesFrom3DPosition(const core::vector3df& pos,
+	virtual core::position2d<s32> getScreenCoordinatesFrom3DPosition(
+		const core::vector3df& pos,
 		const ICameraSceneNode* camera = 0,
-		bool useViewPort = false) = 0;
+		bool useViewPort = false
+	) = 0;
 
 	//! Gets the scene node, which is currently visible under the given screen
 	//! coordinates, viewed from the currently active camera.
@@ -184,11 +190,12 @@ public:
 	\return Visible scene node under screen coordinates with
 	matching bits in its id. If there is no scene node under this
 	position, 0 is returned. */
-	virtual ISceneNode*
-	getSceneNodeFromScreenCoordinatesBB(const core::position2d<s32>& pos,
+	virtual ISceneNode* getSceneNodeFromScreenCoordinatesBB(
+		const core::position2d<s32>& pos,
 		s32 idBitMask = 0,
 		bool bNoDebugObjects = false,
-		ISceneNode* root = 0) = 0;
+		ISceneNode* root = 0
+	) = 0;
 
 	//! Returns the nearest scene node which collides with a 3d ray and whose id
 	//! matches a bitmask.
@@ -205,10 +212,12 @@ public:
 	\return Scene node nearest to ray.start, which collides with
 	the ray and matches the idBitMask, if the mask is not null. If
 	no scene node is found, 0 is returned. */
-	virtual ISceneNode* getSceneNodeFromRayBB(const core::line3d<f32>& ray,
+	virtual ISceneNode* getSceneNodeFromRayBB(
+		const core::line3d<f32>& ray,
 		s32 idBitMask = 0,
 		bool bNoDebugObjects = false,
-		ISceneNode* root = 0) = 0;
+		ISceneNode* root = 0
+	) = 0;
 
 	//! Get the scene node, which the given camera is looking at and whose id matches
 	//! the bitmask.
@@ -228,9 +237,11 @@ public:
 	\return Scene node nearest to the camera, which collides with
 	the ray and matches the idBitMask, if the mask is not null. If
 	no scene node is found, 0 is returned. */
-	virtual ISceneNode* getSceneNodeFromCameraBB(const ICameraSceneNode* camera,
+	virtual ISceneNode* getSceneNodeFromCameraBB(
+		const ICameraSceneNode* camera,
 		s32 idBitMask = 0,
-		bool bNoDebugObjects = false) = 0;
+		bool bNoDebugObjects = false
+	) = 0;
 
 	//! Perform a ray/box and ray/triangle collision check on a hierarchy of scene
 	//! nodes.
@@ -260,11 +271,13 @@ public:
 	Debug objects are scene nodes with IsDebugObject() = true.
 	\return Returns the scene node containing the hit triangle nearest to ray.start.
 	If no collision is detected, then 0 is returned. */
-	virtual ISceneNode* getSceneNodeAndCollisionPointFromRay(SCollisionHit& hitResult,
+	virtual ISceneNode* getSceneNodeAndCollisionPointFromRay(
+		SCollisionHit& hitResult,
 		const core::line3df& ray,
 		s32 idBitMask = 0,
 		ISceneNode* collisionRootNode = 0,
-		bool noDebugObjects = false) = 0;
+		bool noDebugObjects = false
+	) = 0;
 
 	//! Perform a ray/box and ray/triangle collision check on a hierarchy of scene
 	//! nodes.
